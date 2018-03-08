@@ -1,13 +1,18 @@
 Package: agedepth
-Title: What the Package Does (one line, title case)
+Title: Tidy Age-Depth Model Tools
 Version: 0.0.0.9000
 Authors@R: person("First", "Last", email = "first.last@example.com", role = c("aut", "cre"))
-Description: What the package does (one paragraph).
+Description: Converting ages to depths in an archive or vise versa is a
+  time-consuming operation governed by a lot of fussy math. This package
+  takes care of the fussy math, so depths can be converted to ages worry-free.
 Depends: R (>= 3.4.3)
-License: What license is it under?
+License: GPL-3
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.0.1
 Suggests: testthat
 URL: https://github.com/paleolimbot/agedepth
 BugReports: https://github.com/paleolimbot/agedepth/issues
+Imports: rlang,
+    dplyr,
+    tibble

@@ -23,6 +23,8 @@ trans_na(x, y)
 \item{x0}{The x value to anchor the transform}
 
 \item{y0}{The y value to anchor the transform}
+
+\item{slope}{The slope (in units of y/x) to use for the transform}
 }
 \value{
 A list with component functions \code{trans} and \code{inverse}

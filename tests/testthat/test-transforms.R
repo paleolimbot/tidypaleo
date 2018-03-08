@@ -68,5 +68,39 @@ test_that("trans_na works as expected", {
 
   test_trans <- trans_na(test_depth, test_age)
   expect_identical(test_trans$trans(test_depth), c(NA_real_, NA_real_, NA_real_))
-  expect_error(test_trans$inverse(test_age), "Inverse transform for trans_na is not defined")
+  expect_identical(test_trans$inverse(test_age), c(NA_real_, NA_real_, NA_real_))
+})
+
+test_that("trans factory tester works with all included trans factories", {
+  expect_identical(trans_interpolate, validate_trans_factory(trans_interpolate))
+  expect_identical(trans_average, validate_trans_factory(trans_average))
+  expect_identical(trans_exact, validate_trans_factory(trans_exact))
+  expect_identical(trans_na, validate_trans_factory(trans_na))
+})
+
+test_that("as_trans_factory works with included trans factories", {
+  expect_identical(trans_interpolate, as_trans_factory(trans_interpolate))
+  expect_identical(trans_average, as_trans_factory(trans_average))
+  expect_identical(trans_exact, as_trans_factory(trans_exact))
+  expect_identical(trans_na, as_trans_factory(trans_na))
+})
+
+test_that("as_trans_factory works with rlang lambda functions", {
+  test_depth <- c(0, 10, 15)
+  test_age <- c(100, 90, 80)
+
+  factory <- as_trans_factory(~trans_interpolate(.x, .y))
+  expect_equal(
+    factory(test_depth, test_age),
+    trans_interpolate(test_depth, test_age)
+  )
+
+  # check passing of objects from calling environment
+  first_fun <- dplyr::first
+  last_fun <- dplyr::last
+  factory2 <- as_trans_factory(~trans_average(.x, .y, x0 = first_fun, y0 = last_fun))
+  expect_equal(
+    factory2(test_depth, test_age),
+    trans_average(test_depth, test_age, x0 = first_fun, y0 = last_fun)
+  )
 })

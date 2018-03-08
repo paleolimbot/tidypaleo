@@ -5,6 +5,7 @@
 #' @param y A paired vector of y values
 #' @param x0 The x value to anchor the transform
 #' @param y0 The y value to anchor the transform
+#' @param slope The slope (in units of y/x) to use for the transform
 #'
 #' @return A list with component functions \code{trans} and \code{inverse}
 #' @export
@@ -92,9 +93,63 @@ trans_na <- function(x, y) {
       rep_len(NA_real_, length.out = length(new_x))
     },
     inverse = function(new_y) {
-      stop("Inverse transform for trans_na is not defined")
+      rep_len(NA_real_, length.out = length(new_y))
     }
   )
+}
+
+#' Coerce and validate transforms and functions that produce them
+#'
+#' @param factory A function that produces a transform object
+#' @param trans A transform object
+#' @param x The test x data
+#' @param y The test y data
+#' @param env The calling environment, for transform factories that are calls or
+#'   rlang lambda-style functions.
+#'
+#' @return The input, invisibly.
+#' @export
+#'
+as_trans_factory <- function(factory, env = parent.frame()) {
+  if(is.function(factory)) {
+    factory
+  } else {
+    rlang::as_function(factory, env = env)
+  }
+}
+
+#' @rdname as_trans_factory
+#' @export
+validate_trans_factory <- function(factory, x = 1:3, y = 1:3) {
+  validate_trans(factory(x, y), x, y)
+  invisible(factory)
+}
+
+#' @rdname as_trans_factory
+#' @export
+validate_trans <- function(trans, x = 1:3, y = 1:3) {
+  if(!is.list(trans)) stop("trans must be a list")
+  if(!all(c("trans", "inverse") %in% names(trans))) {
+    stop("trans must have trans and inverse components")
+  }
+  if(!is.function(trans$trans)) stop("trans$trans must be a function")
+  if(!is.function(trans$inverse)) stop("trans$inverse must be a function")
+
+  trans_result <- try(trans$trans(x))
+  if(inherits(trans_result, "try-error")) {
+    stop("test of trans$trans() failed: ", as.character(trans_result))
+  }
+  if(!is.numeric(trans_result) || length(trans_result) != length(x)) {
+    stop("test of trans$trans() failed: non-vectorized or non-numeric result")
+  }
+  inverse_result <- try(trans$inverse(y))
+  if(inherits(trans_result, "try-error")) {
+    stop("test of trans$inverse() failed: ", as.character(trans_result))
+  }
+  if(!is.numeric(inverse_result) || length(inverse_result) != length(y)) {
+    stop("test of trans$inverse() failed: non-vectorized or non-numeric result")
+  }
+  invisible(trans)
 }
 
 verify_length <- function(x, y, n = 2) {
