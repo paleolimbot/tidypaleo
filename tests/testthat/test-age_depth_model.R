@@ -54,7 +54,7 @@ test_that("predict works with newdata and straight args", {
   adm <- age_depth_model(test_data, depth = depth_col, age = age_col)
 
   expect_identical(
-    predict(adm, depth = 0:5),
+    predict(adm, depth = 0:5) %>% dplyr::select(-depth),
     predict(adm, tibble::tibble(depth = 0:5), depth = depth)
   )
 })

@@ -130,6 +130,7 @@ is_age_depth_model <- function(x) {
 #'
 predict.age_depth_model <- function(object, newdata = NULL, depth = NULL, age = NULL, ...) {
   if(is.null(newdata)) {
+    dplyr_method <- dplyr::mutate
     if(is.null(depth) && is.null(age)) {
       stop("One of depth or age must be NULL")
     } else if(is.null(depth)) {
@@ -138,6 +139,7 @@ predict.age_depth_model <- function(object, newdata = NULL, depth = NULL, age = 
       data <- tibble::tibble(depth = depth)
     }
   } else {
+    dplyr_method <- dplyr::transmute
     depth <- rlang::enquo(depth)
     age <- rlang::enquo(age)
     # when both depth and age are NULL, thus throws a warning
@@ -152,7 +154,7 @@ predict.age_depth_model <- function(object, newdata = NULL, depth = NULL, age = 
     max_depth <- max(object$data$depth)
     min_depth <- min(object$data$depth)
 
-    dplyr::transmute(
+    dplyr_method(
       data,
       age = dplyr::case_when(
         .data$depth > max_depth ~ trans$extrapolate_age_below$trans(.data$depth),
@@ -183,7 +185,7 @@ predict.age_depth_model <- function(object, newdata = NULL, depth = NULL, age = 
     # different if ages go up with depth or go down with depth
     spear <- stats::cor(object$data$depth, object$data$age, method = "spear")
     if(spear >= 0) {
-      dplyr::transmute(
+      dplyr_method(
         data,
         depth = dplyr::case_when(
           (.data$age <= max_age) & (.data$age >= min_age) ~ trans$interpolate_age$inverse(.data$age),
@@ -197,7 +199,7 @@ predict.age_depth_model <- function(object, newdata = NULL, depth = NULL, age = 
         )
       )
     } else {
-      dplyr::transmute(
+      dplyr_method(
         data,
         depth = dplyr::case_when(
           (.data$age <= max_age) & (.data$age >= min_age) ~ trans$interpolate_age$inverse(.data$age),

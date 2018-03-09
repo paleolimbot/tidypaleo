@@ -1,5 +1,7 @@
 ---
-output: github_document
+output: 
+  github_document:
+    df_print: kable
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -16,7 +18,7 @@ knitr::opts_chunk$set(
 
 # agedepth
 
-The goal of agedepth is to ...
+Given a known depths and known (or modelled) ages, it is often convenient to approximate age as a function of depth in an archive. This package provides tools to flexibly create age-depth relationships with various rules for interpolating age within known age-depth values, and extrapolating above and below these values. Typically, this is interpolation between known values and extrapolating using average sedimentation rates.
 
 ## Installation
 
@@ -29,8 +31,26 @@ devtools::install_github("paleolimbot/agedepth")
 
 ## Example
 
-This is a basic example which shows you how to solve a common problem:
+Using the built-in dataset `alta_lake_210Pb_ages`, which contains a Lead-210 (CRS) age-depth relationship for a core from [Alta Lake, Whistler, British Columbia](https://en.wikipedia.org/wiki/Alta_Lake_(British_Columbia)), we can formally create an age-depth model (note that `age` and `depth` are evaluated within `.data`, if it is provided, and support tidy evaluation):
 
-```{r example}
-## basic example code
+```{r}
+library(agedepth)
+alta_lake_adm <- age_depth_model(
+  alta_lake_210Pb_ages,
+  depth = depth_cm, age = age_year_ad,
+  age_max = age_year_ad + age_error_yr, 
+  age_min = age_year_ad - age_error_yr
+)
+```
+
+Then, we can plot the relationship:
+
+```{r alta_lake_adm_plot}
+plot(alta_lake_adm)
+```
+
+...Or predict raw data:
+
+```{r}
+predict(alta_lake_adm, depth = seq(-1, 10, 0.5))
 ```
