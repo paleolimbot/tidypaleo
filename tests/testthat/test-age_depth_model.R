@@ -91,7 +91,7 @@ test_that("base graphics plotting renders properly", {
   adm_cont_err <- age_depth_model(
     test_data, depth = depth_col, age = age_col,
     age_min = age_col - err, age_max = age_col + err,
-    interpolate_age_err = trans_interpolate
+    interpolate_age_limits = trans_interpolate
   )
   plot(adm_cont_err)
 
@@ -99,8 +99,8 @@ test_that("base graphics plotting renders properly", {
   adm_cont_err_below <- age_depth_model(
     test_data, depth = depth_col, age = age_col,
     age_min = age_col - err, age_max = age_col + err,
-    interpolate_age_err = trans_interpolate,
-    extrapolate_age_err_below = trans_average
+    interpolate_age_limits = trans_interpolate,
+    extrapolate_age_limits_below = trans_average
   )
   plot(adm_cont_err_below)
 

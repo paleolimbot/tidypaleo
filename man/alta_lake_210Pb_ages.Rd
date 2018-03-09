@@ -4,12 +4,15 @@
 \name{alta_lake_210Pb_ages}
 \alias{alta_lake_210Pb_ages}
 \alias{alta_lake_14C_ages}
+\alias{alta_lake_bacon_ages}
 \title{Alta Lake Lead-210 and Carbon-14 Ages}
 \format{An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 9 rows and 5 columns.}
 \usage{
 alta_lake_210Pb_ages
 
 alta_lake_14C_ages
+
+alta_lake_bacon_ages
 }
 \description{
 The \code{alta_lake_210Pb_ages} object contains raw depths and ages for Alta
@@ -18,11 +21,18 @@ Lake (Whistler, British Columbia, Canada) core AL-GC2 (Dunnington et al.
 activities using the constant rate of supply (CRS) model (Appleby and
 Oldfield 1983). The \code{alta_lake_14C_ages} object contains one
 uncalibrated Carbon-14 measurement from the same core.
+The \code{alta_lake_bacon_ages} object contains the combined result of the
+Lead-210 and the Carbon-14 ages as modelled by \link[rbacon]{rbacon-package}
+(Blaauw and Christen 2011).
 }
 \references{
-Appleby, P. G., and F. Oldfield. "The Assessment of 210Pb Data
-from Sites with Varying Sediment Accumulation Rates." Hydrobiologia 103, no.
-1 (July 1, 1983): 29–35. \url{https://doi.org/10.1007/BF00028424}.
+Appleby, P. G., and F. Oldfield. "The Assessment of 210Pb Data from Sites
+with Varying Sediment Accumulation Rates." Hydrobiologia 103, no. 1 (July 1,
+1983): 29–35. \url{https://doi.org/10.1007/BF00028424}.
+
+Blaauw, Maarten, and J. Andrés Christen. "Flexible Paleoclimate Age-Depth
+Models Using an Autoregressive Gamma Process." Bayesian Analysis 6, no. 3
+(September 2011): 457–74. \url{https://doi.org/10.1214/ba/1339616472}.
 
 Dunnington, Dewey W., Ian S. Spooner, Chris E. White, R. Jack Cornett, Dave
 Williamson, and Mike Nelson. "A Geochemical Perspective on the Impact of

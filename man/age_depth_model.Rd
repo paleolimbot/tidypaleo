@@ -8,8 +8,9 @@ age_depth_model(.data, depth, age, age_min = NA_real_, age_max = NA_real_,
   interpolate_age = trans_interpolate,
   extrapolate_age_below = ~trans_average(.x, .y, x0 = last, y0 = last),
   extrapolate_age_above = ~trans_average(.x, .y, x0 = first, y0 = first),
-  interpolate_age_err = trans_exact, extrapolate_age_err_below = trans_na,
-  extrapolate_age_err_above = trans_na)
+  interpolate_age_limits = trans_exact,
+  extrapolate_age_limits_below = trans_na,
+  extrapolate_age_limits_above = trans_na)
 }
 \arguments{
 \item{.data}{A data frame}
@@ -21,7 +22,7 @@ are evaluated like they are within \link[dplyr]{mutate}.}
 \item{interpolate_age, extrapolate_age_below, extrapolate_age_above}{These arguments
 provide the rules for interpolating and extrapolating ages based on depths.}
 
-\item{interpolate_age_err, extrapolate_age_err_below, extrapolate_age_err_above}{These arguments
+\item{interpolate_age_limits, extrapolate_age_limits_below, extrapolate_age_limits_above}{These arguments
 provide the rules for interpolating and extrapolating age min and max values
 based on depths.}
 }

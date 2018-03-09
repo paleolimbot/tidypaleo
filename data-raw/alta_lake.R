@@ -21,5 +21,12 @@ alta_lake_14C_ages <- tibble(
   type = "Carbon-14 age / fir needle"
 )
 
+alta_lake_bacon_ages <- read_delim("data-raw/AL-GC2_30_ages.txt", delim = "\t",
+                                   col_types = cols(.default = col_double())) %>%
+  rename(depth_cm = depth, age_min_year_BP = min, age_max_year_BP = max,
+         age_median_year_BP = median, age_weighted_mean_year_BP = wmean) %>%
+  rlang::set_attrs(spec = NULL)
+
 devtools::use_data(alta_lake_210Pb_ages, overwrite = TRUE)
 devtools::use_data(alta_lake_14C_ages, overwrite = TRUE)
+devtools::use_data(alta_lake_bacon_ages)

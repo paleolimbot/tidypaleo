@@ -7,7 +7,7 @@
 #'   are evaluated like they are within \link[dplyr]{mutate}.
 #' @param interpolate_age,extrapolate_age_below,extrapolate_age_above These arguments
 #'   provide the rules for interpolating and extrapolating ages based on depths.
-#' @param interpolate_age_err,extrapolate_age_err_below,extrapolate_age_err_above These arguments
+#' @param interpolate_age_limits,extrapolate_age_limits_below,extrapolate_age_limits_above These arguments
 #'   provide the rules for interpolating and extrapolating age min and max values
 #'   based on depths.
 #'
@@ -21,9 +21,9 @@ age_depth_model <- function(
   interpolate_age = trans_interpolate,
   extrapolate_age_below = ~trans_average(.x, .y, x0 = last, y0 = last),
   extrapolate_age_above = ~trans_average(.x, .y, x0 = first, y0 = first),
-  interpolate_age_err = trans_exact,
-  extrapolate_age_err_below = trans_na,
-  extrapolate_age_err_above = trans_na
+  interpolate_age_limits = trans_exact,
+  extrapolate_age_limits_below = trans_na,
+  extrapolate_age_limits_above = trans_na
 ) {
   # enquose arguments
   depth <- rlang::enquo(depth)
@@ -46,9 +46,9 @@ age_depth_model <- function(
     interpolate_age = interpolate_age,
     extrapolate_age_below = extrapolate_age_below,
     extrapolate_age_above = extrapolate_age_above,
-    interpolate_age_err = interpolate_age_err,
-    extrapolate_age_err_below = extrapolate_age_err_below,
-    extrapolate_age_err_above = extrapolate_age_err_above
+    interpolate_age_limits = interpolate_age_limits,
+    extrapolate_age_limits_below = extrapolate_age_limits_below,
+    extrapolate_age_limits_above = extrapolate_age_limits_above
   )
   trans_factory_args <- lapply(trans_factory_args, as_trans_factory)
   lapply(trans_factory_args, validate_trans_factory)
@@ -279,19 +279,19 @@ create_trans_list <- function(adm) {
     interpolate_age = list(cols = c("depth", "age"), trans = "interpolate_age"),
     extrapolate_age_above = list(cols = c("depth", "age"), trans = "extrapolate_age_above"),
     extrapolate_age_below = list(cols = c("depth", "age"), trans = "extrapolate_age_below"),
-    interpolate_age_min = list(cols = c("depth", "age_min"), trans = "interpolate_age_err"),
-    interpolate_age_max = list(cols = c("depth", "age_max"), trans = "interpolate_age_err"),
+    interpolate_age_min = list(cols = c("depth", "age_min"), trans = "interpolate_age_limits"),
+    interpolate_age_max = list(cols = c("depth", "age_max"), trans = "interpolate_age_limits"),
     extrapolate_age_min_above = list(
-      cols = c("depth", "age_min"), trans = "extrapolate_age_err_above"
+      cols = c("depth", "age_min"), trans = "extrapolate_age_limits_above"
     ),
     extrapolate_age_max_above = list(
-      cols = c("depth", "age_max"), trans = "extrapolate_age_err_above"
+      cols = c("depth", "age_max"), trans = "extrapolate_age_limits_above"
     ),
     extrapolate_age_min_below = list(
-      cols = c("depth", "age_min"), trans = "extrapolate_age_err_below"
+      cols = c("depth", "age_min"), trans = "extrapolate_age_limits_below"
     ),
     extrapolate_age_max_below = list(
-      cols = c("depth", "age_max"), trans = "extrapolate_age_err_below"
+      cols = c("depth", "age_max"), trans = "extrapolate_age_limits_below"
     )
   )
 
