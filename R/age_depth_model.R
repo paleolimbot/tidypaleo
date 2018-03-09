@@ -156,8 +156,13 @@ predict.age_depth_model <- function(object, newdata = NULL, depth = NULL, age = 
         .data$depth > max_depth ~ trans$extrapolate_age_below$trans(.data$depth),
         .data$depth < min_depth ~ trans$extrapolate_age_above$trans(.data$depth),
         TRUE ~ trans$interpolate_age$trans(.data$depth)
-        # TODO add age_min and age_max here
+      ),
+      method = dplyr::case_when(
+        .data$depth > max_depth ~ "extrapolate_below",
+        .data$depth < min_depth ~ "extrapolate_above",
+        TRUE ~ "interpolate"
       )
+      # TODO add age_min and age_max here
     )
   } else if("age" %in% colnames(data)) {
     # predict depth only
@@ -170,18 +175,28 @@ predict.age_depth_model <- function(object, newdata = NULL, depth = NULL, age = 
       dplyr::transmute(
         data,
         depth = dplyr::case_when(
+          (.data$age <= max_age) & (.data$age >= min_age) ~ trans$interpolate_age$inverse(.data$age),
           .data$age > max_age ~ trans$extrapolate_age_below$inverse(.data$age),
-          .data$age < min_age ~ trans$extrapolate_age_above$inverse(.data$age),
-          TRUE ~ trans$interpolate_age$inverse(.data$age)
+          .data$age < min_age ~ trans$extrapolate_age_above$inverse(.data$age)
+        ),
+        method = dplyr::case_when(
+          (.data$age <= max_age) & (.data$age >= min_age) ~ "inverse_interpolate",
+          .data$age > max_age ~ "inverse_extrapolate_below",
+          .data$age < min_age ~ "inverse_extrapolate_above"
         )
       )
     } else {
       dplyr::transmute(
         data,
         depth = dplyr::case_when(
+          (.data$age <= max_age) & (.data$age >= min_age) ~ trans$interpolate_age$inverse(.data$age),
           .data$age < max_age ~ trans$extrapolate_age_below$inverse(.data$age),
-          .data$age > min_age ~ trans$extrapolate_age_above$inverse(.data$age),
-          TRUE ~ trans$interpolate_age$inverse(.data$age)
+          .data$age > min_age ~ trans$extrapolate_age_above$inverse(.data$age)
+        ),
+        method = dplyr::case_when(
+          (.data$age <= max_age) & (.data$age >= min_age) ~ "inverse_interpolate",
+          .data$age < max_age ~ "inverse_extrapolate_below",
+          .data$age > min_age ~ "inverse_extrapolate_above"
         )
       )
     }
@@ -189,8 +204,6 @@ predict.age_depth_model <- function(object, newdata = NULL, depth = NULL, age = 
     stop("One of depth or age must be NULL")
   }
 }
-
-
 
 create_trans_list <- function(adm) {
 
