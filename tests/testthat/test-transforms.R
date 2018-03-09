@@ -104,3 +104,42 @@ test_that("as_trans_factory works with rlang lambda functions", {
     trans_average(test_depth, test_age, x0 = first_fun, y0 = last_fun)
   )
 })
+
+test_that("invalid trans factories are detected by validate_trans_factory", {
+  expect_error(validate_trans_factory(NULL), "transform factory must be a function")
+})
+
+test_that("invalid trans objects are detected by validate_trans", {
+  expect_error(validate_trans(NULL), "trans must be a list")
+  expect_error(validate_trans(list()), "trans must have trans and inverse components")
+  expect_error(validate_trans(list(trans = NULL, inverse = NULL)), "trans must be a function")
+  expect_error(validate_trans(list(trans = identity, inverse = NULL)), "inverse must be a function")
+  expect_error(validate_trans(list(
+    trans = mean, inverse = identity)
+  ), "non-vectorized or non-numeric result")
+  expect_error(validate_trans(list(
+    trans = identity, inverse = mean)
+  ), "non-vectorized or non-numeric result")
+  expect_error(validate_trans(list(
+    trans = stop, inverse = identity)
+  ), "test of trans\\$trans.*?failed")
+  expect_error(validate_trans(list(
+    trans = identity, inverse = stop)
+  ), "test of trans\\$inverse.*?failed")
+  expect_silent(validate_trans(list(trans = identity, inverse = identity)))
+})
+
+test_that("trans objects can't be created with too few observations", {
+  expect_error(trans_interpolate(1, 1), "greater than or equal to 2")
+  expect_error(trans_interpolate(1, 1:2), "must be equal to length")
+  expect_error(trans_average(1, 1), "greater than or equal to 2")
+  expect_error(trans_average(1, 1:2), "must be equal to length")
+  expect_error(trans_exact(numeric(0), numeric(0)), "must be greater than or equal to 1")
+  expect_error(trans_exact(1, 1:2), "must be equal to length")
+})
+
+test_that("args to trans_average are checked", {
+  expect_error(trans_average(1:3, 1:3, x0 = "nope"), "or a scalar numeric")
+  expect_error(trans_average(1:3, 1:3, y0 = "nope"), "or a scalar numeric")
+  expect_error(trans_average(1:3, 1:3, slope = "nope"), "slope must be a numeric scalar")
+})

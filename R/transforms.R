@@ -121,6 +121,7 @@ as_trans_factory <- function(factory, env = parent.frame()) {
 #' @rdname as_trans_factory
 #' @export
 validate_trans_factory <- function(factory, x = 1:3, y = 1:3) {
+  if(!is.function(factory)) stop("transform factory must be a function")
   validate_trans(factory(x, y), x, y)
   invisible(factory)
 }
@@ -135,15 +136,15 @@ validate_trans <- function(trans, x = 1:3, y = 1:3) {
   if(!is.function(trans$trans)) stop("trans$trans must be a function")
   if(!is.function(trans$inverse)) stop("trans$inverse must be a function")
 
-  trans_result <- try(trans$trans(x))
+  trans_result <- try(trans$trans(x), silent = TRUE)
   if(inherits(trans_result, "try-error")) {
     stop("test of trans$trans() failed: ", as.character(trans_result))
   }
   if(!is.numeric(trans_result) || length(trans_result) != length(x)) {
     stop("test of trans$trans() failed: non-vectorized or non-numeric result")
   }
-  inverse_result <- try(trans$inverse(y))
-  if(inherits(trans_result, "try-error")) {
+  inverse_result <- try(trans$inverse(y), silent = TRUE)
+  if(inherits(inverse_result, "try-error")) {
     stop("test of trans$inverse() failed: ", as.character(trans_result))
   }
   if(!is.numeric(inverse_result) || length(inverse_result) != length(y)) {

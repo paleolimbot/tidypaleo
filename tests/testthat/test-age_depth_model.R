@@ -49,6 +49,27 @@ test_that("age depth predictions are accurate", {
   expect_equal(predict(adm_increase, age = 6)$method, "inverse_extrapolate_below")
 })
 
+test_that("predict works with newdata and straight args", {
+  test_data <- data.frame(depth_col = 0:5, age_col = 2000:1995)
+  adm <- age_depth_model(test_data, depth = depth_col, age = age_col)
+
+  expect_identical(
+    predict(adm, depth = 0:5),
+    predict(adm, tibble::tibble(depth = 0:5), depth = depth)
+  )
+})
+
+test_that("predict throws an error when no input is specified", {
+  test_data <- data.frame(depth_col = 0:5, age_col = 2000:1995)
+  adm <- age_depth_model(test_data, depth = depth_col, age = age_col)
+
+  expect_error(predict(adm, age = NULL, depth = NULL), "One of depth or age must be NULL")
+  expect_error(
+    predict(adm, newdata = tibble::tibble(dummy = 1), age = NULL, depth = NULL),
+    "One of depth or age must be NULL"
+  )
+})
+
 test_that("base graphics plotting renders properly", {
   # mostly a graphical test
   expect_true(TRUE)
@@ -83,4 +104,11 @@ test_that("base graphics plotting renders properly", {
   )
   plot(adm_cont_err_below)
 
+})
+
+test_that("invalid age depth model objects are detected", {
+  expect_error(
+    validate_age_depth_model(structure(list())),
+    "objects of class age_depth_model must have components"
+  )
 })

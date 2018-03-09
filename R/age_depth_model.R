@@ -130,12 +130,12 @@ is_age_depth_model <- function(x) {
 #'
 predict.age_depth_model <- function(object, newdata = NULL, depth = NULL, age = NULL, ...) {
   if(is.null(newdata)) {
-    if(is.null(depth)) {
+    if(is.null(depth) && is.null(age)) {
+      stop("One of depth or age must be NULL")
+    } else if(is.null(depth)) {
       data <- tibble::tibble(age = age)
     } else if(is.null(age)) {
       data <- tibble::tibble(depth = depth)
-    } else {
-      stop("One of depth or age must be NULL")
     }
   } else {
     depth <- rlang::enquo(depth)
