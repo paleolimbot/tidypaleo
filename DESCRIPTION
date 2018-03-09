@@ -1,10 +1,12 @@
 Package: agedepth
-Title: Tidy Age-Depth Model Tools
+Title: Flexible Age-Depth Model Tools
 Version: 0.0.0.9000
-Authors@R: person("First", "Last", email = "first.last@example.com", role = c("aut", "cre"))
-Description: Converting ages to depths in an archive or vise versa is a
-  time-consuming operation governed by a lot of fussy math. This package
-  takes care of the fussy math, so depths can be converted to ages worry-free.
+Authors@R: person("Dewey", "Dunnington", email = "dewey@fishandwhistle.net", role = c("aut", "cre"))
+Description: Given a known depths and known (or modelled) ages, it is
+  often convenient to approximate age as a function of depth in an archive. This
+  package provides tools to flexibly create age-depth relationships with various rules
+  for interpolating age within known age-depth values, and extrapolating above and below
+  these values.
 Depends: R (>= 3.4.0)
 License: GPL-3
 Encoding: UTF-8
