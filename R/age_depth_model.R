@@ -126,6 +126,8 @@ is_age_depth_model <- function(x) {
 #'   depth vector.
 #' @export
 #'
+#' @importFrom stats predict
+#'
 predict.age_depth_model <- function(object, newdata = NULL, depth = NULL, age = NULL, ...) {
   if(is.null(newdata)) {
     if(is.null(depth)) {
@@ -157,12 +159,21 @@ predict.age_depth_model <- function(object, newdata = NULL, depth = NULL, age = 
         .data$depth < min_depth ~ trans$extrapolate_age_above$trans(.data$depth),
         TRUE ~ trans$interpolate_age$trans(.data$depth)
       ),
+      age_min = dplyr::case_when(
+        .data$depth > max_depth ~ trans$extrapolate_age_min_below$trans(.data$depth),
+        .data$depth < min_depth ~ trans$extrapolate_age_min_above$trans(.data$depth),
+        TRUE ~ trans$interpolate_age_min$trans(.data$depth)
+      ),
+      age_max = dplyr::case_when(
+        .data$depth > max_depth ~ trans$extrapolate_age_max_below$trans(.data$depth),
+        .data$depth < min_depth ~ trans$extrapolate_age_max_above$trans(.data$depth),
+        TRUE ~ trans$interpolate_age_max$trans(.data$depth)
+      ),
       method = dplyr::case_when(
         .data$depth > max_depth ~ "extrapolate_below",
         .data$depth < min_depth ~ "extrapolate_above",
         TRUE ~ "interpolate"
       )
-      # TODO add age_min and age_max here
     )
   } else if("age" %in% colnames(data)) {
     # predict depth only
@@ -203,6 +214,62 @@ predict.age_depth_model <- function(object, newdata = NULL, depth = NULL, age = 
   } else {
     stop("One of depth or age must be NULL")
   }
+}
+
+#' Plot an age depth model using base graphics
+#'
+#' @param x An \link{age_depth_model}
+#' @param xlab,ylab Axis labels
+#' @param xlim,ylim Axis limits
+#' @param add Pass TRUE to skip creating a new plot
+#' @param ... Passed to \link[graphics]{points} to customize points display
+#'
+#' @export
+#'
+#' @importFrom graphics plot
+#'
+plot.age_depth_model <- function(x, xlab = "depth", ylab = "age", xlim = NULL, ylim = NULL,
+                                 add = FALSE, ...) {
+  if(!add) {
+    graphics::plot(
+      scales::expand_range(range(x$data$depth), mul = 0.1),
+      scales::expand_range(
+        range(c(x$data$age, x$data$age_min, x$data$age_max), na.rm = TRUE),
+        mul = 0.1
+      ),
+      type = "n",
+      xlab = xlab,
+      ylab = ylab,
+      xlim = xlim,
+      ylim = ylim
+    )
+  }
+
+  plot_range <- graphics::par("usr")
+  depth <- NULL; rm(depth) # CMD check gets mad with syntax of curve()
+  # above
+  graphics::curve(predict(x, depth = depth)[["age"]], xname = "depth", add = TRUE, lty = 2,
+        from = plot_range[1], to = min(x$data$depth))
+  # interpolate
+  graphics::curve(predict(x, depth = depth)[["age"]], xname = "depth", add = TRUE, lty = 1,
+        from = min(x$data$depth), to = max(x$data$depth))
+  # below
+  graphics::curve(predict(x, depth = depth)[["age"]], xname = "depth", add = TRUE, lty = 2,
+        from = max(x$data$depth), to = plot_range[2])
+
+  # errors for points
+  interp_exact_points <- predict(x, depth = x$data$depth)
+  graphics::segments(x$data$depth, interp_exact_points$age_min,
+           x$data$depth, interp_exact_points$age_max)
+
+  # interpolated errors without differentiating between interp/extrap
+  graphics::curve(predict(x, depth = depth)[["age_min"]], xname = "depth", add = TRUE, lty = 3,
+        from = plot_range[1], to = plot_range[2])
+  graphics::curve(predict(x, depth = depth)[["age_max"]], xname = "depth", add = TRUE, lty = 3,
+        from = plot_range[1], to = plot_range[2])
+
+  # data for model
+  graphics::points(x$data$depth, x$data$age, ...)
 }
 
 create_trans_list <- function(adm) {

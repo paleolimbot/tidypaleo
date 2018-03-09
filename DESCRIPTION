@@ -16,4 +16,5 @@ URL: https://github.com/paleolimbot/agedepth
 BugReports: https://github.com/paleolimbot/agedepth/issues
 Imports: rlang,
     dplyr,
-    tibble
+    tibble,
+    scales

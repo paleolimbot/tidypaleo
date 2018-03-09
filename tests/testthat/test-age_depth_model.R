@@ -48,3 +48,39 @@ test_that("age depth predictions are accurate", {
   expect_equal(predict(adm_increase, age = -1)$method, "inverse_extrapolate_above")
   expect_equal(predict(adm_increase, age = 6)$method, "inverse_extrapolate_below")
 })
+
+test_that("base graphics plotting renders properly", {
+  # mostly a graphical test
+  expect_true(TRUE)
+
+  test_data <- tibble::tibble(
+    depth_col = 0:5,
+    age_col = 2000:1995 - depth_col ^ 1.5,
+    err = depth_col ^ 1.5
+  )
+
+  # should only have error bars
+  adm <- age_depth_model(
+    test_data, depth = depth_col, age = age_col,
+    age_min = age_col - err, age_max = age_col + err
+  )
+  plot(adm)
+
+  # should have dotted lines for interpolated error
+  adm_cont_err <- age_depth_model(
+    test_data, depth = depth_col, age = age_col,
+    age_min = age_col - err, age_max = age_col + err,
+    interpolate_age_err = trans_interpolate
+  )
+  plot(adm_cont_err)
+
+  # should have dotted lines for extrapolated below error
+  adm_cont_err_below <- age_depth_model(
+    test_data, depth = depth_col, age = age_col,
+    age_min = age_col - err, age_max = age_col + err,
+    interpolate_age_err = trans_interpolate,
+    extrapolate_age_err_below = trans_average
+  )
+  plot(adm_cont_err_below)
+
+})
