@@ -5,7 +5,7 @@ Authors@R: person("First", "Last", email = "first.last@example.com", role = c("a
 Description: Converting ages to depths in an archive or vise versa is a
   time-consuming operation governed by a lot of fussy math. This package
   takes care of the fussy math, so depths can be converted to ages worry-free.
-Depends: R (>= 3.4.3)
+Depends: R (>= 3.4.0)
 License: GPL-3
 Encoding: UTF-8
 LazyData: true

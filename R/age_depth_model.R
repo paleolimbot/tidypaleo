@@ -34,10 +34,10 @@ age_depth_model <- function(
   # create data from .data + args + dplyr::mutate()
   data <- dplyr::transmute(
     .data,
-    depth = !!depth,
-    age = !!age,
-    age_min = !!age_min,
-    age_max = !!age_max
+    depth = as.numeric(!!depth),
+    age = as.numeric(!!age),
+    age_min = as.numeric(!!age_min),
+    age_max = as.numeric(!!age_max)
   )
   data <- dplyr::arrange(data, .data$depth)
 
@@ -114,6 +114,83 @@ validate_age_depth_model <- function(x) {
 is_age_depth_model <- function(x) {
   inherits(x, "age_depth_model")
 }
+
+#' Predict age and depth values
+#'
+#' @param object An \link{age_depth_model} object
+#' @param newdata Optional input data frame
+#' @param depth,age Specify one of these to predict the other.
+#' @param ... Unused
+#'
+#' @return A data frame with the same number of observations as the input age or
+#'   depth vector.
+#' @export
+#'
+predict.age_depth_model <- function(object, newdata = NULL, depth = NULL, age = NULL, ...) {
+  if(is.null(newdata)) {
+    if(is.null(depth)) {
+      data <- tibble::tibble(age = age)
+    } else if(is.null(age)) {
+      data <- tibble::tibble(depth = depth)
+    } else {
+      stop("One of depth or age must be NULL")
+    }
+  } else {
+    depth <- rlang::enquo(depth)
+    age <- rlang::enquo(age)
+    # when both depth and age are NULL, thus throws a warning
+    data <- suppressWarnings(dplyr::transmute(newdata, depth = !!depth, age = !!age))
+  }
+
+  # extract trans functions
+  trans <- object$trans
+
+  if("depth" %in% colnames(data)) {
+    # predict age + age_min + age_max
+    max_depth <- max(object$data$depth)
+    min_depth <- min(object$data$depth)
+
+    dplyr::transmute(
+      data,
+      age = dplyr::case_when(
+        .data$depth > max_depth ~ trans$extrapolate_age_below$trans(.data$depth),
+        .data$depth < min_depth ~ trans$extrapolate_age_above$trans(.data$depth),
+        TRUE ~ trans$interpolate_age$trans(.data$depth)
+        # TODO add age_min and age_max here
+      )
+    )
+  } else if("age" %in% colnames(data)) {
+    # predict depth only
+    max_age <- max(object$data$age)
+    min_age <- min(object$data$age)
+
+    # different if ages go up with depth or go down with depth
+    spear <- stats::cor(object$data$depth, object$data$age, method = "spear")
+    if(spear >= 0) {
+      dplyr::transmute(
+        data,
+        depth = dplyr::case_when(
+          .data$age > max_age ~ trans$extrapolate_age_below$inverse(.data$age),
+          .data$age < min_age ~ trans$extrapolate_age_above$inverse(.data$age),
+          TRUE ~ trans$interpolate_age$inverse(.data$age)
+        )
+      )
+    } else {
+      dplyr::transmute(
+        data,
+        depth = dplyr::case_when(
+          .data$age < max_age ~ trans$extrapolate_age_below$inverse(.data$age),
+          .data$age > min_age ~ trans$extrapolate_age_above$inverse(.data$age),
+          TRUE ~ trans$interpolate_age$inverse(.data$age)
+        )
+      )
+    }
+  } else {
+    stop("One of depth or age must be NULL")
+  }
+}
+
+
 
 create_trans_list <- function(adm) {
 
