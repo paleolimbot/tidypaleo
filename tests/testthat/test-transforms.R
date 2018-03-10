@@ -1,4 +1,4 @@
-context("transforms")
+context("test-transforms.R")
 
 test_that("approx transform works as expected", {
   test_depth <- c(0, 10, 15)

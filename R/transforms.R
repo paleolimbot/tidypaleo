@@ -11,6 +11,7 @@
 #' @export
 #'
 trans_interpolate <- function(x, y) {
+  if(!all(is.finite(c(x, y)))) stop("Non-finite values in transformation")
   verify_length(x, y)
   force(x)
   force(y)
@@ -29,6 +30,7 @@ trans_interpolate <- function(x, y) {
 #' @rdname trans_interpolate
 #' @export
 trans_average <- function(x, y, x0 = last, y0 = last, slope = NULL) {
+  if(!all(is.finite(c(x, y)))) warning("Non-finite values in average transformation")
   verify_length(x, y)
 
   model <- stats::lm(y ~ x)

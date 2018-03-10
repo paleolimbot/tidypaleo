@@ -2,14 +2,16 @@
 #' Create age depth models
 #'
 #' @param .data A data frame
-#' @param depth,age,age_min,age_max Expressions evaluated in \code{.data} that provide the
-#'   known depths, known ages, and error information if available. These expressions
-#'   are evaluated like they are within \link[dplyr]{mutate}.
-#' @param interpolate_age,extrapolate_age_below,extrapolate_age_above These arguments
-#'   provide the rules for interpolating and extrapolating ages based on depths.
-#' @param interpolate_age_limits,extrapolate_age_limits_below,extrapolate_age_limits_above These arguments
-#'   provide the rules for interpolating and extrapolating age min and max values
-#'   based on depths.
+#' @param depth,age,age_min,age_max Expressions evaluated in \code{.data} that
+#'   provide the known depths, known ages, and error information if available.
+#'   These expressions are evaluated like they are within \link[dplyr]{mutate}
+#'   if \code{.data} is present.
+#' @param interpolate_age,extrapolate_age_below,extrapolate_age_above These
+#'   arguments provide the rules for interpolating and extrapolating ages based
+#'   on depths.
+#' @param interpolate_age_limits,extrapolate_age_limits_below,extrapolate_age_limits_above
+#'   These arguments provide the rules for interpolating and extrapolating age
+#'   min and max values based on depths.
 #'
 #' @return An age depth model object.
 #' @export
@@ -17,7 +19,7 @@
 #' @importFrom rlang .data
 #'
 age_depth_model <- function(
-  .data, depth, age, age_min = NA_real_, age_max = NA_real_,
+  .data = NULL, depth, age, age_min = NA_real_, age_max = NA_real_,
   interpolate_age = trans_interpolate,
   extrapolate_age_below = ~trans_average(.x, .y, x0 = last, y0 = last),
   extrapolate_age_above = ~trans_average(.x, .y, x0 = first, y0 = first),
@@ -25,20 +27,31 @@ age_depth_model <- function(
   extrapolate_age_limits_below = trans_na,
   extrapolate_age_limits_above = trans_na
 ) {
+  # check missingness of depth and age (odd error message otherwise)
+  if(missing(depth)) stop("depth is a required argument")
+  if(missing(age)) stop("age is a required argument")
+
+  # capture call for printing purposes
+  call <- match.call()
+  call_label <- rlang::expr_text(call)
+
   # enquose arguments
   depth <- rlang::enquo(depth)
   age <- rlang::enquo(age)
   age_min <- rlang::enquo(age_min)
   age_max <- rlang::enquo(age_max)
 
-  # create data from .data + args + dplyr::mutate()
-  data <- dplyr::transmute(
+  # create data from .data_eval
+  data <- data_eval(
     .data,
-    depth = as.numeric(!!depth),
-    age = as.numeric(!!age),
-    age_min = as.numeric(!!age_min),
-    age_max = as.numeric(!!age_max)
+    depth = !!depth,
+    age = !!age,
+    age_min = !!age_min,
+    age_max = !!age_max
   )
+  if(!identical(colnames(data), c("depth", "age", "age_min", "age_max"))) {
+    stop("depth, age, age_min, and age_max must all be non-NULL")
+  }
   data <- dplyr::arrange(data, .data$depth)
 
   # sanitize, validate trans factory arguments
@@ -56,6 +69,7 @@ age_depth_model <- function(
   # create
   adm <- new_age_depth_model(
     list(
+      call_label = call_label,
       data = tibble::as_tibble(data),
       trans_factories = trans_factory_args
     )
@@ -92,9 +106,12 @@ new_age_depth_model <- function(x) {
 #'
 validate_age_depth_model <- function(x) {
   if(!is.list(x)) stop("objects of class age_depth_model must be a list")
-  if(!all(c("trans", "trans_factories", "data") %in% names(x))) {
+  if(!all(c("trans", "trans_factories", "data", "call_label") %in% names(x))) {
     stop("objects of class age_depth_model must have components, ",
-         "'trans', 'trans_factories', and 'data")
+         "'call_label', 'trans', 'trans_factories', and 'data")
+  }
+  if(!is.character(x$call_label) || length(x$call_label) != 1) {
+    stop("x$call_label is not a character vector of length 1")
   }
   if(!tibble::is_tibble(x$data)) stop("x$data is not a tibble")
   if(!is.list(x$trans)) stop("x$trans is not a list")
@@ -118,7 +135,7 @@ is_age_depth_model <- function(x) {
 #' Predict age and depth values
 #'
 #' @param object An \link{age_depth_model} object
-#' @param newdata Optional input data frame
+#' @param .data Optional input data frame
 #' @param depth,age Specify one of these to predict the other.
 #' @param ... Unused
 #'
@@ -128,22 +145,21 @@ is_age_depth_model <- function(x) {
 #'
 #' @importFrom stats predict
 #'
-predict.age_depth_model <- function(object, newdata = NULL, depth = NULL, age = NULL, ...) {
-  if(is.null(newdata)) {
+predict.age_depth_model <- function(object, .data = NULL, depth = NULL, age = NULL, ...) {
+  # create data
+  depth <- rlang::enquo(depth)
+  age <- rlang::enquo(age)
+  data <- data_eval(.data, depth = !!depth, age = !!age)
+
+  # check for both depth and age in data
+  if(all(c("depth", "age") %in% data)) stop("One of depth or age must be NULL")
+
+  # using mutate for null data means that the input is in the output,
+  # which is probably what the user wants
+  if(is.null(.data)) {
     dplyr_method <- dplyr::mutate
-    if(is.null(depth) && is.null(age)) {
-      stop("One of depth or age must be NULL")
-    } else if(is.null(depth)) {
-      data <- tibble::tibble(age = age)
-    } else if(is.null(age)) {
-      data <- tibble::tibble(depth = depth)
-    }
   } else {
     dplyr_method <- dplyr::transmute
-    depth <- rlang::enquo(depth)
-    age <- rlang::enquo(age)
-    # when both depth and age are NULL, thus throws a warning
-    data <- suppressWarnings(dplyr::transmute(newdata, depth = !!depth, age = !!age))
   }
 
   # extract trans functions
@@ -216,6 +232,18 @@ predict.age_depth_model <- function(object, newdata = NULL, depth = NULL, age = 
   } else {
     stop("One of depth or age must be NULL")
   }
+}
+
+#' @rdname predict.age_depth_model
+#' @export
+predict_depth <- function(object, age) {
+  predict(object, age = age)$depth
+}
+
+#' @rdname predict.age_depth_model
+#' @export
+predict_age <- function(object, depth) {
+  predict(object, depth = depth)$age
 }
 
 #' Plot an age depth model using base graphics

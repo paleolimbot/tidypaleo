@@ -2,15 +2,21 @@
 % Please edit documentation in R/age_depth_model.R
 \name{predict.age_depth_model}
 \alias{predict.age_depth_model}
+\alias{predict_depth}
+\alias{predict_age}
 \title{Predict age and depth values}
 \usage{
-\method{predict}{age_depth_model}(object, newdata = NULL, depth = NULL,
+\method{predict}{age_depth_model}(object, .data = NULL, depth = NULL,
   age = NULL, ...)
+
+predict_depth(object, age)
+
+predict_age(object, depth)
 }
 \arguments{
 \item{object}{An \link{age_depth_model} object}
 
-\item{newdata}{Optional input data frame}
+\item{.data}{Optional input data frame}
 
 \item{depth, age}{Specify one of these to predict the other.}
 

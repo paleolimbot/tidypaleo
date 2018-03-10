@@ -19,4 +19,5 @@ BugReports: https://github.com/paleolimbot/agedepth/issues
 Imports: rlang,
     dplyr,
     tibble,
-    scales
+    scales,
+    ggplot2

@@ -8,6 +8,30 @@ test_that("age_depth_model() creates valid age depth model objects", {
   expect_identical(validate_age_depth_model(adm), adm)
 })
 
+test_that("data is optional in constructor", {
+  test_data <- data.frame(depth_col = 0:5, age_col = 2000:1995)
+  expect_identical(
+    age_depth_model(test_data, depth = depth_col, age = age_col)$data,
+    age_depth_model(depth = 0:5, age = 2000:1995)$data
+  )
+})
+
+test_that("NULL or missing arguments throw an error", {
+  test_data <- data.frame(depth_col = 0:5, age_col = 2000:1995)
+  expect_error(age_depth_model(), "depth is a required argument")
+  expect_error(age_depth_model(depth = 0:5), "age is a required argument")
+  expect_error(age_depth_model(depth = NULL, age = 2000:1995), "must all be non-NULL")
+  expect_error(age_depth_model(depth = 0:5, age = NULL), "must all be non-NULL")
+})
+
+test_that("non-finite age/depth values are handled appropriately", {
+  expect_error(age_depth_model(depth = c(NA, 0:5), age = c(2000:1995, NA)), "Non-finite values")
+  expect_warning(
+    age_depth_model(depth = c(NA, 0:5), age = c(2000:1995, NA), interpolate_age = trans_na),
+    "Non-finite values"
+  )
+})
+
 test_that("age depth predictions are accurate", {
   test_data <- data.frame(depth_col = 0:5, age_col = 2000:1995)
 
@@ -57,6 +81,12 @@ test_that("predict works with newdata and straight args", {
     predict(adm, depth = 0:5) %>% dplyr::select(-depth),
     predict(adm, tibble::tibble(depth = 0:5), depth = depth)
   )
+})
+
+test_that("predict shortcuts work as expected", {
+  adm <- age_depth_model(depth = 0:5, age = 2000:1995)
+  expect_equal(predict_age(adm, 0:5), 2000:1995)
+  expect_equal(predict_depth(adm, 1995:2000), 5:0)
 })
 
 test_that("predict throws an error when no input is specified", {
@@ -110,5 +140,11 @@ test_that("invalid age depth model objects are detected", {
   expect_error(
     validate_age_depth_model(structure(list())),
     "objects of class age_depth_model must have components"
+  )
+  expect_error(
+    validate_age_depth_model(structure(list(
+      call_label = 4, trans = list(), trans_factories = list(), data = tibble::tibble()
+    ))),
+    "character vector of length 1"
   )
 })

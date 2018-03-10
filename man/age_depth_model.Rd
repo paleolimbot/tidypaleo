@@ -4,8 +4,8 @@
 \alias{age_depth_model}
 \title{Create age depth models}
 \usage{
-age_depth_model(.data, depth, age, age_min = NA_real_, age_max = NA_real_,
-  interpolate_age = trans_interpolate,
+age_depth_model(.data = NULL, depth, age, age_min = NA_real_,
+  age_max = NA_real_, interpolate_age = trans_interpolate,
   extrapolate_age_below = ~trans_average(.x, .y, x0 = last, y0 = last),
   extrapolate_age_above = ~trans_average(.x, .y, x0 = first, y0 = first),
   interpolate_age_limits = trans_exact,
@@ -15,16 +15,17 @@ age_depth_model(.data, depth, age, age_min = NA_real_, age_max = NA_real_,
 \arguments{
 \item{.data}{A data frame}
 
-\item{depth, age, age_min, age_max}{Expressions evaluated in \code{.data} that provide the
-known depths, known ages, and error information if available. These expressions
-are evaluated like they are within \link[dplyr]{mutate}.}
+\item{depth, age, age_min, age_max}{Expressions evaluated in \code{.data} that
+provide the known depths, known ages, and error information if available.
+These expressions are evaluated like they are within \link[dplyr]{mutate}
+if \code{.data} is present.}
 
-\item{interpolate_age, extrapolate_age_below, extrapolate_age_above}{These arguments
-provide the rules for interpolating and extrapolating ages based on depths.}
+\item{interpolate_age, extrapolate_age_below, extrapolate_age_above}{These
+arguments provide the rules for interpolating and extrapolating ages based
+on depths.}
 
-\item{interpolate_age_limits, extrapolate_age_limits_below, extrapolate_age_limits_above}{These arguments
-provide the rules for interpolating and extrapolating age min and max values
-based on depths.}
+\item{interpolate_age_limits, extrapolate_age_limits_below, extrapolate_age_limits_above}{These arguments provide the rules for interpolating and extrapolating age
+min and max values based on depths.}
 }
 \value{
 An age depth model object.
