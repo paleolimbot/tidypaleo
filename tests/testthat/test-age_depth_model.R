@@ -100,6 +100,10 @@ test_that("predict throws an error when no input is specified", {
   )
 })
 
+test_that("print outputs things", {
+  expect_output(print(age_depth_model(depth = 0:5, age = 2000: 1995)), "<age_depth_model>")
+})
+
 test_that("base graphics plotting renders properly", {
   # mostly a graphical test
   expect_true(TRUE)

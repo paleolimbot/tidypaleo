@@ -121,6 +121,22 @@ validate_age_depth_model <- function(x) {
   invisible(x)
 }
 
+#' Print summary of age-depth model objects
+#'
+#' @param x An \link{age_depth_model}
+#' @param ... Unused
+#'
+#' @return The input, invisibly
+#' @export
+#'
+print.age_depth_model <- function(x, ...) {
+  cat("<age_depth_model>\n")
+  cat("Call: \n")
+  cat(paste(styler::style_text(x$call_label, strict = TRUE), collapse = "\n"))
+  cat("\n")
+  invisible(x)
+}
+
 #' Test for age depth models
 #'
 #' @param x An object

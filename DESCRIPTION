@@ -20,4 +20,5 @@ Imports: rlang,
     dplyr,
     tibble,
     scales,
-    ggplot2
+    ggplot2,
+    styler
