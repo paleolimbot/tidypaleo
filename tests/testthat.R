@@ -1,4 +1,4 @@
 library(testthat)
-library(agedepth)
+library(tidypaleo)
 
-test_check("agedepth")
+test_check("tidypaleo")

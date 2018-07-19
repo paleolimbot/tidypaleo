@@ -1,12 +1,9 @@
-Package: agedepth
-Title: Flexible Age-Depth Model Tools
+Package: tidypaleo
+Title: Tidy tools for paleoenvironmental archives
 Version: 0.0.0.9000
 Authors@R: person("Dewey", "Dunnington", email = "dewey@fishandwhistle.net", role = c("aut", "cre"))
-Description: Given a known depths and known (or modelled) ages, it is
-  often convenient to approximate age as a function of depth in an archive. This
-  package provides tools to flexibly create age-depth relationships with various rules
-  for interpolating age within known age-depth values, and extrapolating above and below
-  these values.
+Description: Provides a set of functions with a common framework for age-depth model management, 
+  stratigraphic visualization, and common statistical transformations.
 Depends: R (>= 3.4.0)
 License: GPL-3
 Encoding: UTF-8
@@ -14,8 +11,8 @@ LazyData: true
 RoxygenNote: 6.0.1
 Suggests: testthat,
     covr
-URL: https://github.com/paleolimbot/agedepth
-BugReports: https://github.com/paleolimbot/agedepth/issues
+URL: https://github.com/paleolimbot/tidypaleo
+BugReports: https://github.com/paleolimbot/tidypaleo/issues
 Imports: rlang,
     dplyr,
     tibble,

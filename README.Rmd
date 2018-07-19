@@ -6,7 +6,7 @@ output:
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-[![Travis-CI Build Status](https://travis-ci.org/paleolimbot/agedepth.svg?branch=master)](https://travis-ci.org/paleolimbot/agedepth) [![Coverage Status](https://img.shields.io/codecov/c/github/paleolimbot/agedepth/master.svg)](https://codecov.io/github/paleolimbot/agedepth?branch=master)
+[![Travis-CI Build Status](https://travis-ci.org/paleolimbot/tidypaleo.svg?branch=master)](https://travis-ci.org/paleolimbot/tidypaleo) [![Coverage Status](https://img.shields.io/codecov/c/github/paleolimbot/tidypaleo/master.svg)](https://codecov.io/github/paleolimbot/tidypaleo?branch=master)
 
 ```{r, echo = FALSE}
 knitr::opts_chunk$set(
@@ -17,17 +17,17 @@ knitr::opts_chunk$set(
 )
 ```
 
-# agedepth
+# tidypaleo
 
 Given a known depths and known (or modelled) ages, it is often convenient to approximate age as a continuous function of depth in an archive. This package provides tools to flexibly create age-depth relationships with various rules for interpolating age within known age-depth values, and extrapolating above and below these values. Typically, this is interpolation between known values and extrapolating using average sedimentation rates based on ages known at discrete points in a core.
 
 ## Installation
 
-You can install agedepth from github with:
+You can install tidypaleo from github with:
 
 ```{r gh-installation, eval = FALSE}
 # install.packages("devtools")
-devtools::install_github("paleolimbot/agedepth")
+devtools::install_github("paleolimbot/tidypaleo")
 ```
 
 ## Example
@@ -35,7 +35,7 @@ devtools::install_github("paleolimbot/agedepth")
 Using the built-in dataset `alta_lake_210Pb_ages`, which contains a Lead-210 (CRS) age-depth relationship for a core from [Alta Lake, Whistler, British Columbia](https://en.wikipedia.org/wiki/Alta_Lake_(British_Columbia)), we can create an age-depth model (note that `age` and `depth` are evaluated within `.data`, if it is provided, and support tidy evaluation):
 
 ```{r}
-library(agedepth)
+library(tidypaleo)
 alta_lake_adm <- age_depth_model(
   alta_lake_210Pb_ages,
   depth = depth_cm, age = age_year_ad,
