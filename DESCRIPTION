@@ -20,5 +20,6 @@ Imports: rlang,
     tibble,
     scales,
     ggplot2,
-    styler
+    styler,
+    grid
 VignetteBuilder: knitr

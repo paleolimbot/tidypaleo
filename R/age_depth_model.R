@@ -545,5 +545,3 @@ age_depth_as_sec_axis <- function(x, primary = c("depth", "age")) {
     ggplot2::sec_axis(trans = ~predict(x, age = .)$depth)
   }
 }
-
-
