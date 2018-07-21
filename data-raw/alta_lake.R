@@ -29,4 +29,4 @@ alta_lake_bacon_ages <- read_delim("data-raw/AL-GC2_30_ages.txt", delim = "\t",
 
 devtools::use_data(alta_lake_210Pb_ages, overwrite = TRUE)
 devtools::use_data(alta_lake_14C_ages, overwrite = TRUE)
-devtools::use_data(alta_lake_bacon_ages)
+devtools::use_data(alta_lake_bacon_ages, overwrite = TRUE)

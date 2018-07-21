@@ -1,0 +1,165 @@
+"SiteID","SiteName","Latitude","Longitude","DatasetID","DatasetType","AgeOldest","AgeYoungest"
+11760,Grafton Lake,44.383225,-65.184975,17738,diatom,,
+11760,Grafton Lake,44.383225,-65.184975,17909,diatom,,
+11763,Pebbleloggitch Lake,44.301815,-65.350565,17772,diatom,,
+11763,Pebbleloggitch Lake,44.301815,-65.350565,17913,diatom,,
+11777,Lake of Islands,46.74312,-60.52308,17814,diatom,,
+11777,Lake of Islands,46.74312,-60.52308,17937,diatom,,
+11782,White Hill Lake,46.704685,-60.58153,17819,diatom,,
+11782,White Hill Lake,46.704685,-60.58153,17889,diatom,,
+11795,Hirtle Lake,44.47036,-64.7511,17864,diatom,,
+11800,Huey Lake,44.390465,-64.73009,17874,diatom,,
+11801,Little Tupper Lake,44.42474,-64.96443,17875,diatom,,
+11802,Branch Pond,46.741775,-60.456135,17876,diatom,,
+11803,Cradle Lake,46.729315,-60.43343,17877,diatom,,
+11803,Cradle Lake,46.729315,-60.43343,17961,diatom,,
+11806,Indian Lake,46.67058,-60.564035,17881,diatom,,
+11807,John Dee Lake,46.81267,-60.51938,17882,diatom,,
+11809,Long Lake,46.81182,-60.490765,17884,diatom,,
+11810,Mica Hill Lake,46.81375,-60.44224,17885,diatom,,
+11811,Round Lake,46.805745,-60.50785,17886,diatom,,
+11812,Warren Lake,46.714135,-60.39545,17887,diatom,,
+11812,Warren Lake,46.714135,-60.39545,17960,diatom,,
+11813,Matthew Lake,44.32868,-64.68323,17888,diatom,,
+11815,Allens Lake,43.950965,-66.14488,17892,diatom,,
+11816,Brenton Lake,43.9602,-66.06671,17893,diatom,,
+11817,Cedar Lake,44.024885,-66.11246,17894,diatom,,
+11818,Darlings Lake,43.96564,-66.12628,17895,diatom,,
+11819,Lake George,43.9975,-66.047315,17896,diatom,,
+11820,Lake Jesse,44.032605,-66.008945,17897,diatom,,
+11821,Killiams Lake,44.006115,-66.08021,17898,diatom,,
+11822,Tedford Lake,44.10321,-66.01281,17899,diatom,,
+11823,Tefry Lake,43.83411,-66.045135,17900,diatom,,
+11826,Big Dam Lake East,44.449665,-65.2672,17903,diatom,,
+11826,Big Dam Lake East,44.449665,-65.2672,17955,diatom,,
+11827,Big Dam Lake West,44.46037,-65.29029,17904,diatom,,
+11827,Big Dam Lake West,44.46037,-65.29029,17954,diatom,,
+11828,Beaverskin,44.306895,-65.331465,17905,diatom,,
+11829,Channel Lake,44.427225,-65.308035,17906,diatom,,
+11830,Cobrielle Lake,44.31376,-65.235725,17907,diatom,,
+11831,Frozen Ocean,44.44925,-65.34612,17908,diatom,,
+11832,Kejimkujik Lake,44.372815,-65.24746,17910,diatom,,
+11833,Loon Lake,44.321115,-65.189635,17911,diatom,,
+11834,Mountain Lake,44.32435,-65.25823,17912,diatom,,
+11835,Peskawesk Lake,44.31663,-65.3627,17914,diatom,,
+11836,Peskawa Lake,44.31663,-65.3627,17915,diatom,,
+11836,Peskawa Lake,44.31663,-65.3627,17957,diatom,,
+11837,Upper Silver Lake,44.285035,-65.246235,17916,diatom,,
+11846,Peskowesk Lake,44.31221,-65.28823,17935,diatom,,
+11846,Peskowesk Lake,44.31221,-65.28823,17953,diatom,,
+11847,Two Island Lake,46.659515,-60.586675,17936,diatom,,
+11848,Dundas (Lake 4),46.71243,-60.538705,17938,diatom,,
+11848,Dundas (Lake 4),46.71243,-60.538705,17962,diatom,,
+11849,Dundas (Lake 3),46.71243,-60.538705,17939,diatom,,
+11850,Glasgow Lake,46.8226,-60.493895,17940,diatom,,
+11851,Bird Lake,43.97256,-65.94327,17941,diatom,,
+11852,Black Lake,44.29295,-65.268785,17942,diatom,,
+11853,Little Wiles Lake,44.401235,-64.6429,17943,diatom,,
+11856,Annis Lake,44.33002,-64.83983,17948,diatom,,
+11857,Rocky Lake,44.55826,-64.438015,17949,diatom,,
+11858,Deer Lake,46.76494,-60.629895,17950,diatom,,
+11858,Deer Lake,46.76494,-60.629895,17952,diatom,,
+11859,Halfbrook ,44.9475,-62.465,17951,diatom,,
+11860,Frozen Ocean Lake,44.44947,-65.346165,17956,diatom,,
+11861,Beaverskin Lake,44.3069,-65.33149,17958,diatom,,
+11862,Churchills Lake,43.9892,-66.140825,17959,diatom,,
+11863,Anderson Lake,44.72733,-63.6197,17963,water chemistry,-55,-56
+11863,Anderson Lake,44.72733,-63.6197,17964,diatom,-55,-56
+11864,Bayers,44.642595,-63.671075,17965,water chemistry,-55,-56
+11864,Bayers,44.642595,-63.671075,17966,diatom,-55,-56
+11865,Bell Lake,44.674825,-63.509595,17967,water chemistry,-55,-56
+11865,Bell Lake,44.674825,-63.509595,17968,diatom,-55,-56
+11866,Cranberry Lake,44.688975,-63.498015,17969,water chemistry,-55,-56
+11866,Cranberry Lake,44.688975,-63.498015,17970,diatom,-55,-56
+11867,Frasers Lake,44.675305,-63.761815,17971,water chemistry,-55,-56
+11867,Frasers Lake,44.675305,-63.761815,17972,diatom,-55,-56
+11868,Kinsac lake,44.830245,-63.64972,17973,water chemistry,-55,-56
+11868,Kinsac lake,44.830245,-63.64972,17974,diatom,-55,-56
+11869,Little Albro Lake,44.68408,-63.576915,17975,water chemistry,-55,-56
+11869,Little Albro Lake,44.68408,-63.576915,17976,diatom,-55,-56
+11870,Little Springfield,44.801585,-63.74802,17977,water chemistry,-55,-56
+11870,Little Springfield,44.801585,-63.74802,17978,diatom,-55,-56
+11871,Maynard Lake,44.670535,-63.552315,17979,water chemistry,-55,-56
+11871,Maynard Lake,44.670535,-63.552315,17980,diatom,-55,-56
+11872,Miller Lake,44.816915,-63.5938,17981,water chemistry,-55,-56
+11872,Miller Lake,44.816915,-63.5938,17982,diatom,-55,-56
+11873,Powder Mill,44.774525,-63.61172,17983,water chemistry,-55,-56
+11873,Powder Mill,44.774525,-63.61172,17984,diatom,-55,-56
+11874,Russell Lake,44.66354,-63.524985,17985,water chemistry,-55,-56
+11874,Russell Lake,44.66354,-63.524985,17986,diatom,-55,-56
+11875,Soldier Lake,44.814175,-63.56771,17987,water chemistry,-55,-56
+11875,Soldier Lake,44.814175,-63.56771,17988,diatom,-55,-56
+11879,Thomas Lake,44.79554,-63.607065,17998,water chemistry,-55,-56
+11879,Thomas Lake,44.79554,-63.607065,17999,diatom,-55,-56
+11880,Whimsical Lake,44.62494,-63.609855,18000,water chemistry,-55,-56
+11880,Whimsical Lake,44.62494,-63.609855,18001,diatom,-55,-56
+11881,Chocolate Lake,44.63841,-63.623865,18002,water chemistry,-55,-56
+11881,Chocolate Lake,44.63841,-63.623865,18003,diatom,-55,-56
+11882,First Chain Lake,44.63814,-63.644177,18004,water chemistry,-55,-56
+11882,First Chain Lake,44.63814,-63.644177,18005,diatom,-55,-56
+11883,Frenchman Lake,44.698585,-63.57605,18006,water chemistry,-55,-56
+11883,Frenchman Lake,44.698585,-63.57605,18007,diatom,-55,-56
+11884,Lake Major,44.74593,-63.494025,18008,water chemistry,-55,-56
+11884,Lake Major,44.74593,-63.494025,18009,diatom,-55,-56
+11885,Second Chain Lake,44.78106,-63.652145,18010,water chemistry,-55,-56
+11885,Second Chain Lake,44.78106,-63.652145,18011,diatom,-55,-56
+11886,Shubenacadie Grand Lake,44.918475,-63.596765,18012,water chemistry,-55,-56
+11886,Shubenacadie Grand Lake,44.918475,-63.596765,18013,diatom,-55,-56
+11887,Topsail Lake,44.69401,-63.5151,18014,water chemistry,-55,-56
+11887,Topsail Lake,44.69401,-63.5151,18015,diatom,-55,-56
+11888,Big Albro Lake,44.689505,-63.57656,18016,water chemistry,-55,-56
+11888,Big Albro Lake,44.689505,-63.57656,18017,diatom,-55,-56
+11892,Frog Pond,44.62632,-63.603085,18024,water chemistry,-55,-56
+11892,Frog Pond,44.62632,-63.603085,18025,diatom,-55,-56
+11893,Governor Lake,44.64305,-63.703075,18026,water chemistry,-55,-56
+11893,Governor Lake,44.64305,-63.703075,18027,diatom,-55,-56
+11894,Kearney Lake,44.696055,-63.695085,18028,water chemistry,-55,-56
+11894,Kearney Lake,44.696055,-63.695085,18029,diatom,-55,-56
+11895,Lemont Lake,44.68989,-63.5225,18030,water chemistry,-55,-56
+11895,Lemont Lake,44.68989,-63.5225,18031,diatom,-55,-56
+11896,Long Lake,44.62337,-63.640625,18032,water chemistry,-55,-56
+11896,Long Lake,44.62337,-63.640625,18033,diatom,-55,-56
+11897,Loon Lake,44.703815,-63.50411,18034,water chemistry,-55,-56
+11897,Loon Lake,44.703815,-63.50411,18035,diatom,-55,-56
+11898,McCabe Lake,44.778115,-63.753575,18036,water chemistry,-55,-56
+11898,McCabe Lake,44.778115,-63.753575,18037,diatom,-55,-56
+11899,Lake MicMac ,44.691745,-63.553595,18038,water chemistry,-55,-56
+11899,Lake MicMac ,44.691745,-63.553595,18039,diatom,-55,-56
+11900,Oat Hill,44.673865,-63.55036,18040,water chemistry,-55,-56
+11900,Oat Hill,44.673865,-63.55036,18041,diatom,-55,-56
+11901,Paper Mill,44.71521,-63.68946,18042,water chemistry,-55,-56
+11901,Paper Mill,44.71521,-63.68946,18043,diatom,-55,-56
+11902,Powers Pond,44.57673,-63.55461,18044,water chemistry,-55,-56
+11902,Powers Pond,44.57673,-63.55461,18045,diatom,-55,-56
+11903,Rocky Lake,44.749205,-63.627815,18046,water chemistry,-55,-56
+11903,Rocky Lake,44.749205,-63.627815,18047,diatom,-55,-56
+11904,Sandy Lake,44.73399,-63.701415,18048,water chemistry,-55,-56
+11904,Sandy Lake,44.73399,-63.701415,18049,diatom,-55,-56
+11905,Second Lake,44.781075,-63.652275,18052,water chemistry,,
+11905,Second Lake,44.781075,-63.652275,18053,diatom,,
+11906,Second Lake,44.781075,-63.652275,18054,water chemistry,-55,-56
+11906,Second Lake,44.781075,-63.652275,18055,diatom surface sample,-55,-56
+11907,Springfield Lake,44.812365,-63.73978,18056,water chemistry,-55,-56
+11907,Springfield Lake,44.812365,-63.73978,18057,diatom,-55,-56
+11911,Lake William,44.76684,-63.585305,18064,water chemistry,-55,-56
+11911,Lake William,44.76684,-63.585305,18065,diatom,-55,-56
+11912,Williams Lake,44.61925,-63.596915,18066,water chemistry,-55,-56
+11912,Williams Lake,44.61925,-63.596915,18067,diatom,-55,-56
+11913,Lake Banook,44.67947,-63.55591,18068,water chemistry,-55,-56
+11913,Lake Banook,44.67947,-63.55591,18069,diatom,-55,-56
+11914,Bisset Lake,44.65565,-63.467975,18070,water chemistry,-55,-56
+11914,Bisset Lake,44.65565,-63.467975,18071,diatom,-55,-56
+11915,Lake Charles,44.723075,-63.55179,18072,water chemistry,-55,-56
+11915,Lake Charles,44.723075,-63.55179,18073,diatom,-55,-56
+11916,Fletchers Lake,44.842235,-63.612815,18074,water chemistry,-55,-56
+11916,Fletchers Lake,44.842235,-63.612815,18075,diatom,-55,-56
+11917,Morris Lake,44.65226,-63.49853,18076,water chemistry,-55,-56
+11917,Morris Lake,44.65226,-63.49853,18077,diatom,-55,-56
+11918,Pennhorn lake,44.67536,-63.540585,18078,water chemistry,-55,-56
+11918,Pennhorn lake,44.67536,-63.540585,18079,diatom,-55,-56
+11919,Settle Lake,44.67911,-63.505235,18080,water chemistry,-55,-56
+11919,Settle Lake,44.67911,-63.505235,18081,diatom,-55,-56
+11920,Sheldrake lake,44.67657,-63.797715,18082,water chemistry,-55,-56
+11920,Sheldrake lake,44.67657,-63.797715,18083,diatom,-55,-56
+13691,Cornings Lake,44.053325,-66.082055,20873,diatom,,
+13692,Gull Lake,46.6893,-60.540675,20874,diatom,-52,-54
