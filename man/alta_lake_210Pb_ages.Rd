@@ -5,6 +5,7 @@
 \alias{alta_lake_210Pb_ages}
 \alias{alta_lake_14C_ages}
 \alias{alta_lake_bacon_ages}
+\alias{alta_lake_geochem}
 \title{Alta Lake Lead-210 and Carbon-14 Ages}
 \format{An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 9 rows and 5 columns.}
 \usage{
@@ -13,6 +14,8 @@ alta_lake_210Pb_ages
 alta_lake_14C_ages
 
 alta_lake_bacon_ages
+
+alta_lake_geochem
 }
 \description{
 The \code{alta_lake_210Pb_ages} object contains raw depths and ages for Alta

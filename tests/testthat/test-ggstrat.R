@@ -115,7 +115,7 @@ test_that("removing facet cliping works according to plan", {
   expect_true(TRUE)
 })
 
-test_that("label rotating works properly", {
+test_that("facet label rotating works properly", {
   test_data <- rbind(
     data.frame(
       facet = c("a very very very very long facet name 1"),
@@ -152,51 +152,101 @@ test_that("label rotating works properly", {
   print(
     p +
       ggplot2::facet_grid(facet2 ~ facet) +
-      rotate_facet_labels(45, direction = c("x", "y")) +
+      rotated_facet_labels(45, direction = c("x", "y")) +
       ggplot2::labs(caption = "x and y labels rotated by 45 degrees with no strip background")
   )
 
   print(
     p +
       ggplot2::facet_grid(facet2 ~ facet) +
-      rotate_facet_labels(45) +
+      rotated_facet_labels(45) +
       ggplot2::labs(caption = "only x rotated by 45 degrees (default) with no strip background")
   )
 
   print(
     p +
       ggplot2::facet_grid(facet2 ~ facet) +
-      rotate_facet_labels(45, direction = "y") +
+      rotated_facet_labels(45, direction = "y") +
       ggplot2::labs(caption = "only y rotated by 45 degrees with no strip background")
   )
 
   print(
     p +
       ggplot2::facet_grid(facet2 ~ facet) +
-      rotate_facet_labels(-45, direction = c("x", "y")) +
+      rotated_facet_labels(-45, direction = c("x", "y")) +
       ggplot2::labs(caption = "labels rotated by -45 degrees in both directions (text base should align to top/right of plot)")
   )
 
   print(
     p +
       ggplot2::facet_grid(facet2 ~ facet) +
-      rotate_facet_labels(0, direction = c("x", "y")) +
+      rotated_facet_labels(0, direction = c("x", "y")) +
       ggplot2::labs(caption = "labels rotated by 0 degrees in both directions (text should align to middle)")
   )
 
   print(
     p +
       ggplot2::facet_grid(facet2 ~ facet) +
-      rotate_facet_labels(90, direction = c("x", "y")) +
+      rotated_facet_labels(90, direction = c("x", "y")) +
       ggplot2::labs(caption = "labels rotated by 90 degrees in both directions (text should align to middle)")
   )
 
   print(
     p +
       ggplot2::facet_grid(facet2 ~ facet) +
-      rotate_facet_labels(-90, direction = c("x", "y")) +
+      rotated_facet_labels(-90, direction = c("x", "y")) +
       ggplot2::labs(caption = "labels rotated by -90 degrees in both directions (text should align to middle)")
   )
 
   expect_true(TRUE)
+})
+
+test_that("axis label rotating works properly", {
+  p <- ggplot2::ggplot(
+    data.frame(x = runif(10), y = runif(10)),
+    ggplot2::aes(x, y)
+  ) +
+    ggplot2::geom_point() +
+    ggplot2::scale_x_continuous(
+      breaks = c(0, 0.2, 0.4, 0.6, 0.8, 1),
+      labels = c("0", "0.2000000", "0.4", "0.6000", "0.80", "1.000"),
+      limits = c(0, 1),
+      sec.axis = ggplot2::dup_axis()
+    ) +
+    ggplot2::scale_y_continuous(
+      breaks = c(0, 0.2, 0.4, 0.6, 0.8, 1),
+      labels = c("0", "0.2000000", "0.4", "0.6000", "0.80", "1.000"),
+      limits = c(0, 1),
+      sec.axis = ggplot2::dup_axis()
+    )
+
+  print(
+    p +
+      rotated_axis_labels(0, direction = c("x", "y")) +
+      ggplot2::labs(caption = "axis labels rotated by 0 degrees, text aligned naturally")
+  )
+
+  print(
+    p +
+      rotated_axis_labels(90, direction = c("x", "y")) +
+      ggplot2::labs(caption = "axis labels rotated by 90 degrees, text aligned naturally")
+  )
+
+  print(
+    p +
+      rotated_axis_labels(-90, direction = c("x", "y")) +
+      ggplot2::labs(caption = "axis labels rotated by 90 degrees, text aligned naturally")
+  )
+
+  print(
+    p +
+      rotated_axis_labels(45, direction = c("x", "y")) +
+      ggplot2::labs(caption = "axis labels rotated by 90 degrees, text aligned naturally")
+  )
+
+  print(
+    p +
+      rotated_axis_labels(-45, direction = c("x", "y")) +
+      ggplot2::labs(caption = "axis labels rotated by 90 degrees, text aligned naturally")
+  )
 })

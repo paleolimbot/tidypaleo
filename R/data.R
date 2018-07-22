@@ -6,7 +6,8 @@
 #' in the form of a \link[mudata2]{mudata} object, from which location
 #' information, parameter information, and data can be extracted using
 #' \link[mudata2]{tbl_locations}, \link[mudata2]{tbl_params}, and
-#' \link[mudata2]{tbl_data} (respectively).
+#' \link[mudata2]{tbl_data} (respectively). Also, a subset of these
+#' data amenable to plotting have been made available.
 #'
 #' @source
 #' Neotoma paleoecology database (\url{http://neotomadb.org/})
@@ -27,6 +28,8 @@
 #'
 "halifax_lakes"
 
+#' @rdname halifax_lakes
+"halifax_lakes_plottable"
 
 #' Keji lakes core diatom counts
 #'
@@ -35,7 +38,8 @@
 #' These data are in the form of a \link[mudata2]{mudata} object, from which
 #' location information, parameter information, and data can be extracted using
 #' \link[mudata2]{tbl_locations}, \link[mudata2]{tbl_params}, and
-#' \link[mudata2]{tbl_data} (respectively).
+#' \link[mudata2]{tbl_data} (respectively). Also, a subset of these
+#' data amenable to plotting have been made available.
 #'
 #' @source Neotoma paleoecology database (\url{http://neotomadb.org/})
 #'
@@ -53,6 +57,9 @@
 #'   tbl_data()
 #'
 "keji_lakes"
+
+#' @rdname keji_lakes
+"keji_lakes_plottable"
 
 #' Alta Lake Lead-210 and Carbon-14 Ages
 #'
@@ -103,6 +110,9 @@
 
 #' @rdname alta_lake_210Pb_ages
 "alta_lake_bacon_ages"
+
+#' @rdname alta_lake_210Pb_ages
+"alta_lake_geochem"
 
 #' Long Lake Carbon-14 Ages
 #'

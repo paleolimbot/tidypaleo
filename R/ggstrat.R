@@ -9,7 +9,7 @@
 #' @return An object or list of objects that can be added to a \link[ggplot2]{ggplot}
 #' @export
 #'
-rotate_facet_labels <- function(angle = 45, direction = "x", remove_label_background = TRUE) {
+rotated_facet_labels <- function(angle = 45, direction = "x", remove_label_background = TRUE) {
   stopifnot(
     all(direction %in% c("x", "y")),
     is.numeric(angle), length(angle) == 1,
@@ -34,7 +34,7 @@ rotate_facet_labels <- function(angle = 45, direction = "x", remove_label_backgr
   )
 }
 
-#' @rdname rotate_facet_labels
+#' @rdname rotated_facet_labels
 #' @export
 remove_label_clip <- function(direction) {
   force(direction)
@@ -49,10 +49,36 @@ remove_label_clip <- function(direction) {
   )
 }
 
+#' @rdname rotated_facet_labels
+#' @export
+rotated_axis_labels <- function(angle = 90, direction = "x") {
+
+  stopifnot(
+    all(direction %in% c("x", "y")),
+    is.numeric(angle), length(angle) == 1
+  )
+
+  theme_mods <- ggplot2::theme()
+
+  if("x" %in% direction) {
+    theme_mods <- theme_mods +
+      theme_modify_paleo(rotate_axis_labels_x = angle)
+  }
+
+  if("y" %in% direction) {
+    theme_mods <- theme_mods +
+      theme_modify_paleo(rotate_axis_labels_y = angle)
+  }
+
+  theme_mods
+}
+
 #' Internal theme modification code
 #'
 #' @param rotate_labels_x Rotate top/bottom facet labels (degrees counterclockwise)
 #' @param rotate_labels_y Rotate right/left facet labels (degrees counterclockwise)
+#' @param rotate_axis_labels_x Rotate top/bottom axis labels (degrees counterclockwise)
+#' @param rotate_axis_labels_y Rotate right/left axis labels (degrees counterclockwise)
 #' @param remove_label_background Remove the background of the facet label
 #' @param pad_right_inches Give the plot extra right padding
 #'
@@ -60,7 +86,8 @@ remove_label_clip <- function(direction) {
 #' @noRd
 #'
 theme_modify_paleo <- function(rotate_labels_x = NULL, rotate_labels_y = NULL, remove_label_background_x = FALSE,
-                               remove_label_background_y = FALSE, pad_right_inches = NULL) {
+                               remove_label_background_y = FALSE, rotate_axis_labels_x = NULL,
+                               rotate_axis_labels_y = NULL, pad_right_inches = NULL) {
   theme_elements <- list(
     strip.text.x = if(!is.null(rotate_labels_x)) ggplot2::element_text(
       angle = rotate_labels_x,
@@ -71,6 +98,26 @@ theme_modify_paleo <- function(rotate_labels_x = NULL, rotate_labels_y = NULL, r
       angle = rotate_labels_y,
       hjust = if(abs(rotate_labels_y) == 90) 0.5 else 0,
       vjust = if(rotate_labels_y > 0) 0 else if(rotate_labels_y < 0) 0 else 0.5
+    ),
+    axis.text.x.bottom = if(!is.null(rotate_axis_labels_x)) ggplot2::element_text(
+      angle = rotate_axis_labels_x,
+      hjust = if(rotate_axis_labels_x > 0) 1 else if(rotate_axis_labels_x < 0) 0 else 0.5,
+      vjust = if(abs(rotate_axis_labels_x) == 90) 0.5 else if(abs(rotate_axis_labels_x) != 0) 1 else 0.5
+    ),
+    axis.text.y.left = if(!is.null(rotate_axis_labels_y)) ggplot2::element_text(
+      angle = rotate_axis_labels_y,
+      hjust = if(abs(rotate_axis_labels_y) == 90) 0.5 else 1,
+      vjust = if(rotate_axis_labels_y == 0) 0.5 else 1
+    ),
+    axis.text.x.top = if(!is.null(rotate_axis_labels_x)) ggplot2::element_text(
+      angle = rotate_axis_labels_x,
+      hjust = if(rotate_axis_labels_x > 0) 0 else if(rotate_axis_labels_x < 0) 1 else 0.5,
+      vjust = if(abs(rotate_axis_labels_x) == 90) 0.5 else if(abs(rotate_axis_labels_x) != 0) 0 else 0.5
+    ),
+    axis.text.y.right = if(!is.null(rotate_axis_labels_y)) ggplot2::element_text(
+      angle = rotate_axis_labels_y,
+      hjust = if(abs(rotate_axis_labels_y) == 90) 0.5 else 0,
+      vjust = if(rotate_axis_labels_y == 0) 0.5 else 0
     ),
     strip.background.x = if(remove_label_background_x) ggplot2::element_blank(),
     strip.background.y = if(remove_label_background_y) ggplot2::element_blank(),

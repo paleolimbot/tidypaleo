@@ -88,7 +88,25 @@ keji_lakes <- mudata(
 ) %>%
   update_datasets(source = "Neotoma", url = "https://www.neotomadb.org/")
 
+# also create plottable version for vignette
+keji_lakes_plottable <- keji_lakes %>%
+  select_locations("Beaverskin Lake", "Peskawa Lake") %>%
+  tbl_data() %>%
+
+  # relative abundance
+  group_by(location, depth) %>%
+  mutate(rel_abund = value / sum(value) * 100) %>%
+  ungroup() %>%
+  rename(count = value) %>%
+
+  # select only 5 most common taxa
+  mutate(taxon = fct_reorder(param, -rel_abund, mean) %>% fct_lump(5)) %>%
+  group_by(location, depth, taxon) %>%
+  summarise(count = sum(count), rel_abund = sum(rel_abund)) %>%
+  ungroup()
+
 devtools::use_data(keji_lakes, overwrite = TRUE)
+devtools::use_data(keji_lakes_plottable, overwrite = TRUE)
 
 # diatom samples from Halifax Lakes:
 # (Banook has some unfortunate labeling inconsistencies, and thus can't be included)
@@ -147,13 +165,34 @@ halifax_lakes_data <- counts %>%
   rename_all(str_replace_all, "\\.", "_") %>%
   select(location, param, sample_type, value, everything())
 
+# create mudata
 halifax_lakes <- mudata(
   data = halifax_lakes_data,
-  params = halifax_lakes_params,
+  params = halifax_lakes_params %>% select(-variable_units),
   locations = halifax_lakes_locations,
   dataset_id = "neotoma_halifax_lakes",
   x_columns = "sample_type"
 ) %>%
   update_datasets(source = "Neotoma", url = "https://www.neotomadb.org/")
 
+# also create plottable version for vignette
+halifax_lakes_plottable <- halifax_lakes %>%
+  select_locations(1:10) %>%
+  tbl_data() %>%
+  filter(sample_type %in% c("top", "bottom")) %>%
+
+  # relative abundance
+  group_by(location, sample_type) %>%
+  mutate(rel_abund = value / sum(value) * 100) %>%
+  ungroup() %>%
+  rename(count = value) %>%
+
+  # select only 5 most common taxa
+  mutate(taxon = fct_reorder(param, -rel_abund, mean) %>% fct_lump(5)) %>%
+  group_by(location, sample_type, taxon) %>%
+  summarise(count = sum(count), rel_abund = sum(rel_abund)) %>%
+  ungroup()
+
+
 devtools::use_data(halifax_lakes, overwrite = TRUE)
+devtools::use_data(halifax_lakes_plottable, overwrite = TRUE)

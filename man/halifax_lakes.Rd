@@ -3,6 +3,7 @@
 \docType{data}
 \name{halifax_lakes}
 \alias{halifax_lakes}
+\alias{halifax_lakes_plottable}
 \title{Halifax lakes water chemistry and top/bottom diatom counts}
 \format{An object of class \code{mudata} (inherits from \code{list}) of length 5.}
 \source{
@@ -10,6 +11,8 @@ Neotoma paleoecology database (\url{http://neotomadb.org/})
 }
 \usage{
 halifax_lakes
+
+halifax_lakes_plottable
 }
 \description{
 A subset of well-labeled, clean diatom count data for 44 Halifax-area (Nova Scotia) lakes,
@@ -17,7 +20,8 @@ an analysis of which has been published by Ginn et al. (2015). These data are
 in the form of a \link[mudata2]{mudata} object, from which location
 information, parameter information, and data can be extracted using
 \link[mudata2]{tbl_locations}, \link[mudata2]{tbl_params}, and
-\link[mudata2]{tbl_data} (respectively).
+\link[mudata2]{tbl_data} (respectively). Also, a subset of these
+data amenable to plotting have been made available.
 }
 \examples{
 library(mudata2)

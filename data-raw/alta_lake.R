@@ -1,5 +1,6 @@
 
 library(tidyverse)
+library(mudata2)
 
 # from Dunnington et al. 2016, doi: 10.1007/s10933-016-9919-x
 # and thesis version, Dunnington 2015,
@@ -27,6 +28,12 @@ alta_lake_bacon_ages <- read_delim("data-raw/AL-GC2_30_ages.txt", delim = "\t",
          age_median_year_BP = median, age_weighted_mean_year_BP = wmean) %>%
   rlang::set_attrs(spec = NULL)
 
+alta_lake_geochem <- alta_lake %>%
+  select_params("C", "C/N", "d13C", "d15N", "Ti", "Cu") %>%
+  tbl_data() %>%
+  select(-dataset)
+
+devtools::use_data(alta_lake_geochem, overwrite = TRUE)
 devtools::use_data(alta_lake_210Pb_ages, overwrite = TRUE)
 devtools::use_data(alta_lake_14C_ages, overwrite = TRUE)
 devtools::use_data(alta_lake_bacon_ages, overwrite = TRUE)

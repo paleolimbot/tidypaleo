@@ -1,0 +1,40 @@
+---
+title: "Stratigraphic diagrams with tidypaleo"
+author: "Dewey Dunnington"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Stratigraphic diagrams with tidypaleo}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r}
+library(tidypaleo)
+library(ggplot2)
+theme_set(theme_bw())
+```
+
+## Geochemical stratigraphic plots
+
+```{r}
+data(alta_lake_geochem)
+alta_lake_geochem
+```
+
+```{r}
+ggplot(alta_lake_geochem, aes(x = value, y = depth)) +
+  geom_path() +
+  geom_point() +
+  scale_y_reverse() +
+  facet_wrap(~param, scales = "free_x", nrow = 1) +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
+```
+
