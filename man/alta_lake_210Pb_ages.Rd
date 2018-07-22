@@ -25,6 +25,15 @@ The \code{alta_lake_bacon_ages} object contains the combined result of the
 Lead-210 and the Carbon-14 ages as modelled by \link[rbacon]{rbacon-package}
 (Blaauw and Christen 2011).
 }
+\examples{
+data(alta_lake_210Pb_ages)
+data(alta_lake_14C_ages)
+data(alta_lake_bacon_ages)
+
+library(mudata2)
+data(alta_lake)
+
+}
 \references{
 Appleby, P. G., and F. Oldfield. "The Assessment of 210Pb Data from Sites
 with Varying Sediment Accumulation Rates." Hydrobiologia 103, no. 1 (July 1,
@@ -43,6 +52,8 @@ Paleolimnology 56, no. 4 (November 2016): 315–330.
 Dunnington, Dewey W. "A 500-Year Applied Paleolimnological Assessment of
 Environmental Change at Alta Lake, Whistler, British Columbia, Canada." M.Sc.
 Thesis, Acadia University, 2015.
-\url{http://openarchive.acadiau.ca/cdm/singleitem/collection/Theses/id/1074/rec/1}.
+}
+\seealso{
+The \link[mudata2]{alta_lake} dataset (mudata2 package) for geochemical data.
 }
 \keyword{datasets}

@@ -18,6 +18,14 @@ Lake (Nova Scotia-New Brunswick Border Region, Canada) core LL-PC2
 contains the result of the Carbon-14 ages as
 modelled by \link[rbacon]{rbacon-package} (Blaauw and Christen 2011).
 }
+\examples{
+data(long_lake_14C_ages)
+data(long_lake_bacon_ages)
+
+library(mudata2)
+data(long_lake)
+
+}
 \references{
 Blaauw, Maarten, and J. Andrés Christen. "Flexible Paleoclimate Age-Depth
 Models Using an Autoregressive Gamma Process." Bayesian Analysis 6, no. 3
@@ -32,6 +40,8 @@ Atlantic Canada." FACETS 2, no. 1 (May 23, 2017): 440–60.
 White, Hilary E. "Paleolimnological Records of Post-Glacial Lake
 and Wetland Evolution from the Isthmus of Chignecto Region, Eastern Canada."
 M.Sc. Thesis, Acadia University, 2012.
-\url{http://openarchive.acadiau.ca/cdm/singleitem/collection/Theses/id/645/rec/80}.
+}
+\seealso{
+The \link[mudata2]{long_lake} dataset (mudata2 package) for geochemical data.
 }
 \keyword{datasets}

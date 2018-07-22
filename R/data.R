@@ -1,4 +1,59 @@
 
+#' Halifax lakes water chemistry and top/bottom diatom counts
+#'
+#' A subset of well-labeled, clean diatom count data for 44 Halifax-area (Nova Scotia) lakes,
+#' an analysis of which has been published by Ginn et al. (2015). These data are
+#' in the form of a \link[mudata2]{mudata} object, from which location
+#' information, parameter information, and data can be extracted using
+#' \link[mudata2]{tbl_locations}, \link[mudata2]{tbl_params}, and
+#' \link[mudata2]{tbl_data} (respectively).
+#'
+#' @source
+#' Neotoma paleoecology database (\url{http://neotomadb.org/})
+#'
+#' @references
+#' Ginn, Brian K., Thiyake Rajaratnam, Brian F. Cumming, and John P.
+#' Smol. "Establishing Realistic Management Objectives for Urban Lakes Using
+#' Paleolimnological Techniques: An Example from Halifax Region (Nova Scotia,
+#' Canada)." Lake and Reservoir Management 31, no. 2 (April 3, 2015): 92-108.
+#' \url{https://doi.org/10.1080/10402381.2015.1013648}.
+#'
+#' @examples
+#' library(mudata2)
+#' data(halifax_lakes)
+#'
+#' halifax_lakes %>%
+#'   tbl_data()
+#'
+"halifax_lakes"
+
+
+#' Keji lakes core diatom counts
+#'
+#' A subset of well-labeled, clean diatom count data for 3 Keji-area (Nova
+#' Scotia) lakes, which form part of the analysis in Ginn et al. (2007).
+#' These data are in the form of a \link[mudata2]{mudata} object, from which
+#' location information, parameter information, and data can be extracted using
+#' \link[mudata2]{tbl_locations}, \link[mudata2]{tbl_params}, and
+#' \link[mudata2]{tbl_data} (respectively).
+#'
+#' @source Neotoma paleoecology database (\url{http://neotomadb.org/})
+#'
+#' @references
+#' Ginn, Brian K., Brian F. Cumming, and John P. Smol. "Long-Term
+#' Lake Acidification Trends in High- and Low-Sulphate Deposition Regions from
+#' Nova Scotia, Canada." Hydrobiologia 586, no. 1 (July 1, 2007): 261-75.
+#' \url{https://doi.org/10.1007/s10750-007-0644-3}.
+#'
+#' @examples
+#' library(mudata2)
+#' data(keji_lakes)
+#'
+#' keji_lakes %>%
+#'   tbl_data()
+#'
+"keji_lakes"
+
 #' Alta Lake Lead-210 and Carbon-14 Ages
 #'
 #' The \code{alta_lake_210Pb_ages} object contains raw depths and ages for Alta
@@ -29,8 +84,17 @@
 #' Dunnington, Dewey W. "A 500-Year Applied Paleolimnological Assessment of
 #' Environmental Change at Alta Lake, Whistler, British Columbia, Canada." M.Sc.
 #' Thesis, Acadia University, 2015.
-#' \url{http://openarchive.acadiau.ca/cdm/singleitem/collection/Theses/id/1074/rec/1}.
 #'
+#' @seealso
+#' The \link[mudata2]{alta_lake} dataset (mudata2 package) for geochemical data.
+#'
+#' @examples
+#' data(alta_lake_210Pb_ages)
+#' data(alta_lake_14C_ages)
+#' data(alta_lake_bacon_ages)
+#'
+#' library(mudata2)
+#' data(alta_lake)
 #'
 "alta_lake_210Pb_ages"
 
@@ -62,8 +126,16 @@
 #' White, Hilary E. "Paleolimnological Records of Post-Glacial Lake
 #' and Wetland Evolution from the Isthmus of Chignecto Region, Eastern Canada."
 #' M.Sc. Thesis, Acadia University, 2012.
-#' \url{http://openarchive.acadiau.ca/cdm/singleitem/collection/Theses/id/645/rec/80}.
 #'
+#' @seealso
+#' The \link[mudata2]{long_lake} dataset (mudata2 package) for geochemical data.
+#'
+#' @examples
+#' data(long_lake_14C_ages)
+#' data(long_lake_bacon_ages)
+#'
+#' library(mudata2)
+#' data(long_lake)
 #'
 "long_lake_14C_ages"
 

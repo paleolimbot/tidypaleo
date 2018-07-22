@@ -1,6 +1,7 @@
 
 library(tidyverse)
 # library(neotoma)
+library(mudata2)
 
 ginn_ns_search <- read_csv(
   "data-raw/neotoma_ginn_nova_scotia.csv",
@@ -50,8 +51,109 @@ counts <- tibble(
 ) %>%
   unnest(long_data)
 
-all_data <- counts %>%
-  left_join(sample_info, by = "sample.id") %>%
-  left_join(taxon_info, by = c("taxon.name", "dataset.id")) %>%
-  left_join(dataset_info, by = "dataset.id") %>%
-  left_join(site_info, by = "dataset.id")
+
+# cores: PSKWSK07B (17953), BEAVERS07B (17958), PESKAWA07B (17957)
+keji_lakes_datasets <- dataset_info %>%
+  filter(dataset.id %in% c(17953, 17958, 17957))
+
+keji_lakes_locations <- site_info %>%
+  filter(dataset.id %in% keji_lakes_datasets$dataset.id) %>%
+  select(location = site.name, neotoma_dataset_id = dataset.id, everything()) %>%
+  rename_all(str_replace_all, "\\.", "_")
+
+keji_lakes_params <- taxon_info %>%
+  filter(dataset.id %in% keji_lakes_datasets$dataset.id) %>%
+  select(-dataset.id) %>%
+  distinct() %>%
+  rename(param = taxon.name) %>%
+  rename_all(str_replace_all, "\\.", "_")
+
+keji_lakes_data <- counts %>%
+  # two samples have (probably erroneous) duplicate depth information for causes mudata() validation fail
+  filter(sample.id != 166477, sample.id != 166546) %>%
+  left_join(sample_info %>% select(depth, unit.name, sample.id, dataset.id), by = "sample.id") %>%
+  left_join(taxon_info %>% select(taxon.name, dataset.id, variable.units), by = c("taxon.name", "dataset.id")) %>%
+  left_join(site_info %>% select(dataset.id, site.name), by = "dataset.id") %>%
+  filter(dataset.id %in% keji_lakes_datasets$dataset.id) %>%
+  rename(neotoma_dataset_id = dataset.id, location = site.name, param = taxon.name, neotoma_sample_id = sample.id) %>%
+  rename_all(str_replace_all, "\\.", "_") %>%
+  select(location, param, depth, value, everything())
+
+keji_lakes <- mudata(
+  data = keji_lakes_data,
+  params = keji_lakes_params,
+  locations = keji_lakes_locations,
+  dataset_id = "neotoma_keji_lakes",
+  x_columns = "depth"
+) %>%
+  update_datasets(source = "Neotoma", url = "https://www.neotomadb.org/")
+
+devtools::use_data(keji_lakes, overwrite = TRUE)
+
+# diatom samples from Halifax Lakes:
+# (Banook has some unfortunate labeling inconsistencies, and thus can't be included)
+halifax_lakes_datasets <- dataset_info %>%
+  filter(str_detect(dataset.name, "Halifax Lakess?"), !str_detect(collection.handle, "BANOOK")) %>%
+  spread(dataset.type, dataset.id) %>%
+  filter(!is.na(diatom), !is.na(`water chemistry`)) %>%
+  gather(dataset.type, dataset.id, diatom, `water chemistry`) %>%
+  arrange(collection.handle)
+
+halifax_lakes_locations <- site_info %>%
+  filter(dataset.id %in% halifax_lakes_datasets$dataset.id) %>%
+  group_by_at(vars(-dataset.id)) %>%
+  summarise(neotoma_dataset_ids = paste(dataset.id, collapse = ", ")) %>%
+  ungroup() %>%
+  select(location = site.name, everything()) %>%
+  rename_all(str_replace_all, "\\.", "_")
+
+halifax_lakes_params <- taxon_info %>%
+  filter(dataset.id %in% halifax_lakes_datasets$dataset.id) %>%
+  select(-dataset.id) %>%
+  distinct() %>%
+  group_by(taxon.name) %>%
+  mutate(variable.units = paste(variable.units, collapse = "; ")) %>%
+  ungroup() %>%
+  # there is an issue with units: some params are both in ug/L and mg/L
+  distinct() %>%
+  rename(param = taxon.name) %>%
+  rename_all(str_replace_all, "\\.", "_")
+
+halifax_lakes_data <- counts %>%
+  left_join(sample_info %>% select(depth, unit.name, sample.id, dataset.id), by = "sample.id") %>%
+  left_join(taxon_info %>% select(taxon.name, dataset.id, variable.units), by = c("taxon.name", "dataset.id")) %>%
+  left_join(dataset_info %>% select(dataset.id, dataset.type), by = "dataset.id") %>%
+  left_join(site_info %>% select(dataset.id, site.name), by = "dataset.id") %>%
+  filter(dataset.id %in% halifax_lakes_datasets$dataset.id) %>%
+  # convert ug/L to mg/L
+  mutate(
+    value = if_else(!is.na(variable.units) & variable.units == "µg/L", value / 1000, value),
+    variable.units = if_else(!is.na(variable.units) & variable.units == "µg/L", "mg/L", variable.units)
+  ) %>%
+
+  # set sample_type to 'top', 'bottom', or 'water chemistry'
+  mutate(
+    sample_type = case_when(
+      dataset.type == "water chemistry" ~ "water chemistry",
+      str_detect(unit.name, "top$") ~ "top",
+      str_detect(unit.name, "tom$") ~ "bottom",
+      # several mislabeled units
+      unit.name == "Bisset_wch" & dataset.type == "diatom" ~ "top",
+      unit.name == "Major_wch" & dataset.type == "diatom" ~ "top",
+      TRUE ~ NA_character_
+    )
+  ) %>%
+  rename(neotoma_dataset_id = dataset.id, location = site.name, param = taxon.name, neotoma_sample_id = sample.id) %>%
+  rename_all(str_replace_all, "\\.", "_") %>%
+  select(location, param, sample_type, value, everything())
+
+halifax_lakes <- mudata(
+  data = halifax_lakes_data,
+  params = halifax_lakes_params,
+  locations = halifax_lakes_locations,
+  dataset_id = "neotoma_halifax_lakes",
+  x_columns = "sample_type"
+) %>%
+  update_datasets(source = "Neotoma", url = "https://www.neotomadb.org/")
+
+devtools::use_data(halifax_lakes, overwrite = TRUE)

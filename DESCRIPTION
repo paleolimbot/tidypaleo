@@ -12,6 +12,7 @@ RoxygenNote: 6.0.1
 Suggests: testthat,
     covr,
     knitr,
+    mudata2,
     rmarkdown
 URL: https://github.com/paleolimbot/tidypaleo
 BugReports: https://github.com/paleolimbot/tidypaleo/issues
