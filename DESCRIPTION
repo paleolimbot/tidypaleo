@@ -20,7 +20,8 @@ Imports: rlang,
     dplyr,
     tibble,
     scales,
-    ggplot2,
+    ggplot2 (>= 2.2.1.9000),
     styler,
+    purrr,
     grid
 VignetteBuilder: knitr

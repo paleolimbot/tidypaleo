@@ -8,29 +8,49 @@
 #'
 #' @return An object or list of objects that can be added to a \link[ggplot2]{ggplot}
 #' @export
+#' @importFrom purrr %||%
 #'
 rotated_facet_labels <- function(angle = 45, direction = "x", remove_label_background = TRUE) {
   stopifnot(
     all(direction %in% c("x", "y")),
-    is.numeric(angle), length(angle) == 1,
+    is.numeric(angle), length(angle) == 1, angle >= -90, angle <= 90,
     is.logical(remove_label_background), length(remove_label_background) == 1
   )
 
-  theme_mods <- ggplot2::theme()
+  structure(
+    list(
+      modify_plot = function(plot) {
+        plot$facet <- modify_facet_clip(plot$facet, remove_clip = direction)
 
-  if("x" %in% direction) {
-    theme_mods <- theme_mods +
-      theme_modify_paleo(rotate_labels_x = angle, remove_label_background_x = remove_label_background)
-  }
+        facet_switch <- plot$facet$params$switch %||% plot$facet$params$strip.position %||% "none"
 
-  if("y" %in% direction) {
-    theme_mods <- theme_mods +
-      theme_modify_paleo(rotate_labels_y = angle, remove_label_background_y = remove_label_background)
-  }
+        strip_position_x <- if(facet_switch %in% c("x", "both", "bottom")) "bottom" else "top"
+        strip_position_y <- if(facet_switch %in% c("y", "both", "left")) "left" else "right"
 
-  list(
-    theme_mods,
-    remove_label_clip(direction = direction)
+        theme_mods <- ggplot2::theme()
+
+        if("x" %in% direction) {
+          theme_mods <- theme_mods +
+            theme_modify_paleo(
+              rotate_labels_x = angle,
+              remove_label_background_x = remove_label_background,
+              strip_position_x = strip_position_x
+            )
+        }
+
+        if("y" %in% direction) {
+          theme_mods <- theme_mods +
+            theme_modify_paleo(
+              rotate_labels_y = angle,
+              remove_label_background_y = remove_label_background,
+              strip_position_y = strip_position_y
+            )
+        }
+
+        plot + theme_mods
+      }
+    ),
+    class = "paleo_hook"
   )
 }
 
@@ -87,18 +107,41 @@ rotated_axis_labels <- function(angle = 90, direction = "x") {
 #'
 theme_modify_paleo <- function(rotate_labels_x = NULL, rotate_labels_y = NULL, remove_label_background_x = FALSE,
                                remove_label_background_y = FALSE, rotate_axis_labels_x = NULL,
-                               rotate_axis_labels_y = NULL, pad_right_inches = NULL) {
+                               rotate_axis_labels_y = NULL, pad_right_inches = NULL,
+                               strip_position_x = c("top", "bottom"), strip_position_y = c("left", "right")) {
+
+  strip_position_x <- match.arg(strip_position_x)
+  strip_position_y <- match.arg(strip_position_y)
+
   theme_elements <- list(
-    strip.text.x = if(!is.null(rotate_labels_x)) ggplot2::element_text(
-      angle = rotate_labels_x,
-      hjust = if(rotate_labels_x > 0) 0 else if(rotate_labels_x < 0) 1 else 0.5,
-      vjust = if(abs(rotate_labels_x) == 90) 0.5 else if(rotate_labels_x > 0) 0 else if(rotate_labels_x < 0) 1.1 else 0.5
-    ),
-    strip.text.y = if(!is.null(rotate_labels_y)) ggplot2::element_text(
-      angle = rotate_labels_y,
-      hjust = if(abs(rotate_labels_y) == 90) 0.5 else 0,
-      vjust = if(rotate_labels_y > 0) 0 else if(rotate_labels_y < 0) 0 else 0.5
-    ),
+    strip.text.x = if(!is.null(rotate_labels_x) && strip_position_x == "top") {
+      ggplot2::element_text(
+        angle = rotate_labels_x,
+        hjust = if(rotate_labels_x > 0) 0 else if(rotate_labels_x < 0) 1 else 0.5,
+        vjust = if(abs(rotate_labels_x) == 90) 0.5 else if(rotate_labels_x > 0) 0 else if(rotate_labels_x < 0) 1.1 else 0.5
+      )
+    } else if(!is.null(rotate_labels_x) && strip_position_x == "bottom") {
+      ggplot2::element_text(
+        angle = rotate_labels_x,
+        hjust = if(rotate_labels_x > 0) 1 else if(rotate_labels_x < 0) 0 else 0.5,
+        vjust = if(abs(rotate_labels_x) == 90) 0.5 else if(rotate_labels_x > 0) 1 else if(rotate_labels_x < 0) 0 else 0.5
+      )
+    },
+    strip.text.y = if(!is.null(rotate_labels_y) && strip_position_y == "right") {
+      ggplot2::element_text(
+        angle = rotate_labels_y,
+        hjust = if(abs(rotate_labels_y) == 90) 0.5 else 0,
+        vjust = if(rotate_labels_y == 0) 0.5 else 0
+      )
+    } else if(!is.null(rotate_labels_y) && strip_position_y == "left") {
+      rotate_labels_y <- rotate_labels_y + 180
+      ggplot2::element_text(
+        angle = rotate_labels_y,
+        hjust = if(abs(rotate_labels_y %% 180) == 90) 0.5 else 1,
+        # rotate_labels_y can be 180 or -180 due to adjustment above
+        vjust = if(rotate_labels_y %% 180 == 0) 0.5 else 1
+      )
+    },
     axis.text.x.bottom = if(!is.null(rotate_axis_labels_x)) ggplot2::element_text(
       angle = rotate_axis_labels_x,
       hjust = if(rotate_axis_labels_x > 0) 1 else if(rotate_axis_labels_x < 0) 0 else 0.5,

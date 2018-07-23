@@ -35,6 +35,6 @@ ggplot(alta_lake_geochem, aes(x = value, y = depth)) +
   geom_point() +
   scale_y_reverse() +
   facet_wrap(~param, scales = "free_x", nrow = 1) +
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
+  rotated_axis_labels()
 ```
 
