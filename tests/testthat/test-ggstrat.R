@@ -396,25 +396,44 @@ test_that("age depth axes work as expected", {
   expect_true(TRUE)
 })
 
+test_that("relative abundance scales", {
+
+  print(
+    ggplot2::ggplot(keji_lakes_plottable, ggplot2::aes(x = rel_abund, y = depth)) +
+      geom_col_segsh() +
+      ggplot2::scale_y_reverse() +
+      ggplot2::facet_grid(location ~ taxon, scales = "free_x", space = "free_x") +
+      rotated_facet_labels() +
+      scale_x_abundance() +
+      ggplot2::labs(caption = "zero-based x scale with minor breaks every 10%")
+  )
+
+  print(
+    ggplot2::ggplot(keji_lakes_plottable, ggplot2::aes(y = rel_abund, x = depth)) +
+      geom_col_segs() +
+      ggplot2::scale_x_reverse() +
+      ggplot2::facet_grid(taxon ~ location, scales = "free_y", space = "free_y") +
+      rotated_facet_labels(direction = "y") +
+      scale_y_abundance() +
+      ggplot2::labs(caption = "zero-based y scale with minor breaks every 10%")
+  )
+
+  # plot-generating tests
+  expect_true(TRUE)
+})
+
 test_that("horizontal and vertical segment geometries look as they should", {
   test_data <- data.frame(a = 1:20, b = cumsum(rnorm(20)))
   print(
     ggplot2::ggplot(test_data, ggplot2::aes(x = a, y = b)) +
-      geom_vsegments(yend = 1) +
+      geom_col_segs(yend = 1) +
       ggplot2::geom_path() +
       ggplot2::labs(caption = "vertical segments starting at 1")
   )
 
   print(
     ggplot2::ggplot(test_data, ggplot2::aes(x = b, y = a)) +
-      geom_hsegments(xend = 1) +
-      ggplot2::geom_path() +
-      ggplot2::labs(caption = "horizontal segments starting at 1")
-  )
-
-  print(
-    ggplot2::ggplot(test_data, ggplot2::aes(x = b, y = a)) +
-      geom_colh() +
+      geom_col_segsh(xend = 1) +
       ggplot2::geom_path() +
       ggplot2::labs(caption = "horizontal segments starting at 1")
   )

@@ -12,7 +12,10 @@ vignette: >
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  fig.height = 3,
+  fig.width = 5,
+  dpi = 150
 )
 ```
 
@@ -60,18 +63,19 @@ data("keji_lakes_plottable")
 keji_lakes_plottable
 ```
 
-```{r}
+```{r, fig.height=6}
 ggplot(keji_lakes_plottable, aes(x = rel_abund, y = depth)) +
-  geom_hsegments() +
+  geom_col_segsh() +
   scale_y_reverse() +
-  scale_x_continuous(breaks = seq(10, 100, 30)) +
+  scale_x_abundance() +
   facet_grid(location ~ taxon, scales = "free_x", space = "free_x") +
   rotated_facet_labels()
 ```
 
 ```{r}
 ggplot(halifax_lakes_plottable, aes(x = rel_abund, y = location, fill = sample_type)) +
-  geom_colh(width = 0.5) +
+  geom_colh(width = 0.5, position = "dodgev") +
+  scale_x_abundance(minor_breaks = seq(0, 100, 10)) +
   facet_grid(~taxon, scales = "free_x", space = "free_x") +
-  rotated_facet_labels()
+  rotated_facet_labels() 
 ```

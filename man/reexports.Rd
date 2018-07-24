@@ -6,6 +6,8 @@
 \alias{position_dodge2v}
 \alias{reexports}
 \alias{position_dodgev}
+\alias{reexports}
+\alias{geom_colh}
 \title{Objects exported from other packages}
 \keyword{internal}
 \description{
@@ -13,6 +15,6 @@ These objects are imported from other packages. Follow the links
 below to see their documentation.
 
 \describe{
-  \item{ggstance}{\code{\link[ggstance]{position_dodge2v}}, \code{\link[ggstance]{position_dodgev}}}
+  \item{ggstance}{\code{\link[ggstance]{position_dodge2v}}, \code{\link[ggstance]{position_dodgev}}, \code{\link[ggstance]{geom_colh}}}
 }}
 

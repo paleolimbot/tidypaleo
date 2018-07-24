@@ -8,7 +8,7 @@
 #' @return A ggplot2 layer
 #' @export
 #'
-geom_hsegments <- function(mapping = NULL, data = NULL,
+geom_col_segsh <- function(mapping = NULL, data = NULL,
                             stat = "identity", position = "identity",
                             ...,
                             xend = 0,
@@ -23,7 +23,7 @@ geom_hsegments <- function(mapping = NULL, data = NULL,
     data = data,
     mapping = mapping,
     stat = stat,
-    geom = GeomHsegments,
+    geom = GeomColSegsh,
     position = position,
     show.legend = show.legend,
     inherit.aes = inherit.aes,
@@ -39,9 +39,9 @@ geom_hsegments <- function(mapping = NULL, data = NULL,
   )
 }
 
-#' @rdname geom_hsegments
+#' @rdname geom_col_segsh
 #' @export
-geom_vsegments <- function(mapping = NULL, data = NULL,
+geom_col_segs <- function(mapping = NULL, data = NULL,
                             stat = "identity", position = "identity",
                             ...,
                             yend = 0,
@@ -56,7 +56,7 @@ geom_vsegments <- function(mapping = NULL, data = NULL,
     data = data,
     mapping = mapping,
     stat = stat,
-    geom = GeomVsegments,
+    geom = GeomColSegs,
     position = position,
     show.legend = show.legend,
     inherit.aes = inherit.aes,
@@ -72,10 +72,10 @@ geom_vsegments <- function(mapping = NULL, data = NULL,
   )
 }
 
-#' @rdname geom_hsegments
+#' @rdname geom_col_segsh
 #' @export
-GeomHsegments <- ggplot2::ggproto(
-  "GeomHsegments",
+GeomColSegsh <- ggplot2::ggproto(
+  "GeomColSegsh",
   ggplot2::GeomSegment,
   required_aes = c("x", "y"),
   default_aes = ggplot2::aes(xend = 0, yend = 0, colour = "black", size = 0.5, linetype = 1, alpha = NA),
@@ -97,10 +97,10 @@ GeomHsegments <- ggplot2::ggproto(
   }
 )
 
-#' @rdname geom_hsegments
+#' @rdname geom_col_segsh
 #' @export
-GeomVsegments <- ggplot2::ggproto(
-  "GeomVsegments",
+GeomColSegs <- ggplot2::ggproto(
+  "GeomColSegs",
   ggplot2::GeomSegment,
   required_aes = c("x", "y"),
   default_aes = ggplot2::aes(xend = 0, yend = 0, colour = "black", size = 0.5, linetype = 1, alpha = NA),
@@ -122,31 +122,6 @@ GeomVsegments <- ggplot2::ggproto(
   }
 )
 
-#' Horizontal bar geometry
-#'
-#' Differs from ggstance::\link[ggstance]{geom_colh} by setting the default position
-#' to dodge rather than stack, which is more likely to be useful in a stratigraphic context
-#'
-#' @param mapping,data,position,...,width,na.rm,show.legend,inherit.aes See
-#'   \link[ggstance]{geom_colh}
-#'
-#' @return A ggplot2 layer
-#' @export
-#'
-geom_colh <- function(mapping = NULL, data = NULL, position = "dodgev", ...,
-                      width = NULL, na.rm = FALSE, show.legend = NA, inherit.aes = TRUE) {
-  ggstance::geom_colh(
-    mapping = mapping,
-    data = data,
-    position = position,
-    ...,
-    width = width,
-    na.rm = na.rm,
-    show.legend = show.legend,
-    inherit.aes = inherit.aes
-  )
-}
-
 #' @importFrom ggstance position_dodge2v
 #' @export
 ggstance::position_dodge2v
@@ -155,6 +130,36 @@ ggstance::position_dodge2v
 #' @export
 ggstance::position_dodgev
 
+#' @importFrom ggstance geom_colh
+#' @export
+ggstance::geom_colh
+
+#' Scales for relative abundance values
+#'
+#' Continuous scales that (1) always start at 0, (2) always have the same breaks, and
+#' (3) expand using a constant rather than a percentage. These scales assume that data are
+#' in percentages (i.e., range 0 to 100 rather than 0 to 1).
+#'
+#' @param ... Passed to \link[ggplot2]{scale_y_continuous} or \link[ggplot2]{scale_x_continuous}
+#' @param limits Limits for the scale
+#' @param breaks Where to place labels on the scale
+#' @param minor_breaks Where to place minor breaks
+#' @param expand A vector of expantion constants
+#'
+#' @return A \link[ggplot2]{scale_y_continuous} or \link[ggplot2]{scale_x_continuous}
+#' @export
+#'
+scale_x_abundance <- function(..., limits = c(0, NA), breaks = seq(10, 90, 30),
+                              minor_breaks = seq(0, 100, 10), expand = c(0, 1)) {
+  ggplot2::scale_x_continuous(..., limits = limits, breaks = breaks, expand = expand, minor_breaks = minor_breaks)
+}
+
+#' @rdname scale_x_abundance
+#' @export
+scale_y_abundance <- function(..., limits = c(0, NA), breaks = seq(10, 90, 30),
+                              minor_breaks = seq(0, 100, 10), expand = c(0, 1)) {
+  ggplot2::scale_y_continuous(..., limits = limits, breaks = breaks, expand = expand, minor_breaks = minor_breaks)
+}
 
 
 
