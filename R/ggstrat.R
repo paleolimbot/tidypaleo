@@ -122,6 +122,42 @@ GeomVsegments <- ggplot2::ggproto(
   }
 )
 
+#' Horizontal bar geometry
+#'
+#' Differs from ggstance::\link[ggstance]{geom_colh} by setting the default position
+#' to dodge rather than stack, which is more likely to be useful in a stratigraphic context
+#'
+#' @param mapping,data,position,...,width,na.rm,show.legend,inherit.aes See
+#'   \link[ggstance]{geom_colh}
+#'
+#' @return A ggplot2 layer
+#' @export
+#'
+geom_colh <- function(mapping = NULL, data = NULL, position = "dodgev", ...,
+                      width = NULL, na.rm = FALSE, show.legend = NA, inherit.aes = TRUE) {
+  ggstance::geom_colh(
+    mapping = mapping,
+    data = data,
+    position = position,
+    ...,
+    width = width,
+    na.rm = na.rm,
+    show.legend = show.legend,
+    inherit.aes = inherit.aes
+  )
+}
+
+#' @importFrom ggstance position_dodge2v
+#' @export
+ggstance::position_dodge2v
+
+#' @importFrom ggstance position_dodgev
+#' @export
+ggstance::position_dodgev
+
+
+
+
 #' Age-depth scales
 #'
 #' @param model An age-depth model, or NULL to suppress the second axis

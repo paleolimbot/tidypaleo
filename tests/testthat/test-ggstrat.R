@@ -412,6 +412,13 @@ test_that("horizontal and vertical segment geometries look as they should", {
       ggplot2::labs(caption = "horizontal segments starting at 1")
   )
 
+  print(
+    ggplot2::ggplot(test_data, ggplot2::aes(x = b, y = a)) +
+      geom_colh() +
+      ggplot2::geom_path() +
+      ggplot2::labs(caption = "horizontal segments starting at 1")
+  )
+
   # plot-generating tests
   expect_true(TRUE)
 })

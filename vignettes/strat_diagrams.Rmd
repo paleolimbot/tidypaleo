@@ -68,3 +68,10 @@ ggplot(keji_lakes_plottable, aes(x = rel_abund, y = depth)) +
   facet_grid(location ~ taxon, scales = "free_x", space = "free_x") +
   rotated_facet_labels()
 ```
+
+```{r}
+ggplot(halifax_lakes_plottable, aes(x = rel_abund, y = location, fill = sample_type)) +
+  geom_colh(width = 0.5) +
+  facet_grid(~taxon, scales = "free_x", space = "free_x") +
+  rotated_facet_labels()
+```
