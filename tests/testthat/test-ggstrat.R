@@ -174,7 +174,8 @@ test_that("facet label rotating works properly", {
     p +
       ggplot2::facet_grid(facet2 ~ facet, switch = "both") +
       rotated_facet_labels(45, direction = "x") +
-      ggplot2::labs(caption = "only x rotated by 45 degrees with no strip background (lack of clip on left is not our fault ggplot2 #2772...)")
+      ggplot2::labs(
+        caption = "only x rotated by 45 degrees with no strip background (lack of clip on left is not our fault ggplot2 #2772...)")
   )
 
   print(
@@ -325,6 +326,90 @@ test_that("axis label rotating works properly", {
     p +
       rotated_axis_labels(-45, direction = c("x", "y")) +
       ggplot2::labs(caption = "axis labels rotated by 90 degrees, text aligned naturally")
+  )
+
+  # plot-generating tests
+  expect_true(TRUE)
+})
+
+test_that("age depth axes work as expected", {
+
+  adm_ident <- age_depth_model(depth = 1:10, age = -(1:10))
+  test_data <- data.frame(depth = 1:20, age = -(1:20), value = cumsum(rnorm(20)))
+  py <- ggplot2::ggplot(test_data, ggplot2::aes(y = depth, x = value)) + ggplot2::geom_path()
+  px <- ggplot2::ggplot(test_data, ggplot2::aes(y = value, x = depth)) + ggplot2::geom_path()
+
+  print(
+    py + scale_y_depth_age(adm_ident, age_name = "age axis", age_breaks = seq(0, -20, -4)) +
+      ggplot2::labs(caption = "reversed y axis, negative age axis with name, non-standard breaks")
+  )
+
+  print(
+    px + scale_x_depth_age(adm_ident, age_name = "age axis", age_breaks = seq(0, -20, -4)) +
+      ggplot2::labs(caption = "reversed x axis, negative age axis with name, non-standard breaks")
+  )
+
+  print(
+    py + scale_y_depth_age(NULL) +
+      ggplot2::labs(caption = "reversed y axis, no age axis")
+  )
+
+  print(
+    px + scale_x_depth_age(NULL) +
+      ggplot2::labs(caption = "reversed x axis, no age axis")
+  )
+
+  py <- ggplot2::ggplot(test_data, ggplot2::aes(y = age, x = value)) + ggplot2::geom_path()
+  px <- ggplot2::ggplot(test_data, ggplot2::aes(y = value, x = age)) + ggplot2::geom_path()
+
+  print(
+    py + scale_y_age_depth(adm_ident, depth_name = "depth axis", depth_breaks = seq(0, 20, 4)) +
+      ggplot2::labs(caption = "normal y axis, negative depth axis with name, non-standard breaks")
+  )
+
+  print(
+    px + scale_x_age_depth(adm_ident, depth_name = "depth axis", depth_breaks = seq(0, 20, 4)) +
+      ggplot2::labs(caption = "normal x axis, negative age axis with name, non-standard breaks")
+  )
+
+  print(
+    py + scale_y_age_depth(NULL) +
+      ggplot2::labs(caption = "normal y axis, no age axis")
+  )
+
+  print(
+    py + scale_y_age_depth(NULL, reversed = TRUE) +
+      ggplot2::labs(caption = "reversed y axis, no age axis")
+  )
+
+  print(
+    px + scale_x_age_depth(NULL) +
+      ggplot2::labs(caption = "normal x axis, no age axis")
+  )
+
+  print(
+    px + scale_x_age_depth(NULL, reversed = TRUE) +
+      ggplot2::labs(caption = "reversed x axis, no age axis")
+  )
+
+  # plot-generating tests
+  expect_true(TRUE)
+})
+
+test_that("horizontal and vertical segment geometries look as they should", {
+  test_data <- data.frame(a = 1:20, b = cumsum(rnorm(20)))
+  print(
+    ggplot2::ggplot(test_data, ggplot2::aes(x = a, y = b)) +
+      geom_vsegments(yend = 1) +
+      ggplot2::geom_path() +
+      ggplot2::labs(caption = "vertical segments starting at 1")
+  )
+
+  print(
+    ggplot2::ggplot(test_data, ggplot2::aes(x = b, y = a)) +
+      geom_hsegments(xend = 1) +
+      ggplot2::geom_path() +
+      ggplot2::labs(caption = "horizontal segments starting at 1")
   )
 
   # plot-generating tests

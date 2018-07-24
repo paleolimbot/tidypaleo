@@ -1,4 +1,173 @@
 
+#' Useful geometries for strat diagrams
+#'
+#' @param mapping,data,stat,position,arrow,arrow.fill,lineend,linejoin,na.rm,show.legend,inherit.aes,... See
+#'   \link[ggplot2]{geom_segment}.
+#' @param xend,yend The end of the horizontal or vertical segment bars, respectively.
+#'
+#' @return A ggplot2 layer
+#' @export
+#'
+geom_hsegments <- function(mapping = NULL, data = NULL,
+                            stat = "identity", position = "identity",
+                            ...,
+                            xend = 0,
+                            arrow = NULL,
+                            arrow.fill = NULL,
+                            lineend = "butt",
+                            linejoin = "round",
+                            na.rm = FALSE,
+                            show.legend = NA,
+                            inherit.aes = TRUE) {
+  ggplot2::layer(
+    data = data,
+    mapping = mapping,
+    stat = stat,
+    geom = GeomHsegments,
+    position = position,
+    show.legend = show.legend,
+    inherit.aes = inherit.aes,
+    params = list(
+      arrow = arrow,
+      arrow.fill = arrow.fill,
+      lineend = lineend,
+      linejoin = linejoin,
+      na.rm = na.rm,
+      xend = xend,
+      ...
+    )
+  )
+}
+
+#' @rdname geom_hsegments
+#' @export
+geom_vsegments <- function(mapping = NULL, data = NULL,
+                            stat = "identity", position = "identity",
+                            ...,
+                            yend = 0,
+                            arrow = NULL,
+                            arrow.fill = NULL,
+                            lineend = "butt",
+                            linejoin = "round",
+                            na.rm = FALSE,
+                            show.legend = NA,
+                            inherit.aes = TRUE) {
+  ggplot2::layer(
+    data = data,
+    mapping = mapping,
+    stat = stat,
+    geom = GeomVsegments,
+    position = position,
+    show.legend = show.legend,
+    inherit.aes = inherit.aes,
+    params = list(
+      arrow = arrow,
+      arrow.fill = arrow.fill,
+      lineend = lineend,
+      linejoin = linejoin,
+      na.rm = na.rm,
+      yend = yend,
+      ...
+    )
+  )
+}
+
+#' @rdname geom_hsegments
+#' @export
+GeomHsegments <- ggplot2::ggproto(
+  "GeomHsegments",
+  ggplot2::GeomSegment,
+  required_aes = c("x", "y"),
+  default_aes = ggplot2::aes(xend = 0, yend = 0, colour = "black", size = 0.5, linetype = 1, alpha = NA),
+
+  draw_panel = function(self, data, panel_params, coord, arrow = NULL, arrow.fill = NULL,
+                        lineend = "butt", linejoin = "round", na.rm = FALSE) {
+    data$yend <- data$y
+
+    ggplot2::ggproto_parent(ggplot2::GeomSegment, self)$draw_panel(
+      data = data,
+      panel_params = panel_params,
+      coord = coord,
+      arrow = arrow,
+      arrow.fill = arrow.fill,
+      lineend = lineend,
+      linejoin = linejoin,
+      na.rm = na.rm
+    )
+  }
+)
+
+#' @rdname geom_hsegments
+#' @export
+GeomVsegments <- ggplot2::ggproto(
+  "GeomVsegments",
+  ggplot2::GeomSegment,
+  required_aes = c("x", "y"),
+  default_aes = ggplot2::aes(xend = 0, yend = 0, colour = "black", size = 0.5, linetype = 1, alpha = NA),
+
+  draw_panel = function(self, data, panel_params, coord, arrow = NULL, arrow.fill = NULL,
+                        lineend = "butt", linejoin = "round", na.rm = FALSE) {
+    data$xend <- data$x
+
+    ggplot2::ggproto_parent(ggplot2::GeomSegment, self)$draw_panel(
+      data = data,
+      panel_params = panel_params,
+      coord = coord,
+      arrow = arrow,
+      arrow.fill = arrow.fill,
+      lineend = lineend,
+      linejoin = linejoin,
+      na.rm = na.rm
+    )
+  }
+)
+
+#' Age-depth scales
+#'
+#' @param model An age-depth model, or NULL to suppress the second axis
+#' @param reversed Reverse the primary age axis (for years BP or similar)
+#' @param age_name,depth_name Label for the second axis
+#' @param age_breaks,depth_breaks Breaks for the second axis
+#' @param ... Passed to \link[ggplot2]{scale_y_continuous} or \link[ggplot2]{scale_x_continuous}
+#'
+#' @return A \link[ggplot2]{scale_y_continuous} or \link[ggplot2]{scale_x_continuous}
+#' @export
+#' @importFrom ggplot2 waiver
+#'
+scale_y_depth_age <- function(model = NULL, age_name = "age", age_breaks = waiver(), ...) {
+  second_axis <- age_depth_as_sec_axis(model, primary = "depth", name = age_name, breaks = age_breaks)
+  ggplot2::scale_y_reverse(..., sec.axis = second_axis)
+}
+
+#' @rdname scale_y_depth_age
+#' @export
+scale_y_age_depth <- function(model = NULL, reversed = FALSE, depth_name = "depth", depth_breaks = waiver(), ...) {
+  second_axis <- age_depth_as_sec_axis(model, primary = "age", name = depth_name, breaks = depth_breaks)
+  if(reversed) {
+    ggplot2::scale_y_reverse(..., sec.axis = second_axis)
+  } else {
+    ggplot2::scale_y_continuous(..., sec.axis = second_axis)
+  }
+}
+
+#' @rdname scale_y_depth_age
+#' @export
+scale_x_depth_age <- function(model = NULL, age_name = "age", age_breaks = waiver(), ...) {
+  second_axis <- age_depth_as_sec_axis(model, primary = "depth", name = age_name, breaks = age_breaks)
+  ggplot2::scale_x_reverse(..., sec.axis = second_axis)
+}
+
+#' @rdname scale_y_depth_age
+#' @export
+scale_x_age_depth <- function(model = NULL, reversed = FALSE, depth_name = "depth", depth_breaks = waiver(), ...) {
+  second_axis <- age_depth_as_sec_axis(model, primary = "age", name = depth_name, breaks = depth_breaks)
+  if(reversed) {
+    ggplot2::scale_x_reverse(..., sec.axis = second_axis)
+  } else {
+    ggplot2::scale_x_continuous(..., sec.axis = second_axis)
+  }
+}
+
 #' Common plot modifications for stratigraphic plots
 #'
 #' @param angle The angle at which labels should be rotated

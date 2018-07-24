@@ -100,7 +100,7 @@ keji_lakes_plottable <- keji_lakes %>%
   rename(count = value) %>%
 
   # select only 5 most common taxa
-  mutate(taxon = fct_reorder(param, -rel_abund, mean) %>% fct_lump(5)) %>%
+  mutate(taxon = fct_lump(param, 5, w = rel_abund)) %>%
   group_by(location, depth, taxon) %>%
   summarise(count = sum(count), rel_abund = sum(rel_abund)) %>%
   ungroup()
@@ -188,7 +188,7 @@ halifax_lakes_plottable <- halifax_lakes %>%
   rename(count = value) %>%
 
   # select only 5 most common taxa
-  mutate(taxon = fct_reorder(param, -rel_abund, mean) %>% fct_lump(5)) %>%
+  mutate(taxon = fct_lump(param, 5, w = rel_abund)) %>%
   group_by(location, sample_type, taxon) %>%
   summarise(count = sum(count), rel_abund = sum(rel_abund)) %>%
   ungroup()

@@ -25,7 +25,7 @@ theme_set(theme_bw())
 ## Geochemical stratigraphic plots
 
 ```{r}
-data(alta_lake_geochem)
+data("alta_lake_geochem")
 alta_lake_geochem
 ```
 
@@ -38,3 +38,33 @@ ggplot(alta_lake_geochem, aes(x = value, y = depth)) +
   rotated_axis_labels()
 ```
 
+```{r}
+alta_adm <- age_depth_model(
+  alta_lake_bacon_ages, 
+  depth = depth_cm,
+  age = 1950 - age_weighted_mean_year_BP
+)
+
+ggplot(alta_lake_geochem, aes(x = value, y = depth)) +
+  geom_path() +
+  geom_point() +
+  scale_y_reverse(sec.axis = age_depth_as_sec_axis(alta_adm)) +
+  facet_wrap(~param, scales = "free_x", nrow = 1) +
+  rotated_axis_labels()
+```
+
+## Species abundance stratigraphic plots
+
+```{r}
+data("keji_lakes_plottable")
+keji_lakes_plottable
+```
+
+```{r}
+ggplot(keji_lakes_plottable, aes(x = rel_abund, y = depth)) +
+  geom_hsegments() +
+  scale_y_reverse() +
+  scale_x_continuous(breaks = seq(10, 100, 30)) +
+  facet_grid(location ~ taxon, scales = "free_x", space = "free_x") +
+  rotated_facet_labels()
+```

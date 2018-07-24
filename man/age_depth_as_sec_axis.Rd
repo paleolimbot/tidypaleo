@@ -4,7 +4,7 @@
 \alias{age_depth_as_sec_axis}
 \title{Use Age Depth Models as a Second ggplot Axis}
 \usage{
-age_depth_as_sec_axis(x, primary = c("depth", "age"))
+age_depth_as_sec_axis(x, primary = c("depth", "age"), ...)
 }
 \arguments{
 \item{x}{An \link{age_depth_model}}
@@ -29,7 +29,7 @@ alta_lake_adm <- age_depth_model(
 )
 
 ggplot(alta_lake_210Pb_ages, aes(y = depth_cm, x = age_year_ad)) +
-  geom_line() +
+  geom_path() +
   geom_point() +
   scale_y_reverse(sec.axis = age_depth_as_sec_axis(alta_lake_adm))
 

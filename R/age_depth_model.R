@@ -532,16 +532,22 @@ verify_length <- function(x, y, n = 2) {
 #' )
 #'
 #' ggplot(alta_lake_210Pb_ages, aes(y = depth_cm, x = age_year_ad)) +
-#'   geom_line() +
+#'   geom_path() +
 #'   geom_point() +
 #'   scale_y_reverse(sec.axis = age_depth_as_sec_axis(alta_lake_adm))
 #'
-age_depth_as_sec_axis <- function(x, primary = c("depth", "age")) {
+age_depth_as_sec_axis <- function(x, primary = c("depth", "age"), ...) {
   primary <- match.arg(primary)
+
+  # if NULL, return the default arg for continuous scales sec.axis
+  if(is.null(x)) {
+    return(ggplot2::waiver())
+  }
+
   . <- NULL; rm(.) # no other way to create a second axis than with a .
   if(primary == "depth") {
-    ggplot2::sec_axis(trans = ~predict(x, depth = .)$age)
+    ggplot2::sec_axis(trans = ~predict(x, depth = .)$age, ...)
   } else {
-    ggplot2::sec_axis(trans = ~predict(x, age = .)$depth)
+    ggplot2::sec_axis(trans = ~predict(x, age = .)$depth, ...)
   }
 }
