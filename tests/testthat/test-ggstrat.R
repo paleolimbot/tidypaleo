@@ -443,3 +443,23 @@ test_that("horizontal and vertical segment geometries look as they should", {
   # plot-generating tests
   expect_true(TRUE)
 })
+
+test_that("facet_abundanceh? shortcuts work as expected", {
+
+  print(
+    ggplot2::ggplot(keji_lakes_plottable, ggplot2::aes(y = rel_abund, x = depth)) +
+      geom_col_segs() +
+      ggplot2::scale_x_reverse() +
+      facet_abundance(vars(taxon), vars(location)) +
+      ggplot2::labs(caption = "zero-based fixed-space y scale with minor breaks every 10%")
+  )
+
+  print(
+    ggplot2::ggplot(keji_lakes_plottable, ggplot2::aes(x = rel_abund, y = depth)) +
+      geom_col_segsh() +
+      ggplot2::scale_y_reverse() +
+      facet_abundanceh(vars(taxon), vars(location)) +
+      ggplot2::labs(caption = "zero-based fixed-space x scale with minor breaks every 10%")
+  )
+
+})

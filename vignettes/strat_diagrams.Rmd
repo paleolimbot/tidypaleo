@@ -51,7 +51,7 @@ alta_adm <- age_depth_model(
 ggplot(alta_lake_geochem, aes(x = value, y = depth)) +
   geom_path() +
   geom_point() +
-  scale_y_reverse(sec.axis = age_depth_as_sec_axis(alta_adm)) +
+  scale_y_depth_age(alta_adm) +
   facet_wrap(~param, scales = "free_x", nrow = 1) +
   rotated_axis_labels()
 ```
@@ -67,15 +67,11 @@ keji_lakes_plottable
 ggplot(keji_lakes_plottable, aes(x = rel_abund, y = depth)) +
   geom_col_segsh() +
   scale_y_reverse() +
-  scale_x_abundance() +
-  facet_grid(location ~ taxon, scales = "free_x", space = "free_x") +
-  rotated_facet_labels()
+  facet_abundanceh(vars(taxon), grouping = vars(location))
 ```
 
 ```{r}
 ggplot(halifax_lakes_plottable, aes(x = rel_abund, y = location, fill = sample_type)) +
   geom_colh(width = 0.5, position = "dodgev") +
-  scale_x_abundance(minor_breaks = seq(0, 100, 10)) +
-  facet_grid(~taxon, scales = "free_x", space = "free_x") +
-  rotated_facet_labels() 
+  facet_abundanceh(vars(taxon))
 ```

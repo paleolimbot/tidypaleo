@@ -1,4 +1,34 @@
 
+#' Facet for relative abundance data
+#'
+#' @param taxon A call to \link[ggplot2]{vars}, defining the column that identifies the taxon.
+#' @param grouping  A call to \link[ggplot2]{vars}, identifying additional grouping columns
+#' @param rotate_facet_labels Facet label rotation (degrees)
+#'
+#' @export
+#'
+facet_abundanceh <- function(taxon, grouping = NULL, rotate_facet_labels = 45) {
+  list(
+    scale_x_abundance(),
+    ggplot2::facet_grid(rows = grouping, cols = taxon, scales = "free_x", space = "free_x"),
+    rotated_facet_labels(angle = rotate_facet_labels, direction = "x")
+  )
+}
+
+#' @rdname facet_abundanceh
+#' @export
+facet_abundance <- function(taxon, grouping = NULL, rotate_facet_labels = 0) {
+  list(
+    scale_y_abundance(),
+    ggplot2::facet_grid(rows = taxon, cols = grouping, scales = "free_y", space = "free_y"),
+    rotated_facet_labels(angle = rotate_facet_labels, direction = "y")
+  )
+}
+
+#' @importFrom ggplot2 vars
+#' @export
+ggplot2::vars
+
 #' Useful geometries for strat diagrams
 #'
 #' @param mapping,data,stat,position,arrow,arrow.fill,lineend,linejoin,na.rm,show.legend,inherit.aes,... See

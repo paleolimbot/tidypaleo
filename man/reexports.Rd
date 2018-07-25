@@ -3,6 +3,8 @@
 \docType{import}
 \name{reexports}
 \alias{reexports}
+\alias{vars}
+\alias{reexports}
 \alias{position_dodge2v}
 \alias{reexports}
 \alias{position_dodgev}
@@ -15,6 +17,8 @@ These objects are imported from other packages. Follow the links
 below to see their documentation.
 
 \describe{
+  \item{ggplot2}{\code{\link[ggplot2]{vars}}}
+
   \item{ggstance}{\code{\link[ggstance]{position_dodge2v}}, \code{\link[ggstance]{position_dodgev}}, \code{\link[ggstance]{geom_colh}}}
 }}
 
