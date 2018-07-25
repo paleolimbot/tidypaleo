@@ -6,6 +6,7 @@
 \alias{geom_col_segs}
 \alias{GeomColSegsh}
 \alias{GeomColSegs}
+\alias{GeomLineh}
 \title{Useful geometries for strat diagrams}
 \format{An object of class \code{GeomColSegsh} (inherits from \code{GeomSegment}, \code{Geom}, \code{ggproto}, \code{gg}) of length 4.}
 \usage{
@@ -22,6 +23,8 @@ geom_col_segs(mapping = NULL, data = NULL, stat = "identity",
 GeomColSegsh
 
 GeomColSegs
+
+GeomLineh
 }
 \arguments{
 \item{mapping, data, stat, position, arrow, arrow.fill, lineend, linejoin, na.rm, show.legend, inherit.aes, ...}{See

@@ -424,18 +424,20 @@ test_that("relative abundance scales", {
 
 test_that("horizontal and vertical segment geometries look as they should", {
   test_data <- data.frame(a = 1:20, b = cumsum(rnorm(20)))
+  test_data <- dplyr::sample_n(test_data, 20, replace = FALSE)
+
   print(
     ggplot2::ggplot(test_data, ggplot2::aes(x = a, y = b)) +
       geom_col_segs(yend = 1) +
-      ggplot2::geom_path() +
-      ggplot2::labs(caption = "vertical segments starting at 1")
+      ggplot2::geom_line() +
+      ggplot2::labs(caption = "vertical segments starting at 1, path geom in x order")
   )
 
   print(
     ggplot2::ggplot(test_data, ggplot2::aes(x = b, y = a)) +
       geom_col_segsh(xend = 1) +
-      ggplot2::geom_path() +
-      ggplot2::labs(caption = "horizontal segments starting at 1")
+      geom_lineh() +
+      ggplot2::labs(caption = "horizontal segments starting at 1, path geom in y order")
   )
 
   # plot-generating tests

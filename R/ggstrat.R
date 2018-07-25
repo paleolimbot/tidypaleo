@@ -122,6 +122,42 @@ GeomColSegs <- ggplot2::ggproto(
   }
 )
 
+#' Connect observations in the vertical direction
+#'
+#' @param mapping,data,stat,position,na.rm,show.legend,inherit.aes,... See
+#' \link[ggplot2]{geom_line}.
+#'
+#' @return A ggplot2 layer.
+#' @export
+#'
+geom_lineh <- function(mapping = NULL, data = NULL, stat = "identity",
+                       position = "identity", na.rm = FALSE,
+                       show.legend = NA, inherit.aes = TRUE, ...) {
+  ggplot2::layer(
+    data = data,
+    mapping = mapping,
+    stat = stat,
+    geom = GeomLineh,
+    position = position,
+    show.legend = show.legend,
+    inherit.aes = inherit.aes,
+    params = list(
+      na.rm = na.rm,
+      ...
+    )
+  )
+}
+
+#' @rdname geom_col_segsh
+#' @export
+GeomLineh <- ggplot2::ggproto(
+  "GeomLineh",
+  ggplot2::GeomPath,
+  setup_data = function(data, params) {
+    data[order(data$PANEL, data$group, data$y), ]
+  }
+)
+
 #' @importFrom ggstance position_dodge2v
 #' @export
 ggstance::position_dodge2v
