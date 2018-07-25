@@ -451,7 +451,7 @@ test_that("facet_abundanceh? shortcuts work as expected", {
       geom_col_segs() +
       ggplot2::scale_x_reverse() +
       facet_abundance(vars(taxon), vars(location)) +
-      ggplot2::labs(caption = "zero-based fixed-space y scale with minor breaks every 10%")
+      ggplot2::labs(caption = "zero-based fixed-space y scale with minor breaks every 10%, partial italics on facets")
   )
 
   print(
@@ -459,7 +459,53 @@ test_that("facet_abundanceh? shortcuts work as expected", {
       geom_col_segsh() +
       ggplot2::scale_y_reverse() +
       facet_abundanceh(vars(taxon), vars(location)) +
-      ggplot2::labs(caption = "zero-based fixed-space x scale with minor breaks every 10%")
+      ggplot2::labs(caption = "zero-based fixed-space x scale with minor breaks every 10%, partial italics on facets")
   )
 
+  print(
+    ggplot2::ggplot(keji_lakes_plottable, ggplot2::aes(x = rel_abund, y = depth)) +
+      geom_col_segsh() +
+      ggplot2::scale_y_reverse() +
+      facet_abundanceh(vars(taxon), vars(location), labeller = ggplot2::label_value) +
+      ggplot2::labs(caption = "zero-based fixed-space x scale with minor breaks every 10%, no italics on facets")
+  )
+
+  expect_true(TRUE)
+})
+
+test_that("Species italicizer works as planned", {
+  test_data <- data.frame(
+    x = 1,
+    y = 1,
+    species = c(
+      "Thinger sp.", "Thinger spp.", "Thinger thinger",
+      "Thinger thinger (nope)", "Thinger thinger-complex"
+    ),
+    not_species = "Contain's \"weird\" ~things "
+  )
+
+  print(
+    ggplot2::ggplot(test_data, ggplot2::aes(x, y)) +
+      ggplot2::geom_point() +
+      ggplot2::facet_wrap(vars(species, not_species), labeller = label_species) +
+      ggplot2::labs(caption = "partially italicised strip 1, non-italicized strip 2")
+  )
+
+  print(
+    ggplot2::ggplot(test_data, ggplot2::aes(x, y)) +
+      ggplot2::geom_point() +
+      ggplot2::facet_grid(cols = vars(species), rows = vars(not_species),
+                          labeller = function(...) label_species(..., species_facet = "species")) +
+      ggplot2::labs(caption = "partially italicised strip top, non-italicized strip right")
+  )
+
+  print(
+    ggplot2::ggplot(test_data, ggplot2::aes(x, y)) +
+      ggplot2::geom_point() +
+      ggplot2::facet_grid(rows = vars(species), cols = vars(not_species),
+                          labeller = function(...) label_species(..., species_facet = "species")) +
+      ggplot2::labs(caption = "partially italicised strip right, non-italicized strip top")
+  )
+
+  expect_true(TRUE)
 })

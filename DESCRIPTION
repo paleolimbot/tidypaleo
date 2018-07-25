@@ -24,5 +24,6 @@ Imports: rlang,
     styler,
     purrr,
     ggstance,
+    stringr,
     grid
 VignetteBuilder: knitr

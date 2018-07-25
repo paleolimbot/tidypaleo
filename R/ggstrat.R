@@ -4,30 +4,146 @@
 #' @param taxon A call to \link[ggplot2]{vars}, defining the column that identifies the taxon.
 #' @param grouping  A call to \link[ggplot2]{vars}, identifying additional grouping columns
 #' @param rotate_facet_labels Facet label rotation (degrees)
+#' @param labeller Labeller to process facet names. Use \link{label_species} to italicize
+#'   species names, or \link[ggplot2]{label_value} to suppress.
+#' @param ... Passed to \link[ggplot2]{facet_grid}.
 #'
 #' @export
 #'
-facet_abundanceh <- function(taxon, grouping = NULL, rotate_facet_labels = 45) {
+facet_abundanceh <- function(taxon, grouping = NULL, rotate_facet_labels = 45, labeller = label_species, ...) {
+
+  # must be created by vars()
+  stopifnot(
+    all(vapply(taxon, rlang::is_quosure, logical(1)))
+  )
+
+  # set the labeller to partially italicise species names
+  if(identical(labeller, label_species)) {
+    taxon_facet_name <- vapply(taxon, rlang::quo_name, character(1))
+    labeller <- function(...) label_species(..., species_facet = taxon_facet_name)
+  }
+
   list(
     scale_x_abundance(),
-    ggplot2::facet_grid(rows = grouping, cols = taxon, scales = "free_x", space = "free_x"),
-    rotated_facet_labels(angle = rotate_facet_labels, direction = "x")
+    ggplot2::facet_grid(rows = grouping, cols = taxon, scales = "free_x", space = "free_x", labeller = labeller, ...),
+    rotated_facet_labels(angle = rotate_facet_labels, direction = "x"),
+    ggplot2::labs(x = "Relative abundance (%)")
   )
 }
 
 #' @rdname facet_abundanceh
 #' @export
-facet_abundance <- function(taxon, grouping = NULL, rotate_facet_labels = 0) {
+facet_abundance <- function(taxon, grouping = NULL, rotate_facet_labels = 0, labeller = label_species, ...) {
+  # must be created by vars()
+  stopifnot(
+    all(vapply(taxon, rlang::is_quosure, logical(1)))
+  )
+
+  # set the labeller to partially italicise species names
+  if(identical(labeller, label_species)) {
+    taxon_facet_name <- vapply(taxon, rlang::quo_name, character(1))
+    labeller <- function(...) label_species(..., species_facet = taxon_facet_name)
+  }
+
   list(
     scale_y_abundance(),
-    ggplot2::facet_grid(rows = taxon, cols = grouping, scales = "free_y", space = "free_y"),
-    rotated_facet_labels(angle = rotate_facet_labels, direction = "y")
+    ggplot2::facet_grid(rows = taxon, cols = grouping, scales = "free_y", space = "free_y", labeller = labeller, ...),
+    rotated_facet_labels(angle = rotate_facet_labels, direction = "y"),
+    ggplot2::labs(x = "Relative abundance (%)")
   )
 }
 
 #' @importFrom ggplot2 vars
 #' @export
 ggplot2::vars
+
+
+#' Facet labellers
+#'
+#' Use these to label species with partial italic formatting. See \link[ggplot2]{label_parsed}.
+#'
+#' @param labels A data.frame of facet label values
+#' @param dont_italicize Regular expressions that should not be italicized
+#' @param species_facet Which facet(s) contain species values
+#' @param multi_line See \link[ggplot2]{label_parsed}
+#'
+#' @export
+label_species <- function(labels, dont_italicize = c("\\(.*?\\)", "spp?\\.", "-complex"),
+                          species_facet = 1, multi_line = TRUE) {
+  stopifnot(
+    is.character(dont_italicize),
+    is.logical(multi_line), length(multi_line) == 1
+  )
+
+  if(is.character(species_facet)) {
+    all_facets <- colnames(labels)
+    # ignore if labels doesn't contain the target facet
+    species_facet <- intersect(species_facet, all_facets)
+  } else if(is.numeric(species_facet)) {
+    all_facets <- seq_along(labels)
+    stopifnot(all(species_facet %in% seq_along(labels)))
+  } else {
+    stop("species_facet must be numeric or character")
+  }
+
+  # apply italic() around specific components
+  for(facet in species_facet) {
+    vals <- labels[[facet]]
+    exprs <- partial_italic_expr(unique(as.character(vals)))
+
+    if(is.factor(vals)) {
+      levs <- levels(vals)
+      labels[[facet]] <- factor(exprs[vals], levels = exprs[levs])
+    } else {
+      labels[[facet]] <- exprs[vals]
+    }
+  }
+
+  # wrap other facets in "" so that label_parsed() doesn't try to parse non-parseable items
+  for(facet in setdiff(all_facets, species_facet)) {
+    escaped <- stringr::str_replace_all(labels[[facet]], '"', '\\\\"')
+    labels[[facet]] <- paste0('"', escaped, '"')
+  }
+
+  ggplot2::label_parsed(labels, multi_line = multi_line)
+}
+
+partial_italic_expr <- function(labs, dont_italicize = c("\\(.*?\\)", "spp?\\.", "-complex")) {
+  not_italics_regex <- paste0("(\\s*", dont_italicize, "\\s*)", collapse = "|")
+
+  stringr::str_view_all(labs, not_italics_regex)
+  locs <- stringr::str_locate_all(labs, not_italics_regex)
+  names(locs) <- labs
+  inv_locs <- lapply(locs, stringr::invert_match)
+  names(inv_locs) <- labs
+
+  locs_df <- dplyr::bind_rows(lapply(locs, as.data.frame), .id = "label")
+  locs_df$pattern <- '"%s"'
+  inv_locs_df <- dplyr::bind_rows(lapply(inv_locs, as.data.frame), .id = "label")
+  inv_locs_df$pattern <- 'italic("%s")'
+
+  labs_df <- dplyr::bind_rows(locs_df, inv_locs_df)
+  labs_df$match <- stringr::str_sub(labs_df$label, labs_df$start, labs_df$end)
+  labs_df <- labs_df[order(labs_df$label, labs_df$start), , drop = FALSE]
+  labs_df <- labs_df[stringr::str_length(labs_df$match) > 0, , drop = FALSE]
+
+  labs_df$match_esc <- stringr::str_replace_all(labs_df$match, '"', '\\\\"')
+  labs_df$label_expr <- sprintf(labs_df$pattern, labs_df$match_esc)
+
+  final_split <- split(labs_df$label_expr, labs_df$label)
+
+  final_chr <- sprintf(
+    "paste(%s)",
+    vapply(
+      final_split,
+      paste,
+      collapse = ", ",
+      FUN.VALUE = character(1)
+    )
+  )
+  names(final_chr) <- names(final_split)
+  final_chr
+}
 
 #' Useful geometries for strat diagrams
 #'

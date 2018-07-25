@@ -5,9 +5,11 @@
 \alias{facet_abundance}
 \title{Facet for relative abundance data}
 \usage{
-facet_abundanceh(taxon, grouping = NULL, rotate_facet_labels = 45)
+facet_abundanceh(taxon, grouping = NULL, rotate_facet_labels = 45,
+  labeller = label_species, ...)
 
-facet_abundance(taxon, grouping = NULL, rotate_facet_labels = 0)
+facet_abundance(taxon, grouping = NULL, rotate_facet_labels = 0,
+  labeller = label_species, ...)
 }
 \arguments{
 \item{taxon}{A call to \link[ggplot2]{vars}, defining the column that identifies the taxon.}
@@ -15,6 +17,11 @@ facet_abundance(taxon, grouping = NULL, rotate_facet_labels = 0)
 \item{grouping}{A call to \link[ggplot2]{vars}, identifying additional grouping columns}
 
 \item{rotate_facet_labels}{Facet label rotation (degrees)}
+
+\item{labeller}{Labeller to process facet names. Use \link{label_species} to italicize
+species names, or \link[ggplot2]{label_value} to suppress.}
+
+\item{...}{Passed to \link[ggplot2]{facet_grid}.}
 }
 \description{
 Facet for relative abundance data
