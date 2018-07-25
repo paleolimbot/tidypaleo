@@ -64,6 +64,6 @@ ggplot(alta_lake_geochem, aes(x = value, y = depth)) +
   geom_path() +
   geom_point() +
   scale_y_depth_age(alta_adm) +
-  facet_wrap(~param, scales = "free_x", nrow = 1) +
+  facet_wrap(vars(param), scales = "free_x", nrow = 1) +
   rotated_axis_labels()
 ```

@@ -111,7 +111,6 @@ label_species <- function(labels, dont_italicize = c("\\(.*?\\)", "spp?\\.", "-c
 partial_italic_expr <- function(labs, dont_italicize = c("\\(.*?\\)", "spp?\\.", "-complex")) {
   not_italics_regex <- paste0("(\\s*", dont_italicize, "\\s*)", collapse = "|")
 
-  stringr::str_view_all(labs, not_italics_regex)
   locs <- stringr::str_locate_all(labs, not_italics_regex)
   names(locs) <- labs
   inv_locs <- lapply(locs, stringr::invert_match)
