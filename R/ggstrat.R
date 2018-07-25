@@ -93,7 +93,7 @@ label_species <- function(labels, dont_italicize = c("\\(.*?\\)", "spp?\\.", "-c
 
     if(is.factor(vals)) {
       levs <- levels(vals)
-      labels[[facet]] <- factor(exprs[vals], levels = exprs[levs])
+      labels[[facet]] <- factor(exprs[as.character(vals)], levels = exprs[levs])
     } else {
       labels[[facet]] <- exprs[vals]
     }
