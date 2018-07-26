@@ -5,7 +5,7 @@
 \title{Facet labellers}
 \usage{
 label_species(labels, dont_italicize = c("\\\\(.*?\\\\)", "spp?\\\\.",
-  "-complex"), species_facet = 1, multi_line = TRUE)
+  "-complex", "[Oo]ther"), species_facet = 1, multi_line = TRUE)
 }
 \arguments{
 \item{labels}{A data.frame of facet label values}

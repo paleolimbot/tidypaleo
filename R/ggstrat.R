@@ -68,7 +68,7 @@ ggplot2::vars
 #' @param multi_line See \link[ggplot2]{label_parsed}
 #'
 #' @export
-label_species <- function(labels, dont_italicize = c("\\(.*?\\)", "spp?\\.", "-complex"),
+label_species <- function(labels, dont_italicize = c("\\(.*?\\)", "spp?\\.", "-complex", "[Oo]ther"),
                           species_facet = 1, multi_line = TRUE) {
   stopifnot(
     is.character(dont_italicize),
@@ -89,7 +89,7 @@ label_species <- function(labels, dont_italicize = c("\\(.*?\\)", "spp?\\.", "-c
   # apply italic() around specific components
   for(facet in species_facet) {
     vals <- labels[[facet]]
-    exprs <- partial_italic_expr(unique(as.character(vals)))
+    exprs <- partial_italic_expr(unique(as.character(vals)), dont_italicize = dont_italicize)
 
     if(is.factor(vals)) {
       levs <- levels(vals)
@@ -108,7 +108,7 @@ label_species <- function(labels, dont_italicize = c("\\(.*?\\)", "spp?\\.", "-c
   ggplot2::label_parsed(labels, multi_line = multi_line)
 }
 
-partial_italic_expr <- function(labs, dont_italicize = c("\\(.*?\\)", "spp?\\.", "-complex")) {
+partial_italic_expr <- function(labs, dont_italicize) {
   not_italics_regex <- paste0("(\\s*", dont_italicize, "\\s*)", collapse = "|")
 
   locs <- stringr::str_locate_all(labs, not_italics_regex)
