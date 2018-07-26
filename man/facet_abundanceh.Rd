@@ -6,10 +6,10 @@
 \title{Facet for relative abundance data}
 \usage{
 facet_abundanceh(taxon, grouping = NULL, rotate_facet_labels = 45,
-  labeller = label_species, ...)
+  labeller = label_species, scales = "free_x", space = "free_x", ...)
 
 facet_abundance(taxon, grouping = NULL, rotate_facet_labels = 0,
-  labeller = label_species, ...)
+  labeller = label_species, scales = "free_y", space = "free_y", ...)
 }
 \arguments{
 \item{taxon}{A call to \link[ggplot2]{vars}, defining the column that identifies the taxon.}
@@ -21,8 +21,12 @@ facet_abundance(taxon, grouping = NULL, rotate_facet_labels = 0,
 \item{labeller}{Labeller to process facet names. Use \link{label_species} to italicize
 species names, or \link[ggplot2]{label_value} to suppress.}
 
+\item{space, scales}{Modify default scale freedom behaviour}
+
 \item{...}{Passed to \link[ggplot2]{facet_grid}.}
 }
 \description{
-Facet for relative abundance data
+Provides a number of modifications to the plot that are necessary for relative abundance plots
+of a number of species. See \link{scale_x_abundance}, \link[ggplot2]{facet_grid},
+and \link{rotated_facet_labels} for examples of how to customize the default behaviour.
 }

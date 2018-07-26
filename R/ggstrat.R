@@ -1,16 +1,22 @@
 
 #' Facet for relative abundance data
 #'
+#' Provides a number of modifications to the plot that are necessary for relative abundance plots
+#' of a number of species. See \link{scale_x_abundance}, \link[ggplot2]{facet_grid},
+#' and \link{rotated_facet_labels} for examples of how to customize the default behaviour.
+#'
 #' @param taxon A call to \link[ggplot2]{vars}, defining the column that identifies the taxon.
 #' @param grouping  A call to \link[ggplot2]{vars}, identifying additional grouping columns
 #' @param rotate_facet_labels Facet label rotation (degrees)
 #' @param labeller Labeller to process facet names. Use \link{label_species} to italicize
 #'   species names, or \link[ggplot2]{label_value} to suppress.
+#' @param space,scales Modify default scale freedom behaviour
 #' @param ... Passed to \link[ggplot2]{facet_grid}.
 #'
 #' @export
 #'
-facet_abundanceh <- function(taxon, grouping = NULL, rotate_facet_labels = 45, labeller = label_species, ...) {
+facet_abundanceh <- function(taxon, grouping = NULL, rotate_facet_labels = 45, labeller = label_species,
+                             scales = "free_x", space = "free_x", ...) {
 
   # must be created by vars()
   stopifnot(
@@ -25,7 +31,7 @@ facet_abundanceh <- function(taxon, grouping = NULL, rotate_facet_labels = 45, l
 
   list(
     scale_x_abundance(),
-    ggplot2::facet_grid(rows = grouping, cols = taxon, scales = "free_x", space = "free_x", labeller = labeller, ...),
+    ggplot2::facet_grid(rows = grouping, cols = taxon, scales = scales, space = space, labeller = labeller, ...),
     rotated_facet_labels(angle = rotate_facet_labels, direction = "x"),
     ggplot2::labs(x = "Relative abundance (%)")
   )
@@ -33,7 +39,9 @@ facet_abundanceh <- function(taxon, grouping = NULL, rotate_facet_labels = 45, l
 
 #' @rdname facet_abundanceh
 #' @export
-facet_abundance <- function(taxon, grouping = NULL, rotate_facet_labels = 0, labeller = label_species, ...) {
+facet_abundance <- function(taxon, grouping = NULL, rotate_facet_labels = 0, labeller = label_species,
+                            scales = "free_y", space = "free_y", ...) {
+
   # must be created by vars()
   stopifnot(
     all(vapply(taxon, rlang::is_quosure, logical(1)))
@@ -47,7 +55,7 @@ facet_abundance <- function(taxon, grouping = NULL, rotate_facet_labels = 0, lab
 
   list(
     scale_y_abundance(),
-    ggplot2::facet_grid(rows = taxon, cols = grouping, scales = "free_y", space = "free_y", labeller = labeller, ...),
+    ggplot2::facet_grid(rows = taxon, cols = grouping, scales = scales, space = space, labeller = labeller, ...),
     rotated_facet_labels(angle = rotate_facet_labels, direction = "y"),
     ggplot2::labs(x = "Relative abundance (%)")
   )
