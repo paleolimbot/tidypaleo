@@ -51,9 +51,19 @@ alta_adm <- age_depth_model(
 ggplot(alta_lake_geochem, aes(x = value, y = depth)) +
   geom_path() +
   geom_point() +
-  scale_y_depth_age(alta_adm) +
-  facet_wrap(~param, scales = "free_x", nrow = 1) +
-  rotated_axis_labels()
+  scale_y_depth_age(alta_adm, age_name = "Age (Year AD)") +
+  facet_geochem(
+    vars(param), 
+    nrow = 1, 
+    units = c(
+      C = "%",
+      Cu = "ppm",
+      Ti = "ppm",
+      d15N = "‰",
+      d13C = "‰"
+    )
+  ) +
+  labs(y = "Depth (cm)", x = NULL)
 ```
 
 ## Species abundance stratigraphic plots

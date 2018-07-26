@@ -2,7 +2,7 @@
 % Please edit documentation in R/ggstrat.R
 \name{label_species}
 \alias{label_species}
-\title{Facet labellers}
+\title{Species facet labellers}
 \usage{
 label_species(labels, dont_italicize = c("\\\\(.*?\\\\)", "spp?\\\\.",
   "-complex", "[Oo]ther"), species_facet = 1, multi_line = TRUE)

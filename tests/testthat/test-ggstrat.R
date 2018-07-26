@@ -509,3 +509,78 @@ test_that("Species italicizer works as planned", {
 
   expect_true(TRUE)
 })
+
+test_that("facet geochem works as expected", {
+  test_data <- data.frame(
+    x = 1,
+    y = 1,
+    geochem = c(
+      "d15N", "d13C", "d18O", "d18S", "210Pb",
+      "Ca", "Pb", "C/N", 'Wierd"s things~'
+    ),
+    not_geochem = "Contain's \"weird\" ~things "
+  )
+
+  print(
+    ggplot2::ggplot(test_data, ggplot2::aes(x, y)) +
+      ggplot2::geom_point() +
+      facet_geochem(
+        vars(geochem),
+        grouping = vars(not_geochem)
+      ) +
+      ggplot2::labs(caption = "label_geochem by default, facet_wrap()")
+  )
+
+  print(
+    ggplot2::ggplot(test_data, ggplot2::aes(x, y)) +
+      ggplot2::geom_point() +
+      facet_geochem(
+        vars(geochem),
+        units = c(
+          "210Pb" = "Bq/g",
+          "Ca" = "ppm",
+          "Pb" = "ppm",
+          "d15N" = "permille",
+          "d13C" = "permille",
+          "C/N" = NA
+        )
+      ) +
+      ggplot2::labs(caption = "label_geochem by default, facet_wrap(), units as appropriate")
+  )
+
+  expect_true(TRUE)
+})
+
+test_that("geochem labeller works as planned", {
+  test_data <- data.frame(
+    x = 1,
+    y = 1,
+    geochem = c(
+      "d15N", "d13C", "d18O", "d18S", "210Pb",
+      "Ca", "Pb", "C/N", 'Wierd"s things~'
+    ),
+    not_geochem = "Contain's \"weird\" ~things "
+  )
+
+  print(
+    ggplot2::ggplot(test_data, ggplot2::aes(x, y)) +
+      ggplot2::geom_point() +
+      ggplot2::facet_wrap(
+        vars(geochem, not_geochem),
+        labeller = function(...) label_geochem(
+          ...,
+          units = c(
+            "Contain's \"weird\" ~things " = "ppm",
+            'Wierd"s things~' = "ppm",
+            "d15N" = "permille",
+            "C/N" = NA
+          ),
+          default_units = "def"
+        )
+      ) +
+      ggplot2::labs(caption = "lots of default units, 'deltas', superscript 210, ppms")
+  )
+
+
+  expect_true(TRUE)
+})

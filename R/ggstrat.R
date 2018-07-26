@@ -3,15 +3,19 @@
 #'
 #' Provides a number of modifications to the plot that are necessary for relative abundance plots
 #' of a number of species. See \link{scale_x_abundance}, \link[ggplot2]{facet_grid},
-#' and \link{rotated_facet_labels} for examples of how to customize the default behaviour.
+#' \link[ggplot2]{facet_grid}, \link{label_species}, \link{label_geochem},
+#' and \link{rotated_facet_labels} \link{rotated_axis_labels}
+#' for examples of how to customize the default behaviour.
 #'
-#' @param taxon A call to \link[ggplot2]{vars}, defining the column that identifies the taxon.
+#' @param taxon,param A call to \link[ggplot2]{vars}, defining the column that identifies the taxon (parameter).
 #' @param grouping  A call to \link[ggplot2]{vars}, identifying additional grouping columns
-#' @param rotate_facet_labels Facet label rotation (degrees)
+#' @param rotate_facet_labels,rotate_axis_labels Facet (axis) label rotation (degrees)
 #' @param labeller Labeller to process facet names. Use \link{label_species} to italicize
 #'   species names, or \link[ggplot2]{label_value} to suppress.
 #' @param space,scales Modify default scale freedom behaviour
-#' @param ... Passed to \link[ggplot2]{facet_grid}.
+#' @param units A named vector of units to apply to parameter labels (NA for unitless)
+#' @param default_units The default unit name (NA for unitless)
+#' @param ... Passed to \link[ggplot2]{facet_grid} (abundance) or \link[ggplot2]{facet_wrap} (geochem).
 #'
 #' @export
 #'
@@ -61,12 +65,36 @@ facet_abundance <- function(taxon, grouping = NULL, rotate_facet_labels = 0, lab
   )
 }
 
+#' @rdname facet_abundanceh
+#' @export
+facet_geochem <- function(param, grouping = NULL, rotate_axis_labels = 90, scales = "free_x",
+                          labeller = label_geochem,
+                          units = character(0), default_units = NA_character_, ...) {
+
+  # must be created by vars()
+  stopifnot(
+    all(vapply(param, rlang::is_quosure, logical(1)))
+  )
+
+  # set the labeller to partially italicise species names
+  if(identical(labeller, label_geochem)) {
+    geochem_facet_name <- vapply(param, rlang::quo_name, character(1))
+    labeller <- function(...) label_geochem(..., geochem_facet = geochem_facet_name, units = units,
+                                            default_units = default_units)
+  }
+
+  list(
+    ggplot2::facet_wrap(c(param, grouping), scales = scales, labeller = labeller, ...),
+    rotated_axis_labels(angle = rotate_axis_labels, direction = "x")
+  )
+}
+
 #' @importFrom ggplot2 vars
 #' @export
 ggplot2::vars
 
 
-#' Facet labellers
+#' Species facet labellers
 #'
 #' Use these to label species with partial italic formatting. See \link[ggplot2]{label_parsed}.
 #'
@@ -116,6 +144,7 @@ label_species <- function(labels, dont_italicize = c("\\(.*?\\)", "spp?\\.", "-c
   ggplot2::label_parsed(labels, multi_line = multi_line)
 }
 
+# workhorse behind partial italicizing
 partial_italic_expr <- function(labs, dont_italicize) {
   not_italics_regex <- paste0("(\\s*", dont_italicize, "\\s*)", collapse = "|")
 
@@ -150,6 +179,108 @@ partial_italic_expr <- function(labs, dont_italicize) {
   )
   names(final_chr) <- names(final_split)
   final_chr
+}
+
+#' Geochem facet labelers
+#'
+#' @param labels A data.frame of facet label values
+#' @param units A named list of values = unit
+#' @param default_units The default units to apply
+#' @param geochem_facet Which facet to apply formatting
+#' @param renamers Search and replace operations to perform in the form
+#'   search = replace
+#' @param multi_line See \link[ggplot2]{label_parsed}
+#'
+#' @export
+label_geochem <- function(
+  labels,
+  units = character(0),
+  default_units = NA_character_,
+  geochem_facet = 1,
+  renamers = c(
+    "^d([0-9]+)([HCNOS])$" = "paste(delta ^ \\1, \\2)",
+    "^210Pb$" = "paste({}^210, Pb)",
+    "^Pb210$" = "paste({}^210, Pb)"
+  ),
+  multi_line = TRUE
+) {
+
+  stopifnot(
+    is.character(renamers), !is.null(names(renamers)),
+    is.character(units),
+    is.character(default_units), length(default_units) == 1,
+    is.logical(multi_line), length(multi_line) == 1
+  )
+
+  if(is.character(geochem_facet)) {
+    all_facets <- colnames(labels)
+    # ignore if labels doesn't contain the target facet
+    geochem_facet <- intersect(geochem_facet, all_facets)
+  } else if(is.numeric(geochem_facet)) {
+    all_facets <- seq_along(labels)
+    stopifnot(all(geochem_facet %in% seq_along(labels)))
+  } else {
+    stop("geochem_facet must be numeric or character")
+  }
+
+  for(facet in geochem_facet) {
+    vals <- labels[[facet]]
+    new_vals <- search_replace_expr(
+      as.character(vals),
+      renamers = renamers,
+      units = units,
+      default_units = default_units
+    )
+
+    if(is.factor(vals)) {
+      labels[[facet]] <- factor(
+        new_vals,
+        levels = search_replace_expr(
+          levels(vals),
+          renamers = renamers,
+          units = units,
+          default_units = default_units
+        )
+      )
+    } else {
+      labels[[facet]] <- new_vals
+    }
+  }
+
+  for(facet in setdiff(all_facets, geochem_facet)) {
+    escaped <- stringr::str_replace_all(labels[[facet]], '"', '\\\\"')
+    labels[[facet]] <- paste0('"', escaped, '"')
+  }
+
+  ggplot2::label_parsed(labels, multi_line = multi_line)
+}
+
+search_replace_expr <- function(vals, renamers, units, default_units) {
+
+  if(!is.null(names(units))) {
+    units <- units[vals]
+    units[is.na(units) & is.na(names(units))] <- default_units
+
+    unit_add <- dplyr::if_else(
+      is.na(units),
+      "",
+      paste0('~("', stringr::str_replace_all(units, '"', '\\\\"'), '")')
+    )
+  } else {
+    unit_add <- rlang::rep_along(vals, "")
+  }
+
+  replaced <- rlang::rep_along(vals, FALSE)
+  for(i in seq_along(renamers)) {
+    new_vals <- stringr::str_replace(vals, names(renamers)[[i]], renamers[[i]])
+    new_replaced <- replaced | stringr::str_detect(vals, names(renamers)[[i]])
+    vals[!replaced] <- new_vals[!replaced]
+    replaced <- new_replaced
+  }
+
+  vals[!replaced] <- paste0('"', stringr::str_replace_all(vals[!replaced], '"', '\\\\"'), '"')
+
+  paste0(vals, unit_add)
 }
 
 #' Useful geometries for strat diagrams

@@ -29,7 +29,8 @@ theme_set(theme_bw())
 ggplot(keji_lakes_plottable, aes(x = rel_abund, y = depth)) +
   geom_col_segsh() +
   scale_y_reverse() +
-  facet_abundanceh(vars(taxon), grouping = vars(location))
+  facet_abundanceh(vars(taxon), grouping = vars(location)) +
+  labs(y = "Depth (cm)")
 ```
 
 ![](README-keji-strat-1.png)
@@ -39,7 +40,8 @@ Relative abundance data with a discrete y axis can be drawn using `geom_colh()` 
 ``` r
 ggplot(halifax_lakes_plottable, aes(x = rel_abund, y = location, fill = sample_type)) +
   geom_colh(width = 0.5, position = "dodgev") +
-  facet_abundanceh(vars(taxon))
+  facet_abundanceh(vars(taxon)) +
+  labs(fill = NULL, y = NULL)
 ```
 
 ![](README-halifax-lakes-plot-1.png)
@@ -57,9 +59,19 @@ alta_adm <- age_depth_model(
 ggplot(alta_lake_geochem, aes(x = value, y = depth)) +
   geom_path() +
   geom_point() +
-  scale_y_depth_age(alta_adm) +
-  facet_wrap(vars(param), scales = "free_x", nrow = 1) +
-  rotated_axis_labels()
+  scale_y_depth_age(alta_adm, age_name = "Age (Year AD)") +
+  facet_geochem(
+    vars(param), 
+    nrow = 1, 
+    units = c(
+      C = "%",
+      Cu = "ppm",
+      Ti = "ppm",
+      d15N = "‰",
+      d13C = "‰"
+    )
+  ) +
+  labs(y = "Depth (cm)", x = NULL)
 ```
 
 ![](README-alta-strat-1.png)
