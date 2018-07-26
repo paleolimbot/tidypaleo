@@ -19,6 +19,8 @@ knitr::opts_chunk$set(
 
 # tidypaleo
 
+Working with multi-proxy paleo-archive data is inherently difficult. There are multiple locations, multiple parameters, and a lot of discipline-specific norms for plot layout and notation. This package simplifies a few workflows to promote the use of R and reproducible documents in paleo-based studies.
+
 ## Installation
 
 You can install tidypaleo from github with:
@@ -30,7 +32,11 @@ devtools::install_github("paleolimbot/tidypaleo")
 
 ## Examples
 
-This package exposes a number of functions useful when creating stratigraphic plots, including `facet_abundanceh()`, which combines several other functions to help create stratigraphic plots using **ggplot2**. The `geom_col_segsh()` geometry draws horizontal sements, which are commonly used to show species abundance data.
+### Age-depth models
+
+### Stratigraphic diagrams
+
+This package exposes a number of functions useful when creating stratigraphic diatrams, including `facet_abundanceh()`, which combines several other functions to help create stratigraphic plots using **ggplot2**. The `geom_col_segsh()` geometry draws horizontal sements, which are commonly used to show species abundance data.
 
 ```{r keji-strat}
 library(ggplot2)
@@ -53,7 +59,7 @@ ggplot(halifax_lakes_plottable, aes(x = rel_abund, y = location, fill = sample_t
   labs(fill = NULL, y = NULL)
 ```
 
-Age depth models can be constructed (using `age_depth_model()`) and used to draw second axes on stratigraphic plots (using `scale_y_depth_age()`.
+Age depth models can be constructed (using `age_depth_model()`) and used to draw second axes on stratigraphic plots (using `scale_y_depth_age()`). The `facet_geochem()` function wraps `facet_wrap()`, and includes a labeller (`label_geochem`) that can add units, and automatically renames `d15N`, `d13C` and `d18O` such that they are labelled correctly.
 
 ```{r alta-strat}
 alta_adm <- age_depth_model(
@@ -63,7 +69,7 @@ alta_adm <- age_depth_model(
 )
 
 ggplot(alta_lake_geochem, aes(x = value, y = depth)) +
-  geom_path() +
+  geom_lineh() +
   geom_point() +
   scale_y_depth_age(alta_adm, age_name = "Age (Year AD)") +
   facet_geochem(
