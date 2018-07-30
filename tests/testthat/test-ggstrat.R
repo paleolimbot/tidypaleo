@@ -409,7 +409,7 @@ test_that("facet geochem works as expected", {
   print(
     ggplot2::ggplot(test_data, ggplot2::aes(x, y)) +
       ggplot2::geom_point() +
-      facet_geochem(
+      facet_geochem_wrap(
         vars(geochem),
         grouping = vars(not_geochem)
       ) +
@@ -419,7 +419,7 @@ test_that("facet geochem works as expected", {
   print(
     ggplot2::ggplot(test_data, ggplot2::aes(x, y)) +
       ggplot2::geom_point() +
-      facet_geochem(
+      facet_geochem_wrap(
         vars(geochem),
         units = c(
           "210Pb" = "Bq/g",
@@ -461,6 +461,20 @@ test_that("geochem labeller works as planned", {
             "C/N" = NA
           ),
           default_units = "def"
+        )
+      ) +
+      ggplot2::labs(caption = "lots of default units, 'deltas', superscript 210, ppms")
+  )
+
+  # NULL (disabled) renamer
+  print(
+    ggplot2::ggplot(test_data, ggplot2::aes(x, y)) +
+      ggplot2::geom_point() +
+      ggplot2::facet_wrap(
+        vars(geochem, not_geochem),
+        labeller = function(...) label_geochem(
+          ...,
+          renamers = NULL
         )
       ) +
       ggplot2::labs(caption = "lots of default units, 'deltas', superscript 210, ppms")

@@ -93,7 +93,9 @@ partial_italic_expr <- function(labs, dont_italicize) {
 #' @param default_units The default units to apply
 #' @param geochem_facet Which facet to apply formatting
 #' @param renamers Search and replace operations to perform in the form
-#'   search = replace
+#'   search = replace. Replace text can (should) contain backreferences,
+#'   and will be parsed as an expression (see \link[grDevices]{plotmath}). Use
+#'   NULL to suppress renaming.
 #' @param multi_line See \link[ggplot2]{label_parsed}
 #'
 #' @export
@@ -111,7 +113,7 @@ label_geochem <- function(
 ) {
 
   stopifnot(
-    is.character(renamers), !is.null(names(renamers)),
+    (length(renamers) == 0) || (is.character(renamers) && !is.null(names(renamers))),
     is.character(units),
     is.character(default_units), length(default_units) == 1,
     is.logical(multi_line), length(multi_line) == 1

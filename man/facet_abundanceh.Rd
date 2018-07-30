@@ -3,7 +3,7 @@
 \name{facet_abundanceh}
 \alias{facet_abundanceh}
 \alias{facet_abundance}
-\alias{facet_geochem}
+\alias{facet_geochem_wrap}
 \title{Facet for relative abundance data}
 \usage{
 facet_abundanceh(taxon, grouping = NULL, rotate_facet_labels = 45,
@@ -12,9 +12,11 @@ facet_abundanceh(taxon, grouping = NULL, rotate_facet_labels = 45,
 facet_abundance(taxon, grouping = NULL, rotate_facet_labels = 0,
   labeller = label_species, scales = "free_y", space = "free_y", ...)
 
-facet_geochem(param, grouping = NULL, rotate_axis_labels = 90,
-  scales = "free_x", labeller = label_geochem, units = character(0),
-  default_units = NA_character_, ...)
+facet_geochem_wrap(param, grouping = NULL, rotate_axis_labels = 90,
+  scales = "free_x", labeller = label_geochem,
+  renamers = c(`^d([0-9]+)([HCNOS])$` = "paste(delta ^ \\\\1, \\\\2)",
+  `^210Pb$` = "paste({}^210, Pb)", `^Pb210$` = "paste({}^210, Pb)"),
+  units = character(0), default_units = NA_character_, ...)
 }
 \arguments{
 \item{taxon, param}{A call to \link[ggplot2]{vars}, defining the column that identifies the taxon (parameter).}
@@ -24,15 +26,21 @@ facet_geochem(param, grouping = NULL, rotate_axis_labels = 90,
 \item{rotate_facet_labels, rotate_axis_labels}{Facet (axis) label rotation (degrees)}
 
 \item{labeller}{Labeller to process facet names. Use \link{label_species} to italicize
-species names, or \link[ggplot2]{label_value} to suppress.}
+species names, \link{label_geochem} to perform common formatting and units,
+or \link[ggplot2]{label_value} to suppress.}
 
 \item{space, scales}{Modify default scale freedom behaviour}
 
 \item{...}{Passed to \link[ggplot2]{facet_grid} (abundance) or \link[ggplot2]{facet_wrap} (geochem).}
 
-\item{units}{A named vector of units to apply to parameter labels (NA for unitless)}
+\item{renamers}{Search and replace operations to perform in the form
+search = replace. Replace text can (should) contain backreferences,
+and will be parsed as an expression (see \link[grDevices]{plotmath}). Use
+NULL to suppress renaming.}
 
-\item{default_units}{The default unit name (NA for unitless)}
+\item{units}{A named list of values = unit}
+
+\item{default_units}{The default units to apply}
 }
 \description{
 Provides a number of modifications to the plot that are necessary for relative abundance plots

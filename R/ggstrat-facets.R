@@ -11,11 +11,12 @@
 #' @param grouping  A call to \link[ggplot2]{vars}, identifying additional grouping columns
 #' @param rotate_facet_labels,rotate_axis_labels Facet (axis) label rotation (degrees)
 #' @param labeller Labeller to process facet names. Use \link{label_species} to italicize
-#'   species names, or \link[ggplot2]{label_value} to suppress.
+#'   species names, \link{label_geochem} to perform common formatting and units,
+#'   or \link[ggplot2]{label_value} to suppress.
 #' @param space,scales Modify default scale freedom behaviour
-#' @param units A named vector of units to apply to parameter labels (NA for unitless)
-#' @param default_units The default unit name (NA for unitless)
 #' @param ... Passed to \link[ggplot2]{facet_grid} (abundance) or \link[ggplot2]{facet_wrap} (geochem).
+#' @inheritParams label_geochem
+#' @inheritParams label_species
 #'
 #' @export
 #'
@@ -67,9 +68,14 @@ facet_abundance <- function(taxon, grouping = NULL, rotate_facet_labels = 0, lab
 
 #' @rdname facet_abundanceh
 #' @export
-facet_geochem <- function(param, grouping = NULL, rotate_axis_labels = 90, scales = "free_x",
-                          labeller = label_geochem,
-                          units = character(0), default_units = NA_character_, ...) {
+facet_geochem_wrap <- function(param, grouping = NULL, rotate_axis_labels = 90, scales = "free_x",
+                               labeller = label_geochem,
+                               renamers = c(
+                                 "^d([0-9]+)([HCNOS])$" = "paste(delta ^ \\1, \\2)",
+                                 "^210Pb$" = "paste({}^210, Pb)",
+                                 "^Pb210$" = "paste({}^210, Pb)"
+                               ),
+                               units = character(0), default_units = NA_character_, ...) {
 
   # must be created by vars()
   stopifnot(
@@ -80,7 +86,7 @@ facet_geochem <- function(param, grouping = NULL, rotate_axis_labels = 90, scale
   if(identical(labeller, label_geochem)) {
     geochem_facet_name <- vapply(param, rlang::quo_name, character(1))
     labeller <- function(...) label_geochem(..., geochem_facet = geochem_facet_name, units = units,
-                                            default_units = default_units)
+                                            renamers = renamers, default_units = default_units)
   }
 
   list(

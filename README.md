@@ -66,7 +66,7 @@ ggplot(alta_lake_geochem, aes(x = value, y = depth)) +
   geom_lineh() +
   geom_point() +
   scale_y_depth_age(alta_adm, age_name = "Age (Year AD)") +
-  facet_geochem(
+  facet_geochem_wrap(
     vars(param), 
     nrow = 1, 
     units = c(
