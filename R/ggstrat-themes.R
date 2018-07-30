@@ -8,7 +8,6 @@
 #'
 #' @return An object or list of objects that can be added to a \link[ggplot2]{ggplot}
 #' @export
-#' @importFrom purrr %||%
 #'
 rotated_facet_labels <- function(angle = 45, direction = "x", remove_label_background = TRUE) {
   stopifnot(
@@ -19,54 +18,47 @@ rotated_facet_labels <- function(angle = 45, direction = "x", remove_label_backg
 
   structure(
     list(
-      modify_plot = function(plot) {
-        plot$facet <- modify_facet_clip(plot$facet, remove_clip = direction)
-
-        facet_switch <- plot$facet$params$switch %||% plot$facet$params$strip.position %||% "none"
-
-        strip_position_x <- if(facet_switch %in% c("x", "both", "bottom")) "bottom" else "top"
-        strip_position_y <- if(facet_switch %in% c("y", "both", "left")) "left" else "right"
-
-        theme_mods <- ggplot2::theme()
-
-        if("x" %in% direction) {
-          theme_mods <- theme_mods +
-            theme_modify_paleo(
-              rotate_labels_x = angle,
-              remove_label_background_x = remove_label_background,
-              strip_position_x = strip_position_x
-            )
-        }
-
-        if("y" %in% direction) {
-          theme_mods <- theme_mods +
-            theme_modify_paleo(
-              rotate_labels_y = angle,
-              remove_label_background_y = remove_label_background,
-              strip_position_y = strip_position_y
-            )
-        }
-
-        plot + theme_mods
-      }
+      angle = angle,
+      direction = direction,
+      remove_label_background = remove_label_background
     ),
-    class = "paleo_hook"
+    class = "rotate_facet_label_spec"
   )
 }
 
-#' @rdname rotated_facet_labels
+#' @importFrom ggplot2 ggplot_add
 #' @export
-remove_label_clip <- function(direction) {
-  force(direction)
-  structure(
-    list(
-      modify_plot = function(plot) {
-        plot$facet <- modify_facet_clip(plot$facet, remove_clip = direction)
-        plot
-      }
-    ),
-    class = "paleo_hook"
-  )
+#' @importFrom purrr %||%
+#'
+ggplot_add.rotate_facet_label_spec <- function(object, plot, object_name) {
+  plot$facet <- modify_facet_clip(plot$facet, remove_clip = object$direction)
+
+  facet_switch <- plot$facet$params$switch %||% plot$facet$params$strip.position %||% "none"
+
+  strip_position_x <- if(facet_switch %in% c("x", "both", "bottom")) "bottom" else "top"
+  strip_position_y <- if(facet_switch %in% c("y", "both", "left")) "left" else "right"
+
+  theme_mods <- ggplot2::theme()
+
+  if("x" %in% object$direction) {
+    theme_mods <- theme_mods +
+      theme_modify_paleo(
+        rotate_labels_x = object$angle,
+        remove_label_background_x = object$remove_label_background,
+        strip_position_x = strip_position_x
+      )
+  }
+
+  if("y" %in% object$direction) {
+    theme_mods <- theme_mods +
+      theme_modify_paleo(
+        rotate_labels_y = object$angle,
+        remove_label_background_y = object$remove_label_background,
+        strip_position_y = strip_position_y
+      )
+  }
+
+  plot + theme_mods
 }
 
 #' @rdname rotated_facet_labels
@@ -246,20 +238,4 @@ set_clip <- function(panel_table, regex, value) {
   }
 
   panel_table
-}
-
-#' Infrastructure for special methods
-#'
-#' These methods provide the infrastructure necessary to rotate facet labels and set
-#' multiple scales.
-#'
-#' @param plot A ggplot object
-#' @param object,object_name ggplot_add arguments
-#'
-#' @return A ggplot object
-#' @importFrom ggplot2 ggplot_add
-#' @export
-#'
-ggplot_add.paleo_hook <- function(object, plot, object_name) {
-  object$modify_plot(plot)
 }
