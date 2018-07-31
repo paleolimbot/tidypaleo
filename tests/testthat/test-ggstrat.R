@@ -395,7 +395,7 @@ test_that("Species italicizer works as planned", {
   expect_true(TRUE)
 })
 
-test_that("facet geochem works as expected", {
+test_that("facets for geochem work as expected", {
   test_data <- data.frame(
     x = 1,
     y = 1,
@@ -431,6 +431,26 @@ test_that("facet geochem works as expected", {
         )
       ) +
       ggplot2::labs(caption = "label_geochem by default, facet_wrap(), units as appropriate")
+  )
+
+  print(
+    ggplot2::ggplot(test_data, ggplot2::aes(x, y)) +
+      ggplot2::geom_point() +
+      facet_geochem_grid(
+        vars(geochem),
+        grouping = vars(not_geochem)
+      ) +
+      ggplot2::labs(caption = "label_geochem by default (y direction), facet_grid()")
+  )
+
+  print(
+    ggplot2::ggplot(test_data, ggplot2::aes(x, y)) +
+      ggplot2::geom_point() +
+      facet_geochem_gridh(
+        vars(geochem),
+        grouping = vars(not_geochem)
+      ) +
+      ggplot2::labs(caption = "label_geochem by default (x direction), facet_grid()")
   )
 
   expect_true(TRUE)
@@ -482,4 +502,22 @@ test_that("geochem labeller works as planned", {
 
 
   expect_true(TRUE)
+})
+
+test_that("default args for facet_* functions are consistent", {
+  expect_identical(formals(facet_abundance)$dont_italicize, formals(facet_abundanceh)$dont_italicize)
+  expect_identical(formals(facet_abundance)$dont_italicize, formals(label_species)$dont_italicize)
+
+  expect_identical(formals(facet_geochem_wrap)$scales, formals(facet_geochem_gridh)$scales)
+  expect_identical(formals(facet_geochem_wrap)$renamers, formals(facet_geochem_gridh)$renamers)
+  expect_identical(formals(facet_geochem_wrap)$units, formals(facet_geochem_gridh)$units)
+  expect_identical(formals(facet_geochem_wrap)$default_units, formals(facet_geochem_gridh)$default_units)
+
+  expect_identical(formals(facet_geochem_wrap)$renamers, formals(facet_geochem_grid)$renamers)
+  expect_identical(formals(facet_geochem_wrap)$units, formals(facet_geochem_grid)$units)
+  expect_identical(formals(facet_geochem_wrap)$default_units, formals(facet_geochem_grid)$default_units)
+
+  expect_identical(formals(facet_geochem_wrap)$renamers, formals(label_geochem)$renamers)
+  expect_identical(formals(facet_geochem_wrap)$units, formals(label_geochem)$units)
+  expect_identical(formals(facet_geochem_wrap)$default_units, formals(label_geochem)$default_units)
 })

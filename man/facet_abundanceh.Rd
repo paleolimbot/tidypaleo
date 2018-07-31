@@ -4,16 +4,34 @@
 \alias{facet_abundanceh}
 \alias{facet_abundance}
 \alias{facet_geochem_wrap}
+\alias{facet_geochem_grid}
+\alias{facet_geochem_gridh}
 \title{Facet for relative abundance data}
 \usage{
 facet_abundanceh(taxon, grouping = NULL, rotate_facet_labels = 45,
-  labeller = label_species, scales = "free_x", space = "free_x", ...)
+  labeller = label_species, scales = "free_x", space = "free_x",
+  dont_italicize = c("\\\\(.*?\\\\)", "spp?\\\\.", "-complex", "[Oo]ther"),
+  ...)
 
 facet_abundance(taxon, grouping = NULL, rotate_facet_labels = 0,
-  labeller = label_species, scales = "free_y", space = "free_y", ...)
+  labeller = label_species, scales = "free_y", space = "free_y",
+  dont_italicize = c("\\\\(.*?\\\\)", "spp?\\\\.", "-complex", "[Oo]ther"),
+  ...)
 
 facet_geochem_wrap(param, grouping = NULL, rotate_axis_labels = 90,
   scales = "free_x", labeller = label_geochem,
+  renamers = c(`^d([0-9]+)([HCNOS])$` = "paste(delta ^ \\\\1, \\\\2)",
+  `^210Pb$` = "paste({}^210, Pb)", `^Pb210$` = "paste({}^210, Pb)"),
+  units = character(0), default_units = NA_character_, ...)
+
+facet_geochem_grid(param, grouping = NULL, rotate_axis_labels = 0,
+  scales = "free_y", space = "fixed", labeller = label_geochem,
+  renamers = c(`^d([0-9]+)([HCNOS])$` = "paste(delta ^ \\\\1, \\\\2)",
+  `^210Pb$` = "paste({}^210, Pb)", `^Pb210$` = "paste({}^210, Pb)"),
+  units = character(0), default_units = NA_character_, ...)
+
+facet_geochem_gridh(param, grouping = NULL, rotate_axis_labels = 90,
+  scales = "free_x", space = "fixed", labeller = label_geochem,
   renamers = c(`^d([0-9]+)([HCNOS])$` = "paste(delta ^ \\\\1, \\\\2)",
   `^210Pb$` = "paste({}^210, Pb)", `^Pb210$` = "paste({}^210, Pb)"),
   units = character(0), default_units = NA_character_, ...)
@@ -30,6 +48,8 @@ species names, \link{label_geochem} to perform common formatting and units,
 or \link[ggplot2]{label_value} to suppress.}
 
 \item{space, scales}{Modify default scale freedom behaviour}
+
+\item{dont_italicize}{Regular expressions that should not be italicized}
 
 \item{...}{Passed to \link[ggplot2]{facet_grid} (abundance) or \link[ggplot2]{facet_wrap} (geochem).}
 

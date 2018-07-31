@@ -21,18 +21,17 @@
 #' @export
 #'
 facet_abundanceh <- function(taxon, grouping = NULL, rotate_facet_labels = 45, labeller = label_species,
-                             scales = "free_x", space = "free_x", ...) {
+                             scales = "free_x", space = "free_x",
+                             dont_italicize = c("\\(.*?\\)", "spp?\\.", "-complex", "[Oo]ther"), ...) {
 
-  # must be created by vars()
-  stopifnot(
-    all(vapply(taxon, rlang::is_quosure, logical(1)))
+  check_groupings(taxon, grouping)
+
+  labeller <- evaluate_labeller(
+    labeller,
+    label_species,
+    species_facet = rlang::quo_name(taxon[[1]]),
+    dont_italicize = dont_italicize
   )
-
-  # set the labeller to partially italicise species names
-  if(identical(labeller, label_species)) {
-    taxon_facet_name <- vapply(taxon, rlang::quo_name, character(1))
-    labeller <- function(...) label_species(..., species_facet = taxon_facet_name)
-  }
 
   list(
     scale_x_abundance(),
@@ -45,18 +44,17 @@ facet_abundanceh <- function(taxon, grouping = NULL, rotate_facet_labels = 45, l
 #' @rdname facet_abundanceh
 #' @export
 facet_abundance <- function(taxon, grouping = NULL, rotate_facet_labels = 0, labeller = label_species,
-                            scales = "free_y", space = "free_y", ...) {
+                            scales = "free_y", space = "free_y",
+                            dont_italicize = c("\\(.*?\\)", "spp?\\.", "-complex", "[Oo]ther"), ...) {
 
-  # must be created by vars()
-  stopifnot(
-    all(vapply(taxon, rlang::is_quosure, logical(1)))
+  check_groupings(taxon, grouping)
+
+  labeller <- evaluate_labeller(
+    labeller,
+    label_species,
+    species_facet = rlang::quo_name(taxon[[1]]),
+    dont_italicize = dont_italicize
   )
-
-  # set the labeller to partially italicise species names
-  if(identical(labeller, label_species)) {
-    taxon_facet_name <- vapply(taxon, rlang::quo_name, character(1))
-    labeller <- function(...) label_species(..., species_facet = taxon_facet_name)
-  }
 
   list(
     scale_y_abundance(),
@@ -77,22 +75,93 @@ facet_geochem_wrap <- function(param, grouping = NULL, rotate_axis_labels = 90, 
                                ),
                                units = character(0), default_units = NA_character_, ...) {
 
-  # must be created by vars()
-  stopifnot(
-    all(vapply(param, rlang::is_quosure, logical(1)))
-  )
+  check_groupings(param, grouping)
 
-  # set the labeller to partially italicise species names
-  if(identical(labeller, label_geochem)) {
-    geochem_facet_name <- vapply(param, rlang::quo_name, character(1))
-    labeller <- function(...) label_geochem(..., geochem_facet = geochem_facet_name, units = units,
-                                            renamers = renamers, default_units = default_units)
-  }
+  labeller <- evaluate_labeller(
+    labeller,
+    label_geochem,
+    geochem_facet = rlang::quo_name(param[[1]]),
+    units = units,
+    renamers = renamers,
+    default_units = default_units
+  )
 
   list(
     ggplot2::facet_wrap(c(param, grouping), scales = scales, labeller = labeller, ...),
     rotated_axis_labels(angle = rotate_axis_labels, direction = "x")
   )
+}
+
+#' @rdname facet_abundanceh
+#' @export
+facet_geochem_grid <- function(param, grouping = NULL, rotate_axis_labels = 0, scales = "free_y",
+                               space = "fixed", labeller = label_geochem,
+                               renamers = c(
+                                 "^d([0-9]+)([HCNOS])$" = "paste(delta ^ \\1, \\2)",
+                                 "^210Pb$" = "paste({}^210, Pb)",
+                                 "^Pb210$" = "paste({}^210, Pb)"
+                               ),
+                               units = character(0), default_units = NA_character_, ...) {
+
+  check_groupings(param, grouping)
+
+  labeller <- evaluate_labeller(
+    labeller,
+    label_geochem,
+    geochem_facet = rlang::quo_name(param[[1]]),
+    units = units,
+    renamers = renamers,
+    default_units = default_units
+  )
+
+  list(
+    ggplot2::facet_grid(rows = param, cols = grouping, scales = scales, space = space, labeller = labeller, ...),
+    rotated_axis_labels(angle = rotate_axis_labels, direction = "y")
+  )
+}
+
+#' @rdname facet_abundanceh
+#' @export
+facet_geochem_gridh <- function(param, grouping = NULL, rotate_axis_labels = 90, scales = "free_x",
+                                space = "fixed", labeller = label_geochem,
+                                renamers = c(
+                                  "^d([0-9]+)([HCNOS])$" = "paste(delta ^ \\1, \\2)",
+                                  "^210Pb$" = "paste({}^210, Pb)",
+                                  "^Pb210$" = "paste({}^210, Pb)"
+                                ),
+                                units = character(0), default_units = NA_character_, ...) {
+
+  check_groupings(param, grouping)
+
+  labeller <- evaluate_labeller(
+    labeller,
+    label_geochem,
+    geochem_facet = rlang::quo_name(param[[1]]),
+    units = units,
+    renamers = renamers,
+    default_units = default_units
+  )
+
+  list(
+    ggplot2::facet_grid(cols = param, rows = grouping, scales = scales, space = space, labeller = labeller, ...),
+    rotated_axis_labels(angle = rotate_axis_labels, direction = "x")
+  )
+}
+
+check_groupings <- function(param, grouping) {
+  stopifnot(
+    all(vapply(param, rlang::is_quosure, logical(1))), length(param) == 1,
+    is.null(grouping) || all(vapply(grouping, rlang::is_quosure, logical(1)))
+  )
+}
+
+evaluate_labeller <- function(labeller, default_labeller, ...) {
+  if(identical(labeller, default_labeller)) {
+    default_labeller_args <- list(...)
+    function(...) purrr::invoke(default_labeller, default_labeller_args, ...)
+  } else {
+    labeller
+  }
 }
 
 #' @importFrom ggplot2 vars
