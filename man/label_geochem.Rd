@@ -28,3 +28,20 @@ NULL to suppress renaming.}
 \description{
 Geochem facet labelers
 }
+\examples{
+
+library(ggplot2)
+
+ggplot(alta_lake_geochem, aes(x = value, y = depth)) +
+  geom_lineh() +
+  geom_point() +
+  scale_y_reverse() +
+  facet_wrap(
+    vars(param),
+    labeller = purrr::partial(label_geochem, geochem_facet = "param"),
+    nrow = 1,
+    scales = "free_x"
+  ) +
+  labs(x = NULL, y = "Depth (cm)")
+
+}

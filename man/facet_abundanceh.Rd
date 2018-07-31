@@ -69,3 +69,40 @@ of a number of species. See \link{scale_x_abundance}, \link[ggplot2]{facet_grid}
 and \link{rotated_facet_labels} \link{rotated_axis_labels}
 for examples of how to customize the default behaviour.
 }
+\examples{
+library(ggplot2)
+
+ggplot(keji_lakes_plottable, aes(x = rel_abund, y = depth)) +
+  geom_col_segsh() +
+  scale_y_reverse() +
+  facet_abundanceh(vars(taxon), grouping = vars(location)) +
+  labs(y = "Depth (cm)")
+
+ggplot(keji_lakes_plottable, aes(y = rel_abund, x = depth)) +
+  geom_col_segs() +
+  scale_x_reverse() +
+  facet_abundance(vars(taxon), grouping = vars(location)) +
+  labs(x = "Depth (cm)")
+
+ggplot(alta_lake_geochem, aes(x = value, y = depth)) +
+  geom_lineh() +
+  geom_point() +
+  scale_y_reverse() +
+  facet_geochem_wrap(vars(param), units = c(C = "\%", Cu = "ppm", Ti = "ppm"), nrow = 1) +
+  labs(x = NULL, y = "Depth (cm)")
+
+ggplot(alta_lake_geochem, aes(x = value, y = depth)) +
+  geom_lineh() +
+  geom_point() +
+  scale_y_reverse() +
+  facet_geochem_gridh(vars(param), units = c(C = "\%", Cu = "ppm", Ti = "ppm")) +
+  labs(x = NULL, y = "Depth (cm)")
+
+ggplot(alta_lake_geochem, aes(y = value, x = depth)) +
+  geom_line() +
+  geom_point() +
+  scale_x_reverse() +
+  facet_geochem_grid(vars(param), units = c(C = "\%", Cu = "ppm", Ti = "ppm")) +
+  labs(y = NULL, x = "Depth (cm)")
+
+}

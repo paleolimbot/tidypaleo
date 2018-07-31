@@ -19,3 +19,20 @@ label_species(labels, dont_italicize = c("\\\\(.*?\\\\)", "spp?\\\\.",
 \description{
 Use these to label species with partial italic formatting. See \link[ggplot2]{label_parsed}.
 }
+\examples{
+
+library(ggplot2)
+
+ggplot(keji_lakes_plottable, aes(x = rel_abund, y = depth)) +
+  geom_col_segsh() +
+  scale_y_reverse() +
+  facet_grid(
+    cols = vars(taxon),
+    rows = vars(location),
+    scales = "free_x",
+    space = "free_x",
+    labeller = purrr::partial(label_species, species_facet = "taxon")
+  ) +
+  labs(y = "Depth (cm)")
+
+}

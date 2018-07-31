@@ -9,6 +9,23 @@
 #' @param multi_line See \link[ggplot2]{label_parsed}
 #'
 #' @export
+#'
+#' @examples
+#'
+#' library(ggplot2)
+#'
+#' ggplot(keji_lakes_plottable, aes(x = rel_abund, y = depth)) +
+#'   geom_col_segsh() +
+#'   scale_y_reverse() +
+#'   facet_grid(
+#'     cols = vars(taxon),
+#'     rows = vars(location),
+#'     scales = "free_x",
+#'     space = "free_x",
+#'     labeller = purrr::partial(label_species, species_facet = "taxon")
+#'   ) +
+#'   labs(y = "Depth (cm)")
+#'
 label_species <- function(labels, dont_italicize = c("\\(.*?\\)", "spp?\\.", "-complex", "[Oo]ther"),
                           species_facet = 1, multi_line = TRUE) {
   stopifnot(
@@ -59,9 +76,9 @@ partial_italic_expr <- function(labs, dont_italicize) {
   names(inv_locs) <- labs
 
   locs_df <- dplyr::bind_rows(lapply(locs, as.data.frame), .id = "label")
-  locs_df$pattern <- '"%s"'
+  locs_df$pattern <- rep_len('"%s"', nrow(locs_df))
   inv_locs_df <- dplyr::bind_rows(lapply(inv_locs, as.data.frame), .id = "label")
-  inv_locs_df$pattern <- 'italic("%s")'
+  inv_locs_df$pattern <- rep_len('italic("%s")', nrow(inv_locs_df))
 
   labs_df <- dplyr::bind_rows(locs_df, inv_locs_df)
   labs_df$match <- stringr::str_sub(labs_df$label, labs_df$start, labs_df$end)
@@ -99,6 +116,23 @@ partial_italic_expr <- function(labs, dont_italicize) {
 #' @param multi_line See \link[ggplot2]{label_parsed}
 #'
 #' @export
+#'
+#' @examples
+#'
+#' library(ggplot2)
+#'
+#' ggplot(alta_lake_geochem, aes(x = value, y = depth)) +
+#'   geom_lineh() +
+#'   geom_point() +
+#'   scale_y_reverse() +
+#'   facet_wrap(
+#'     vars(param),
+#'     labeller = purrr::partial(label_geochem, geochem_facet = "param"),
+#'     nrow = 1,
+#'     scales = "free_x"
+#'   ) +
+#'   labs(x = NULL, y = "Depth (cm)")
+#'
 label_geochem <- function(
   labels,
   units = character(0),

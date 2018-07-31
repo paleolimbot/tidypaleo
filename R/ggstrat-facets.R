@@ -20,6 +20,42 @@
 #'
 #' @export
 #'
+#' @examples
+#' library(ggplot2)
+#'
+#' ggplot(keji_lakes_plottable, aes(x = rel_abund, y = depth)) +
+#'   geom_col_segsh() +
+#'   scale_y_reverse() +
+#'   facet_abundanceh(vars(taxon), grouping = vars(location)) +
+#'   labs(y = "Depth (cm)")
+#'
+#' ggplot(keji_lakes_plottable, aes(y = rel_abund, x = depth)) +
+#'   geom_col_segs() +
+#'   scale_x_reverse() +
+#'   facet_abundance(vars(taxon), grouping = vars(location)) +
+#'   labs(x = "Depth (cm)")
+#'
+#' ggplot(alta_lake_geochem, aes(x = value, y = depth)) +
+#'   geom_lineh() +
+#'   geom_point() +
+#'   scale_y_reverse() +
+#'   facet_geochem_wrap(vars(param), units = c(C = "%", Cu = "ppm", Ti = "ppm"), nrow = 1) +
+#'   labs(x = NULL, y = "Depth (cm)")
+#'
+#' ggplot(alta_lake_geochem, aes(x = value, y = depth)) +
+#'   geom_lineh() +
+#'   geom_point() +
+#'   scale_y_reverse() +
+#'   facet_geochem_gridh(vars(param), units = c(C = "%", Cu = "ppm", Ti = "ppm")) +
+#'   labs(x = NULL, y = "Depth (cm)")
+#'
+#' ggplot(alta_lake_geochem, aes(y = value, x = depth)) +
+#'   geom_line() +
+#'   geom_point() +
+#'   scale_x_reverse() +
+#'   facet_geochem_grid(vars(param), units = c(C = "%", Cu = "ppm", Ti = "ppm")) +
+#'   labs(y = NULL, x = "Depth (cm)")
+#'
 facet_abundanceh <- function(taxon, grouping = NULL, rotate_facet_labels = 45, labeller = label_species,
                              scales = "free_x", space = "free_x",
                              dont_italicize = c("\\(.*?\\)", "spp?\\.", "-complex", "[Oo]ther"), ...) {
@@ -60,7 +96,7 @@ facet_abundance <- function(taxon, grouping = NULL, rotate_facet_labels = 0, lab
     scale_y_abundance(),
     ggplot2::facet_grid(rows = taxon, cols = grouping, scales = scales, space = space, labeller = labeller, ...),
     rotated_facet_labels(angle = rotate_facet_labels, direction = "y"),
-    ggplot2::labs(x = "Relative abundance (%)")
+    ggplot2::labs(y = "Relative abundance (%)")
   )
 }
 
