@@ -13,7 +13,8 @@ Suggests: testthat,
     covr,
     knitr,
     mudata2,
-    rmarkdown
+    rmarkdown,
+    withr
 URL: https://github.com/paleolimbot/tidypaleo
 BugReports: https://github.com/paleolimbot/tidypaleo/issues
 Imports: rlang,
@@ -25,5 +26,7 @@ Imports: rlang,
     purrr,
     ggstance,
     stringr,
-    grid
+    grid,
+    stats,
+    tidyr
 VignetteBuilder: knitr
