@@ -6,7 +6,7 @@ test_that("nested_data_matrix works as intended", {
     alta_lake_geochem,
     key = param,
     value = value,
-    qualifiers = c(zone, depth)
+    qualifiers = c(depth, zone)
   )
 
   expect_is(ndm, "tbl_df")
@@ -27,7 +27,7 @@ test_that("nested_data_matrix works as intended", {
       alta_lake_geochem,
       key = param,
       value = value,
-      qualifiers = c(zone, depth),
+      qualifiers = c(depth, zone),
       filter_all = dplyr::all_vars(runif(length(.)) > 0.1)
     )
 
@@ -40,7 +40,7 @@ test_that("nested_data_matrix works as intended", {
     alta_lake_geochem,
     key = param,
     value = value,
-    qualifiers = c(zone, depth),
+    qualifiers = c(depth, zone),
     select_if = ~mean(.) > 1
   )
 
@@ -53,7 +53,7 @@ test_that("nested_data_matrix works as intended", {
       alta_lake_geochem,
       key = param,
       value = value,
-      qualifiers = c(zone, depth),
+      qualifiers = c(depth, zone),
       select_if = ~mean(.) > 1,
       filter_all = dplyr::all_vars(runif(length(.)) > 0.1)
     )
@@ -71,7 +71,7 @@ test_that("nested_data_matrix works as intended", {
     alta_lake_geochem,
     key = param,
     value = value,
-    qualifiers = c(zone, depth),
+    qualifiers = c(depth, zone),
     groups = location
   )
   expect_equal(
@@ -94,11 +94,11 @@ test_that("nested_pca works as intended", {
     alta_lake_geochem,
     key = param,
     value = value,
-    qualifiers = c(zone, depth),
+    qualifiers = c(depth, zone),
     trans = scale
   )
 
-  ndm_pca <- nested_pca(ndm)
+  ndm_pca <- nested_prcomp(ndm)
 
   expect_equal(
     colnames(ndm_pca),
@@ -119,6 +119,45 @@ test_that("nested_pca works as intended", {
     ncol(ndm_pca$loadings[[1]]),
     ncol(ndm_pca$data[[1]]) + 1
   )
+
+})
+
+test_that("nested_chclust works as intended", {
+
+  ndm <- nested_data_matrix(
+    alta_lake_geochem,
+    key = param,
+    value = value,
+    qualifiers = c(depth, zone),
+    trans = scale
+  )
+
+  nested_coniss <- nested_chclust(ndm)
+
+  expect_setequal(
+    colnames(nested_coniss),
+    c(
+      "wide_df", "discarded_columns", "discarded_rows", "qualifiers",
+      "data", "distance", "model", "broken_stick", "segments"
+    )
+  )
+
+  expect_setequal(
+    colnames(tidyr::unnest(nested_coniss, segments)),
+    c(
+      "order", "dispersion", "order_end", "dispersion_end", "is_end",
+      "is_cross", "row_number", "zone", "depth", "depth_end"
+      )
+  )
+
+  expect_setequal(
+    colnames(tidyr::unnest(nested_coniss, broken_stick)),
+    c("n_groups", "dispersion", "broken_stick_dispersion")
+  )
+
+  model <- nested_coniss$model[[1]] # constrained, obs are in order
+
+
 
 })
 

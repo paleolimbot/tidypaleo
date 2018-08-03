@@ -2,17 +2,16 @@
 % Please edit documentation in R/nested_data_matrix.R
 \name{nested_anal}
 \alias{nested_anal}
-\alias{nested_pca}
 \title{Perform an analysis on a nested data matrix}
 \usage{
 nested_anal(.data, data_column, fun, data_arg, ..., model_column = "model")
-
-nested_pca(.data, data_column = "data", ...)
 }
 \arguments{
-\item{.data}{A data frame with a list column of data frames}
+\item{.data}{A data frame with a list column of data frames, possibly created using
+\link{nested_data_matrix}.}
 
-\item{data_column}{The column that contains the data}
+\item{data_column}{The name of the column that contains the data. Evaluated
+like \link[dplyr]{pull}.}
 
 \item{fun}{A model function}
 

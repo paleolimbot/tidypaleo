@@ -96,8 +96,10 @@ nested_data_matrix <- function(.data, key, value, qualifiers = NULL, fill = NA, 
 
 #' Perform an analysis on a nested data matrix
 #'
-#' @param .data A data frame with a list column of data frames
-#' @param data_column The column that contains the data
+#' @param .data A data frame with a list column of data frames, possibly created using
+#'   \link{nested_data_matrix}.
+#' @param data_column The name of the column that contains the data. Evaluated
+#'   like \link[dplyr]{pull}.
 #' @param model_column The column that will contain the model(s)
 #' @param fun A model function
 #' @param data_arg The data argument of fun
@@ -121,9 +123,41 @@ nested_anal <- function(.data, data_column, fun, data_arg, ..., model_column = "
   .data
 }
 
-#' @rdname nested_anal
+
+#' Nested Principal Components Analysis (PCA)
+#'
+#' Powered by \link[stats]{prcomp}. When creating the \link{nested_data_matrix},
+#' the data should be scaled (i.e, \code{trans = scale}) if all variables are not
+#' in the same unit.
+#'
+#' @inheritParams nested_anal
+#' @param ... Passed to \link[stats]{prcomp}.
+#'
+#' @return .data with additional columns 'model', 'loadings', 'variance' and 'scores'
 #' @export
-nested_pca <- function(.data, data_column = "data", ...) {
+#'
+#' @examples
+#' library(tidyr)
+#'
+#' nested_pca <- alta_lake_geochem %>%
+#'   nested_data_matrix(
+#'     key = param,
+#'     value = value,
+#'     qualifiers = c(depth, zone),
+#'     trans = scale
+#'   ) %>%
+#'   nested_prcomp()
+#'
+#' # get variance info
+#' nested_pca %>% unnest(variance)
+#'
+#' # get loadings info
+#' nested_pca %>% unnest(loadings)
+#'
+#' # scores, requalified
+#' nested_pca %>% unnest(qualifiers, scores)
+#'
+nested_prcomp <- function(.data, data_column = "data", ...) {
   npca <- nested_anal(
     .data,
     data_column = !!enquo(data_column),
@@ -138,10 +172,10 @@ nested_pca <- function(.data, data_column = "data", ...) {
     function(model) {
       tibble::tibble(
         component = seq_along(model$sdev),
-        sdev = model$sdev,
-        var = model$sdev ^ 2,
-        prop_var = (model$sdev ^ 2) / sum(model$sdev ^ 2),
-        cum_prop_var = cumsum((model$sdev ^ 2) / sum(model$sdev ^ 2))
+        standard_deviation = model$sdev,
+        variance = model$sdev ^ 2,
+        variance_proportion = (model$sdev ^ 2) / sum(model$sdev ^ 2),
+        variance_proportion_cumulative = cumsum((model$sdev ^ 2) / sum(model$sdev ^ 2))
       )
     }
   )
@@ -165,4 +199,134 @@ nested_pca <- function(.data, data_column = "data", ...) {
   )
 
   npca
+}
+
+#' Nested Constrained hierarchical clustering (CONISS)
+#'
+#' Powered by \link[rioja]{chclust}; broken stick using \link[rioja]{bstick}.
+#'
+#' @inheritParams nested_anal
+#' @param distance_fun A distance function like \link[stats]{dist} or \link[vegan]{vegdist}.
+#' @param ... Passed to \link[rioja]{chclust}.
+#'
+#' @return .data with additional columns 'model', 'broken_stick', and 'segments'
+#' @export
+#'
+#' @references
+#' Grimm, E.C. (1987) CONISS: A FORTRAN 77 program for stratigraphically constrained cluster
+#' analysis by the method of incremental sum of squares. Computers & Geosciences, 13, 13-35.
+#' \url{http://doi.org/10.1016/0098-3004(87)90022-7}
+#'
+#' Juggins, S. (2017) rioja: Analysis of Quaternary Science Data, R package version (0.9-15.1).
+#' (\url{http://cran.r-project.org/package=rioja}).
+#'
+nested_chclust <- function(.data, data_column = "data", qualifiers_column = "qualifiers", distance_fun = stats::dist,
+                           n_groups = NULL, ...) {
+  data_column <- enquo(data_column)
+  qualifiers_column <- enquo(qualifiers_column)
+  n_groups <- enquo(n_groups)
+
+  .data$distance <- purrr::map(dplyr::pull(.data, !!data_column), distance_fun)
+
+  npca <- nested_anal(
+    .data,
+    data_column = "distance",
+    fun = rioja::chclust,
+    data_arg = "d",
+    ...
+  )
+
+  # 100 groups is an arbitrary maximum...ensures that a large number of zones
+  npca$broken_stick <- purrr::map(
+    npca$model,
+    function(model) tibble::as_tibble(rioja::bstick(model, plot = FALSE, ng = 1000))
+  )
+  npca$broken_stick <- purrr::map(npca$broken_stick, dplyr::rename, n_groups = "nGroups", broken_stick_dispersion = "bstick")
+  npca$broken_stick <- purrr::map(npca$broken_stick, function(.data) dplyr::filter(.data, is.finite(.data$dispersion)))
+
+  npca$segments <- purrr::map2(npca$model, dplyr::pull(npca, !!qualifiers_column), qualify_dendro_data)
+
+  if(rlang::quo_is_null(n_groups)) {
+    npca$n_groups <- purrr::map2_int(npca$model, npca$broken_stick, determine_n_groups)
+  } else {
+    npca$n_groups <- dplyr::mutate(npca, !!n_groups)
+  }
+
+  npca$chclust_zone <- purrr::map2(npca$model, npca$n_groups, function(model, n_groups) {
+    zone_label <- stats::cutree(model, k = n_groups)
+  })
+  npca$zone_info <- purrr::pmap(list(npca$chclust_zone, npca$qualifiers, npca$n_groups), group_boundaries)
+
+  npca
+}
+
+group_boundaries <- function(chclust_zones, qualifiers, n_groups = 1) {
+  stopifnot(
+    length(chclust_zones) == nrow(qualifiers),
+    is.numeric(n_groups), length(n_groups) == 1, n_groups > 0
+  )
+
+  qualifiers$chclust_zone <- chclust_zones
+  group_info <- tidyr::nest(
+    dplyr::group_by(qualifiers, .data$chclust_zone),
+    .key = "data"
+  )
+
+  for(var in setdiff(colnames(qualifiers), "chclust_zone")) {
+    if(is.numeric(qualifiers[[var]])) {
+      group_info[[paste("min", var, sep = "_")]] <- purrr::map_dbl(group_info$data, function(df) min(df[[var]]))
+      group_info[[paste("max", var, sep = "_")]] <- purrr::map_dbl(group_info$data, function(df) max(df[[var]]))
+    }
+  }
+
+  group_info$data <- NULL
+
+  for(var in setdiff(colnames(qualifiers), "chclust_zone")) {
+    if(is.numeric(qualifiers[[var]])) {
+      group_info[[paste("boundary", var, sep = "_")]] <-
+        (group_info[[paste("max", var, sep = "_")]] + dplyr::lead(group_info[[paste("min", var, sep = "_")]])) / 2
+    }
+  }
+
+  group_info
+}
+
+determine_n_groups <- function(model, broken_stick, threshold = 1.1) {
+  # ensures there is at least one group greater than broken stick dispersion
+  broken_stick <- tibble::add_row(broken_stick, n_groups = 1, dispersion = 0, broken_stick_dispersion = Inf)
+
+  broken_stick$disp_gt_bstick <- broken_stick$dispersion > (broken_stick$broken_stick_dispersion * threshold)
+  runlength <- rle(broken_stick$disp_gt_bstick)
+  runlength$lengths[1]
+}
+
+qualify_dendro_data <- function(model, qualifiers) {
+  # need observations to be in order for this to work
+  stopifnot(
+    inherits(model, "hclust"),
+    all(abs(model$order - dplyr::lag(model$order)) == 1, na.rm = TRUE),
+    is.data.frame(qualifiers),
+    nrow(qualifiers) == length(model$order)
+  )
+
+  ggdend <- ggdendro::dendro_data(model)$segments
+  ggdend <- dplyr::rename(ggdend, order = "x", dispersion = "y", order_end = "xend", dispersion_end = "yend")
+  ggdend$is_end <- ggdend$dispersion_end == 0
+  ggdend$is_cross <- ggdend$dispersion == ggdend$dispersion_end
+  ggdend$row_number <- dplyr::if_else(ggdend$is_end & (ggdend$order %% 1 == 0), model$order[ggdend$order], NA_integer_)
+
+  combined <- dplyr::bind_cols(ggdend, qualifiers[ggdend$row_number, ])
+
+  # interpolate based on order column,
+  # add _end versions of numeric variables interpolated based on
+  # the order_end column
+  for(var in colnames(qualifiers)) {
+    if(is.numeric(qualifiers[[var]])) {
+      combined[[var]] <- stats::approx(x = na.omit(combined[c("order", var)]), xout = combined$order)$y
+      combined[[paste(var, "end", sep = "_")]] <-
+        stats::approx(x = na.omit(combined[c("order_end", var)]), xout = combined$order_end)$y
+    }
+  }
+
+  combined
 }
