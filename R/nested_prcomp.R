@@ -39,7 +39,13 @@ nested_prcomp <- function(.data, data_column = "data", ...) {
     fun = stats::prcomp,
     data_arg = "x",
     scale. = FALSE,
-    reserved_names = c("variance", "loadings", "scores"),
+    reserved_names = c(
+      "variance", "loadings", "scores",
+      paste0("PC", 1:100),
+      "component", "component_text", "standard_deviation", "variance",
+      "variance_proportion", "variance_proportion_cumulative",
+      "variable"
+    ),
     ...
   )
 

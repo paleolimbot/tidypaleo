@@ -46,14 +46,26 @@ nested_chclust <- function(.data, data_column = "data", qualifiers_column = "qua
   qualifiers_column <- enquo(qualifiers_column)
   n_groups <- enquo(n_groups)
 
-  .data$distance <- purrr::map(dplyr::pull(.data, !!data_column), distance_fun)
+  data_col_obj <- dplyr::pull(.data, !!data_column)
+  qualifiers_col_obj <- dplyr::pull(.data, !!qualifiers_column)
+
+  .data$distance <- purrr::map(data_col_obj, distance_fun)
+  qualifier_names <- unique(unlist(purrr::map(qualifiers_col_obj, colnames)))
 
   nchclust <- nested_anal(
     .data,
     data_column = "distance",
     fun = rioja::chclust,
     data_arg = "d",
-    reserved_names = c("broken_stick", "n_groups", "chclust_zone", "nodes", "segments"),
+    reserved_names = c(
+      # names of columns in this object
+      "broken_stick", "n_groups", "chclust_zone", "nodes", "segments",
+
+      # names of columns in nested columns
+      paste(qualifier_names, "end", sep = "_"), paste(qualifier_names, "boundary", sep = "_"),
+      "n_groups", "dispersion", "broken_stick_dispersion", "dispersion_end",
+      "dendro_order", "dendro_order_end", "node_id", "is_leaf", "recursive_level"
+    ),
     ...
   )
 
@@ -80,14 +92,15 @@ nested_chclust <- function(.data, data_column = "data", qualifiers_column = "qua
   }
 
   # zones based on stats::cutree()
+  nchclust$dendro_order <- purrr::map(nchclust$model, "order")
   nchclust$chclust_zone <- purrr::map2(nchclust$model, nchclust$n_groups, function(model, n_groups) {
     stats::cutree(model, k = n_groups)
   })
-  nchclust$zone_info <- purrr::pmap(list(nchclust$chclust_zone, nchclust$qualifiers, nchclust$n_groups), group_boundaries)
+  nchclust$zone_info <- purrr::pmap(list(nchclust$chclust_zone, qualifiers_col_obj, nchclust$n_groups), group_boundaries)
 
   # denrogram segments and nodes
   nchclust$nodes <- purrr::pmap(
-    list(nchclust$model, dplyr::pull(nchclust, !!qualifiers_column), nchclust$chclust_zone),
+    list(nchclust$model, qualifiers_col_obj, nchclust$chclust_zone),
     qualify_dendro_data
   )
   nchclust$segments <- purrr::map(

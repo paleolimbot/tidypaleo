@@ -16,7 +16,7 @@ test_that("nested_chclust produces the correct columns", {
   expect_setequal(
     colnames(nested_coniss),
     c("wide_df", "discarded_columns", "discarded_rows", "qualifiers",
-      "data", "distance", "model", "broken_stick", "n_groups", "chclust_zone",
+      "data", "distance", "model", "broken_stick", "n_groups", "dendro_order", "chclust_zone",
       "zone_info", "nodes", "segments")
   )
 
