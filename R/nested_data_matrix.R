@@ -39,14 +39,27 @@ nested_data_matrix <- function(.data, key, value, qualifiers = NULL, fill = NA, 
     groups <- dplyr::group_vars(.data)
   }
 
-  variables <- dplyr::distinct(
-    dplyr::select(
-      dplyr::ungroup(.data),
-      !!key
-    )
-  )[[1]]
+  variables <- as.character(
+    dplyr::distinct(
+      dplyr::select(
+        dplyr::ungroup(.data),
+        !!key
+      )
+    )[[1]]
+  )
 
   data <- dplyr::select(dplyr::ungroup(.data), !!groups, !!qualifiers, !!key, !!value)
+
+  reserved_names <- c(
+    "wide_df", "discarded_columns", "discarded_rows", "qualifiers",
+    "data", "wide_df_original"
+  )
+
+  # col names can't be reserved, and can't be identical to any of the variables
+  check_problematic_names(colnames(data), c(reserved_names, variables))
+
+  # variables can't be reserved names either
+  check_problematic_names(variables, reserved_names, data_name = rlang::quo_label(key))
 
   wide <- tidyr::spread(
     data,
@@ -107,13 +120,29 @@ nested_data_matrix <- function(.data, key, value, qualifiers = NULL, fill = NA, 
 #' @param model_column The column that will contain the model(s)
 #' @param fun A model function
 #' @param data_arg The data argument of fun
+#' @param reserved_names Names that should not be allowed as columns in any
+#'   data frame within this object
 #' @param ... Passed to fun
 #'
 #' @return .data with an additional list column of fun output
 #' @export
 #'
-nested_anal <- function(.data, data_column, fun, data_arg, ..., model_column = "model") {
+nested_anal <- function(.data, data_column, fun, data_arg, ..., model_column = "model", reserved_names = NULL) {
   data_column <- enquo(data_column)
+
+  # column names can't be reserved names in .data or in nested data columns
+  check_problematic_names(colnames(.data), c(reserved_names, model_column))
+  purrr::map(colnames(.data), function(col_name) {
+    col <- .data[[col_name]]
+
+    if(is.list(col)) {
+      purrr::map(col, function(list_item) {
+        if(is.data.frame(list_item)) {
+          check_problematic_names(colnames(list_item), c(reserved_names, model_column), data_name = col_name)
+        }
+      })
+    }
+  })
 
   .data[[model_column]] <- purrr::map(
     dplyr::pull(.data, !!data_column),
@@ -127,248 +156,13 @@ nested_anal <- function(.data, data_column, fun, data_arg, ..., model_column = "
   .data
 }
 
-
-#' Nested Principal Components Analysis (PCA)
-#'
-#' Powered by \link[stats]{prcomp}. When creating the \link{nested_data_matrix},
-#' the data should be scaled (i.e, \code{trans = scale}) if all variables are not
-#' in the same unit.
-#'
-#' @inheritParams nested_anal
-#' @param ... Passed to \link[stats]{prcomp}.
-#'
-#' @return .data with additional columns 'model', 'loadings', 'variance' and 'scores'
-#' @export
-#'
-#' @examples
-#' library(tidyr)
-#'
-#' nested_pca <- alta_lake_geochem %>%
-#'   nested_data_matrix(
-#'     key = param,
-#'     value = value,
-#'     qualifiers = c(depth, zone),
-#'     trans = scale
-#'   ) %>%
-#'   nested_prcomp()
-#'
-#' # get variance info
-#' nested_pca %>% unnest(variance)
-#'
-#' # get loadings info
-#' nested_pca %>% unnest(loadings)
-#'
-#' # scores, requalified
-#' nested_pca %>% unnest(qualifiers, scores)
-#'
-nested_prcomp <- function(.data, data_column = "data", ...) {
-  npca <- nested_anal(
-    .data,
-    data_column = !!enquo(data_column),
-    fun = stats::prcomp,
-    data_arg = "x",
-    scale. = FALSE,
-    ...
-  )
-
-  npca$variance <- purrr::map(
-    npca$model,
-    function(model) {
-      tibble::tibble(
-        component = seq_along(model$sdev),
-        standard_deviation = model$sdev,
-        variance = model$sdev ^ 2,
-        variance_proportion = (model$sdev ^ 2) / sum(model$sdev ^ 2),
-        variance_proportion_cumulative = cumsum((model$sdev ^ 2) / sum(model$sdev ^ 2))
-      )
-    }
-  )
-
-  npca$loadings <- purrr::map(
-    npca$model,
-    function(model) {
-      df <- tibble::rownames_to_column(
-        as.data.frame(model$rotation),
-        var = "variable"
-      )
-      tibble::as_tibble(df)
-    }
-  )
-
-  npca$scores <- purrr::map(
-    npca$model,
-    function(model) {
-      tibble::as_tibble(stats::predict(model))
-    }
-  )
-
-  npca
-}
-
-#' Nested Constrained hierarchical clustering (CONISS)
-#'
-#' Powered by \link[rioja]{chclust}; broken stick using \link[rioja]{bstick}.
-#'
-#' @inheritParams nested_anal
-#' @param distance_fun A distance function like \link[stats]{dist} or \link[vegan]{vegdist}.
-#' @param qualifiers_column The column that contains the qualifiers
-#' @param n_groups The number of groups to use (can be a vector or expression using vars in .data)
-#' @param ... Passed to \link[rioja]{chclust}.
-#'
-#' @return .data with additional columns 'model', 'broken_stick', and 'segments'
-#' @export
-#'
-#' @references
-#' Grimm, E.C. (1987) CONISS: A FORTRAN 77 program for stratigraphically constrained cluster
-#' analysis by the method of incremental sum of squares. Computers & Geosciences, 13, 13-35.
-#' \url{http://doi.org/10.1016/0098-3004(87)90022-7}
-#'
-#' Juggins, S. (2017) rioja: Analysis of Quaternary Science Data, R package version (0.9-15.1).
-#' (\url{http://cran.r-project.org/package=rioja}).
-#'
-nested_chclust <- function(.data, data_column = "data", qualifiers_column = "qualifiers", distance_fun = stats::dist,
-                           n_groups = NULL, ...) {
-  data_column <- enquo(data_column)
-  qualifiers_column <- enquo(qualifiers_column)
-  n_groups <- enquo(n_groups)
-
-  .data$distance <- purrr::map(dplyr::pull(.data, !!data_column), distance_fun)
-
-  npca <- nested_anal(
-    .data,
-    data_column = "distance",
-    fun = rioja::chclust,
-    data_arg = "d",
-    ...
-  )
-
-  # 100 groups is an arbitrary maximum...ensures that a large number of zones
-  npca$broken_stick <- purrr::map(
-    npca$model,
-    function(model) tibble::as_tibble(rioja::bstick(model, plot = FALSE, ng = 1000))
-  )
-  npca$broken_stick <- purrr::map(npca$broken_stick, dplyr::rename, n_groups = "nGroups", broken_stick_dispersion = "bstick")
-  npca$broken_stick <- purrr::map(npca$broken_stick, function(.data) dplyr::filter(.data, is.finite(.data$dispersion)))
-
-  # n_groups based on user input OR default determine_n_groups()
-  if(rlang::quo_is_null(n_groups)) {
-    npca$n_groups <- purrr::map2(npca$model, npca$broken_stick, determine_n_groups)
-  } else {
-    npca <- dplyr::mutate(npca, n_groups = !!n_groups)
-    npca$n_groups <- as.list(npca$n_groups)
+check_problematic_names <- function(col_names, bad_names, data_name = ".data", action = stop) {
+  bad_names_in_df <- intersect(col_names, bad_names)
+  if(length(bad_names_in_df) > 0) {
+    action(
+      "The following names in ", data_name, " are reserved must be renamed: ",
+      paste0("`", bad_names_in_df, "`", collapse = ", ")
+    )
   }
-
-  # zones based on stats::cutree()
-  npca$chclust_zone <- purrr::map2(npca$model, npca$n_groups, function(model, n_groups) {
-    stats::cutree(model, k = n_groups)
-  })
-  npca$zone_info <- purrr::pmap(list(npca$chclust_zone, npca$qualifiers, npca$n_groups), group_boundaries)
-
-  # denrogram segments and nodes
-  npca$nodes <- purrr::pmap(list(npca$model, dplyr::pull(npca, !!qualifiers_column), npca$chclust_zone), qualify_dendro_data)
-  npca$segments <- purrr::map(npca$nodes, function(df) tidyr::unnest(dplyr::select(df, "node_id", "chclust_zone", "segments")))
-  npca$nodes <- purrr::map(npca$nodes, function(df) dplyr::select(df, -"segments"))
-
-  npca
 }
 
-group_boundaries <- function(chclust_zones, qualifiers, n_groups = 1) {
-  stopifnot(
-    length(chclust_zones) == nrow(qualifiers),
-    is.numeric(n_groups), length(n_groups) == 1, n_groups > 0
-  )
-
-  qualifiers$chclust_zone <- chclust_zones
-  group_info <- tidyr::nest(
-    dplyr::group_by(qualifiers, .data$chclust_zone),
-    .key = "data"
-  )
-
-  for(var in setdiff(colnames(qualifiers), "chclust_zone")) {
-    if(is.numeric(qualifiers[[var]])) {
-      group_info[[paste("min", var, sep = "_")]] <- purrr::map_dbl(group_info$data, function(df) min(df[[var]]))
-      group_info[[paste("max", var, sep = "_")]] <- purrr::map_dbl(group_info$data, function(df) max(df[[var]]))
-    }
-  }
-
-  group_info$data <- NULL
-
-  for(var in setdiff(colnames(qualifiers), "chclust_zone")) {
-    if(is.numeric(qualifiers[[var]])) {
-      group_info[[paste("boundary", var, sep = "_")]] <-
-        (group_info[[paste("max", var, sep = "_")]] + dplyr::lead(group_info[[paste("min", var, sep = "_")]])) / 2
-    }
-  }
-
-  group_info
-}
-
-determine_n_groups <- function(model, broken_stick, threshold = 1.1) {
-  # ensures there is at least one group greater than broken stick dispersion
-  broken_stick <- tibble::add_row(broken_stick, n_groups = 1, dispersion = 0, broken_stick_dispersion = Inf)
-
-  broken_stick$disp_gt_bstick <- broken_stick$dispersion > (broken_stick$broken_stick_dispersion * threshold)
-  runlength <- rle(broken_stick$disp_gt_bstick)
-  runlength$lengths[1]
-}
-
-qualify_dendro_data <- function(model, qualifiers, chclust_zones) {
-  qualifiers$dendro_order <- model$order
-  numeric_vars <- colnames(qualifiers)[purrr::map_lgl(qualifiers, is.numeric)]
-  node_data(stats::as.dendrogram(model), qualifiers, numeric_vars, chclust_zones)
-}
-
-node_data <- function(node, qualifiers, numeric_vars, chclust_zones, recursive_level = 1, node_id = 1) {
-
-  if(stats::is.leaf(node)) {
-    data1 <- tibble::tibble()
-    data2 <- tibble::tibble()
-
-    data <- dplyr::slice(qualifiers, as.numeric(attr(node, "label")))
-    data$chclust_zone <- chclust_zones[attr(node, "label")]
-    data$is_leaf <- TRUE
-    data$segments <- list(tibble::tibble())
-    data$dispersion <- attr(node, "height")
-  } else {
-
-    # includes rows for all child nodes
-    data1 <- node_data(node[[1]], qualifiers, numeric_vars, chclust_zones, recursive_level + 1, node_id = node_id + 1)
-    data2 <- node_data(node[[2]], qualifiers, numeric_vars, chclust_zones, recursive_level + 1, node_id = max(data1$node_id) + 1)
-
-    # first row is always the last node
-    n1 <- dplyr::slice(data1, 1)
-    n2 <- dplyr::slice(data2, 1)
-
-    data <- (n1[numeric_vars] + n2[numeric_vars]) / 2
-    data$chclust_zone <- if(n1$chclust_zone == n2$chclust_zone) n1$chclust_zone else NA_integer_
-    data$is_leaf <- FALSE
-    data$dispersion <- attr(node, "height")
-
-    data$segments <- list(get_dendro_segments(data, n1, n2, numeric_vars))
-  }
-
-  data$recursive_level <- recursive_level
-  data$node_id <- node_id
-  tibble::as_tibble(dplyr::bind_rows(data, data1, data2))
-}
-
-get_dendro_segments <- function(data, n1, n2, numeric_vars) {
-  n1 <- n1[c(numeric_vars, "dispersion")]
-  n2 <- n2[c(numeric_vars, "dispersion")]
-  data <- data[c(numeric_vars, "dispersion")]
-
-  end_numeric_vars <- paste(numeric_vars, "end", sep = "_")
-
-  n1_end <- n1
-  colnames(n1_end) <- paste(colnames(n1_end), "end", sep = "_")
-  n2_end <- n2
-  colnames(n2_end) <- paste(colnames(n2_end), "end", sep = "_")
-  data_end <- data
-  colnames(data_end) <- paste(colnames(data_end), "end", sep = "_")
-
-  dplyr::bind_rows(
-    dplyr::bind_cols(n1[numeric_vars], n2_end[end_numeric_vars], data["dispersion"], data_end["dispersion_end"]),
-    dplyr::bind_cols(n1[numeric_vars], n1_end[end_numeric_vars], data["dispersion"], n1_end["dispersion_end"]),
-    dplyr::bind_cols(n2[numeric_vars], n2_end[end_numeric_vars], data["dispersion"], n2_end["dispersion_end"])
-  )
-}

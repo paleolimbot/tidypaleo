@@ -88,78 +88,50 @@ test_that("nested_data_matrix works as intended", {
   )
 })
 
-test_that("nested_pca works as intended", {
+test_that("nested_data_matrix gives an error with reserved column names", {
+  alg_bad <- dplyr::rename(alta_lake_geochem, data = depth)
+  expect_error(
+    nested_data_matrix(alg_bad, param, value, data),
+    "The following names in"
+  )
+})
 
-  ndm <- nested_data_matrix(
-    alta_lake_geochem,
-    key = param,
-    value = value,
-    qualifiers = c(depth, zone),
-    trans = scale
+test_that("nested_anal gives an error with reserved column names", {
+  alg_bad <- dplyr::rename(alta_lake_geochem, model = depth)
+  ndm <- expect_silent(
+    nested_data_matrix(alg_bad, param, value, model)
   )
 
-  ndm_pca <- nested_prcomp(ndm)
-
-  expect_equal(
-    colnames(ndm_pca),
-    c("wide_df", "discarded_columns", "discarded_rows", "qualifiers", "data",
-      "model", "variance", "loadings", "scores")
+  expect_error(
+    nested_anal(ndm, data_column = "data", fun = stats::prcomp, data_arg = "x"),
+    "The following names in wide_df"
   )
 
-  expect_identical(
-    purrr::map_int(ndm_pca$qualifiers, nrow),
-    purrr::map_int(ndm_pca$data, nrow)
+  ndm$model <- 1
+  expect_error(
+    nested_anal(ndm, data_column = "data", fun = stats::prcomp, data_arg = "x"),
+    "The following names in .data"
   )
 
-  expect_identical(
-    purrr::map_int(ndm_pca$qualifiers, nrow),
-    purrr::map_int(ndm_pca$scores, nrow)
+  ndm <- nested_data_matrix(alta_lake_geochem, param, value, depth)
+  ndm$random_name <- 1
+  expect_silent(
+    nested_anal(ndm, data_column = "data", fun = stats::prcomp, data_arg = "x")
   )
-
-  expect_equal(
-    ncol(ndm_pca$loadings[[1]]),
-    ncol(ndm_pca$data[[1]]) + 1
+  expect_error(
+    nested_anal(ndm, data_column = "data", fun = stats::prcomp, data_arg = "x", reserved_names = "random_name"),
+    "The following names in .data"
   )
 
 })
 
-test_that("nested_chclust works as intended", {
-
-  ndm <- nested_data_matrix(
-    alta_lake_geochem,
-    key = param,
-    value = value,
-    qualifiers = c(depth, zone),
-    trans = scale
+test_that("nested data matrix works with a grouping variable", {
+  ndm_grp <- nested_data_matrix(keji_lakes_plottable, taxon, rel_abund, depth, fill = 0, groups = location)
+  expect_identical(
+    ndm_grp,
+    nested_data_matrix(dplyr::group_by(keji_lakes_plottable, location), taxon, rel_abund, depth, fill = 0)
   )
 
-  nested_coniss <- nested_chclust(ndm)
-
-  expect_setequal(
-    colnames(nested_coniss),
-    c("wide_df", "discarded_columns", "discarded_rows", "qualifiers",
-      "data", "distance", "model", "broken_stick", "n_groups", "chclust_zone",
-      "zone_info", "nodes", "segments")
-  )
-
-  expect_setequal(
-    colnames(tidyr::unnest(nested_coniss, segments)),
-    c("node_id", "chclust_zone", "depth", "dendro_order", "depth_end",
-      "dendro_order_end", "dispersion", "dispersion_end", "row_number", "row_number_end")
-  )
-
-  expect_setequal(
-    colnames(tidyr::unnest(nested_coniss, broken_stick)),
-    c("n_groups", "dispersion", "broken_stick_dispersion")
-  )
-
-  expect_setequal(
-    colnames(tidyr::unnest(nested_coniss, nodes)),
-    c("depth", "dendro_order", "chclust_zone", "is_leaf", "dispersion",
-      "recursive_level", "node_id", "zone", "row_number")
-  )
-
+  expect_true("location" %in% colnames(ndm_grp))
+  expect_true(is.atomic(ndm_grp$location))
 })
-
-
-
