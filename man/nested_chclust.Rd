@@ -15,7 +15,11 @@ nested_chclust(.data, data_column = "data",
 \item{data_column}{The name of the column that contains the data. Evaluated
 like \link[dplyr]{pull}.}
 
+\item{qualifiers_column}{The column that contains the qualifiers}
+
 \item{distance_fun}{A distance function like \link[stats]{dist} or \link[vegan]{vegdist}.}
+
+\item{n_groups}{The number of groups to use (can be a vector or expression using vars in .data)}
 
 \item{...}{Passed to \link[rioja]{chclust}.}
 }

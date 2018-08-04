@@ -17,7 +17,7 @@ test_that("nested_data_matrix works as intended", {
   )
   expect_setequal(
     colnames(ndm$qualifiers[[1]]),
-    c("depth", "zone")
+    c("depth", "zone", "row_number")
   )
   expect_true(!any(c("depth", "zone") %in% colnames(ndm$data[[1]])))
   expect_true(all(purrr::map_lgl(ndm, ~inherits(.x[[1]], "tbl_df"))))
@@ -102,7 +102,8 @@ test_that("nested_pca works as intended", {
 
   expect_equal(
     colnames(ndm_pca),
-    c("wide_df", "discarded_columns", "discarded_rows", "qualifiers", "data", "model", "variance", "loadings", "scores")
+    c("wide_df", "discarded_columns", "discarded_rows", "qualifiers", "data",
+      "model", "variance", "loadings", "scores")
   )
 
   expect_identical(
@@ -136,18 +137,15 @@ test_that("nested_chclust works as intended", {
 
   expect_setequal(
     colnames(nested_coniss),
-    c(
-      "wide_df", "discarded_columns", "discarded_rows", "qualifiers",
-      "data", "distance", "model", "broken_stick", "segments"
-    )
+    c("wide_df", "discarded_columns", "discarded_rows", "qualifiers",
+      "data", "distance", "model", "broken_stick", "n_groups", "chclust_zone",
+      "zone_info", "nodes", "segments")
   )
 
   expect_setequal(
     colnames(tidyr::unnest(nested_coniss, segments)),
-    c(
-      "order", "dispersion", "order_end", "dispersion_end", "is_end",
-      "is_cross", "row_number", "zone", "depth", "depth_end"
-      )
+    c("node_id", "chclust_zone", "depth", "dendro_order", "depth_end",
+      "dendro_order_end", "dispersion", "dispersion_end", "row_number", "row_number_end")
   )
 
   expect_setequal(
@@ -155,9 +153,11 @@ test_that("nested_chclust works as intended", {
     c("n_groups", "dispersion", "broken_stick_dispersion")
   )
 
-  model <- nested_coniss$model[[1]] # constrained, obs are in order
-
-
+  expect_setequal(
+    colnames(tidyr::unnest(nested_coniss, nodes)),
+    c("depth", "dendro_order", "chclust_zone", "is_leaf", "dispersion",
+      "recursive_level", "node_id", "zone", "row_number")
+  )
 
 })
 

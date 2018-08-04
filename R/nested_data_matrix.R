@@ -84,7 +84,11 @@ nested_data_matrix <- function(.data, key, value, qualifiers = NULL, fill = NA, 
     ))
   })
 
-  nested$qualifiers <- purrr::map(nested$wide_df, function(df) dplyr::select(df, !!qualifiers))
+  nested$qualifiers <- purrr::map(nested$wide_df, function(df) {
+    df <- dplyr::select(df, !!qualifiers)
+    df$row_number <- seq_len(nrow(df))
+    df
+  })
   nested$data <- purrr::map(nested$wide_df, function(df) {
     df <- dplyr::select(df, -!!qualifiers)
     dplyr::mutate_all(df, trans)
@@ -207,6 +211,8 @@ nested_prcomp <- function(.data, data_column = "data", ...) {
 #'
 #' @inheritParams nested_anal
 #' @param distance_fun A distance function like \link[stats]{dist} or \link[vegan]{vegdist}.
+#' @param qualifiers_column The column that contains the qualifiers
+#' @param n_groups The number of groups to use (can be a vector or expression using vars in .data)
 #' @param ... Passed to \link[rioja]{chclust}.
 #'
 #' @return .data with additional columns 'model', 'broken_stick', and 'segments'
@@ -244,18 +250,24 @@ nested_chclust <- function(.data, data_column = "data", qualifiers_column = "qua
   npca$broken_stick <- purrr::map(npca$broken_stick, dplyr::rename, n_groups = "nGroups", broken_stick_dispersion = "bstick")
   npca$broken_stick <- purrr::map(npca$broken_stick, function(.data) dplyr::filter(.data, is.finite(.data$dispersion)))
 
-  npca$segments <- purrr::map2(npca$model, dplyr::pull(npca, !!qualifiers_column), qualify_dendro_data)
-
+  # n_groups based on user input OR default determine_n_groups()
   if(rlang::quo_is_null(n_groups)) {
-    npca$n_groups <- purrr::map2_int(npca$model, npca$broken_stick, determine_n_groups)
+    npca$n_groups <- purrr::map2(npca$model, npca$broken_stick, determine_n_groups)
   } else {
-    npca$n_groups <- dplyr::mutate(npca, !!n_groups)
+    npca <- dplyr::mutate(npca, n_groups = !!n_groups)
+    npca$n_groups <- as.list(npca$n_groups)
   }
 
+  # zones based on stats::cutree()
   npca$chclust_zone <- purrr::map2(npca$model, npca$n_groups, function(model, n_groups) {
-    zone_label <- stats::cutree(model, k = n_groups)
+    stats::cutree(model, k = n_groups)
   })
   npca$zone_info <- purrr::pmap(list(npca$chclust_zone, npca$qualifiers, npca$n_groups), group_boundaries)
+
+  # denrogram segments and nodes
+  npca$nodes <- purrr::pmap(list(npca$model, dplyr::pull(npca, !!qualifiers_column), npca$chclust_zone), qualify_dendro_data)
+  npca$segments <- purrr::map(npca$nodes, function(df) tidyr::unnest(dplyr::select(df, "node_id", "chclust_zone", "segments")))
+  npca$nodes <- purrr::map(npca$nodes, function(df) dplyr::select(df, -"segments"))
 
   npca
 }
@@ -300,33 +312,63 @@ determine_n_groups <- function(model, broken_stick, threshold = 1.1) {
   runlength$lengths[1]
 }
 
-qualify_dendro_data <- function(model, qualifiers) {
-  # need observations to be in order for this to work
-  stopifnot(
-    inherits(model, "hclust"),
-    all(abs(model$order - dplyr::lag(model$order)) == 1, na.rm = TRUE),
-    is.data.frame(qualifiers),
-    nrow(qualifiers) == length(model$order)
-  )
+qualify_dendro_data <- function(model, qualifiers, chclust_zones) {
+  qualifiers$dendro_order <- model$order
+  numeric_vars <- colnames(qualifiers)[purrr::map_lgl(qualifiers, is.numeric)]
+  node_data(stats::as.dendrogram(model), qualifiers, numeric_vars, chclust_zones)
+}
 
-  ggdend <- ggdendro::dendro_data(model)$segments
-  ggdend <- dplyr::rename(ggdend, order = "x", dispersion = "y", order_end = "xend", dispersion_end = "yend")
-  ggdend$is_end <- ggdend$dispersion_end == 0
-  ggdend$is_cross <- ggdend$dispersion == ggdend$dispersion_end
-  ggdend$row_number <- dplyr::if_else(ggdend$is_end & (ggdend$order %% 1 == 0), model$order[ggdend$order], NA_integer_)
+node_data <- function(node, qualifiers, numeric_vars, chclust_zones, recursive_level = 1, node_id = 1) {
 
-  combined <- dplyr::bind_cols(ggdend, qualifiers[ggdend$row_number, ])
+  if(stats::is.leaf(node)) {
+    data1 <- tibble::tibble()
+    data2 <- tibble::tibble()
 
-  # interpolate based on order column,
-  # add _end versions of numeric variables interpolated based on
-  # the order_end column
-  for(var in colnames(qualifiers)) {
-    if(is.numeric(qualifiers[[var]])) {
-      combined[[var]] <- stats::approx(x = na.omit(combined[c("order", var)]), xout = combined$order)$y
-      combined[[paste(var, "end", sep = "_")]] <-
-        stats::approx(x = na.omit(combined[c("order_end", var)]), xout = combined$order_end)$y
-    }
+    data <- dplyr::slice(qualifiers, as.numeric(attr(node, "label")))
+    data$chclust_zone <- chclust_zones[attr(node, "label")]
+    data$is_leaf <- TRUE
+    data$segments <- list(tibble::tibble())
+    data$dispersion <- attr(node, "height")
+  } else {
+
+    # includes rows for all child nodes
+    data1 <- node_data(node[[1]], qualifiers, numeric_vars, chclust_zones, recursive_level + 1, node_id = node_id + 1)
+    data2 <- node_data(node[[2]], qualifiers, numeric_vars, chclust_zones, recursive_level + 1, node_id = max(data1$node_id) + 1)
+
+    # first row is always the last node
+    n1 <- dplyr::slice(data1, 1)
+    n2 <- dplyr::slice(data2, 1)
+
+    data <- (n1[numeric_vars] + n2[numeric_vars]) / 2
+    data$chclust_zone <- if(n1$chclust_zone == n2$chclust_zone) n1$chclust_zone else NA_integer_
+    data$is_leaf <- FALSE
+    data$dispersion <- attr(node, "height")
+
+    data$segments <- list(get_dendro_segments(data, n1, n2, numeric_vars))
   }
 
-  combined
+  data$recursive_level <- recursive_level
+  data$node_id <- node_id
+  tibble::as_tibble(dplyr::bind_rows(data, data1, data2))
+}
+
+get_dendro_segments <- function(data, n1, n2, numeric_vars) {
+  n1 <- n1[c(numeric_vars, "dispersion")]
+  n2 <- n2[c(numeric_vars, "dispersion")]
+  data <- data[c(numeric_vars, "dispersion")]
+
+  end_numeric_vars <- paste(numeric_vars, "end", sep = "_")
+
+  n1_end <- n1
+  colnames(n1_end) <- paste(colnames(n1_end), "end", sep = "_")
+  n2_end <- n2
+  colnames(n2_end) <- paste(colnames(n2_end), "end", sep = "_")
+  data_end <- data
+  colnames(data_end) <- paste(colnames(data_end), "end", sep = "_")
+
+  dplyr::bind_rows(
+    dplyr::bind_cols(n1[numeric_vars], n2_end[end_numeric_vars], data["dispersion"], data_end["dispersion_end"]),
+    dplyr::bind_cols(n1[numeric_vars], n1_end[end_numeric_vars], data["dispersion"], n1_end["dispersion_end"]),
+    dplyr::bind_cols(n2[numeric_vars], n2_end[end_numeric_vars], data["dispersion"], n2_end["dispersion_end"])
+  )
 }
