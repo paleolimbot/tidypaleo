@@ -8,6 +8,7 @@ test_that("nested_data_matrix works as intended", {
     value = value,
     qualifiers = c(depth, zone)
   )
+  expect_equal(get_grouping_vars(ndm), character(0))
 
   expect_is(ndm, "tbl_df")
   expect_equal(nrow(ndm), 1)
@@ -74,6 +75,7 @@ test_that("nested_data_matrix works as intended", {
     qualifiers = c(depth, zone),
     groups = location
   )
+  expect_equal(get_grouping_vars(grouped_ndm), "location")
   expect_equal(
     colnames(grouped_ndm),
     c("location", "wide_df", "discarded_columns", "discarded_rows", "qualifiers", "data")
@@ -134,4 +136,38 @@ test_that("nested data matrix works with a grouping variable", {
 
   expect_true("location" %in% colnames(ndm_grp))
   expect_true(is.atomic(ndm_grp$location))
+})
+
+test_that("class inheritance works", {
+  ndm <- nested_data_matrix(alta_lake_geochem, param, value, depth, trans = scale)
+  na <- nested_anal(ndm, data_column = "data", fun = stats::prcomp, data_arg = "x")
+  expect_is(ndm, "nested_data_matrix")
+  expect_is(na, "nested_anal")
+  expect_is(na, "nested_data_matrix")
+  expect_is(dplyr::filter(ndm, TRUE), "nested_data_matrix")
+  expect_is(dplyr::filter(na, TRUE), "nested_anal")
+  expect_is(dplyr::filter(na, TRUE), "nested_data_matrix")
+  expect_is(dplyr::slice(ndm, 1), "nested_data_matrix")
+  expect_is(dplyr::slice(na, 1), "nested_anal")
+  expect_is(dplyr::slice(na, 1), "nested_data_matrix")
+
+  expect_equal(nrow(dplyr::filter(ndm, FALSE)), 0)
+  expect_equal(nrow(dplyr::slice(ndm, numeric(0))), 0)
+  expect_equal(nrow(dplyr::filter(ndm, TRUE)), 1)
+  expect_equal(nrow(dplyr::slice(ndm, 1)), 1)
+})
+
+test_that("nested anal plotting works", {
+  ndm <- nested_data_matrix(alta_lake_geochem, param, value, depth, trans = scale)
+  ndm_grp <- nested_data_matrix(keji_lakes_plottable, taxon, rel_abund, depth, fill = 0, trans = sqrt, groups = location)
+  pca <- nested_anal(ndm, data_column = "data", fun = stats::prcomp, data_arg = "x")
+  pca_grp <- nested_anal(ndm_grp, data_column = "data", fun = stats::prcomp, data_arg = "x")
+
+  expect_length(plot(pca, sub = "default"), 1)
+  expect_length(plot(pca_grp, plot_labels = location, sub = "default grouped"), 2)
+
+  plot(pca_grp, plot_labels = location, nrow = 2, sub = "nrow = 2")
+  plot(pca_grp, plot_labels = location, ncol = 1, sub = "ncol = 1")
+
+  expect_error(plot(dplyr::filter(pca_grp, FALSE)), "Nothing to plot")
 })

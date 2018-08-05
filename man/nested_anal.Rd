@@ -4,8 +4,7 @@
 \alias{nested_anal}
 \title{Perform an analysis on a nested data matrix}
 \usage{
-nested_anal(.data, data_column, fun, data_arg, ..., model_column = "model",
-  reserved_names = NULL)
+nested_anal(.data, data_column, fun, data_arg, ..., reserved_names = NULL)
 }
 \arguments{
 \item{.data}{A data frame with a list column of data frames, possibly created using
@@ -19,8 +18,6 @@ like \link[dplyr]{pull}.}
 \item{data_arg}{The data argument of fun}
 
 \item{...}{Passed to fun}
-
-\item{model_column}{The column that will contain the model(s)}
 
 \item{reserved_names}{Names that should not be allowed as columns in any
 data frame within this object}

@@ -14,7 +14,6 @@ Suggests: testthat,
     knitr,
     mudata2,
     rmarkdown,
-    withr,
     rioja
 URL: https://github.com/paleolimbot/tidypaleo
 BugReports: https://github.com/paleolimbot/tidypaleo/issues
@@ -29,5 +28,8 @@ Imports: rlang,
     stringr,
     grid,
     stats,
+    withr,
+    graphics,
+    grDevices,
     tidyr
 VignetteBuilder: knitr

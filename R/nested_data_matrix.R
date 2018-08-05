@@ -108,7 +108,7 @@ nested_data_matrix <- function(.data, key, value, qualifiers = NULL, fill = NA, 
   })
 
   nested$wide_df_original <- NULL
-  tibble::as_tibble(dplyr::ungroup(nested))
+  new_nested_data_matrix(tibble::as_tibble(dplyr::ungroup(nested)))
 }
 
 #' Perform an analysis on a nested data matrix
@@ -117,7 +117,6 @@ nested_data_matrix <- function(.data, key, value, qualifiers = NULL, fill = NA, 
 #'   \link{nested_data_matrix}.
 #' @param data_column The name of the column that contains the data. Evaluated
 #'   like \link[dplyr]{pull}.
-#' @param model_column The column that will contain the model(s)
 #' @param fun A model function
 #' @param data_arg The data argument of fun
 #' @param reserved_names Names that should not be allowed as columns in any
@@ -127,8 +126,9 @@ nested_data_matrix <- function(.data, key, value, qualifiers = NULL, fill = NA, 
 #' @return .data with an additional list column of fun output
 #' @export
 #'
-nested_anal <- function(.data, data_column, fun, data_arg, ..., model_column = "model", reserved_names = NULL) {
+nested_anal <- function(.data, data_column, fun, data_arg, ..., reserved_names = NULL) {
   data_column <- enquo(data_column)
+  model_column <- "model"
 
   # column names can't be reserved names in .data or in nested data columns
   check_problematic_names(colnames(.data), c(reserved_names, model_column))
@@ -153,7 +153,94 @@ nested_anal <- function(.data, data_column, fun, data_arg, ..., model_column = "
     }
   )
 
-  .data
+  new_nested_anal(.data)
+}
+
+new_nested_data_matrix <- function(x) {
+  structure(x, class = unique(c("nested_data_matrix", class(x))))
+}
+
+new_nested_anal <- function(x) {
+  structure(x, class = unique(c("nested_anal", class(x))))
+}
+
+#' @importFrom dplyr filter
+#' @export
+dplyr::filter
+
+
+#' @importFrom dplyr filter
+#' @export
+filter.nested_data_matrix <- function(.data, ...) {
+  data_class <- class(.data)
+  structure(NextMethod(), class = data_class)
+}
+
+#' @importFrom dplyr slice
+#' @export
+slice.nested_data_matrix <- function(.data, ...) {
+  data_class <- class(.data)
+  structure(NextMethod(), class = data_class)
+}
+
+#' @importFrom graphics plot
+#' @export
+plot.nested_anal <- function(x, ..., plot_labels = "", nrow = NULL, ncol = NULL) {
+  plot_labels <- enquo(plot_labels)
+  nested_anal_plot(x, .fun = graphics::plot, ..., plot_labels = !!plot_labels, nrow = nrow, ncol = ncol)
+}
+
+nested_anal_plot <- function(.x, .fun, ..., .label_arg = "main", plot_labels = "", nrow = NULL, ncol = NULL) {
+  plot_labels <- enquo(plot_labels)
+  n_plots <- nrow(.x)
+
+  if(n_plots == 0) {
+    stop("Nothing to plot, object has zero rows")
+  } else {
+    dims <- wrap_dims(n_plots, nrow, ncol)
+
+    if(rlang::quo_is_null(plot_labels)) {
+      .x$.plot_label <- list(NULL)
+    } else {
+      .x <- dplyr::mutate(.x, .plot_label = as.list(!!plot_labels))
+    }
+
+    invisible(
+      withr::with_par(list(mfrow = dims), {
+        # using map rather than for in case the plot function returns something
+        purrr::map2(.x$model, .x$.plot_label, function(model, label) {
+          args <- list(model)
+          if(!is.null(label) && !is.null(.label_arg)) {
+            args[[.label_arg]] <- label
+          }
+
+          purrr::invoke(.fun, args, ...)
+        })
+      })
+    )
+  }
+}
+
+# I ripped this off of ggplot2 to see how it was done...
+wrap_dims <- function(n, nrow = NULL, ncol = NULL) {
+  if (is.null(ncol) && is.null(nrow)) {
+    default_row_col <- grDevices::n2mfrow(n)
+    nrow <- default_row_col[2]
+    ncol <- default_row_col[1]
+  } else if (is.null(ncol)) {
+    ncol <- ceiling(n / nrow)
+  } else if (is.null(nrow)) {
+    nrow <- ceiling(n / ncol)
+  }
+
+  c(nrow, ncol)
+}
+
+get_grouping_vars <- function(ndm) {
+  # everything before "wide_df"
+  wide_loc <- which(colnames(ndm) == "wide_df")[1]
+  if(is.na(wide_loc)) stop("'wide_df' was not found in the nested data matrix")
+  colnames(ndm)[seq_len(wide_loc - 1)]
 }
 
 check_problematic_names <- function(col_names, bad_names, data_name = ".data", action = stop) {
@@ -165,4 +252,3 @@ check_problematic_names <- function(col_names, bad_names, data_name = ".data", a
     )
   }
 }
-
