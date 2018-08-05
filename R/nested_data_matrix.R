@@ -156,12 +156,12 @@ nested_anal <- function(.data, data_column, fun, data_arg, ..., reserved_names =
   new_nested_anal(.data)
 }
 
-new_nested_data_matrix <- function(x) {
-  structure(x, class = unique(c("nested_data_matrix", class(x))))
+new_nested_data_matrix <- function(x, subclasses = character(0)) {
+  structure(x, class = unique(c(subclasses, "nested_data_matrix", class(x))))
 }
 
-new_nested_anal <- function(x) {
-  structure(x, class = unique(c("nested_anal", class(x))))
+new_nested_anal <- function(x, subclasses = character(0)) {
+  structure(x, class = unique(c(subclasses, "nested_anal", class(x))))
 }
 
 #' @importFrom dplyr filter
@@ -183,6 +183,17 @@ slice.nested_data_matrix <- function(.data, ...) {
   structure(NextMethod(), class = data_class)
 }
 
+#' Plot a nested analysis
+#'
+#' Calls \link[graphics]{plot} or another (base) plotting function on all models, arranging the output in subplots.
+#'
+#' @param x A \link{nested_anal} object (or subclass)
+#' @param ... Passed to the plot function
+#' @param plot_labels A vector of plot labels (can be an expression using columns in x)
+#' @param nrow,ncol Force a number of rows or columns in the output
+#'
+#' @return A list containing the result of the plot function (invisibly)
+#'
 #' @importFrom graphics plot
 #' @export
 plot.nested_anal <- function(x, ..., plot_labels = "", nrow = NULL, ncol = NULL) {

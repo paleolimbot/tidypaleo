@@ -12,17 +12,19 @@ test_that("nested_chclust produces the correct columns", {
   )
 
   nested_coniss <- nested_chclust(ndm)
+  expect_is(nested_coniss, "nested_chclust")
+  expect_is(nested_coniss, "nested_hclust")
 
   expect_setequal(
     colnames(nested_coniss),
     c("wide_df", "discarded_columns", "discarded_rows", "qualifiers",
-      "data", "distance", "model", "broken_stick", "n_groups", "dendro_order", "chclust_zone",
+      "data", "distance", "model", "CCC", "broken_stick", "n_groups", "dendro_order", "hclust_zone",
       "zone_info", "nodes", "segments")
   )
 
   expect_setequal(
     colnames(tidyr::unnest(nested_coniss, segments)),
-    c("node_id", "chclust_zone", "depth", "dendro_order", "depth_end",
+    c("node_id", "hclust_zone", "depth", "dendro_order", "depth_end",
       "dendro_order_end", "dispersion", "dispersion_end", "row_number", "row_number_end")
   )
 
@@ -33,7 +35,7 @@ test_that("nested_chclust produces the correct columns", {
 
   expect_setequal(
     colnames(tidyr::unnest(nested_coniss, nodes)),
-    c("depth", "dendro_order", "chclust_zone", "is_leaf", "dispersion",
+    c("depth", "dendro_order", "hclust_zone", "is_leaf", "dispersion",
       "recursive_level", "node_id", "zone", "row_number")
   )
 
@@ -62,7 +64,7 @@ test_that("nested_chclust produces the correct segments and nodes", {
         size = 0.4
       ) +
       ggplot2::geom_segment(
-        ggplot2::aes(x = dispersion, xend = dispersion_end, yend = depth_end, col = factor(chclust_zone)),
+        ggplot2::aes(x = dispersion, xend = dispersion_end, yend = depth_end, col = factor(hclust_zone)),
         data = tidyr::unnest(nested_coniss, segments) %>% dplyr::mutate(param = "Z_CONISS"),
         size = 0.3
       ) +
@@ -83,7 +85,7 @@ test_that("nested_chclust produces the correct segments and nodes", {
       ggplot2::ggplot(ggplot2::aes(n_groups, value, col = type)) +
       ggplot2::geom_point() +
       ggplot2::geom_line() +
-      ggplot2::labs(caption = "3 groups should be a plausible number based on this...")
+      ggplot2::labs(caption = "3 groups should be a plausible number based on this")
   )
 
   expect_true(TRUE)
@@ -99,7 +101,7 @@ test_that("nested_chclust works with a grouping variable", {
   print(
     ggplot2::ggplot() +
       ggplot2::geom_segment(
-        ggplot2::aes(y = depth, x = dispersion, xend = dispersion_end, yend = depth_end, col = factor(chclust_zone)),
+        ggplot2::aes(y = depth, x = dispersion, xend = dispersion_end, yend = depth_end, col = factor(hclust_zone)),
         data = tidyr::unnest(nested_coniss, segments) %>% dplyr::mutate(param = "Z_CONISS"),
         size = 0.3
       ) +
@@ -120,7 +122,14 @@ test_that("nested_chclust works with a grouping variable", {
       tidyr::gather(type, value, broken_stick_dispersion, dispersion) %>%
       ggplot2::ggplot(ggplot2::aes(n_groups, value, col = type)) +
       ggplot2::geom_line() +
+      ggplot2::geom_point() +
       ggplot2::facet_wrap(vars(location)) +
-      ggplot2::labs(caption = "2 groups should be a plausible number for both based on this...")
+      ggplot2::labs(caption = "2 groups should be a plausible number for both based on this")
   )
+})
+
+test_that("nested hclust works as planned", {
+  ndm <- nested_data_matrix(halifax_lakes_plottable, taxon, rel_abund, c(location, sample_type))
+  nest_hc <- nested_hclust(ndm)
+  expect_is(nest_hc, "nested_hclust")
 })

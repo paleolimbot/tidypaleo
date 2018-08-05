@@ -12,6 +12,8 @@ test_that("nested_pca works as intended", {
 
   ndm_pca <- nested_prcomp(ndm)
 
+  expect_is(ndm_pca, "nested_prcomp")
+
   expect_equal(
     colnames(ndm_pca),
     c("wide_df", "discarded_columns", "discarded_rows", "qualifiers", "data",
@@ -36,13 +38,18 @@ test_that("nested_pca works as intended", {
 })
 
 test_that("nested_prcomp works with a grouping variable", {
-  ndm_grp <- nested_data_matrix(keji_lakes_plottable, taxon, rel_abund, depth, fill = 0, trans = sqrt, groups = location)
+  ndm_grp <- nested_data_matrix(
+    keji_lakes_plottable,
+    taxon, rel_abund, depth,
+    fill = 0, trans = sqrt, select_if = ~any(. != 0),
+    groups = location
+  )
   prcomp_grp <- nested_prcomp(ndm_grp)
 
   expect_true("location" %in% colnames(prcomp_grp))
   expect_true(is.atomic(prcomp_grp$location))
-  # ggplot2::ggplot(tidyr::unnest(prcomp_grp, variance), ggplot2::aes(component, variance_proportion)) +
-  #   ggplot2::geom_point() +
-  #   ggplot2::facet_wrap(vars(location))
+
+  plot(prcomp_grp, plot_labels = location, sub = "grouped PCA skree")
+  biplot(prcomp_grp, plot_labels = location, sub = "grouped PCA biplot")
 })
 

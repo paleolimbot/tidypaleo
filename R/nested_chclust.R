@@ -1,24 +1,32 @@
 
-#' Nested Constrained hierarchical clustering (CONISS)
+#' Nested (Constrained) hierarchical clustering
 #'
-#' Powered by \link[rioja]{chclust}; broken stick using \link[rioja]{bstick}.
+#' Powered by \link[rioja]{chclust} and \link[stats]{hclust}; broken stick using \link[rioja]{bstick}.
 #'
 #' @inheritParams nested_anal
 #' @param distance_fun A distance function like \link[stats]{dist} or \link[vegan]{vegdist}.
 #' @param qualifiers_column The column that contains the qualifiers
 #' @param n_groups The number of groups to use (can be a vector or expression using vars in .data)
-#' @param ... Passed to \link[rioja]{chclust}.
+#' @param fun Function powering the clustering
+#' @param ... Passed to \link[rioja]{chclust} or \link[stats]{hclust}.
 #'
-#' @return .data with additional columns 'model', 'broken_stick', and 'segments'
+#' @return .data with additional columns
 #' @export
 #'
 #' @references
+#'
+#' Bennett, K. (1996) Determination of the number of zones in a biostratigraphic sequence.
+#' New Phytologist, 132, 155-170.
+#' \url{http://doi.org/10.1111/j.1469-8137.1996.tb04521.x} (Broken stick)
+#'
 #' Grimm, E.C. (1987) CONISS: A FORTRAN 77 program for stratigraphically constrained cluster
 #' analysis by the method of incremental sum of squares. Computers & Geosciences, 13, 13-35.
 #' \url{http://doi.org/10.1016/0098-3004(87)90022-7}
 #'
 #' Juggins, S. (2017) rioja: Analysis of Quaternary Science Data, R package version (0.9-15.1).
 #' (\url{http://cran.r-project.org/package=rioja}).
+#'
+#' See \link[stats]{hclust} for hierarchical clustering references
 #'
 #' @examples
 #' library(tidyr)
@@ -28,6 +36,9 @@
 #'   group_by(location) %>%
 #'   nested_data_matrix(taxon, rel_abund, depth, fill = 0) %>%
 #'   nested_chclust()
+#'
+#' # plot the dendrograms using base graphics
+#' plot(nested_coniss, plot_labels = location, ncol = 1)
 #'
 #' # plot broken stick dispersion to verify number of plausible groups
 #' library(ggplot2)
@@ -40,8 +51,8 @@
 #'   geom_point() +
 #'   facet_wrap(vars(location))
 #'
-nested_chclust <- function(.data, data_column = "data", qualifiers_column = "qualifiers", distance_fun = stats::dist,
-                           n_groups = NULL, ...) {
+nested_hclust <- function(.data, data_column = "data", qualifiers_column = "qualifiers", distance_fun = stats::dist,
+                          n_groups = NULL, ..., fun = stats::hclust, reserved_names = character(0)) {
   data_column <- enquo(data_column)
   qualifiers_column <- enquo(qualifiers_column)
   n_groups <- enquo(n_groups)
@@ -55,21 +66,77 @@ nested_chclust <- function(.data, data_column = "data", qualifiers_column = "qua
   nchclust <- nested_anal(
     .data,
     data_column = "distance",
-    fun = rioja::chclust,
+    fun = fun,
     data_arg = "d",
     reserved_names = c(
+      reserved_names,
+
       # names of columns in this object
-      "broken_stick", "n_groups", "chclust_zone", "nodes", "segments",
+      "broken_stick", "n_groups", "hclust_zone", "nodes", "segments",
 
       # names of columns in nested columns
       paste(qualifier_names, "end", sep = "_"), paste(qualifier_names, "boundary", sep = "_"),
-      "n_groups", "dispersion", "broken_stick_dispersion", "dispersion_end",
+      "dispersion", "broken_stick_dispersion", "dispersion_end",
       "dendro_order", "dendro_order_end", "node_id", "is_leaf", "recursive_level"
     ),
     ...
   )
 
-  # 100 groups is an arbitrary maximum...ensures that a large number of zones
+  # n_groups based on user input OR default function (like determine_n_groups())
+  if(rlang::quo_is_null(n_groups)) {
+    nchclust$n_groups <- purrr::map(nchclust$model, determine_n_groups)
+  } else {
+    nchclust <- dplyr::mutate(nchclust, n_groups = !!n_groups)
+    nchclust$n_groups <- as.list(nchclust$n_groups)
+  }
+
+  # cophonetic correlation coeficient
+  nchclust$CCC <- purrr::map2(nchclust$model, nchclust$distance, function(model, dist) {
+    stats::cor(stats::cophenetic(model), dist, method = "pearson")
+  })
+
+  # zones based on stats::cutree()
+  nchclust$dendro_order <- purrr::map(nchclust$model, "order")
+  nchclust$hclust_zone <- purrr::map2(nchclust$model, nchclust$n_groups, function(model, n_groups) {
+    stats::cutree(model, k = n_groups)
+  })
+  nchclust$zone_info <- purrr::pmap(list(nchclust$hclust_zone, qualifiers_col_obj, nchclust$n_groups), group_boundaries)
+
+  # denrogram segments and nodes
+  nchclust$nodes <- purrr::pmap(
+    list(nchclust$model, qualifiers_col_obj, nchclust$hclust_zone),
+    qualify_dendro_data
+  )
+  nchclust$segments <- purrr::map(
+    nchclust$nodes,
+    function(df) tidyr::unnest(dplyr::select(df, "node_id", "hclust_zone", "segments"))
+  )
+  nchclust$nodes <- purrr::map(nchclust$nodes, function(df) dplyr::select(df, -"segments"))
+
+  new_nested_anal(nchclust, "nested_hclust")
+}
+
+#' @rdname nested_hclust
+#' @export
+nested_chclust <- function(.data, data_column = "data", qualifiers_column = "qualifiers", distance_fun = stats::dist,
+                           n_groups = NULL, ...) {
+
+  data_column <- enquo(data_column)
+  qualifiers_column <- enquo(qualifiers_column)
+  n_groups <- enquo(n_groups)
+
+  nchclust <- nested_hclust(
+    .data,
+    data_column = !!data_column,
+    qualifiers_column = !!qualifiers_column,
+    distance_fun = distance_fun,
+    n_groups = !!n_groups,
+    fun = rioja::chclust,
+    ...
+  )
+
+  # 1000 groups is an arbitrary maximum...ensures that a large number of zones could
+  # be plausible
   nchclust$broken_stick <- purrr::map(
     nchclust$model,
     function(model) tibble::as_tibble(rioja::bstick(model, plot = FALSE, ng = 1000))
@@ -83,48 +150,22 @@ nested_chclust <- function(.data, data_column = "data", qualifiers_column = "qua
     function(.data) dplyr::filter(.data, is.finite(.data$dispersion))
   )
 
-  # n_groups based on user input OR default determine_n_groups()
-  if(rlang::quo_is_null(n_groups)) {
-    nchclust$n_groups <- purrr::map2(nchclust$model, nchclust$broken_stick, determine_n_groups)
-  } else {
-    nchclust <- dplyr::mutate(nchclust, n_groups = !!n_groups)
-    nchclust$n_groups <- as.list(nchclust$n_groups)
-  }
-
-  # zones based on stats::cutree()
-  nchclust$dendro_order <- purrr::map(nchclust$model, "order")
-  nchclust$chclust_zone <- purrr::map2(nchclust$model, nchclust$n_groups, function(model, n_groups) {
-    stats::cutree(model, k = n_groups)
-  })
-  nchclust$zone_info <- purrr::pmap(list(nchclust$chclust_zone, qualifiers_col_obj, nchclust$n_groups), group_boundaries)
-
-  # denrogram segments and nodes
-  nchclust$nodes <- purrr::pmap(
-    list(nchclust$model, qualifiers_col_obj, nchclust$chclust_zone),
-    qualify_dendro_data
-  )
-  nchclust$segments <- purrr::map(
-    nchclust$nodes,
-    function(df) tidyr::unnest(dplyr::select(df, "node_id", "chclust_zone", "segments"))
-  )
-  nchclust$nodes <- purrr::map(nchclust$nodes, function(df) dplyr::select(df, -"segments"))
-
-  nchclust
+  new_nested_anal(nchclust, "nested_chclust")
 }
 
-group_boundaries <- function(chclust_zones, qualifiers, n_groups = 1) {
+group_boundaries <- function(hclust_zones, qualifiers, n_groups = 1) {
   stopifnot(
-    length(chclust_zones) == nrow(qualifiers),
+    length(hclust_zones) == nrow(qualifiers),
     is.numeric(n_groups), length(n_groups) == 1, n_groups > 0
   )
 
-  qualifiers$chclust_zone <- chclust_zones
+  qualifiers$hclust_zone <- hclust_zones
   group_info <- tidyr::nest(
-    dplyr::group_by(qualifiers, .data$chclust_zone),
+    dplyr::group_by(qualifiers, .data$hclust_zone),
     .key = "data"
   )
 
-  for(var in setdiff(colnames(qualifiers), "chclust_zone")) {
+  for(var in setdiff(colnames(qualifiers), "hclust_zone")) {
     if(is.numeric(qualifiers[[var]])) {
       group_info[[paste("min", var, sep = "_")]] <- purrr::map_dbl(group_info$data, function(df) min(df[[var]]))
       group_info[[paste("max", var, sep = "_")]] <- purrr::map_dbl(group_info$data, function(df) max(df[[var]]))
@@ -133,7 +174,7 @@ group_boundaries <- function(chclust_zones, qualifiers, n_groups = 1) {
 
   group_info$data <- NULL
 
-  for(var in setdiff(colnames(qualifiers), "chclust_zone")) {
+  for(var in setdiff(colnames(qualifiers), "hclust_zone")) {
     if(is.numeric(qualifiers[[var]])) {
       group_info[[paste("boundary", var, sep = "_")]] <-
         (group_info[[paste("max", var, sep = "_")]] + dplyr::lead(group_info[[paste("min", var, sep = "_")]])) / 2
@@ -143,30 +184,39 @@ group_boundaries <- function(chclust_zones, qualifiers, n_groups = 1) {
   group_info
 }
 
-determine_n_groups <- function(model, broken_stick, threshold = 1.1) {
-  # ensures there is at least one group greater than broken stick dispersion
-  # at the beginning
-  broken_stick <- tibble::add_row(broken_stick, n_groups = 1, dispersion = Inf, broken_stick_dispersion = 0, .before = 1)
+determine_n_groups <- function(model, threshold = 1.1) {
 
-  broken_stick$disp_gt_bstick <- broken_stick$dispersion > (broken_stick$broken_stick_dispersion * threshold)
-  runlength <- rle(broken_stick$disp_gt_bstick)
-  broken_stick$n_groups[runlength$lengths[1]]
+  if(inherits(model, "chclust")) {
+    # slightly duplicated work, but allows hclust and chclust to share more code
+    broken_stick <- rioja::bstick(model, plot = FALSE, ng = 1000)
+    broken_stick <- dplyr::filter(broken_stick, !is.na(.data$dispersion))
+
+    # ensures there is at least one group greater than broken stick dispersion
+    # at the beginning
+    broken_stick <- tibble::add_row(broken_stick, nGroups = 1, dispersion = Inf, bstick = 0, .before = 1)
+
+    broken_stick$disp_gt_bstick <- broken_stick$dispersion > (broken_stick$bstick * threshold)
+    runlength <- rle(broken_stick$disp_gt_bstick)
+    broken_stick$nGroups[runlength$lengths[1]]
+  } else {
+    1
+  }
 }
 
-qualify_dendro_data <- function(model, qualifiers, chclust_zones) {
+qualify_dendro_data <- function(model, qualifiers, hclust_zones) {
   qualifiers$dendro_order <- model$order
   numeric_vars <- colnames(qualifiers)[purrr::map_lgl(qualifiers, is.numeric)]
-  node_data(stats::as.dendrogram(model), qualifiers, numeric_vars, chclust_zones)
+  node_data(stats::as.dendrogram(model), qualifiers, numeric_vars, hclust_zones)
 }
 
-node_data <- function(node, qualifiers, numeric_vars, chclust_zones, recursive_level = 1, node_id = 1) {
+node_data <- function(node, qualifiers, numeric_vars, hclust_zones, recursive_level = 1, node_id = 1) {
 
   if(stats::is.leaf(node)) {
     data1 <- tibble::tibble()
     data2 <- tibble::tibble()
 
     data <- dplyr::slice(qualifiers, as.numeric(attr(node, "label")))
-    data$chclust_zone <- chclust_zones[attr(node, "label")]
+    data$hclust_zone <- hclust_zones[attr(node, "label")]
     data$is_leaf <- TRUE
     data$segments <- list(tibble::tibble())
     data$dispersion <- attr(node, "height")
@@ -174,11 +224,11 @@ node_data <- function(node, qualifiers, numeric_vars, chclust_zones, recursive_l
 
     # includes rows for all child nodes
     data1 <- node_data(
-      node[[1]], qualifiers, numeric_vars, chclust_zones,
+      node[[1]], qualifiers, numeric_vars, hclust_zones,
       recursive_level + 1, node_id = node_id + 1
     )
     data2 <- node_data(
-      node[[2]], qualifiers, numeric_vars, chclust_zones,
+      node[[2]], qualifiers, numeric_vars, hclust_zones,
       recursive_level + 1, node_id = max(data1$node_id) + 1
     )
 
@@ -187,9 +237,9 @@ node_data <- function(node, qualifiers, numeric_vars, chclust_zones, recursive_l
     n2 <- dplyr::slice(data2, 1)
 
     data <- (n1[numeric_vars] + n2[numeric_vars]) / 2
-    data$chclust_zone <- dplyr::if_else(
-      n1$chclust_zone == n2$chclust_zone,
-      true = n1$chclust_zone,
+    data$hclust_zone <- dplyr::if_else(
+      n1$hclust_zone == n2$hclust_zone,
+      true = n1$hclust_zone,
       false = NA_integer_,
       missing = NA_integer_
     )

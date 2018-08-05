@@ -81,5 +81,13 @@ nested_prcomp <- function(.data, data_column = "data", ...) {
     }
   )
 
-  npca
+  new_nested_anal(npca, "nested_prcomp")
+}
+
+#' @importFrom stats biplot
+#' @export
+#' @rdname plot.nested_anal
+biplot.nested_prcomp <- function(x, ..., plot_labels = "", nrow = NULL, ncol = NULL) {
+  plot_labels <- enquo(plot_labels)
+  nested_anal_plot(x, .fun = stats::biplot, ..., plot_labels = !!plot_labels, nrow = nrow, ncol = ncol)
 }
