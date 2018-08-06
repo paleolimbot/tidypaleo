@@ -157,23 +157,23 @@ test_that("nested_analysis gives an error with reserved column names", {
   )
 
   expect_error(
-    nested_analysis(ndm, data_column = "data", fun = stats::prcomp, data_arg = "x"),
+    nested_analysis(ndm, stats::prcomp, data),
     "The following names in discarded_rows"
   )
 
   ndm$model <- 1
   expect_error(
-    nested_analysis(ndm, data_column = "data", fun = stats::prcomp, data_arg = "x"),
+    nested_analysis(ndm, stats::prcomp, data),
     "The following names in .data"
   )
 
   ndm <- nested_data(alta_lake_geochem, depth, param, value)
   ndm$random_name <- 1
   expect_silent(
-    nested_analysis(ndm, data_column = "data", fun = stats::prcomp, data_arg = "x")
+    nested_analysis(ndm, stats::prcomp, data)
   )
   expect_error(
-    nested_analysis(ndm, data_column = "data", fun = stats::prcomp, data_arg = "x", reserved_names = "random_name"),
+    nested_analysis(ndm, stats::prcomp, data, .reserved_names = "random_name"),
     "The following names in .data"
   )
 
@@ -192,7 +192,7 @@ test_that("nested data matrix works with a grouping variable", {
 
 test_that("class inheritance works", {
   ndm <- nested_data(alta_lake_geochem, depth, param, value, trans = scale)
-  na <- nested_analysis(ndm, data_column = "data", fun = stats::prcomp, data_arg = "x")
+  na <- nested_analysis(ndm, stats::prcomp, data)
   class(na) <- setdiff(class(na), "nested_data")
 
   expect_is(ndm, "nested_data")
@@ -219,21 +219,23 @@ test_that("class inheritance works", {
   expect_equal(nrow(dplyr::slice(ndm, numeric(0))), 0)
   expect_equal(nrow(dplyr::filter(ndm, TRUE)), 1)
   expect_equal(nrow(dplyr::slice(ndm, 1)), 1)
-
-
 })
 
 test_that("nested anal plotting works", {
   ndm <- nested_data(alta_lake_geochem, depth, param, value, trans = scale)
   ndm_grp <- nested_data(keji_lakes_plottable, depth, taxon, rel_abund, fill = 0, trans = sqrt, groups = location)
-  pca <- nested_analysis(ndm, data_column = "data", fun = stats::prcomp, data_arg = "x")
-  pca_grp <- nested_analysis(ndm_grp, data_column = "data", fun = stats::prcomp, data_arg = "x")
 
-  expect_length(plot(pca, sub = "default"), 1)
-  expect_length(plot(pca_grp, main = location, sub = "default grouped"), 2)
+  pca <- nested_analysis(ndm, stats::prcomp, data)
+  pca_grp <- nested_analysis(ndm_grp, stats::prcomp, data)
+
+  expect_identical(plot(pca, sub = "default"), pca)
+  expect_identical(plot(pca_grp, sub = "default"), pca_grp)
+  expect_length(plot(pca, sub = "default", .output_column = "plot")$plot, 1)
+  expect_length(plot(pca_grp, main = location, sub = "default grouped", .output_column = "plot")$plot, 2)
 
   plot(pca_grp, main = location, nrow = 2, sub = "nrow = 2")
   plot(pca_grp, main = location, ncol = 1, sub = "ncol = 1")
 
-  expect_error(plot(dplyr::filter(pca_grp, FALSE)), "Nothing to plot")
+  # silent handling of zero-row analyses
+  expect_equal(plot(dplyr::filter(pca_grp, FALSE)) %>% nrow(), 0)
 })

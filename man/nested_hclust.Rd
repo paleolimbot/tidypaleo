@@ -7,8 +7,8 @@
 \title{Nested (Constrained) hierarchical clustering}
 \usage{
 nested_hclust(.data, data_column = "data", qualifiers_column = "qualifiers",
-  distance_fun = stats::dist, n_groups = NULL, ..., fun = stats::hclust,
-  reserved_names = character(0))
+  distance_fun = stats::dist, n_groups = NULL, ..., .fun = stats::hclust,
+  .reserved_names = character(0))
 
 nested_chclust_conslink(.data, data_column = "data",
   qualifiers_column = "qualifiers", distance_fun = stats::dist,
@@ -22,8 +22,7 @@ nested_chclust_coniss(.data, data_column = "data",
 \item{.data}{A data frame with a list column of data frames, possibly created using
 \link{nested_data}.}
 
-\item{data_column}{The name of the column that contains the data. Evaluated
-like \link[dplyr]{pull}.}
+\item{data_column}{An expression that evalulates to the data object within each row of .data}
 
 \item{qualifiers_column}{The column that contains the qualifiers}
 
@@ -33,9 +32,9 @@ like \link[dplyr]{pull}.}
 
 \item{...}{Passed to \link[rioja]{chclust} or \link[stats]{hclust}.}
 
-\item{fun}{Function powering the clustering}
+\item{.fun}{Function powering the clustering. Must return an hclust object of some kind.}
 
-\item{reserved_names}{Names that should not be allowed as columns in any
+\item{.reserved_names}{Names that should not be allowed as columns in any
 data frame within this object}
 }
 \value{

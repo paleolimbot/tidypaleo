@@ -9,7 +9,8 @@
 \method{plot}{nested_analysis}(x, ..., main = "", nrow = NULL,
   ncol = NULL)
 
-plot_nested_analysis(.x, .fun, ..., nrow = NULL, ncol = NULL)
+plot_nested_analysis(.x, .fun, ..., nrow = NULL, ncol = NULL,
+  .model_column = .data$model, .output_column = NULL)
 
 \method{biplot}{nested_prcomp}(x, ..., nrow = NULL, ncol = NULL)
 }
@@ -24,9 +25,13 @@ within a transposed version of x for each row.}
 \item{nrow, ncol}{Force a number of rows or columns in the output}
 
 \item{.fun}{A function that produces graphical output}
+
+\item{.model_column}{The column containing the model}
+
+\item{.output_column}{The column in which the output of the plot function should be placed}
 }
 \value{
-A list containing the result of the plot function (invisibly)
+the input, invisibly
 }
 \description{
 Calls \link[graphics]{plot} or another (base) plotting function on all models, arranging the output in subplots.

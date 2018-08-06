@@ -4,14 +4,13 @@
 \alias{nested_prcomp}
 \title{Nested Principal Components Analysis (PCA)}
 \usage{
-nested_prcomp(.data, data_column = "data", ...)
+nested_prcomp(.data, data_column = .data$data, ...)
 }
 \arguments{
 \item{.data}{A data frame with a list column of data frames, possibly created using
 \link{nested_data}.}
 
-\item{data_column}{The name of the column that contains the data. Evaluated
-like \link[dplyr]{pull}.}
+\item{data_column}{An expression that evalulates to the data object within each row of .data}
 
 \item{...}{Passed to \link[stats]{prcomp}.}
 }

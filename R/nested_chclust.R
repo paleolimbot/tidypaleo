@@ -4,10 +4,11 @@
 #' Powered by \link[rioja]{chclust} and \link[stats]{hclust}; broken stick using \link[rioja]{bstick}.
 #'
 #' @inheritParams nested_analysis
+#' @param data_column An expression that evalulates to the data object within each row of .data
 #' @param distance_fun A distance function like \link[stats]{dist} or \link[vegan]{vegdist}.
 #' @param qualifiers_column The column that contains the qualifiers
 #' @param n_groups The number of groups to use (can be a vector or expression using vars in .data)
-#' @param fun Function powering the clustering
+#' @param .fun Function powering the clustering. Must return an hclust object of some kind.
 #' @param ... Passed to \link[rioja]{chclust} or \link[stats]{hclust}.
 #'
 #' @return .data with additional columns
@@ -52,7 +53,7 @@
 #'   facet_wrap(vars(location))
 #'
 nested_hclust <- function(.data, data_column = "data", qualifiers_column = "qualifiers", distance_fun = stats::dist,
-                          n_groups = NULL, ..., fun = stats::hclust, reserved_names = character(0)) {
+                          n_groups = NULL, ..., .fun = stats::hclust, .reserved_names = character(0)) {
   data_column <- enquo(data_column)
   qualifiers_column <- enquo(qualifiers_column)
   n_groups <- enquo(n_groups)
@@ -64,12 +65,9 @@ nested_hclust <- function(.data, data_column = "data", qualifiers_column = "qual
   qualifier_names <- unique(unlist(purrr::map(qualifiers_col_obj, colnames)))
 
   nchclust <- nested_analysis(
-    .data,
-    data_column = "distance",
-    fun = fun,
-    data_arg = "d",
-    reserved_names = c(
-      reserved_names,
+    .data, .fun = .fun, .data$distance, ...,
+    .reserved_names = c(
+      .reserved_names,
 
       # names of columns in this object
       "broken_stick", "n_groups", "hclust_zone", "nodes", "segments",
@@ -78,8 +76,7 @@ nested_hclust <- function(.data, data_column = "data", qualifiers_column = "qual
       paste(qualifier_names, "end", sep = "_"), paste(qualifier_names, "boundary", sep = "_"),
       "dispersion", "broken_stick_dispersion", "dispersion_end",
       "dendro_order", "dendro_order_end", "node_id", "is_leaf", "recursive_level"
-    ),
-    ...
+    )
   )
 
   # n_groups based on user input OR default function (like determine_n_groups())
@@ -131,7 +128,7 @@ nested_chclust_conslink <- function(.data, data_column = "data", qualifiers_colu
     qualifiers_column = !!qualifiers_column,
     distance_fun = distance_fun,
     n_groups = !!n_groups,
-    fun = rioja::chclust,
+    .fun = rioja::chclust,
     method = "conslink",
     ...
   )
@@ -154,7 +151,7 @@ nested_chclust_coniss <- function(.data, data_column = "data", qualifiers_column
     qualifiers_column = !!qualifiers_column,
     distance_fun = distance_fun,
     n_groups = !!n_groups,
-    fun = rioja::chclust,
+    .fun = rioja::chclust,
     method = "coniss",
     ...
   )

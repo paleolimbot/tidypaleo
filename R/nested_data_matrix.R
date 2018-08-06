@@ -156,43 +156,50 @@ nested_data <- function(.data, qualifiers = NULL, key = NULL, value, fill = NA,
 #'
 #' @param .data A data frame with a list column of data frames, possibly created using
 #'   \link{nested_data}.
-#' @param data_column The name of the column that contains the data. Evaluated
-#'   like \link[dplyr]{pull}.
-#' @param fun A model function
-#' @param data_arg The data argument of fun
-#' @param reserved_names Names that should not be allowed as columns in any
+#' @param .fun A model function
+#' @param .reserved_names Names that should not be allowed as columns in any
 #'   data frame within this object
+#' @param .output_column A column name in which the output of .fun should be stored.
+#' @param .env Passed to \link[rlang]{as_function}
 #' @param ... Passed to fun
 #'
 #' @return .data with an additional list column of fun output
 #' @export
 #'
-nested_analysis <- function(.data, data_column, fun, data_arg, ..., reserved_names = NULL) {
-  data_column <- enquo(data_column)
-  model_column <- "model"
+nested_analysis <- function(.data, .fun, ..., .output_column = "model", .reserved_names = NULL, .env = parent.frame()) {
+  # allow lambda-style functions
+  .fun <- rlang::as_function(.fun, env = .env)
+
+  # args get evalulated 'tidily' within the transposed data,
+  # so they can refer to columns in the nested_analysis data frame
+  more_args <- rlang::quos(...)
+
+  stopifnot(
+    is.null(.output_column) || is.character(.output_column) & length(.output_column) == 1
+  )
 
   # column names can't be reserved names in .data or in nested data columns
-  check_problematic_names(colnames(.data), c(reserved_names, model_column))
+  check_problematic_names(colnames(.data), c(.reserved_names, .output_column))
   purrr::map(colnames(.data), function(col_name) {
     col <- .data[[col_name]]
 
     if(is.list(col)) {
       purrr::map(col, function(list_item) {
         if(is.data.frame(list_item)) {
-          check_problematic_names(colnames(list_item), c(reserved_names, model_column), data_name = col_name)
+          check_problematic_names(colnames(list_item), c(.reserved_names, .output_column), data_name = col_name)
         }
       })
     }
   })
 
-  .data[[model_column]] <- purrr::map(
-    dplyr::pull(.data, !!data_column),
-    function(df) {
-      data_arg_list <- list()
-      data_arg_list[[data_arg]] <- df
-      purrr::invoke(fun, data_arg_list, ...)
-    }
-  )
+  result <- purrr::map(purrr::transpose(.data), function(row) {
+    args <- purrr::map(more_args, function(arg_q) rlang::eval_tidy(arg_q, data = row))
+    purrr::invoke(.fun, args)
+  })
+
+  if(!is.null(.output_column)) {
+    .data[[.output_column]] <- result
+  }
 
   new_nested_analysis(.data)
 }
@@ -295,8 +302,10 @@ mutate.nested_analysis <- function(.data, ...) {
 #' @param ... Passed to the plot function. Tidy evaluation is supported, and arguments are evaluated
 #'   within a transposed version of x for each row.
 #' @param nrow,ncol Force a number of rows or columns in the output
+#' @param .model_column The column containing the model
+#' @param .output_column The column in which the output of the plot function should be placed
 #'
-#' @return A list containing the result of the plot function (invisibly)
+#' @return the input, invisibly
 #'
 #' @importFrom graphics plot
 #' @export
@@ -307,34 +316,18 @@ plot.nested_analysis <- function(x, ..., main = "", nrow = NULL, ncol = NULL) {
 
 #' @rdname plot.nested_analysis
 #' @export
-plot_nested_analysis <- function(.x, .fun, ..., nrow = NULL, ncol = NULL) {
-  n_plots <- nrow(.x)
+plot_nested_analysis <- function(.x, .fun, ..., nrow = NULL, ncol = NULL, .model_column = .data$model, .output_column = NULL) {
+  .model_column <- enquo(.model_column)
 
-  # args get evalulated 'tidily' within the transposed data,
-  # so they can refer to columns in the nested_analysis data frame
-  more_args <- rlang::quos(...)
+  # handle zero rows quietly
+  if(nrow(.x) == 0) return(.x)
 
-  if(n_plots == 0) {
-    stop("Nothing to plot, object has zero rows")
-  } else {
-    dims <- wrap_dims(n_plots, nrow, ncol)
-
-    invisible(
-      withr::with_par(list(mfrow = dims), {
-
-        # using map rather than for in case the plot function returns something
-        purrr::map(purrr::transpose(.x), function(row) {
-
-          args <- c(
-            list(row$model),
-            purrr::map(more_args, function(arg_q) rlang::eval_tidy(arg_q, data = row))
-          )
-
-          purrr::invoke(.fun, args)
-        })
-      })
-    )
-  }
+  dims <- wrap_dims(nrow(.x), nrow, ncol)
+  invisible(
+    withr::with_par(list(mfrow = dims), {
+      nested_analysis(.x, .fun, !!.model_column, ..., .output_column = .output_column)
+    })
+  )
 }
 
 # I ripped this off of ggplot2 to see how it was done...hard to write it any better

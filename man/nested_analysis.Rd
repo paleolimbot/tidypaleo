@@ -4,23 +4,23 @@
 \alias{nested_analysis}
 \title{Perform an analysis on a nested data matrix}
 \usage{
-nested_analysis(.data, data_column, fun, data_arg, ..., reserved_names = NULL)
+nested_analysis(.data, .fun, ..., .output_column = "model",
+  .reserved_names = NULL, .env = parent.frame())
 }
 \arguments{
 \item{.data}{A data frame with a list column of data frames, possibly created using
 \link{nested_data}.}
 
-\item{data_column}{The name of the column that contains the data. Evaluated
-like \link[dplyr]{pull}.}
-
-\item{fun}{A model function}
-
-\item{data_arg}{The data argument of fun}
+\item{.fun}{A model function}
 
 \item{...}{Passed to fun}
 
-\item{reserved_names}{Names that should not be allowed as columns in any
+\item{.output_column}{A column name in which the output of .fun should be stored.}
+
+\item{.reserved_names}{Names that should not be allowed as columns in any
 data frame within this object}
+
+\item{.env}{Passed to \link[rlang]{as_function}}
 }
 \value{
 .data with an additional list column of fun output
