@@ -14,7 +14,8 @@ Suggests: testthat,
     knitr,
     mudata2,
     rmarkdown,
-    rioja
+    rioja,
+    vegan
 URL: https://github.com/paleolimbot/tidypaleo
 BugReports: https://github.com/paleolimbot/tidypaleo/issues
 Imports: rlang,
