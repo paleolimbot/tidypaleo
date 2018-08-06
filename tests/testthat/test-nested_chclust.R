@@ -5,9 +5,9 @@ test_that("nested_chclust_coniss produces the correct columns", {
 
   ndm <- nested_data(
     alta_lake_geochem,
+    qualifiers = c(depth, zone),
     key = param,
     value = value,
-    qualifiers = c(depth, zone),
     trans = scale
   )
 
@@ -17,7 +17,7 @@ test_that("nested_chclust_coniss produces the correct columns", {
 
   expect_setequal(
     colnames(nested_coniss),
-    c("wide_df", "discarded_columns", "discarded_rows", "qualifiers",
+    c("discarded_columns", "discarded_rows", "qualifiers",
       "data", "distance", "model", "CCC", "broken_stick", "n_groups", "dendro_order", "hclust_zone",
       "zone_info", "nodes", "segments")
   )
@@ -45,10 +45,10 @@ test_that("nested_chclust_coniss produces the correct segments and nodes", {
 
   ndm <- nested_data(
     alta_lake_geochem,
+    qualifiers = c(depth, zone),
     key = param,
     value = value,
-    trans = scale,
-    qualifiers = depth
+    trans = scale
   )
 
   nested_coniss <- nested_chclust_coniss(ndm)
@@ -92,7 +92,7 @@ test_that("nested_chclust_coniss produces the correct segments and nodes", {
 })
 
 test_that("nested_chclust_coniss works with a grouping variable", {
-  ndm_grp <- nested_data(keji_lakes_plottable, taxon, rel_abund, depth, fill = 0, groups = location)
+  ndm_grp <- nested_data(keji_lakes_plottable, depth, taxon, rel_abund, fill = 0, groups = location)
   nested_coniss <- nested_chclust_coniss(ndm_grp)
 
   expect_true("location" %in% colnames(nested_coniss))
@@ -129,13 +129,13 @@ test_that("nested_chclust_coniss works with a grouping variable", {
 })
 
 test_that("nested hclust works as planned", {
-  ndm <- nested_data(halifax_lakes_plottable, taxon, rel_abund, c(location, sample_type))
+  ndm <- nested_data(halifax_lakes_plottable, c(location, sample_type), taxon, rel_abund)
   nest_hc <- nested_hclust(ndm)
   expect_is(nest_hc, "nested_hclust")
 })
 
 test_that("plot methods for hclust work", {
-  ndm <- nested_data(halifax_lakes_plottable, taxon, rel_abund, c(location, sample_type))
+  ndm <- nested_data(halifax_lakes_plottable, c(location, sample_type), taxon, rel_abund)
   nest_hc <- nested_hclust(ndm, method = "average")
   nest_chc2 <- nested_chclust_conslink(ndm)
   nest_chc <- nested_chclust_coniss(ndm)

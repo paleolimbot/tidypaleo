@@ -4,9 +4,9 @@ test_that("nested_data works as intended", {
 
   ndm <- nested_data(
     alta_lake_geochem,
+    qualifiers = c(depth, zone),
     key = param,
-    value = value,
-    qualifiers = c(depth, zone)
+    value = value
   )
   expect_equal(get_grouping_vars(ndm), character(0))
 
@@ -14,7 +14,7 @@ test_that("nested_data works as intended", {
   expect_equal(nrow(ndm), 1)
   expect_equal(
     colnames(ndm),
-    c("wide_df", "discarded_columns", "discarded_rows", "qualifiers", "data")
+    c("discarded_columns", "discarded_rows", "qualifiers", "data")
   )
   expect_setequal(
     colnames(ndm$qualifiers[[1]]),
@@ -22,31 +22,32 @@ test_that("nested_data works as intended", {
   )
   expect_true(!any(c("depth", "zone") %in% colnames(ndm$data[[1]])))
   expect_true(all(purrr::map_lgl(ndm, ~inherits(.x[[1]], "tbl_df"))))
+  expect_equal(ncol(ndm$discarded_columns[[1]]), 0)
+  expect_equal(nrow(ndm$discarded_rows[[1]]), 0)
 
   withr::with_seed(1234, {
     ndm_filtered <- nested_data(
       alta_lake_geochem,
+      qualifiers = c(depth, zone),
       key = param,
       value = value,
-      qualifiers = c(depth, zone),
       filter_all = dplyr::all_vars(runif(length(.)) > 0.1)
     )
 
-    expect_equal(nrow(ndm_filtered$wide_df[[1]]), 19)
+    expect_equal(nrow(ndm_filtered$data[[1]]), 19)
     expect_equal(ncol(ndm_filtered$discarded_columns[[1]]), 0)
     expect_equal(nrow(ndm_filtered$discarded_rows[[1]]), 13)
   })
 
   ndm_selected <- nested_data(
     alta_lake_geochem,
+    qualifiers = c(depth, zone),
     key = param,
     value = value,
-    qualifiers = c(depth, zone),
     select_if = ~mean(.) > 1
   )
 
   expect_setequal(colnames(ndm_selected$discarded_columns[[1]]), c("d13C", "Ti"))
-  expect_true(!any(c("d13C", "Ti") %in% colnames(ndm_selected$wide_df[[1]])))
   expect_true(!any(c("d13C", "Ti") %in% colnames(ndm_selected$data[[1]])))
 
   withr::with_seed(1234, {
@@ -59,12 +60,11 @@ test_that("nested_data works as intended", {
       filter_all = dplyr::all_vars(runif(length(.)) > 0.1)
     )
 
-    expect_equal(nrow(ndm_selected_filtered$wide_df[[1]]), 22)
+    expect_equal(nrow(ndm_selected_filtered$data[[1]]), 22)
     expect_equal(ncol(ndm_selected_filtered$discarded_columns[[1]]), 2)
     expect_equal(nrow(ndm_selected_filtered$discarded_rows[[1]]), 10)
 
     expect_setequal(colnames(ndm_selected_filtered$discarded_columns[[1]]), c("d13C", "Ti"))
-    expect_true(!any(c("d13C", "Ti") %in% colnames(ndm_selected_filtered$wide_df[[1]])))
     expect_true(!any(c("d13C", "Ti") %in% colnames(ndm_selected_filtered$data[[1]])))
   })
 
@@ -78,7 +78,7 @@ test_that("nested_data works as intended", {
   expect_equal(get_grouping_vars(grouped_ndm), "location")
   expect_equal(
     colnames(grouped_ndm),
-    c("location", "wide_df", "discarded_columns", "discarded_rows", "qualifiers", "data")
+    c("location", "discarded_columns", "discarded_rows", "qualifiers", "data")
   )
   expect_true(
     all(
@@ -90,10 +90,62 @@ test_that("nested_data works as intended", {
   )
 })
 
+test_that("nested_data works as intended with wide data", {
+
+  alg_wide <- tidyr::spread(dplyr::select(alta_lake_geochem, depth, zone, param, value), param, value)
+
+  ndm_wide <- nested_data(
+    alg_wide,
+    qualifiers = c(depth, zone),
+    value = dplyr::everything()
+  )
+
+  ndm_long <- nested_data(
+    alta_lake_geochem,
+    qualifiers = c(depth, zone),
+    key = param,
+    value = value
+  )
+
+  expect_identical(ndm_wide, ndm_long)
+
+  expect_message(
+    nested_data(
+      alg_wide,
+      qualifiers = depth,
+      key = zone,
+      value = dplyr::everything()
+    ),
+    "Ignoring variables specified in `key`"
+  )
+
+  expect_message(
+    nested_data(
+      alg_wide,
+      qualifiers = depth,
+      value = dplyr::everything(),
+      fill = 0
+    ),
+    "Ignoring `fill`"
+  )
+})
+
+test_that("more than one value column must be specified", {
+  expect_error(
+    nested_data(
+      alta_lake_geochem,
+      qualifiers = c(depth, zone),
+      key = param,
+      value = NULL
+    ),
+    "value columns must be specified"
+  )
+})
+
 test_that("nested_data gives an error with reserved column names", {
   alg_bad <- dplyr::rename(alta_lake_geochem, data = depth)
   expect_error(
-    nested_data(alg_bad, param, value, data),
+    nested_data(alg_bad, qualifiers = data, key = param, value = value),
     "The following names in"
   )
 })
@@ -101,12 +153,12 @@ test_that("nested_data gives an error with reserved column names", {
 test_that("nested_analysis gives an error with reserved column names", {
   alg_bad <- dplyr::rename(alta_lake_geochem, model = depth)
   ndm <- expect_silent(
-    nested_data(alg_bad, param, value, model)
+    nested_data(alg_bad, qualifiers = model, key = param, value = value)
   )
 
   expect_error(
     nested_analysis(ndm, data_column = "data", fun = stats::prcomp, data_arg = "x"),
-    "The following names in wide_df"
+    "The following names in discarded_rows"
   )
 
   ndm$model <- 1
@@ -115,7 +167,7 @@ test_that("nested_analysis gives an error with reserved column names", {
     "The following names in .data"
   )
 
-  ndm <- nested_data(alta_lake_geochem, param, value, depth)
+  ndm <- nested_data(alta_lake_geochem, depth, param, value)
   ndm$random_name <- 1
   expect_silent(
     nested_analysis(ndm, data_column = "data", fun = stats::prcomp, data_arg = "x")
@@ -128,10 +180,10 @@ test_that("nested_analysis gives an error with reserved column names", {
 })
 
 test_that("nested data matrix works with a grouping variable", {
-  ndm_grp <- nested_data(keji_lakes_plottable, taxon, rel_abund, depth, fill = 0, groups = location)
+  ndm_grp <- nested_data(keji_lakes_plottable, depth, taxon, rel_abund, fill = 0, groups = location)
   expect_identical(
     ndm_grp,
-    nested_data(dplyr::group_by(keji_lakes_plottable, location), taxon, rel_abund, depth, fill = 0)
+    nested_data(dplyr::group_by(keji_lakes_plottable, location), depth, taxon, rel_abund, fill = 0)
   )
 
   expect_true("location" %in% colnames(ndm_grp))
@@ -139,7 +191,7 @@ test_that("nested data matrix works with a grouping variable", {
 })
 
 test_that("class inheritance works", {
-  ndm <- nested_data(alta_lake_geochem, param, value, depth, trans = scale)
+  ndm <- nested_data(alta_lake_geochem, depth, param, value, trans = scale)
   na <- nested_analysis(ndm, data_column = "data", fun = stats::prcomp, data_arg = "x")
   class(na) <- setdiff(class(na), "nested_data")
 
@@ -172,8 +224,8 @@ test_that("class inheritance works", {
 })
 
 test_that("nested anal plotting works", {
-  ndm <- nested_data(alta_lake_geochem, param, value, depth, trans = scale)
-  ndm_grp <- nested_data(keji_lakes_plottable, taxon, rel_abund, depth, fill = 0, trans = sqrt, groups = location)
+  ndm <- nested_data(alta_lake_geochem, depth, param, value, trans = scale)
+  ndm_grp <- nested_data(keji_lakes_plottable, depth, taxon, rel_abund, fill = 0, trans = sqrt, groups = location)
   pca <- nested_analysis(ndm, data_column = "data", fun = stats::prcomp, data_arg = "x")
   pca_grp <- nested_analysis(ndm_grp, data_column = "data", fun = stats::prcomp, data_arg = "x")
 

@@ -16,9 +16,9 @@
 #'
 #' nested_pca <- alta_lake_geochem %>%
 #'   nested_data(
+#'     qualifiers = c(depth, zone),
 #'     key = param,
 #'     value = value,
-#'     qualifiers = c(depth, zone),
 #'     trans = scale
 #'   ) %>%
 #'   nested_prcomp()

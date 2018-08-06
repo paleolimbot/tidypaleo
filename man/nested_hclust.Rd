@@ -50,7 +50,7 @@ library(dplyr)
 
 nested_coniss <- keji_lakes_plottable \%>\%
   group_by(location) \%>\%
-  nested_data(taxon, rel_abund, depth, fill = 0) \%>\%
+  nested_data(depth, taxon, rel_abund, fill = 0) \%>\%
   nested_chclust_coniss()
 
 # plot the dendrograms using base graphics

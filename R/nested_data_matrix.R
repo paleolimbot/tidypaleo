@@ -23,92 +23,133 @@
 #' @importFrom dplyr any_vars all_vars
 #' @importFrom rlang enquo !!
 #'
-nested_data <- function(.data, key, value, qualifiers = NULL, fill = NA, groups = NULL,
-                               select_if = ~TRUE, filter_all = any_vars(TRUE), trans = identity) {
+nested_data <- function(.data, qualifiers = NULL, key = NULL, value, fill = NA,
+                        select_if = ~TRUE, filter_all = any_vars(TRUE), trans = identity,
+                        groups = NULL) {
 
   stopifnot(
     is.data.frame(.data)
   )
 
+  groups <- enquo(groups)
   qualifiers <- enquo(qualifiers)
   key <- enquo(key)
   value <- enquo(value)
-  groups <- enquo(groups)
 
   if(rlang::quo_is_null(groups)) {
     groups <- dplyr::group_vars(.data)
   }
 
-  variables <- as.character(
-    dplyr::distinct(
-      dplyr::select(
-        dplyr::ungroup(.data),
-        !!key
-      )
-    )[[1]]
+  # this makes sure all args refer to valid columns, enables checking names later
+  group_vars <- tidyselect::vars_select(colnames(.data), !!groups)
+  qualifier_vars <- tidyselect::vars_select(colnames(.data), !!qualifiers)
+  key_vars <- tidyselect::vars_select(colnames(.data), !!key)
+  value_vars <- tidyselect::vars_select(colnames(.data), !!value)
+
+  # key, qualifier, and group vars can't intersect
+  stopifnot(
+    length(intersect(group_vars, qualifier_vars)) == 0,
+    length(intersect(group_vars, key_vars)) == 0,
+    length(intersect(qualifier_vars, key_vars)) == 0
   )
 
-  data <- dplyr::select(dplyr::ungroup(.data), !!groups, !!qualifiers, !!key, !!value)
+  # value vars are value_vars minus all others (facilitates use of tidyselect helpers)
+  value_vars <- setdiff(value_vars, c(group_vars, qualifier_vars, key_vars))
 
+  if(length(value_vars) == 0) {
+    stop(">0 value columns must be specified")
+  } else if(length(value_vars) == 1) {
+    if(length(key_vars) != 1) stop("Using a single `value` column, exactly one column must be specified by `key`")
+
+    # variables as distinct values of `key`
+    variables <- dplyr::distinct(
+        dplyr::select(
+          dplyr::ungroup(.data),
+          !!key
+        )
+      )[[1]]
+
+    # makes sure factor keys stay in order later
+    variables <- as.character(sort(variables))
+
+  } else {
+    # ignore key_vars and fill if wide data is specified
+    if(length(key_vars) > 0) message("Ignoring variables specified in `key` because more than one `value` column was specified")
+    key_vars <- character(0)
+    if(!identical(fill, NA)) message("Ignoring `fill`")
+    variables <- character(0)
+  }
+
+  # checking column names here to make sure everything can be unnest()ed
+  # without name conflicts
   reserved_names <- c(
-    "wide_df", "discarded_columns", "discarded_rows", "qualifiers",
-    "data", "wide_df_original"
+    "discarded_columns", "discarded_rows", "qualifiers",
+    "data", "df_original"
   )
 
   # col names can't be reserved, and can't be identical to any of the variables
-  check_problematic_names(colnames(data), c(reserved_names, variables))
+  check_problematic_names(c(group_vars, qualifier_vars, key_vars, value_vars), c(reserved_names, variables))
 
-  # variables can't be reserved names either
-  check_problematic_names(variables, reserved_names, data_name = rlang::quo_label(key))
+  # variables can't be reserved names either, because they become columns eventually (if they aren't already)
+  check_problematic_names(variables, reserved_names, data_name = key_vars)
 
-  wide <- tidyr::spread(
-    data,
-    key = !!key, value = !!value,
-    fill = fill
+  data <- dplyr::select(
+    dplyr::ungroup(.data),
+    !!group_vars, !!qualifier_vars, !!key_vars, !!value_vars
   )
+  grouped <- dplyr::group_by_at(data, dplyr::vars(!!group_vars))
+  nested <- tidyr::nest(grouped, !!qualifier_vars, !!key_vars, !!value_vars, .key = "df_original")
 
-  grouped <- dplyr::group_by_at(wide, dplyr::vars(!!groups))
-  nested <- tidyr::nest(grouped, !!qualifiers, !!variables, .key = "wide_df_original")
-  nested$wide_df <- purrr::map(nested$wide_df_original, function(df) {
+  output <- purrr::map(nested$df_original, function(df) {
+    # spread if there is one value var
+    if(length(value_vars) == 1) {
+      df <- tidyr::spread(df, !!key_vars, !!value_vars, fill = fill)
+      # some "variables" aren't present in all groups
+      value_vars <- intersect(variables, colnames(df))
+    }
+
     # select -> filter
-    data_df <- dplyr::select(df, !!variables)
+    data_df <- dplyr::select(df, !!value_vars)
     data_df_selected <- dplyr::select_if(data_df, select_if)
     deselected_names <- setdiff(colnames(data_df), colnames(data_df_selected))
 
     # deselect names that were identified by the previous operation
-    df <- dplyr::select(df, -!!deselected_names)
+    selected_df <- dplyr::select(df, -!!deselected_names)
+    discarded_columns <- dplyr::select(data_df, !!deselected_names)
+    value_vars <- setdiff(value_vars, deselected_names)
 
     # only filter at value variables
-    df <- dplyr::filter_at(df, dplyr::vars(-!!qualifiers), filter_all)
+    filtered_df <- dplyr::filter_at(selected_df, dplyr::vars(!!value_vars), filter_all)
+    discarded_rows <- dplyr::setdiff(selected_df, filtered_df)
 
-    tibble::as_tibble(df)
+    # only transform at value variables
+    trans_df <- dplyr::mutate_at(filtered_df, dplyr::vars(!!value_vars), trans)
+
+    # qualifier vars should always have at least something (row number)
+    qualifiers <- dplyr::select(trans_df, !!qualifier_vars)
+    qualifiers$row_number <- seq_len(nrow(qualifiers))
+
+    list(
+      discarded_columns = discarded_columns,
+      discarded_rows = discarded_rows,
+      qualifiers = qualifiers,
+      data = dplyr::select(trans_df, -!!qualifier_vars)
+    )
   })
 
-  nested$discarded_columns <- purrr::map2(nested$wide_df, nested$wide_df_original, function(wide_df, wide_df_original) {
-    deselected_names <- setdiff(colnames(wide_df_original), colnames(wide_df))
-    tibble::as_tibble(dplyr::select(wide_df_original, !!deselected_names))
-  })
-
-  nested$discarded_rows <- purrr::map2(nested$wide_df, nested$wide_df_original, function(wide_df, wide_df_original) {
-    deselected_names <- setdiff(colnames(wide_df_original), colnames(wide_df))
-    tibble::as_tibble(dplyr::setdiff(
-      dplyr::select(wide_df_original, -!!deselected_names),
-      wide_df
-    ))
-  })
-
-  nested$qualifiers <- purrr::map(nested$wide_df, function(df) {
-    df <- dplyr::select(df, !!qualifiers)
-    df$row_number <- seq_len(nrow(df))
-    df
-  })
-  nested$data <- purrr::map(nested$wide_df, function(df) {
-    df <- dplyr::select(df, -!!qualifiers)
-    dplyr::mutate_all(df, trans)
-  })
-
-  nested$wide_df_original <- NULL
-  new_nested_data(tibble::as_tibble(dplyr::ungroup(nested)))
+  new_nested_data(
+    tibble::as_tibble(
+      dplyr::bind_cols(
+        dplyr::select(
+          dplyr::ungroup(nested),
+          !!group_vars
+        ),
+        tibble::as_tibble(
+          purrr::transpose(output)
+        )
+      )
+    )
+  )
 }
 
 #' Perform an analysis on a nested data matrix
@@ -164,6 +205,7 @@ new_nested_analysis <- function(x, subclasses = character(0)) {
   structure(x, class = unique(c(subclasses, "nested_analysis", class(x))))
 }
 
+# this is necessary because of the masking of stats::filter() by dplyr
 #' @importFrom dplyr filter
 #' @export
 dplyr::filter
@@ -295,7 +337,7 @@ plot_nested_analysis <- function(.x, .fun, ..., nrow = NULL, ncol = NULL) {
   }
 }
 
-# I ripped this off of ggplot2 to see how it was done...
+# I ripped this off of ggplot2 to see how it was done...hard to write it any better
 wrap_dims <- function(n, nrow = NULL, ncol = NULL) {
   if (is.null(ncol) && is.null(nrow)) {
     default_row_col <- grDevices::n2mfrow(n)
@@ -311,10 +353,12 @@ wrap_dims <- function(n, nrow = NULL, ncol = NULL) {
 }
 
 get_grouping_vars <- function(ndm) {
-  # everything before "wide_df"
-  wide_loc <- which(colnames(ndm) == "wide_df")[1]
-  if(is.na(wide_loc)) stop("'wide_df' was not found in the nested data matrix")
-  colnames(ndm)[seq_len(wide_loc - 1)]
+  # everything that isn't a list column before "data"
+  data_loc <- which(colnames(ndm) == "data")[1]
+  if(is.na(data_loc)) stop("'wide_df' was not found in the nested data matrix")
+  list_cols <- colnames(ndm)[purrr::map_lgl(ndm, is.list)]
+  possible_names <- colnames(ndm)[seq_len(data_loc - 1)]
+  setdiff(possible_names, list_cols)
 }
 
 check_problematic_names <- function(col_names, bad_names, data_name = ".data", action = stop) {

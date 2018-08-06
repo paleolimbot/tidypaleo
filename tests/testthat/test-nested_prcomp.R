@@ -4,9 +4,9 @@ test_that("nested_pca works as intended", {
 
   ndm <- nested_data(
     alta_lake_geochem,
+    qualifiers = c(depth, zone),
     key = param,
     value = value,
-    qualifiers = c(depth, zone),
     trans = scale
   )
 
@@ -16,7 +16,7 @@ test_that("nested_pca works as intended", {
 
   expect_equal(
     colnames(ndm_pca),
-    c("wide_df", "discarded_columns", "discarded_rows", "qualifiers", "data",
+    c("discarded_columns", "discarded_rows", "qualifiers", "data",
       "model", "variance", "loadings", "scores")
   )
 
@@ -40,7 +40,7 @@ test_that("nested_pca works as intended", {
 test_that("nested_prcomp works with a grouping variable", {
   ndm_grp <- nested_data(
     keji_lakes_plottable,
-    taxon, rel_abund, depth,
+    depth, taxon, rel_abund,
     fill = 0, trans = sqrt, select_if = ~any(. != 0),
     groups = location
   )

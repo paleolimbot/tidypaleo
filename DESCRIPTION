@@ -18,6 +18,7 @@ Suggests: testthat,
 URL: https://github.com/paleolimbot/tidypaleo
 BugReports: https://github.com/paleolimbot/tidypaleo/issues
 Imports: rlang,
+    tidyselect,
     dplyr,
     tibble,
     scales,
