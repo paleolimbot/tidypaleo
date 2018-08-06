@@ -133,3 +133,27 @@ test_that("nested hclust works as planned", {
   nest_hc <- nested_hclust(ndm)
   expect_is(nest_hc, "nested_hclust")
 })
+
+test_that("plot methods for hclust work", {
+  ndm <- nested_data_matrix(halifax_lakes_plottable, taxon, rel_abund, c(location, sample_type))
+  nest_hc <- nested_hclust(ndm, method = "average")
+  nest_chc <- nested_chclust(ndm)
+
+  plot(
+    nest_hc,
+    main = sprintf("CCC = %0.2f", CCC),
+    labels = paste(qualifiers$location, qualifiers$sample_type),
+    sub = "no fishy subtext (unconstrained)",
+    cex = 0.6
+  )
+
+  plot(
+    nest_chc,
+    main = sprintf("CCC = %0.2f", CCC),
+    labels = paste(qualifiers$location, qualifiers$sample_type),
+    sub = "no fishy subtext (unconstrained)",
+    cex = 0.6
+  )
+
+  expect_true(TRUE)
+})

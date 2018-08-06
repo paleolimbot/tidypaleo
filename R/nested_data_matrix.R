@@ -187,45 +187,48 @@ slice.nested_data_matrix <- function(.data, ...) {
 #'
 #' Calls \link[graphics]{plot} or another (base) plotting function on all models, arranging the output in subplots.
 #'
-#' @param x A \link{nested_anal} object (or subclass)
-#' @param ... Passed to the plot function
-#' @param plot_labels A vector of plot labels (can be an expression using columns in x)
+#' @param x,.x A \link{nested_anal} object (or subclass)
+#' @param .fun A function that produces graphical output
+#' @param main The plot title
+#' @param ... Passed to the plot function. Tidy evaluation is supported, and arguments are evaluated
+#'   within a transposed version of x.
 #' @param nrow,ncol Force a number of rows or columns in the output
 #'
 #' @return A list containing the result of the plot function (invisibly)
 #'
 #' @importFrom graphics plot
 #' @export
-plot.nested_anal <- function(x, ..., plot_labels = "", nrow = NULL, ncol = NULL) {
-  plot_labels <- enquo(plot_labels)
-  nested_anal_plot(x, .fun = graphics::plot, ..., plot_labels = !!plot_labels, nrow = nrow, ncol = ncol)
+plot.nested_anal <- function(x, ..., main = "", nrow = NULL, ncol = NULL) {
+  main <- enquo(main)
+  nested_anal_plot(x, .fun = graphics::plot, ..., main = !!main, nrow = nrow, ncol = ncol)
 }
 
-nested_anal_plot <- function(.x, .fun, ..., .label_arg = "main", plot_labels = "", nrow = NULL, ncol = NULL) {
-  plot_labels <- enquo(plot_labels)
+#' @rdname plot.nested_anal
+#' @export
+nested_anal_plot <- function(.x, .fun, ..., nrow = NULL, ncol = NULL) {
   n_plots <- nrow(.x)
+
+  # args get evalulated 'tidily' within the transposed data,
+  # so they can refer to columns in the nested_anal data frame
+  more_args <- rlang::quos(...)
 
   if(n_plots == 0) {
     stop("Nothing to plot, object has zero rows")
   } else {
     dims <- wrap_dims(n_plots, nrow, ncol)
 
-    if(rlang::quo_is_null(plot_labels)) {
-      .x$.plot_label <- list(NULL)
-    } else {
-      .x <- dplyr::mutate(.x, .plot_label = as.list(!!plot_labels))
-    }
-
     invisible(
       withr::with_par(list(mfrow = dims), {
-        # using map rather than for in case the plot function returns something
-        purrr::map2(.x$model, .x$.plot_label, function(model, label) {
-          args <- list(model)
-          if(!is.null(label) && !is.null(.label_arg)) {
-            args[[.label_arg]] <- label
-          }
 
-          purrr::invoke(.fun, args, ...)
+        # using map rather than for in case the plot function returns something
+        purrr::map(purrr::transpose(.x), function(row) {
+
+          args <- c(
+            list(row$model),
+            purrr::map(more_args, function(arg_q) rlang::eval_tidy(arg_q, data = row))
+          )
+
+          purrr::invoke(.fun, args)
         })
       })
     )

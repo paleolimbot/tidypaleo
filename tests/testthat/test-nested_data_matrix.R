@@ -164,10 +164,10 @@ test_that("nested anal plotting works", {
   pca_grp <- nested_anal(ndm_grp, data_column = "data", fun = stats::prcomp, data_arg = "x")
 
   expect_length(plot(pca, sub = "default"), 1)
-  expect_length(plot(pca_grp, plot_labels = location, sub = "default grouped"), 2)
+  expect_length(plot(pca_grp, main = location, sub = "default grouped"), 2)
 
-  plot(pca_grp, plot_labels = location, nrow = 2, sub = "nrow = 2")
-  plot(pca_grp, plot_labels = location, ncol = 1, sub = "ncol = 1")
+  plot(pca_grp, main = location, nrow = 2, sub = "nrow = 2")
+  plot(pca_grp, main = location, ncol = 1, sub = "ncol = 1")
 
   expect_error(plot(dplyr::filter(pca_grp, FALSE)), "Nothing to plot")
 })

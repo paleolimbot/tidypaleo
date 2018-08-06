@@ -49,7 +49,7 @@ test_that("nested_prcomp works with a grouping variable", {
   expect_true("location" %in% colnames(prcomp_grp))
   expect_true(is.atomic(prcomp_grp$location))
 
-  plot(prcomp_grp, plot_labels = location, sub = "grouped PCA skree")
-  biplot(prcomp_grp, plot_labels = location, sub = "grouped PCA biplot")
+  plot(prcomp_grp, main = location, sub = "grouped PCA skree")
+  biplot(prcomp_grp, main = location, sub = "grouped PCA biplot")
 })
 

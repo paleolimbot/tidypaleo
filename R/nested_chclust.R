@@ -184,6 +184,21 @@ group_boundaries <- function(hclust_zones, qualifiers, n_groups = 1) {
   group_info
 }
 
+#' @export
+#' @importFrom graphics plot
+plot.nested_chclust <- function(x, ..., nrow = NULL, ncol = NULL) {
+  nested_anal_plot(x, .fun = graphics::plot, ..., nrow = nrow, ncol = ncol)
+}
+
+#' @export
+#' @importFrom graphics plot
+plot.nested_hclust <- function(x, ..., sub = "", xlab = "", nrow = NULL, ncol = NULL) {
+  sub <- enquo(sub)
+  xlab <- enquo(xlab)
+  nested_anal_plot(x, .fun = graphics::plot, sub = !!sub, xlab = !!xlab, ..., nrow = nrow, ncol = ncol)
+}
+
+
 determine_n_groups <- function(model, threshold = 1.1) {
 
   if(inherits(model, "chclust")) {

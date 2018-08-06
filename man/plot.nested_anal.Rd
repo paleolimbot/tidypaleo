@@ -2,23 +2,27 @@
 % Please edit documentation in R/nested_data_matrix.R, R/nested_prcomp.R
 \name{plot.nested_anal}
 \alias{plot.nested_anal}
+\alias{nested_anal_plot}
 \alias{biplot.nested_prcomp}
 \title{Plot a nested analysis}
 \usage{
-\method{plot}{nested_anal}(x, ..., plot_labels = "", nrow = NULL,
-  ncol = NULL)
+\method{plot}{nested_anal}(x, ..., main = "", nrow = NULL, ncol = NULL)
 
-\method{biplot}{nested_prcomp}(x, ..., plot_labels = "", nrow = NULL,
-  ncol = NULL)
+nested_anal_plot(.x, .fun, ..., nrow = NULL, ncol = NULL)
+
+\method{biplot}{nested_prcomp}(x, ..., nrow = NULL, ncol = NULL)
 }
 \arguments{
-\item{x}{A \link{nested_anal} object (or subclass)}
+\item{x, .x}{A \link{nested_anal} object (or subclass)}
 
-\item{...}{Passed to the plot function}
+\item{...}{Passed to the plot function. Tidy evaluation is supported, and arguments are evaluated
+within a transposed version of x.}
 
-\item{plot_labels}{A vector of plot labels (can be an expression using columns in x)}
+\item{main}{The plot title}
 
 \item{nrow, ncol}{Force a number of rows or columns in the output}
+
+\item{.fun}{A function that produces graphical output}
 }
 \value{
 A list containing the result of the plot function (invisibly)
