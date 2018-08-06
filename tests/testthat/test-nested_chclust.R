@@ -1,7 +1,7 @@
-context("test-nested_chclust.R")
+context("test-nested_chclust_coniss.R")
 
 
-test_that("nested_chclust produces the correct columns", {
+test_that("nested_chclust_coniss produces the correct columns", {
 
   ndm <- nested_data_matrix(
     alta_lake_geochem,
@@ -11,8 +11,8 @@ test_that("nested_chclust produces the correct columns", {
     trans = scale
   )
 
-  nested_coniss <- nested_chclust(ndm)
-  expect_is(nested_coniss, "nested_chclust")
+  nested_coniss <- nested_chclust_coniss(ndm)
+  expect_is(nested_coniss, "nested_chclust_coniss")
   expect_is(nested_coniss, "nested_hclust")
 
   expect_setequal(
@@ -41,7 +41,7 @@ test_that("nested_chclust produces the correct columns", {
 
 })
 
-test_that("nested_chclust produces the correct segments and nodes", {
+test_that("nested_chclust_coniss produces the correct segments and nodes", {
 
   ndm <- nested_data_matrix(
     alta_lake_geochem,
@@ -51,7 +51,7 @@ test_that("nested_chclust produces the correct segments and nodes", {
     qualifiers = depth
   )
 
-  nested_coniss <- nested_chclust(ndm)
+  nested_coniss <- nested_chclust_coniss(ndm)
 
   print(
     ggplot2::ggplot(alta_lake_geochem, ggplot2::aes(x = value, y = depth)) +
@@ -91,9 +91,9 @@ test_that("nested_chclust produces the correct segments and nodes", {
   expect_true(TRUE)
 })
 
-test_that("nested_chclust works with a grouping variable", {
+test_that("nested_chclust_coniss works with a grouping variable", {
   ndm_grp <- nested_data_matrix(keji_lakes_plottable, taxon, rel_abund, depth, fill = 0, groups = location)
-  nested_coniss <- nested_chclust(ndm_grp)
+  nested_coniss <- nested_chclust_coniss(ndm_grp)
 
   expect_true("location" %in% colnames(nested_coniss))
   expect_true(is.atomic(nested_coniss$location))
@@ -137,7 +137,8 @@ test_that("nested hclust works as planned", {
 test_that("plot methods for hclust work", {
   ndm <- nested_data_matrix(halifax_lakes_plottable, taxon, rel_abund, c(location, sample_type))
   nest_hc <- nested_hclust(ndm, method = "average")
-  nest_chc <- nested_chclust(ndm)
+  nest_chc2 <- nested_chclust_conslink(ndm)
+  nest_chc <- nested_chclust_coniss(ndm)
 
   plot(
     nest_hc,
@@ -152,6 +153,14 @@ test_that("plot methods for hclust work", {
     main = sprintf("CCC = %0.2f", CCC),
     labels = paste(qualifiers$location, qualifiers$sample_type),
     sub = "no fishy subtext (unconstrained)",
+    cex = 0.6
+  )
+
+  plot(
+    nest_chc2,
+    main = sprintf("CCC = %0.2f", CCC),
+    labels = paste(qualifiers$location, qualifiers$sample_type),
+    sub = "no fishy subtext (unconstrained, conslink)",
     cex = 0.6
   )
 

@@ -35,10 +35,10 @@
 #' nested_coniss <- keji_lakes_plottable %>%
 #'   group_by(location) %>%
 #'   nested_data_matrix(taxon, rel_abund, depth, fill = 0) %>%
-#'   nested_chclust()
+#'   nested_chclust_coniss()
 #'
 #' # plot the dendrograms using base graphics
-#' plot(nested_coniss, plot_labels = location, ncol = 1)
+#' plot(nested_coniss, main = location, ncol = 1)
 #'
 #' # plot broken stick dispersion to verify number of plausible groups
 #' library(ggplot2)
@@ -118,8 +118,31 @@ nested_hclust <- function(.data, data_column = "data", qualifiers_column = "qual
 
 #' @rdname nested_hclust
 #' @export
-nested_chclust <- function(.data, data_column = "data", qualifiers_column = "qualifiers", distance_fun = stats::dist,
-                           n_groups = NULL, ...) {
+nested_chclust_conslink <- function(.data, data_column = "data", qualifiers_column = "qualifiers",
+                                    distance_fun = stats::dist,
+                                    n_groups = NULL, ...) {
+  data_column <- enquo(data_column)
+  qualifiers_column <- enquo(qualifiers_column)
+  n_groups <- enquo(n_groups)
+
+  nchclust <- nested_hclust(
+    .data,
+    data_column = !!data_column,
+    qualifiers_column = !!qualifiers_column,
+    distance_fun = distance_fun,
+    n_groups = !!n_groups,
+    fun = rioja::chclust,
+    method = "conslink",
+    ...
+  )
+
+  new_nested_anal(nchclust, c("nested_chclust_conslink", "nested_chclust"))
+}
+
+#' @rdname nested_hclust
+#' @export
+nested_chclust_coniss <- function(.data, data_column = "data", qualifiers_column = "qualifiers", distance_fun = stats::dist,
+                                  n_groups = NULL, ...) {
 
   data_column <- enquo(data_column)
   qualifiers_column <- enquo(qualifiers_column)
@@ -132,6 +155,7 @@ nested_chclust <- function(.data, data_column = "data", qualifiers_column = "qua
     distance_fun = distance_fun,
     n_groups = !!n_groups,
     fun = rioja::chclust,
+    method = "coniss",
     ...
   )
 
@@ -150,8 +174,23 @@ nested_chclust <- function(.data, data_column = "data", qualifiers_column = "qua
     function(.data) dplyr::filter(.data, is.finite(.data$dispersion))
   )
 
-  new_nested_anal(nchclust, "nested_chclust")
+  new_nested_anal(nchclust, c("nested_chclust_coniss", "nested_chclust"))
 }
+
+#' @export
+#' @importFrom graphics plot
+plot.nested_chclust <- function(x, ..., nrow = NULL, ncol = NULL) {
+  nested_anal_plot(x, .fun = graphics::plot, ..., nrow = nrow, ncol = ncol)
+}
+
+#' @export
+#' @importFrom graphics plot
+plot.nested_hclust <- function(x, ..., sub = "", xlab = "", nrow = NULL, ncol = NULL) {
+  sub <- enquo(sub)
+  xlab <- enquo(xlab)
+  nested_anal_plot(x, .fun = graphics::plot, sub = !!sub, xlab = !!xlab, ..., nrow = nrow, ncol = ncol)
+}
+
 
 group_boundaries <- function(hclust_zones, qualifiers, n_groups = 1) {
   stopifnot(
@@ -184,24 +223,9 @@ group_boundaries <- function(hclust_zones, qualifiers, n_groups = 1) {
   group_info
 }
 
-#' @export
-#' @importFrom graphics plot
-plot.nested_chclust <- function(x, ..., nrow = NULL, ncol = NULL) {
-  nested_anal_plot(x, .fun = graphics::plot, ..., nrow = nrow, ncol = ncol)
-}
-
-#' @export
-#' @importFrom graphics plot
-plot.nested_hclust <- function(x, ..., sub = "", xlab = "", nrow = NULL, ncol = NULL) {
-  sub <- enquo(sub)
-  xlab <- enquo(xlab)
-  nested_anal_plot(x, .fun = graphics::plot, sub = !!sub, xlab = !!xlab, ..., nrow = nrow, ncol = ncol)
-}
-
-
 determine_n_groups <- function(model, threshold = 1.1) {
 
-  if(inherits(model, "chclust")) {
+  if(inherits(model, "chclust") && (model$method == "coniss")) {
     # slightly duplicated work, but allows hclust and chclust to share more code
     broken_stick <- rioja::bstick(model, plot = FALSE, ng = 1000)
     broken_stick <- dplyr::filter(broken_stick, !is.na(.data$dispersion))
