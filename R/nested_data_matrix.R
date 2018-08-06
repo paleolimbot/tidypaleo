@@ -176,11 +176,71 @@ filter.nested_data <- function(.data, ...) {
   structure(NextMethod(), class = data_class)
 }
 
+#' @importFrom dplyr filter
+#' @export
+filter.nested_analysis <- function(.data, ...) {
+  data_class <- class(.data)
+  structure(NextMethod(), class = data_class)
+}
+
 #' @importFrom dplyr slice
 #' @export
 slice.nested_data <- function(.data, ...) {
   data_class <- class(.data)
   structure(NextMethod(), class = data_class)
+}
+
+#' @importFrom dplyr slice
+#' @export
+slice.nested_analysis <- function(.data, ...) {
+  data_class <- class(.data)
+  structure(NextMethod(), class = data_class)
+}
+
+#' @importFrom dplyr arrange
+#' @export
+arrange.nested_data <- function(.data, ...) {
+  data_class <- class(.data)
+  structure(NextMethod(), class = data_class)
+}
+
+#' @importFrom dplyr arrange
+#' @export
+arrange.nested_analysis <- function(.data, ...) {
+  data_class <- class(.data)
+  structure(NextMethod(), class = data_class)
+}
+
+#' @importFrom dplyr mutate
+#' @export
+mutate.nested_data <- function(.data, ...) {
+  data_class <- class(.data)
+  result <- NextMethod()
+
+  # only maintain class if no columns were dropped
+  # it's possible that the user corrupts an existing column here
+  # but this is probably rare
+  if(all(colnames(.data) %in% colnames(result))) {
+    structure(result, class = data_class)
+  } else {
+    result
+  }
+}
+
+#' @importFrom dplyr mutate
+#' @export
+mutate.nested_analysis <- function(.data, ...) {
+  data_class <- class(.data)
+  result <- NextMethod()
+
+  # only maintain class if no columns were dropped
+  # it's possible that the user corrupts an existing column here
+  # but this is probably rare
+  if(all(colnames(.data) %in% colnames(result))) {
+    structure(result, class = data_class)
+  } else {
+    result
+  }
 }
 
 #' Plot a nested analysis

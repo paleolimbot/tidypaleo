@@ -141,20 +141,34 @@ test_that("nested data matrix works with a grouping variable", {
 test_that("class inheritance works", {
   ndm <- nested_data(alta_lake_geochem, param, value, depth, trans = scale)
   na <- nested_analysis(ndm, data_column = "data", fun = stats::prcomp, data_arg = "x")
+  class(na) <- setdiff(class(na), "nested_data")
+
   expect_is(ndm, "nested_data")
   expect_is(na, "nested_analysis")
-  expect_is(na, "nested_data")
+  expect_false(inherits(na, "nested_data"))
+
   expect_is(dplyr::filter(ndm, TRUE), "nested_data")
   expect_is(dplyr::filter(na, TRUE), "nested_analysis")
-  expect_is(dplyr::filter(na, TRUE), "nested_data")
+
+  expect_is(dplyr::arrange(ndm, 1), "nested_data")
+  expect_is(dplyr::arrange(na, 1), "nested_analysis")
+
+  # dropping a column results in loss of class propogation
+  expect_is(dplyr::mutate(ndm, new_thing = 1), "nested_data")
+  expect_is(dplyr::mutate(na, new_thing = 1), "nested_analysis")
+  expect_false(inherits(dplyr::mutate(ndm, data = NULL), "nested_data"))
+  expect_false(inherits(dplyr::mutate(na, data = NULL), "nested_analysis"))
+
   expect_is(dplyr::slice(ndm, 1), "nested_data")
   expect_is(dplyr::slice(na, 1), "nested_analysis")
-  expect_is(dplyr::slice(na, 1), "nested_data")
+
 
   expect_equal(nrow(dplyr::filter(ndm, FALSE)), 0)
   expect_equal(nrow(dplyr::slice(ndm, numeric(0))), 0)
   expect_equal(nrow(dplyr::filter(ndm, TRUE)), 1)
   expect_equal(nrow(dplyr::slice(ndm, 1)), 1)
+
+
 })
 
 test_that("nested anal plotting works", {
