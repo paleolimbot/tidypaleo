@@ -23,7 +23,7 @@
 #' @importFrom dplyr any_vars all_vars
 #' @importFrom rlang enquo !!
 #'
-nested_data_matrix <- function(.data, key, value, qualifiers = NULL, fill = NA, groups = NULL,
+nested_data <- function(.data, key, value, qualifiers = NULL, fill = NA, groups = NULL,
                                select_if = ~TRUE, filter_all = any_vars(TRUE), trans = identity) {
 
   stopifnot(
@@ -108,13 +108,13 @@ nested_data_matrix <- function(.data, key, value, qualifiers = NULL, fill = NA, 
   })
 
   nested$wide_df_original <- NULL
-  new_nested_data_matrix(tibble::as_tibble(dplyr::ungroup(nested)))
+  new_nested_data(tibble::as_tibble(dplyr::ungroup(nested)))
 }
 
 #' Perform an analysis on a nested data matrix
 #'
 #' @param .data A data frame with a list column of data frames, possibly created using
-#'   \link{nested_data_matrix}.
+#'   \link{nested_data}.
 #' @param data_column The name of the column that contains the data. Evaluated
 #'   like \link[dplyr]{pull}.
 #' @param fun A model function
@@ -126,7 +126,7 @@ nested_data_matrix <- function(.data, key, value, qualifiers = NULL, fill = NA, 
 #' @return .data with an additional list column of fun output
 #' @export
 #'
-nested_anal <- function(.data, data_column, fun, data_arg, ..., reserved_names = NULL) {
+nested_analysis <- function(.data, data_column, fun, data_arg, ..., reserved_names = NULL) {
   data_column <- enquo(data_column)
   model_column <- "model"
 
@@ -153,15 +153,15 @@ nested_anal <- function(.data, data_column, fun, data_arg, ..., reserved_names =
     }
   )
 
-  new_nested_anal(.data)
+  new_nested_analysis(.data)
 }
 
-new_nested_data_matrix <- function(x, subclasses = character(0)) {
-  structure(x, class = unique(c(subclasses, "nested_data_matrix", class(x))))
+new_nested_data <- function(x, subclasses = character(0)) {
+  structure(x, class = unique(c(subclasses, "nested_data", class(x))))
 }
 
-new_nested_anal <- function(x, subclasses = character(0)) {
-  structure(x, class = unique(c(subclasses, "nested_anal", class(x))))
+new_nested_analysis <- function(x, subclasses = character(0)) {
+  structure(x, class = unique(c(subclasses, "nested_analysis", class(x))))
 }
 
 #' @importFrom dplyr filter
@@ -171,14 +171,14 @@ dplyr::filter
 
 #' @importFrom dplyr filter
 #' @export
-filter.nested_data_matrix <- function(.data, ...) {
+filter.nested_data <- function(.data, ...) {
   data_class <- class(.data)
   structure(NextMethod(), class = data_class)
 }
 
 #' @importFrom dplyr slice
 #' @export
-slice.nested_data_matrix <- function(.data, ...) {
+slice.nested_data <- function(.data, ...) {
   data_class <- class(.data)
   structure(NextMethod(), class = data_class)
 }
@@ -187,29 +187,29 @@ slice.nested_data_matrix <- function(.data, ...) {
 #'
 #' Calls \link[graphics]{plot} or another (base) plotting function on all models, arranging the output in subplots.
 #'
-#' @param x,.x A \link{nested_anal} object (or subclass)
+#' @param x,.x A \link{nested_analysis} object (or subclass)
 #' @param .fun A function that produces graphical output
 #' @param main The plot title
 #' @param ... Passed to the plot function. Tidy evaluation is supported, and arguments are evaluated
-#'   within a transposed version of x.
+#'   within a transposed version of x for each row.
 #' @param nrow,ncol Force a number of rows or columns in the output
 #'
 #' @return A list containing the result of the plot function (invisibly)
 #'
 #' @importFrom graphics plot
 #' @export
-plot.nested_anal <- function(x, ..., main = "", nrow = NULL, ncol = NULL) {
+plot.nested_analysis <- function(x, ..., main = "", nrow = NULL, ncol = NULL) {
   main <- enquo(main)
-  nested_anal_plot(x, .fun = graphics::plot, ..., main = !!main, nrow = nrow, ncol = ncol)
+  plot_nested_analysis(x, .fun = graphics::plot, ..., main = !!main, nrow = nrow, ncol = ncol)
 }
 
-#' @rdname plot.nested_anal
+#' @rdname plot.nested_analysis
 #' @export
-nested_anal_plot <- function(.x, .fun, ..., nrow = NULL, ncol = NULL) {
+plot_nested_analysis <- function(.x, .fun, ..., nrow = NULL, ncol = NULL) {
   n_plots <- nrow(.x)
 
   # args get evalulated 'tidily' within the transposed data,
-  # so they can refer to columns in the nested_anal data frame
+  # so they can refer to columns in the nested_analysis data frame
   more_args <- rlang::quos(...)
 
   if(n_plots == 0) {

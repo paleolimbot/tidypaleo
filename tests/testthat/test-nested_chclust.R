@@ -3,7 +3,7 @@ context("test-nested_chclust_coniss.R")
 
 test_that("nested_chclust_coniss produces the correct columns", {
 
-  ndm <- nested_data_matrix(
+  ndm <- nested_data(
     alta_lake_geochem,
     key = param,
     value = value,
@@ -43,7 +43,7 @@ test_that("nested_chclust_coniss produces the correct columns", {
 
 test_that("nested_chclust_coniss produces the correct segments and nodes", {
 
-  ndm <- nested_data_matrix(
+  ndm <- nested_data(
     alta_lake_geochem,
     key = param,
     value = value,
@@ -92,7 +92,7 @@ test_that("nested_chclust_coniss produces the correct segments and nodes", {
 })
 
 test_that("nested_chclust_coniss works with a grouping variable", {
-  ndm_grp <- nested_data_matrix(keji_lakes_plottable, taxon, rel_abund, depth, fill = 0, groups = location)
+  ndm_grp <- nested_data(keji_lakes_plottable, taxon, rel_abund, depth, fill = 0, groups = location)
   nested_coniss <- nested_chclust_coniss(ndm_grp)
 
   expect_true("location" %in% colnames(nested_coniss))
@@ -129,13 +129,13 @@ test_that("nested_chclust_coniss works with a grouping variable", {
 })
 
 test_that("nested hclust works as planned", {
-  ndm <- nested_data_matrix(halifax_lakes_plottable, taxon, rel_abund, c(location, sample_type))
+  ndm <- nested_data(halifax_lakes_plottable, taxon, rel_abund, c(location, sample_type))
   nest_hc <- nested_hclust(ndm)
   expect_is(nest_hc, "nested_hclust")
 })
 
 test_that("plot methods for hclust work", {
-  ndm <- nested_data_matrix(halifax_lakes_plottable, taxon, rel_abund, c(location, sample_type))
+  ndm <- nested_data(halifax_lakes_plottable, taxon, rel_abund, c(location, sample_type))
   nest_hc <- nested_hclust(ndm, method = "average")
   nest_chc2 <- nested_chclust_conslink(ndm)
   nest_chc <- nested_chclust_coniss(ndm)

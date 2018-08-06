@@ -1,11 +1,11 @@
 
 #' Nested Principal Components Analysis (PCA)
 #'
-#' Powered by \link[stats]{prcomp}. When creating the \link{nested_data_matrix},
+#' Powered by \link[stats]{prcomp}. When creating the \link{nested_data},
 #' the data should be scaled (i.e, \code{trans = scale}) if all variables are not
 #' in the same unit.
 #'
-#' @inheritParams nested_anal
+#' @inheritParams nested_analysis
 #' @param ... Passed to \link[stats]{prcomp}.
 #'
 #' @return .data with additional columns 'model', 'loadings', 'variance' and 'scores'
@@ -15,7 +15,7 @@
 #' library(tidyr)
 #'
 #' nested_pca <- alta_lake_geochem %>%
-#'   nested_data_matrix(
+#'   nested_data(
 #'     key = param,
 #'     value = value,
 #'     qualifiers = c(depth, zone),
@@ -33,7 +33,7 @@
 #' nested_pca %>% unnest(qualifiers, scores)
 #'
 nested_prcomp <- function(.data, data_column = "data", ...) {
-  npca <- nested_anal(
+  npca <- nested_analysis(
     .data,
     data_column = !!enquo(data_column),
     fun = stats::prcomp,
@@ -81,12 +81,12 @@ nested_prcomp <- function(.data, data_column = "data", ...) {
     }
   )
 
-  new_nested_anal(npca, "nested_prcomp")
+  new_nested_analysis(npca, "nested_prcomp")
 }
 
 #' @importFrom stats biplot
 #' @export
-#' @rdname plot.nested_anal
+#' @rdname plot.nested_analysis
 biplot.nested_prcomp <- function(x, ..., nrow = NULL, ncol = NULL) {
-  nested_anal_plot(x, .fun = stats::biplot, ..., nrow = nrow, ncol = ncol)
+  plot_nested_analysis(x, .fun = stats::biplot, ..., nrow = nrow, ncol = ncol)
 }

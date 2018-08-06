@@ -8,7 +8,7 @@ nested_prcomp(.data, data_column = "data", ...)
 }
 \arguments{
 \item{.data}{A data frame with a list column of data frames, possibly created using
-\link{nested_data_matrix}.}
+\link{nested_data}.}
 
 \item{data_column}{The name of the column that contains the data. Evaluated
 like \link[dplyr]{pull}.}
@@ -19,7 +19,7 @@ like \link[dplyr]{pull}.}
 .data with additional columns 'model', 'loadings', 'variance' and 'scores'
 }
 \description{
-Powered by \link[stats]{prcomp}. When creating the \link{nested_data_matrix},
+Powered by \link[stats]{prcomp}. When creating the \link{nested_data},
 the data should be scaled (i.e, \code{trans = scale}) if all variables are not
 in the same unit.
 }
@@ -27,7 +27,7 @@ in the same unit.
 library(tidyr)
 
 nested_pca <- alta_lake_geochem \%>\%
-  nested_data_matrix(
+  nested_data(
     key = param,
     value = value,
     qualifiers = c(depth, zone),

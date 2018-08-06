@@ -3,7 +3,7 @@
 #'
 #' Powered by \link[rioja]{chclust} and \link[stats]{hclust}; broken stick using \link[rioja]{bstick}.
 #'
-#' @inheritParams nested_anal
+#' @inheritParams nested_analysis
 #' @param distance_fun A distance function like \link[stats]{dist} or \link[vegan]{vegdist}.
 #' @param qualifiers_column The column that contains the qualifiers
 #' @param n_groups The number of groups to use (can be a vector or expression using vars in .data)
@@ -34,7 +34,7 @@
 #'
 #' nested_coniss <- keji_lakes_plottable %>%
 #'   group_by(location) %>%
-#'   nested_data_matrix(taxon, rel_abund, depth, fill = 0) %>%
+#'   nested_data(taxon, rel_abund, depth, fill = 0) %>%
 #'   nested_chclust_coniss()
 #'
 #' # plot the dendrograms using base graphics
@@ -63,7 +63,7 @@ nested_hclust <- function(.data, data_column = "data", qualifiers_column = "qual
   .data$distance <- purrr::map(data_col_obj, distance_fun)
   qualifier_names <- unique(unlist(purrr::map(qualifiers_col_obj, colnames)))
 
-  nchclust <- nested_anal(
+  nchclust <- nested_analysis(
     .data,
     data_column = "distance",
     fun = fun,
@@ -113,7 +113,7 @@ nested_hclust <- function(.data, data_column = "data", qualifiers_column = "qual
   )
   nchclust$nodes <- purrr::map(nchclust$nodes, function(df) dplyr::select(df, -"segments"))
 
-  new_nested_anal(nchclust, "nested_hclust")
+  new_nested_analysis(nchclust, "nested_hclust")
 }
 
 #' @rdname nested_hclust
@@ -136,7 +136,7 @@ nested_chclust_conslink <- function(.data, data_column = "data", qualifiers_colu
     ...
   )
 
-  new_nested_anal(nchclust, c("nested_chclust_conslink", "nested_chclust"))
+  new_nested_analysis(nchclust, c("nested_chclust_conslink", "nested_chclust"))
 }
 
 #' @rdname nested_hclust
@@ -174,13 +174,13 @@ nested_chclust_coniss <- function(.data, data_column = "data", qualifiers_column
     function(.data) dplyr::filter(.data, is.finite(.data$dispersion))
   )
 
-  new_nested_anal(nchclust, c("nested_chclust_coniss", "nested_chclust"))
+  new_nested_analysis(nchclust, c("nested_chclust_coniss", "nested_chclust"))
 }
 
 #' @export
 #' @importFrom graphics plot
 plot.nested_chclust <- function(x, ..., nrow = NULL, ncol = NULL) {
-  nested_anal_plot(x, .fun = graphics::plot, ..., nrow = nrow, ncol = ncol)
+  plot_nested_analysis(x, .fun = graphics::plot, ..., nrow = nrow, ncol = ncol)
 }
 
 #' @export
@@ -188,7 +188,7 @@ plot.nested_chclust <- function(x, ..., nrow = NULL, ncol = NULL) {
 plot.nested_hclust <- function(x, ..., sub = "", xlab = "", nrow = NULL, ncol = NULL) {
   sub <- enquo(sub)
   xlab <- enquo(xlab)
-  nested_anal_plot(x, .fun = graphics::plot, sub = !!sub, xlab = !!xlab, ..., nrow = nrow, ncol = ncol)
+  plot_nested_analysis(x, .fun = graphics::plot, sub = !!sub, xlab = !!xlab, ..., nrow = nrow, ncol = ncol)
 }
 
 

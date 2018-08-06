@@ -20,7 +20,7 @@ nested_chclust_coniss(.data, data_column = "data",
 }
 \arguments{
 \item{.data}{A data frame with a list column of data frames, possibly created using
-\link{nested_data_matrix}.}
+\link{nested_data}.}
 
 \item{data_column}{The name of the column that contains the data. Evaluated
 like \link[dplyr]{pull}.}
@@ -50,7 +50,7 @@ library(dplyr)
 
 nested_coniss <- keji_lakes_plottable \%>\%
   group_by(location) \%>\%
-  nested_data_matrix(taxon, rel_abund, depth, fill = 0) \%>\%
+  nested_data(taxon, rel_abund, depth, fill = 0) \%>\%
   nested_chclust_coniss()
 
 # plot the dendrograms using base graphics

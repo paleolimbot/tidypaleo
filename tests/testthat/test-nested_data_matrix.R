@@ -1,8 +1,8 @@
-context("test-nested_data_matrix.R")
+context("test-nested_data.R")
 
-test_that("nested_data_matrix works as intended", {
+test_that("nested_data works as intended", {
 
-  ndm <- nested_data_matrix(
+  ndm <- nested_data(
     alta_lake_geochem,
     key = param,
     value = value,
@@ -24,7 +24,7 @@ test_that("nested_data_matrix works as intended", {
   expect_true(all(purrr::map_lgl(ndm, ~inherits(.x[[1]], "tbl_df"))))
 
   withr::with_seed(1234, {
-    ndm_filtered <- nested_data_matrix(
+    ndm_filtered <- nested_data(
       alta_lake_geochem,
       key = param,
       value = value,
@@ -37,7 +37,7 @@ test_that("nested_data_matrix works as intended", {
     expect_equal(nrow(ndm_filtered$discarded_rows[[1]]), 13)
   })
 
-  ndm_selected <- nested_data_matrix(
+  ndm_selected <- nested_data(
     alta_lake_geochem,
     key = param,
     value = value,
@@ -50,7 +50,7 @@ test_that("nested_data_matrix works as intended", {
   expect_true(!any(c("d13C", "Ti") %in% colnames(ndm_selected$data[[1]])))
 
   withr::with_seed(1234, {
-    ndm_selected_filtered <- nested_data_matrix(
+    ndm_selected_filtered <- nested_data(
       alta_lake_geochem,
       key = param,
       value = value,
@@ -68,7 +68,7 @@ test_that("nested_data_matrix works as intended", {
     expect_true(!any(c("d13C", "Ti") %in% colnames(ndm_selected_filtered$data[[1]])))
   })
 
-  grouped_ndm <- nested_data_matrix(
+  grouped_ndm <- nested_data(
     alta_lake_geochem,
     key = param,
     value = value,
@@ -90,48 +90,48 @@ test_that("nested_data_matrix works as intended", {
   )
 })
 
-test_that("nested_data_matrix gives an error with reserved column names", {
+test_that("nested_data gives an error with reserved column names", {
   alg_bad <- dplyr::rename(alta_lake_geochem, data = depth)
   expect_error(
-    nested_data_matrix(alg_bad, param, value, data),
+    nested_data(alg_bad, param, value, data),
     "The following names in"
   )
 })
 
-test_that("nested_anal gives an error with reserved column names", {
+test_that("nested_analysis gives an error with reserved column names", {
   alg_bad <- dplyr::rename(alta_lake_geochem, model = depth)
   ndm <- expect_silent(
-    nested_data_matrix(alg_bad, param, value, model)
+    nested_data(alg_bad, param, value, model)
   )
 
   expect_error(
-    nested_anal(ndm, data_column = "data", fun = stats::prcomp, data_arg = "x"),
+    nested_analysis(ndm, data_column = "data", fun = stats::prcomp, data_arg = "x"),
     "The following names in wide_df"
   )
 
   ndm$model <- 1
   expect_error(
-    nested_anal(ndm, data_column = "data", fun = stats::prcomp, data_arg = "x"),
+    nested_analysis(ndm, data_column = "data", fun = stats::prcomp, data_arg = "x"),
     "The following names in .data"
   )
 
-  ndm <- nested_data_matrix(alta_lake_geochem, param, value, depth)
+  ndm <- nested_data(alta_lake_geochem, param, value, depth)
   ndm$random_name <- 1
   expect_silent(
-    nested_anal(ndm, data_column = "data", fun = stats::prcomp, data_arg = "x")
+    nested_analysis(ndm, data_column = "data", fun = stats::prcomp, data_arg = "x")
   )
   expect_error(
-    nested_anal(ndm, data_column = "data", fun = stats::prcomp, data_arg = "x", reserved_names = "random_name"),
+    nested_analysis(ndm, data_column = "data", fun = stats::prcomp, data_arg = "x", reserved_names = "random_name"),
     "The following names in .data"
   )
 
 })
 
 test_that("nested data matrix works with a grouping variable", {
-  ndm_grp <- nested_data_matrix(keji_lakes_plottable, taxon, rel_abund, depth, fill = 0, groups = location)
+  ndm_grp <- nested_data(keji_lakes_plottable, taxon, rel_abund, depth, fill = 0, groups = location)
   expect_identical(
     ndm_grp,
-    nested_data_matrix(dplyr::group_by(keji_lakes_plottable, location), taxon, rel_abund, depth, fill = 0)
+    nested_data(dplyr::group_by(keji_lakes_plottable, location), taxon, rel_abund, depth, fill = 0)
   )
 
   expect_true("location" %in% colnames(ndm_grp))
@@ -139,17 +139,17 @@ test_that("nested data matrix works with a grouping variable", {
 })
 
 test_that("class inheritance works", {
-  ndm <- nested_data_matrix(alta_lake_geochem, param, value, depth, trans = scale)
-  na <- nested_anal(ndm, data_column = "data", fun = stats::prcomp, data_arg = "x")
-  expect_is(ndm, "nested_data_matrix")
-  expect_is(na, "nested_anal")
-  expect_is(na, "nested_data_matrix")
-  expect_is(dplyr::filter(ndm, TRUE), "nested_data_matrix")
-  expect_is(dplyr::filter(na, TRUE), "nested_anal")
-  expect_is(dplyr::filter(na, TRUE), "nested_data_matrix")
-  expect_is(dplyr::slice(ndm, 1), "nested_data_matrix")
-  expect_is(dplyr::slice(na, 1), "nested_anal")
-  expect_is(dplyr::slice(na, 1), "nested_data_matrix")
+  ndm <- nested_data(alta_lake_geochem, param, value, depth, trans = scale)
+  na <- nested_analysis(ndm, data_column = "data", fun = stats::prcomp, data_arg = "x")
+  expect_is(ndm, "nested_data")
+  expect_is(na, "nested_analysis")
+  expect_is(na, "nested_data")
+  expect_is(dplyr::filter(ndm, TRUE), "nested_data")
+  expect_is(dplyr::filter(na, TRUE), "nested_analysis")
+  expect_is(dplyr::filter(na, TRUE), "nested_data")
+  expect_is(dplyr::slice(ndm, 1), "nested_data")
+  expect_is(dplyr::slice(na, 1), "nested_analysis")
+  expect_is(dplyr::slice(na, 1), "nested_data")
 
   expect_equal(nrow(dplyr::filter(ndm, FALSE)), 0)
   expect_equal(nrow(dplyr::slice(ndm, numeric(0))), 0)
@@ -158,10 +158,10 @@ test_that("class inheritance works", {
 })
 
 test_that("nested anal plotting works", {
-  ndm <- nested_data_matrix(alta_lake_geochem, param, value, depth, trans = scale)
-  ndm_grp <- nested_data_matrix(keji_lakes_plottable, taxon, rel_abund, depth, fill = 0, trans = sqrt, groups = location)
-  pca <- nested_anal(ndm, data_column = "data", fun = stats::prcomp, data_arg = "x")
-  pca_grp <- nested_anal(ndm_grp, data_column = "data", fun = stats::prcomp, data_arg = "x")
+  ndm <- nested_data(alta_lake_geochem, param, value, depth, trans = scale)
+  ndm_grp <- nested_data(keji_lakes_plottable, taxon, rel_abund, depth, fill = 0, trans = sqrt, groups = location)
+  pca <- nested_analysis(ndm, data_column = "data", fun = stats::prcomp, data_arg = "x")
+  pca_grp <- nested_analysis(ndm_grp, data_column = "data", fun = stats::prcomp, data_arg = "x")
 
   expect_length(plot(pca, sub = "default"), 1)
   expect_length(plot(pca_grp, main = location, sub = "default grouped"), 2)

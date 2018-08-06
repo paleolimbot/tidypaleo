@@ -2,7 +2,7 @@ context("test-nested_prcomp.R")
 
 test_that("nested_pca works as intended", {
 
-  ndm <- nested_data_matrix(
+  ndm <- nested_data(
     alta_lake_geochem,
     key = param,
     value = value,
@@ -38,7 +38,7 @@ test_that("nested_pca works as intended", {
 })
 
 test_that("nested_prcomp works with a grouping variable", {
-  ndm_grp <- nested_data_matrix(
+  ndm_grp <- nested_data(
     keji_lakes_plottable,
     taxon, rel_abund, depth,
     fill = 0, trans = sqrt, select_if = ~any(. != 0),
