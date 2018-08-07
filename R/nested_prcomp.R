@@ -88,3 +88,115 @@ nested_prcomp <- function(.data, data_column = .data$data, ...) {
 biplot.nested_prcomp <- function(x, ..., nrow = NULL, ncol = NULL) {
   plot_nested_analysis(x, .fun = stats::biplot, ..., nrow = nrow, ncol = ncol)
 }
+
+#' @importFrom ggplot2 autoplot
+#' @export
+autoplot.nested_prcomp <- function(
+  object, mapping = NULL,  which = c("PC1", "PC2"), ...,
+  label = .data$row_number,
+  score_geom = ggplot2::geom_point(),
+  score_label_geom = ggrepel::geom_text_repel(ggplot2::aes(label = .data$auto_label), alpha = 0.5),
+  var_geom = list(
+    ggplot2::geom_segment(ggplot2::aes(xend = 0 , yend = 0), color = "red"),
+    ggplot2::geom_point(color = "red")
+  ),
+  var_label_geom = ggplot2::geom_label(
+    ggplot2::aes(label = .data$variable), color = "red", hjust = "outward", vjust = "outward", fill = NA, label.size = NA
+  ),
+  var_buffer_geom = ggplot2::geom_blank(),
+  default_theme = ggplot2::theme_bw(),
+  env = parent.frame()
+) {
+
+  label <- enquo(label)
+
+  stopifnot(
+    is.character(which), length(which) == 2
+  )
+
+  # extract essential components
+  group_vars <- get_grouping_vars(object)
+  scores <- tidyr::unnest(object, .data$qualifiers, .data$scores)
+  loadings <- tidyr::unnest(object, .data$loadings)
+  variance <- tidyr::unnest(object, .data$variance)
+  variance_percent <- rlang::set_names(variance$variance_proportion * 100, variance$component_text)
+
+  # add user-specified label
+  scores <- dplyr::mutate(scores, auto_label = !!label)
+
+  stopifnot(
+    all(which %in% colnames(scores)),
+    all(which %in% colnames(loadings))
+  )
+
+  # let user override mappings
+  mapping <- c(
+    mapping,
+    ggplot2::aes(x = !!rlang::sym(which[1]), y = !!rlang::sym(which[2]))
+  )[unique(c("x", "y", names(mapping)))]
+
+  class(mapping) <- "uneval"
+
+  # find scale for loadings
+  # auto hjust and vjust for labels
+  x <- loadings[[which[1]]]
+  y <- loadings[[which[2]]]
+  xscore <- scores[[which[1]]]
+  yscore <- scores[[which[2]]]
+
+  loading_scale <- min(
+    diff(range(xscore)) / diff(range(x)),
+    diff(range(yscore)) / diff(range(y))
+  )
+
+  loadings <- dplyr::mutate_at(loadings, dplyr::vars(dplyr::starts_with("PC")), `*`, loading_scale)
+  loadings_buffer <- dplyr::mutate_at(loadings, dplyr::vars(dplyr::starts_with("PC")), `*`, 1.2)
+  var_buffer_geom$data <- loadings_buffer
+
+  loadings$auto_vjust <- -y / sqrt(x^2 + y^2) / 2 + 0.5
+  loadings$auto_hjust <- -x / sqrt(x^2 + y^2) / 2 + 0.5
+
+  if(inherits(var_label_geom, "Layer")) {
+    var_label_geom$data <- loadings
+  } else if(is.list(var_label_geom)) {
+    var_label_geom <- lapply(var_label_geom, function(x) {
+      x$data <- loadings
+      x
+    })
+  }
+
+  if(inherits(var_geom, "Layer")) {
+    var_geom$data <- loadings
+  } else if(is.list(var_geom)) {
+    var_geom <- lapply(var_geom, function(x) {
+      x$data <- loadings
+      x
+    })
+  }
+
+  other_axes <- if(!is.null(var_geom) || !is.null(var_label_geom)) {
+    list(
+      ggplot2::scale_x_continuous(sec.axis = ggplot2::sec_axis(~ . / loading_scale, name = sprintf("%s Loading", which[1]))),
+      ggplot2::scale_y_continuous(sec.axis = ggplot2::sec_axis(~ . / loading_scale, name = sprintf("%s Loading", which[2]))),
+      ggplot2::theme(
+        axis.text.x.top = ggplot2::element_text(color = "red"),
+        axis.text.y.right = ggplot2::element_text(color = "red"),
+        axis.ticks.x.top = ggplot2::element_line(color = "red"),
+        axis.ticks.y.right = ggplot2::element_line(color = "red"),
+        axis.title.x.top = ggplot2::element_text(color = "red"),
+        axis.title.y.right = ggplot2::element_text(color = "red")
+      )
+    )
+  }
+
+  # return plot object
+  ggplot2::ggplot(scores, mapping) +  score_geom + score_label_geom +
+    var_geom + var_label_geom + var_buffer_geom +
+    ggplot2::labs(
+      x = sprintf("%s (%0.1f%%)", which[1], variance_percent[which[1]]),
+      y = sprintf("%s (%0.1f%%)", which[2], variance_percent[which[2]])
+    ) +
+    default_theme +
+    other_axes +
+    if(length(group_vars) > 0) ggplot2::facet_wrap(do.call(ggplot2::vars, rlang::syms(group_vars)), ...)
+}
