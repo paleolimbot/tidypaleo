@@ -166,3 +166,21 @@ test_that("plot methods for hclust work", {
 
   expect_true(TRUE)
 })
+
+test_that("autoplot methods work with hclust objects", {
+  ndm <- nested_data(halifax_lakes_plottable, c(location, sample_type), taxon, rel_abund)
+  nest_hc <- nested_hclust(ndm, method = "average")
+  nest_chc2 <- nested_chclust_conslink(ndm)
+  nest_chc <- nested_chclust_coniss(ndm)
+
+  print(ggplot2::autoplot(nest_hc))
+  print(ggplot2::autoplot(nest_hc, ggplot2::aes(x = dendro_order, xend = dendro_order_end, col = hclust_zone), flip = TRUE))
+  print(ggplot2::autoplot(nest_chc))
+  print(ggplot2::autoplot(nest_chc2))
+
+  ndm_grp <- nested_data(keji_lakes_plottable, depth, taxon, rel_abund, fill = 0, groups = location)
+  nested_coniss <- nested_chclust_coniss(ndm_grp)
+  print(ggplot2::autoplot(nested_coniss, ggplot2::aes(x = depth, xend = depth_end), ncol = 1, node_geom = NULL))
+
+  expect_true(TRUE)
+})

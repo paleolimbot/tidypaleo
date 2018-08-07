@@ -89,8 +89,23 @@ biplot.nested_prcomp <- function(x, ..., nrow = NULL, ncol = NULL) {
   plot_nested_analysis(x, .fun = stats::biplot, ..., nrow = nrow, ncol = ncol)
 }
 
+
+#' A ggplot2-based PCA biplot
+#'
+#' @param object A \link{nested_prcomp} object
+#' @param mapping A mapping, created with \link[ggplot2]{aes}.
+#' @param which Which components to plot
+#' @param ... Passed to \link[ggplot2]{facet_wrap} if there are grouping variables, otherwise ignored
+#' @param label An expression evaluated within unnest(object, qualifiers, scores) that defines the label for the object.
+#' @param score_geom,score_label_geom,var_geom,var_label_geom,var_buffer_geom Override these to customize the appearence of
+#'   each layer, or use NULL to suppress.
+#' @param default_theme Use NULL to ignore the default theme for this plot, \link[ggplot2]{theme_bw}.
+#' @param env Plot environment
+#'
+#' @return A \link[ggplot2]{ggplot} object.
 #' @importFrom ggplot2 autoplot
 #' @export
+#'
 autoplot.nested_prcomp <- function(
   object, mapping = NULL,  which = c("PC1", "PC2"), ...,
   label = .data$row_number,
@@ -156,23 +171,8 @@ autoplot.nested_prcomp <- function(
   loadings$auto_vjust <- -y / sqrt(x^2 + y^2) / 2 + 0.5
   loadings$auto_hjust <- -x / sqrt(x^2 + y^2) / 2 + 0.5
 
-  if(inherits(var_label_geom, "Layer")) {
-    var_label_geom$data <- loadings
-  } else if(is.list(var_label_geom)) {
-    var_label_geom <- lapply(var_label_geom, function(x) {
-      x$data <- loadings
-      x
-    })
-  }
-
-  if(inherits(var_geom, "Layer")) {
-    var_geom$data <- loadings
-  } else if(is.list(var_geom)) {
-    var_geom <- lapply(var_geom, function(x) {
-      x$data <- loadings
-      x
-    })
-  }
+  var_geom <- override_data(var_geom, loadings)
+  var_label_geom <- override_data(var_label_geom, loadings)
 
   other_axes <- if(!is.null(var_geom) || !is.null(var_label_geom)) {
     list(
@@ -190,7 +190,7 @@ autoplot.nested_prcomp <- function(
   }
 
   # return plot object
-  ggplot2::ggplot(scores, mapping) +  score_geom + score_label_geom +
+  ggplot2::ggplot(scores, mapping, environment = env) +  score_geom + score_label_geom +
     var_geom + var_label_geom + var_buffer_geom +
     ggplot2::labs(
       x = sprintf("%s (%0.1f%%)", which[1], variance_percent[which[1]]),
@@ -200,3 +200,28 @@ autoplot.nested_prcomp <- function(
     other_axes +
     if(length(group_vars) > 0) ggplot2::facet_wrap(do.call(ggplot2::vars, rlang::syms(group_vars)), ...)
 }
+
+# places data and a default mapping behind a previously specified layer
+override_data <- function(layer, data = NULL, mapping = NULL) {
+  if(inherits(layer, "Layer")) {
+    if(!is.null(data)) {
+      layer$data <- data
+    }
+    if(!is.null(mapping)) {
+      layer$mapping <- override_mapping(layer$mapping, mapping)
+    }
+  } else if(is.list(layer)) {
+    layer <- lapply(layer, override_data, data = data, mapping = mapping)
+  }
+
+  layer
+}
+
+override_mapping <- function(mapping, default_mapping = ggplot2::aes()) {
+  mapping <- c(mapping, default_mapping)
+  mapping <- mapping[unique(names(mapping))]
+  class(mapping) <- "uneval"
+  mapping
+}
+
+

@@ -93,7 +93,7 @@ nested_hclust <- function(.data, data_column = "data", qualifiers_column = "qual
   })
 
   # zones based on stats::cutree()
-  nchclust$dendro_order <- purrr::map(nchclust$model, "order")
+  nchclust$dendro_order <- purrr::map(nchclust$model, function(model) match(seq_along(model$order), model$order))
   nchclust$hclust_zone <- purrr::map2(nchclust$model, nchclust$n_groups, function(model, n_groups) {
     stats::cutree(model, k = n_groups)
   })
@@ -188,6 +188,75 @@ plot.nested_hclust <- function(x, ..., sub = "", xlab = "", nrow = NULL, ncol = 
   plot_nested_analysis(x, .fun = graphics::plot, sub = !!sub, xlab = !!xlab, ..., nrow = nrow, ncol = ncol)
 }
 
+#' A ggplot2-based dendrogram plot/layer
+#'
+#' A quick-and-dirty ggplotter for \link{nested_hclust} objects. Use \code{tidyr::unnest(object, segments)} and
+#' \link[ggplot2]{geom_segment} to further customize the apperance of this plot.
+#'
+#' @param object A \link{nested_hclust}
+#' @param mapping A mapping created with \link[ggplot2]{aes}. Must map x and xend. Use flip to flip the axes.
+#' @param label An expression evaluated in \code{tidyr::unnest(object, nodes)} that nodes are labelled with by default.
+#'   Note that this may label non-leaf nodes.
+#' @param segment_geom,node_geom Override the default geometries for segments and nodes, respectively
+#' @param ... Ignored
+#' @param nrow,ncol Passed to \link[ggplot2]{facet_wrap}
+#' @param flip Use to switch x/y aesthetics
+#'
+#' @importFrom ggplot2 autolayer
+#' @export
+autoplot.nested_hclust <- function(object, ..., nrow = NULL, ncol = NULL) {
+  group_vars <- get_grouping_vars(object)
+  ggplot2::ggplot() +
+    ggplot2::autolayer(object, ...) +
+    if(length(group_vars) > 0) ggplot2::facet_wrap(do.call(ggplot2::vars, rlang::syms(group_vars)), nrow = nrow, ncol = ncol)
+}
+
+#' @importFrom ggplot2 autolayer
+#' @export
+#' @rdname autoplot.nested_hclust
+autolayer.nested_hclust <- function(
+  object,
+  mapping = ggplot2::aes(x = .data$dendro_order, xend = .data$dendro_order_end),
+  label = ifelse(.data$is_leaf, .data$row_number, NA),
+  segment_geom = ggplot2::geom_segment(),
+  node_geom = ggplot2::geom_text(
+    ggplot2::aes(label = .data$auto_label),
+    angle = ifelse(flip, 0, 90),
+    hjust = 1, vjust = 0.5,
+    na.rm = TRUE
+  ),
+  flip = FALSE,
+  ...
+) {
+  label <- enquo(label)
+
+  stopifnot(
+    inherits(mapping, "uneval"),
+    all(c("x", "xend") %in% names(mapping))
+  )
+
+  if(flip) {
+    mapping <- mapping[c("x", "xend", setdiff(names(mapping), c("x", "xend")))]
+    names(mapping) <- c("y", "yend", setdiff(names(mapping), c("x", "xend")))
+    default_mapping <- ggplot2::aes(x = .data$dispersion, xend = .data$dispersion_end)
+  } else {
+    default_mapping <- ggplot2::aes(y = .data$dispersion, yend = .data$dispersion_end)
+  }
+
+  mapping <- c(mapping, default_mapping)
+  mapping <- mapping[unique(names(mapping))]
+  class(mapping) <- "uneval"
+
+  segments <- tidyr::unnest(object, .data$segments)
+  nodes <- tidyr::unnest(object, .data$nodes)
+  nodes <- dplyr::mutate(nodes, auto_label = !!label)
+
+  list(
+    override_data(segment_geom, data = segments, mapping = mapping),
+    override_data(node_geom, data = nodes, mapping = mapping[setdiff(names(mapping), c("xend", "yend"))])
+  )
+}
+
 
 group_boundaries <- function(hclust_zones, qualifiers, n_groups = 1) {
   stopifnot(
@@ -240,7 +309,7 @@ determine_n_groups <- function(model, threshold = 1.1) {
 }
 
 qualify_dendro_data <- function(model, qualifiers, hclust_zones) {
-  qualifiers$dendro_order <- model$order
+  qualifiers$dendro_order <- match(seq_along(model$order), model$order)
   numeric_vars <- colnames(qualifiers)[purrr::map_lgl(qualifiers, is.numeric)]
   node_data(stats::as.dendrogram(model), qualifiers, numeric_vars, hclust_zones)
 }
