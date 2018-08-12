@@ -27,6 +27,8 @@ plot_layer_scores(object, mapping, which = "PC1", key = "param",
 
 \item{sequential_facets}{TRUE will result in the panel containing the dendrogram added to the right
 of the plot.}
+
+\item{...}{Passed to layer_scores()}
 }
 \description{
 Add scores to a plot

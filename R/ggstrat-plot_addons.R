@@ -9,6 +9,7 @@
 #' @param scores_geom One or more geometries to which scores should be applied.
 #' @param sequential_facets TRUE will result in the panel containing the dendrogram added to the right
 #'   of the plot.
+#' @param ... Passed to layer_scores()
 #' @export
 #'
 layer_scores <- function(
