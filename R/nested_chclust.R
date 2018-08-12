@@ -198,25 +198,16 @@ plot.nested_hclust <- function(x, ..., sub = "", xlab = "", nrow = NULL, ncol = 
 #' @param label An expression evaluated in \code{tidyr::unnest(object, nodes)} that nodes are labelled with by default.
 #'   Note that this may label non-leaf nodes.
 #' @param segment_geom,node_geom Override the default geometries for segments and nodes, respectively
-#' @param ... Ignored
+#' @param ... Used to create new columns (may be useful for using with facets)
 #' @param nrow,ncol Passed to \link[ggplot2]{facet_wrap}
 #' @param flip Use to switch x/y aesthetics
 #'
 #' @importFrom ggplot2 autolayer
 #' @export
-autoplot.nested_hclust <- function(object, ..., nrow = NULL, ncol = NULL) {
-  group_vars <- get_grouping_vars(object)
-  ggplot2::ggplot() +
-    ggplot2::autolayer(object, ...) +
-    if(length(group_vars) > 0) ggplot2::facet_wrap(do.call(ggplot2::vars, rlang::syms(group_vars)), nrow = nrow, ncol = ncol)
-}
-
-#' @importFrom ggplot2 autolayer
-#' @export
-#' @rdname autoplot.nested_hclust
-autolayer.nested_hclust <- function(
+autoplot.nested_hclust <- function(
   object,
   mapping = ggplot2::aes(x = .data$dendro_order, xend = .data$dendro_order_end),
+  ...,
   label = ifelse(.data$is_leaf, .data$row_number, NA),
   segment_geom = ggplot2::geom_segment(),
   node_geom = ggplot2::geom_text(
@@ -225,15 +216,17 @@ autolayer.nested_hclust <- function(
     hjust = 1, vjust = 0.5,
     na.rm = TRUE
   ),
-  flip = FALSE,
-  ...
+  nrow = NULL, ncol = NULL, flip = FALSE
 ) {
   label <- enquo(label)
+  mutate_args <- quos(...)
 
   stopifnot(
     inherits(mapping, "uneval"),
     all(c("x", "xend") %in% names(mapping))
   )
+
+  group_vars <- get_grouping_vars(object)
 
   if(flip) {
     mapping <- mapping[c("x", "xend", setdiff(names(mapping), c("x", "xend")))]
@@ -243,20 +236,19 @@ autolayer.nested_hclust <- function(
     default_mapping <- ggplot2::aes(y = .data$dispersion, yend = .data$dispersion_end)
   }
 
-  mapping <- c(mapping, default_mapping)
-  mapping <- mapping[unique(names(mapping))]
-  class(mapping) <- "uneval"
+  mapping <- override_mapping(mapping, default_mapping)
 
   segments <- tidyr::unnest(object, .data$segments)
+  segments <- dplyr::mutate(segments, !!!mutate_args)
+
   nodes <- tidyr::unnest(object, .data$nodes)
-  nodes <- dplyr::mutate(nodes, auto_label = !!label)
+  nodes <- dplyr::mutate(nodes, auto_label = !!label, !!!mutate_args)
 
-  list(
-    override_data(segment_geom, data = segments, mapping = mapping),
-    override_data(node_geom, data = nodes, mapping = mapping[setdiff(names(mapping), c("xend", "yend"))])
-  )
+  ggplot2::ggplot() +
+    override_data(segment_geom, data = segments, mapping = mapping) +
+    override_data(node_geom, data = nodes, mapping = mapping[setdiff(names(mapping), c("xend", "yend"))]) +
+    if(length(group_vars) > 0) ggplot2::facet_wrap(do.call(ggplot2::vars, rlang::syms(group_vars)), nrow = nrow, ncol = ncol)
 }
-
 
 group_boundaries <- function(hclust_zones, qualifiers, n_groups = 1) {
   stopifnot(

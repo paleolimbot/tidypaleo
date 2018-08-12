@@ -21,7 +21,7 @@
 #' @export
 #'
 #' @importFrom dplyr any_vars all_vars
-#' @importFrom rlang enquo !!
+#' @importFrom rlang enquo quos !! !!!
 #'
 nested_data <- function(.data, qualifiers = NULL, key = NULL, value, fill = NA,
                         select_if = ~TRUE, filter_all = any_vars(TRUE), trans = identity,

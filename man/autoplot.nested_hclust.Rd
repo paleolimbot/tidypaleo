@@ -2,32 +2,29 @@
 % Please edit documentation in R/nested_chclust.R
 \name{autoplot.nested_hclust}
 \alias{autoplot.nested_hclust}
-\alias{autolayer.nested_hclust}
 \title{A ggplot2-based dendrogram plot/layer}
 \usage{
-\method{autoplot}{nested_hclust}(object, ..., nrow = NULL, ncol = NULL)
-
-\method{autolayer}{nested_hclust}(object, mapping = ggplot2::aes(x =
-  .data$dendro_order, xend = .data$dendro_order_end),
+\method{autoplot}{nested_hclust}(object, mapping = ggplot2::aes(x =
+  .data$dendro_order, xend = .data$dendro_order_end), ...,
   label = ifelse(.data$is_leaf, .data$row_number, NA),
   segment_geom = ggplot2::geom_segment(),
   node_geom = ggplot2::geom_text(ggplot2::aes(label = .data$auto_label), angle
-  = ifelse(flip, 0, 90), hjust = 1, vjust = 0.5, na.rm = TRUE), flip = FALSE,
-  ...)
+  = ifelse(flip, 0, 90), hjust = 1, vjust = 0.5, na.rm = TRUE), nrow = NULL,
+  ncol = NULL, flip = FALSE)
 }
 \arguments{
 \item{object}{A \link{nested_hclust}}
 
-\item{...}{Ignored}
-
-\item{nrow, ncol}{Passed to \link[ggplot2]{facet_wrap}}
-
 \item{mapping}{A mapping created with \link[ggplot2]{aes}. Must map x and xend. Use flip to flip the axes.}
+
+\item{...}{Used to create new columns (may be useful for using with facets)}
 
 \item{label}{An expression evaluated in \code{tidyr::unnest(object, nodes)} that nodes are labelled with by default.
 Note that this may label non-leaf nodes.}
 
 \item{segment_geom, node_geom}{Override the default geometries for segments and nodes, respectively}
+
+\item{nrow, ncol}{Passed to \link[ggplot2]{facet_wrap}}
 
 \item{flip}{Use to switch x/y aesthetics}
 }
