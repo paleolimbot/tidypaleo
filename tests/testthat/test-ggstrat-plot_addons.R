@@ -85,6 +85,89 @@ test_that("CONISS can be added to a plot", {
       ggplot2::labs(caption = "scales will be off, but CONISS should be different for both lakes and will be at end")
   )
 
+  print(
+    patchwork::wrap_plots(
+      ggplot2::ggplot(keji_lakes_plottable, ggplot2::aes(x = rel_abund, y = depth)) +
+        geom_col_segsh() +
+        ggplot2::scale_y_reverse() +
+        facet_abundanceh(vars(taxon), vars(location)),
+
+      plot_layer_dendrogram(grp_coniss, ggplot2::aes(y = depth), taxon = "CONISS") +
+        ggplot2::facet_grid(rows = vars(location)) +
+        ggplot2::scale_y_reverse(),
+
+      nrow = 1
+    )
+  )
+
+  print(
+    patchwork::wrap_plots(
+      ggplot2::ggplot(keji_lakes_plottable, ggplot2::aes(x = depth, y = rel_abund)) +
+        geom_col_segs() +
+        facet_abundance(vars(taxon), vars(location)),
+
+      plot_layer_dendrogram(grp_coniss, ggplot2::aes(x = depth), taxon = "CONISS") +
+        ggplot2::facet_grid(cols = vars(location)),
+
+      ncol = 1
+    )
+  )
+
+  expect_true(TRUE)
 })
 
+test_that("PCAs can be added to a plot", {
 
+  pca <- alta_lake_geochem %>%
+    nested_data(age, param, value, trans = scale) %>%
+    nested_prcomp()
+
+  print(
+    ggplot2::ggplot(alta_lake_geochem, ggplot2::aes(x = value, y = age)) +
+      geom_lineh() +
+      facet_geochem_gridh(vars(param)) +
+      layer_scores(pca, key = "param", which = c("PC1", "PC2")) +
+      ggplot2::labs(caption = "PCA scores at the right")
+  )
+
+  print(
+    ggplot2::ggplot(alta_lake_geochem, ggplot2::aes(y = value, x = age)) +
+      ggplot2::geom_line() +
+      facet_geochem_grid(vars(param)) +
+      layer_scores(pca, key = "param", value = "value", which = c("PC1", "PC2")) +
+      ggplot2::labs(caption = "PCA scores at the bottom")
+  )
+
+  grp_pca <- keji_lakes_plottable %>%
+    dplyr::group_by(location) %>%
+    nested_data(depth, taxon, rel_abund, trans = sqrt) %>%
+    nested_prcomp()
+
+  print(
+    patchwork::wrap_plots(
+      ggplot2::ggplot(keji_lakes_plottable, ggplot2::aes(x = rel_abund, y = depth)) +
+        geom_col_segsh() +
+        ggplot2::scale_y_reverse() +
+        facet_abundanceh(vars(taxon), vars(location)),
+
+      plot_layer_scores(grp_pca, ggplot2::aes(y = depth), which = c("PC1", "PC2")) +
+        ggplot2::scale_y_reverse(),
+
+      nrow = 1
+    )
+  )
+
+  print(
+    patchwork::wrap_plots(
+      ggplot2::ggplot(keji_lakes_plottable, ggplot2::aes(y = rel_abund, x = depth)) +
+        geom_col_segs() +
+        facet_abundance(vars(taxon), vars(location)),
+
+      plot_layer_scores(grp_pca, ggplot2::aes(x = depth), which = c("PC1", "PC2")),
+
+      ncol = 1
+    )
+  )
+
+  expect_true(TRUE)
+})

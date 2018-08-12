@@ -17,7 +17,8 @@ Suggests: testthat,
     rioja,
     vegan,
     glue,
-    ggrepel
+    ggrepel,
+    patchwork
 URL: https://github.com/paleolimbot/tidypaleo
 BugReports: https://github.com/paleolimbot/tidypaleo/issues
 Imports: rlang,
@@ -36,4 +37,6 @@ Imports: rlang,
     graphics,
     grDevices,
     tidyr
+Remotes:
+    thomasp85/patchwork
 VignetteBuilder: knitr

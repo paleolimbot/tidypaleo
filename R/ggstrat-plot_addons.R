@@ -1,4 +1,60 @@
 
+#' Add scores to a plot
+#'
+#' @param object A \link{nested_prcomp} or similar object
+#' @param mapping A mapping created with \link[ggplot2]{aes}
+#' @param which Which principal components to plot
+#' @param key The column name to use for the principal component names
+#' @param value The column name to use for the principal component score values
+#' @param scores_geom One or more geometries to which scores should be applied.
+#' @param sequential_facets TRUE will result in the panel containing the dendrogram added to the right
+#'   of the plot.
+#' @export
+#'
+layer_scores <- function(
+  object, mapping = NULL, which = "PC1", key = "param", value = "value",
+  scores_geom = list(ggplot2::geom_path(), ggplot2::geom_point()),
+  sequential_facets = TRUE
+) {
+  value <- enquo(value)
+  key <- enquo(key)
+
+  object$scores <- purrr::map(object$scores, function(df) dplyr::select(df, !!which))
+  scores <- tidyr::unnest(object, .data$qualifiers, .data$scores)
+  scores_long <- tidyr::gather(scores, key = !!key, value = !!value, dplyr::starts_with("PC"))
+
+  list(
+    override_data(scores_geom, data = scores_long, mapping = mapping),
+    if(sequential_facets) sequential_layer_facets()
+  )
+}
+
+#' @rdname layer_scores
+#' @export
+plot_layer_scores <- function(object, mapping, which = "PC1", key = "param", value = "value", ...) {
+
+  stopifnot(
+    identical(key, "param"),
+    identical(value, "value"),
+    xor("x" %in% names(mapping), "y" %in% names(mapping))
+  )
+
+  group_vars <- get_grouping_vars(object)
+  var_groups <- do.call(ggplot2::vars, rlang::syms(group_vars))
+
+  mapping_vals <- purrr::map(mapping, rlang::quo_name)
+
+  if("y" %in% names(mapping)) {
+    mapping <- override_mapping(ggplot2::aes(x = .data$value), mapping)
+    facet <- ggplot2::facet_grid(rows = var_groups, cols = ggplot2::vars(!!rlang::sym("param")))
+  } else {
+    mapping <- override_mapping(ggplot2::aes(y = .data$value), mapping)
+    facet <- ggplot2::facet_grid(cols = var_groups, rows = ggplot2::vars(!!rlang::sym("param")))
+  }
+
+  ggplot2::ggplot() + layer_scores(object, mapping, which, "param", "value", ...) + facet
+}
+
 #' Add a dendrogram as a layer or facet
 #'
 #' @param object A \link{nested_hclust} object.
@@ -7,11 +63,12 @@
 #' @param sequential_facets TRUE will result in the panel containing the dendrogram added to the right
 #'   of the plot.
 #' @param lty,alpha,colour,size Customize the apperance of boundary lines
+#' @param panel_label Use to label a pane on a stanalone dendrogram plot
 #' @param ... Use facet_var = "CONISS" or similar to name the panel
 #'
 #' @export
 #'
-layer_dendrogram <- function(object, mapping, ..., segment_geom = ggplot2::geom_segment(inherit.aes = FALSE),
+layer_dendrogram <- function(object, mapping, ..., segment_geom = ggplot2::geom_segment(size = 0.4, inherit.aes = FALSE),
                              sequential_facets = TRUE) {
   stopifnot(
     xor("x" %in% names(mapping), "y" %in% names(mapping))
@@ -42,6 +99,21 @@ layer_dendrogram <- function(object, mapping, ..., segment_geom = ggplot2::geom_
     override_data(segment_geom, data = segments, mapping = mapping),
     if(sequential_facets) sequential_layer_facets()
   )
+}
+
+#' @rdname layer_dendrogram
+#' @export
+plot_layer_dendrogram <- function(object, mapping, ..., panel_label = "CONISS") {
+  group_vars <- get_grouping_vars(object)
+  var_groups <- do.call(ggplot2::vars, rlang::syms(group_vars))
+
+  if("x" %in% names(mapping)) {
+    facet <- ggplot2::facet_grid(rows = var_groups, cols = ggplot2::vars(!!panel_label))
+  } else {
+    facet <- ggplot2::facet_grid(cols = var_groups, rows = ggplot2::vars(!!panel_label))
+  }
+
+  ggplot2::ggplot() + layer_dendrogram(object, mapping, ...) + facet
 }
 
 #' @rdname layer_dendrogram

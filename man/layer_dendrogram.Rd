@@ -2,12 +2,15 @@
 % Please edit documentation in R/ggstrat-plot_addons.R
 \name{layer_dendrogram}
 \alias{layer_dendrogram}
+\alias{plot_layer_dendrogram}
 \alias{layer_zone_boundaries}
 \title{Add a dendrogram as a layer or facet}
 \usage{
 layer_dendrogram(object, mapping, ...,
-  segment_geom = ggplot2::geom_segment(inherit.aes = FALSE),
+  segment_geom = ggplot2::geom_segment(size = 0.4, inherit.aes = FALSE),
   sequential_facets = TRUE)
+
+plot_layer_dendrogram(object, mapping, ..., panel_label = "CONISS")
 
 layer_zone_boundaries(object, mapping, ..., lty = 2, alpha = 0.7,
   colour = "black", size = 0.5)
@@ -23,6 +26,8 @@ layer_zone_boundaries(object, mapping, ..., lty = 2, alpha = 0.7,
 
 \item{sequential_facets}{TRUE will result in the panel containing the dendrogram added to the right
 of the plot.}
+
+\item{panel_label}{Use to label a pane on a stanalone dendrogram plot}
 
 \item{lty, alpha, colour, size}{Customize the apperance of boundary lines}
 }
