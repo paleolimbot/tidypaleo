@@ -409,17 +409,27 @@ test_that("facets for geochem work as expected", {
   print(
     ggplot2::ggplot(test_data, ggplot2::aes(x, y)) +
       ggplot2::geom_point() +
-      facet_geochem_wrap(
+      facet_geochem_wraph(
         vars(geochem),
         grouping = vars(not_geochem)
       ) +
-      ggplot2::labs(caption = "label_geochem by default, facet_wrap()")
+      ggplot2::labs(caption = "label_geochem by default, facet_wrap() with rotated labs")
   )
 
   print(
     ggplot2::ggplot(test_data, ggplot2::aes(x, y)) +
       ggplot2::geom_point() +
       facet_geochem_wrap(
+        vars(geochem),
+        grouping = vars(not_geochem)
+      ) +
+      ggplot2::labs(caption = "label_geochem by default, facet_wrap() with no rotated labs")
+  )
+
+  print(
+    ggplot2::ggplot(test_data, ggplot2::aes(x, y)) +
+      ggplot2::geom_point() +
+      facet_geochem_wraph(
         vars(geochem),
         units = c(
           "210Pb" = "Bq/g",
@@ -508,16 +518,16 @@ test_that("default args for facet_* functions are consistent", {
   expect_identical(formals(facet_abundance)$dont_italicize, formals(facet_abundanceh)$dont_italicize)
   expect_identical(formals(facet_abundance)$dont_italicize, formals(label_species)$dont_italicize)
 
-  expect_identical(formals(facet_geochem_wrap)$scales, formals(facet_geochem_gridh)$scales)
-  expect_identical(formals(facet_geochem_wrap)$renamers, formals(facet_geochem_gridh)$renamers)
-  expect_identical(formals(facet_geochem_wrap)$units, formals(facet_geochem_gridh)$units)
-  expect_identical(formals(facet_geochem_wrap)$default_units, formals(facet_geochem_gridh)$default_units)
+  expect_identical(formals(facet_geochem_wraph)$scales, formals(facet_geochem_gridh)$scales)
+  expect_identical(formals(facet_geochem_wraph)$renamers, formals(facet_geochem_gridh)$renamers)
+  expect_identical(formals(facet_geochem_wraph)$units, formals(facet_geochem_gridh)$units)
+  expect_identical(formals(facet_geochem_wraph)$default_units, formals(facet_geochem_gridh)$default_units)
 
-  expect_identical(formals(facet_geochem_wrap)$renamers, formals(facet_geochem_grid)$renamers)
-  expect_identical(formals(facet_geochem_wrap)$units, formals(facet_geochem_grid)$units)
-  expect_identical(formals(facet_geochem_wrap)$default_units, formals(facet_geochem_grid)$default_units)
+  expect_identical(formals(facet_geochem_wraph)$renamers, formals(facet_geochem_grid)$renamers)
+  expect_identical(formals(facet_geochem_wraph)$units, formals(facet_geochem_grid)$units)
+  expect_identical(formals(facet_geochem_wraph)$default_units, formals(facet_geochem_grid)$default_units)
 
-  expect_identical(formals(facet_geochem_wrap)$renamers, formals(label_geochem)$renamers)
-  expect_identical(formals(facet_geochem_wrap)$units, formals(label_geochem)$units)
-  expect_identical(formals(facet_geochem_wrap)$default_units, formals(label_geochem)$default_units)
+  expect_identical(formals(facet_geochem_wraph)$renamers, formals(label_geochem)$renamers)
+  expect_identical(formals(facet_geochem_wraph)$units, formals(label_geochem)$units)
+  expect_identical(formals(facet_geochem_wraph)$default_units, formals(label_geochem)$default_units)
 })

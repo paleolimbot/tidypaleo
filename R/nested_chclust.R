@@ -266,6 +266,8 @@ group_boundaries <- function(hclust_zones, qualifiers, n_groups = 1) {
     if(is.numeric(qualifiers[[var]])) {
       group_info[[paste("min", var, sep = "_")]] <- purrr::map_dbl(group_info$data, function(df) min(df[[var]]))
       group_info[[paste("max", var, sep = "_")]] <- purrr::map_dbl(group_info$data, function(df) max(df[[var]]))
+      group_info[[paste("first", var, sep = "_")]] <- purrr::map_dbl(group_info$data, function(df) dplyr::first(df[[var]]))
+      group_info[[paste("last", var, sep = "_")]] <- purrr::map_dbl(group_info$data, function(df) dplyr::last(df[[var]]))
     }
   }
 
@@ -274,7 +276,7 @@ group_boundaries <- function(hclust_zones, qualifiers, n_groups = 1) {
   for(var in setdiff(colnames(qualifiers), "hclust_zone")) {
     if(is.numeric(qualifiers[[var]])) {
       group_info[[paste("boundary", var, sep = "_")]] <-
-        (group_info[[paste("max", var, sep = "_")]] + dplyr::lead(group_info[[paste("min", var, sep = "_")]])) / 2
+        (group_info[[paste("last", var, sep = "_")]] + dplyr::lead(group_info[[paste("first", var, sep = "_")]])) / 2
     }
   }
 

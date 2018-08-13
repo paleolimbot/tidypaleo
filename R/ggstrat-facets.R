@@ -102,7 +102,7 @@ facet_abundance <- function(taxon, grouping = NULL, rotate_facet_labels = 0, lab
 
 #' @rdname facet_abundanceh
 #' @export
-facet_geochem_wrap <- function(param, grouping = NULL, rotate_axis_labels = 90, scales = "free_x",
+facet_geochem_wraph <- function(param, grouping = NULL, rotate_axis_labels = 90, scales = "free_x",
                                labeller = label_geochem,
                                renamers = c(
                                  "^d([0-9]+)([HCNOS])$" = "paste(delta ^ \\1, \\2)",
@@ -126,6 +126,31 @@ facet_geochem_wrap <- function(param, grouping = NULL, rotate_axis_labels = 90, 
     ggplot2::facet_wrap(c(param, grouping), scales = scales, labeller = labeller, ...),
     rotated_axis_labels(angle = rotate_axis_labels, direction = "x")
   )
+}
+
+#' @rdname facet_abundanceh
+#' @export
+facet_geochem_wrap <- function(param, grouping = NULL, scales = "free_y",
+                                labeller = label_geochem,
+                                renamers = c(
+                                  "^d([0-9]+)([HCNOS])$" = "paste(delta ^ \\1, \\2)",
+                                  "^210Pb$" = "paste({}^210, Pb)",
+                                  "^Pb210$" = "paste({}^210, Pb)"
+                                ),
+                                units = character(0), default_units = NA_character_, ...) {
+
+  check_groupings(param, grouping)
+
+  labeller <- evaluate_labeller(
+    labeller,
+    label_geochem,
+    geochem_facet = rlang::quo_name(param[[1]]),
+    units = units,
+    renamers = renamers,
+    default_units = default_units
+  )
+
+  ggplot2::facet_wrap(c(param, grouping), scales = scales, labeller = labeller, ...)
 }
 
 #' @rdname facet_abundanceh

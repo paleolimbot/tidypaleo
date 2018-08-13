@@ -18,7 +18,8 @@ Suggests: testthat,
     vegan,
     glue,
     ggrepel,
-    patchwork
+    patchwork,
+    forcats
 URL: https://github.com/paleolimbot/tidypaleo
 BugReports: https://github.com/paleolimbot/tidypaleo/issues
 Imports: rlang,

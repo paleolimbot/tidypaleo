@@ -8,16 +8,16 @@
 \title{Age-depth scales}
 \usage{
 scale_y_depth_age(model = NULL, age_name = "age", age_breaks = waiver(),
-  ...)
+  age_labels = waiver(), ...)
 
 scale_y_age_depth(model = NULL, reversed = FALSE, depth_name = "depth",
-  depth_breaks = waiver(), ...)
+  depth_breaks = waiver(), depth_labels = waiver(), ...)
 
 scale_x_depth_age(model = NULL, age_name = "age", age_breaks = waiver(),
-  ...)
+  age_labels = waiver(), ...)
 
 scale_x_age_depth(model = NULL, reversed = FALSE, depth_name = "depth",
-  depth_breaks = waiver(), ...)
+  depth_breaks = waiver(), depth_labels = waiver(), ...)
 }
 \arguments{
 \item{model}{An age-depth model, or NULL to suppress the second axis}
@@ -25,6 +25,8 @@ scale_x_age_depth(model = NULL, reversed = FALSE, depth_name = "depth",
 \item{age_name, depth_name}{Label for the second axis}
 
 \item{age_breaks, depth_breaks}{Breaks for the second axis}
+
+\item{age_labels, depth_labels}{Labels for each break on the second axis}
 
 \item{...}{Passed to \link[ggplot2]{scale_y_continuous} or \link[ggplot2]{scale_x_continuous}}
 

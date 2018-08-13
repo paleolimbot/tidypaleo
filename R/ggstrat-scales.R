@@ -32,21 +32,24 @@ scale_y_abundance <- function(..., limits = c(0, NA), breaks = seq(10, 90, 30),
 #' @param reversed Reverse the primary age axis (for years BP or similar)
 #' @param age_name,depth_name Label for the second axis
 #' @param age_breaks,depth_breaks Breaks for the second axis
+#' @param age_labels,depth_labels Labels for each break on the second axis
 #' @param ... Passed to \link[ggplot2]{scale_y_continuous} or \link[ggplot2]{scale_x_continuous}
 #'
 #' @return A \link[ggplot2]{scale_y_continuous} or \link[ggplot2]{scale_x_continuous}
 #' @export
 #' @importFrom ggplot2 waiver
 #'
-scale_y_depth_age <- function(model = NULL, age_name = "age", age_breaks = waiver(), ...) {
-  second_axis <- age_depth_as_sec_axis(model, primary = "depth", name = age_name, breaks = age_breaks)
+scale_y_depth_age <- function(model = NULL, age_name = "age", age_breaks = waiver(),
+                              age_labels = waiver(), ...) {
+  second_axis <- age_depth_as_sec_axis(model, primary = "depth", name = age_name, breaks = age_breaks, labels = age_labels)
   ggplot2::scale_y_reverse(..., sec.axis = second_axis)
 }
 
 #' @rdname scale_y_depth_age
 #' @export
-scale_y_age_depth <- function(model = NULL, reversed = FALSE, depth_name = "depth", depth_breaks = waiver(), ...) {
-  second_axis <- age_depth_as_sec_axis(model, primary = "age", name = depth_name, breaks = depth_breaks)
+scale_y_age_depth <- function(model = NULL, reversed = FALSE, depth_name = "depth", depth_breaks = waiver(),
+                              depth_labels = waiver(), ...) {
+  second_axis <- age_depth_as_sec_axis(model, primary = "age", name = depth_name, breaks = depth_breaks, labels = depth_labels)
   if(reversed) {
     ggplot2::scale_y_reverse(..., sec.axis = second_axis)
   } else {
@@ -56,15 +59,17 @@ scale_y_age_depth <- function(model = NULL, reversed = FALSE, depth_name = "dept
 
 #' @rdname scale_y_depth_age
 #' @export
-scale_x_depth_age <- function(model = NULL, age_name = "age", age_breaks = waiver(), ...) {
-  second_axis <- age_depth_as_sec_axis(model, primary = "depth", name = age_name, breaks = age_breaks)
+scale_x_depth_age <- function(model = NULL, age_name = "age", age_breaks = waiver(),
+                              age_labels = waiver(), ...) {
+  second_axis <- age_depth_as_sec_axis(model, primary = "depth", name = age_name, breaks = age_breaks, labels = age_labels)
   ggplot2::scale_x_reverse(..., sec.axis = second_axis)
 }
 
 #' @rdname scale_y_depth_age
 #' @export
-scale_x_age_depth <- function(model = NULL, reversed = FALSE, depth_name = "depth", depth_breaks = waiver(), ...) {
-  second_axis <- age_depth_as_sec_axis(model, primary = "age", name = depth_name, breaks = depth_breaks)
+scale_x_age_depth <- function(model = NULL, reversed = FALSE, depth_name = "depth", depth_breaks = waiver(),
+                              depth_labels = waiver(), ...) {
+  second_axis <- age_depth_as_sec_axis(model, primary = "age", name = depth_name, breaks = depth_breaks, labels = depth_labels)
   if(reversed) {
     ggplot2::scale_x_reverse(..., sec.axis = second_axis)
   } else {

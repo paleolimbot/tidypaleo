@@ -10,60 +10,276 @@ vignette: >
 ---
 
 ```{r setup, include = FALSE}
+library(dplyr)
+library(tidyr)
+library(forcats)
+library(ggplot2)
+library(tidypaleo)
+theme_set(theme_bw(8))
+
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
   fig.height = 3,
-  fig.width = 5,
-  dpi = 150
+  fig.width = 6,
+  dpi = 96
 )
 ```
 
-```{r}
+This vignette covers creating stratigraphic diagrams using **ggplot2**, highlighting the helpers contained within **tidypaleo**. The **ggplot2** framework was chosen because it is quite flexible and can be used to create almost any time-stratigraphic diagram except ones that involve multiple axes (we can have a fight about whether or not those are appropriate anyway, but if you absolutely need to create them I suggest you look elsewhere). It will help considerably if you are already familiar with **ggplot2** ([a great tutorial can be found here](http://r4ds.had.co.nz/data-visualisation.html)).
+
+First, you will need to load the packages. For this tutorial, I will use **tidypaleo**, and the **tidyverse** (this includes **ggplot2**). Later, I will use **patchwork** to create more complex plots (you can install this from GitHub using `devtools::install_packages("thomasp85/patchwork")`, and **mudata2** because it contains more example data that is useful for illustrating plot data from multiple cores. I prefer the `theme_bw()` theme for **ggplot2** plots, so I will set this here as well. Setting the base font size to a small value (8 pt in this case) helps with strat diagrams.
+
+```{r, eval=FALSE}
+library(tidyverse)
 library(tidypaleo)
-library(ggplot2)
-theme_set(theme_bw())
+theme_set(theme_bw(8))
+```
+
+Next, you will need to load the example data. This vignette uses 3 datasets that are already in the correct format for plotting. These are datasets in the **tidypaleo** package: `alta_lake_geochem`, `keji_lakes_plottable`, and `halifax_lakes_plottable`. These represent three common dataset types for which stratigraphic plots are created.
+
+```{r}
+data("alta_lake_geochem")
+data("keji_lakes_plottable")
+data("halifax_lakes_plottable")
 ```
 
 ## Geochemical stratigraphic plots
 
+Geochemical stratigraphic plots include any kind of plot where each panel of the plot should be scaled to the minimum and maximum of the data. This includes (most) non-species abundance data. The example data, `alta_lake_geochem`, is a data frame in parameter-long (one row per measurement) form (you may need to use `gather()` to get your data into this form, which you can learn about in [this tutorial](http://r4ds.had.co.nz/tidy-data.html)). These measurements are from Alta Lake, British Columbia (Canada), and you can read more about them in the [journal article](https://doi.org/10.1007/s10933-016-9919-x).
+
 ```{r}
-data("alta_lake_geochem")
 alta_lake_geochem
 ```
 
-```{r}
-ggplot(alta_lake_geochem, aes(x = value, y = depth)) +
-  geom_path() +
-  geom_point() +
-  scale_y_reverse() +
-  facet_wrap(~param, scales = "free_x", nrow = 1) +
-  rotated_axis_labels()
-```
+Plotting a single core with `ggplot()` involves several steps:
+
+- The initial `ggplot()` call, where we set which columns will get mapped to the `x` and `y` values for each layer.
+- Two layers: `geom_lineh()` and `geom_point()`. We use `geom_lineh()` because our plots will be oriented vertically (`geom_line()` is designed for horizontal plots).
+- Specify how data are divided between facets using `facet_geochem_gridh()` (we use `_gridh()` to orient the panels horizontally rather than vertically).
+- Reverse the Y-axis, so that a depth of 0 is at the top.
+- Remove the X label, and set the Y label to "Depth (cm)".
 
 ```{r}
+alta_plot <- ggplot(alta_lake_geochem, aes(x = value, y = depth)) +
+  geom_lineh() +
+  geom_point() +
+  scale_y_reverse() +
+  facet_geochem_gridh(vars(param)) +
+  labs(x = NULL, y = "Depth (cm)")
+
+alta_plot
+```
+
+That's it! Of course, there are many modifications that can be made, which are covered in the next few sections.
+
+### Adding annotations
+
+It is common to highlight certain depths or ages on strat diagrams, or to add things to various places on a plot. This is accomplished by adding additional layers to the plot. For example, highlighting the depth at which the zones change (according to the paper, this is at 4 cm and 16 cm).
+
+```{r}
+alta_plot +
+  geom_hline(yintercept = c(4, 16), col = "red", lty = 2, alpha = 0.7)
+```
+
+The `geom_hline()` function creates its own data using the `yintercept` argument, but other geometries require us to create our own data. For example, highlighting the middle zone using `geom_rect()` would look like this:
+
+```{r}
+zone_data <- tibble(ymin = 4, ymax = 16, xmin = -Inf, xmax = Inf)
+alta_plot +
+  geom_rect(
+    mapping = aes(ymin = ymin, ymax = ymax, xmin = xmin, xmax = xmax), 
+    data = zone_data, 
+    alpha = 0.2,
+    fill = "blue",
+    inherit.aes = FALSE
+  )
+```
+
+So far, each new layer we have added has been propogated to all facets. To restrict annotations to a specific facet, we need to include the facetting column (in this case, `param`) in the layer data. The element copper (Cu) has standards set by the Canadian government (ISQG of 35.7 ppm), and highlighting values that are outside that range can be done in a similar way to highlighting the middle zone.
+
+```{r}
+cu_standard_data <- tibble(param = "Cu", xmin = 35.7, xmax = Inf, ymin = -Inf, ymax = Inf)
+alta_plot +
+  geom_rect(
+    mapping = aes(ymin = ymin, ymax = ymax, xmin = xmin, xmax = xmax), 
+    data = cu_standard_data, 
+    alpha = 0.2,
+    fill = "red",
+    inherit.aes = FALSE
+  )
+```
+
+To highlight the syntax that changed from the original plot, I've been using `alta_plot + ...`, however with layers such as these, it may be desirable to have the annotation appear under the original data. To do this, you would have to  add your annotation layer (`geom_rect()`) before your data layer (`geom_lineh()` and `geom_point()`).
+
+### Error bars
+
+In the `alta_lake_geochem` data frame, there is a column for standard deviation (`stdev`). You can plot these values as error bars using `geom_errorbarh()`.
+
+```{r, warning=FALSE}
+alta_plot + 
+  geom_errorbarh(aes(xmin = value - stdev, xmax = value + stdev), height = 0.5)
+```
+
+### Reordering facets
+
+To control the order of the facets, the column on which they are facetted (`param`) must be a `factor()`, where the `levels` indicate the order. I suggest using `fct_relevel()` to do this, so that you only need to specify which items should go first. Usually I do this using a pipe (`%>%`) and `mutate()` to avoid assigning any intermediate variables.
+
+```{r, eval=FALSE}
+alta_lake_geochem %>%
+  mutate(param = fct_relevel(param, c("Ti", "Cu", "C/N"))) %>%
+  ggplot(aes(x = value, y = depth)) +
+  ...
+```
+
+```{r, echo=FALSE}
+alta_lake_geochem %>%
+  mutate(param = fct_relevel(param, c("Ti", "Cu", "C/N"))) %>%
+  ggplot(aes(x = value, y = depth)) +
+  geom_lineh() +
+  geom_point() +
+  scale_y_reverse() +
+  facet_geochem_gridh(vars(param)) +
+  labs(x = NULL, y = "Depth (cm)")
+```
+
+### Plotting a subset of the data
+
+The `halifax_geochem` data frame was designed so that it is a reasonable number of parameters to plot at one time. Usually you will have a data frame with many more parameters, which you can subset using `filter()` before calling `ggplot()`. Usually I do this using a pipe (`%>%`) to avoid assigning any intermediate variables.
+
+```{r, eval=FALSE}
+alta_lake_geochem %>%
+  filter(param %in% c("d15N", "d13C", "C/N")) %>%
+  ggplot(aes(x = value, y = depth)) +
+  ...
+```
+
+```{r, echo=FALSE}
+alta_lake_geochem %>%
+  filter(param %in% c("d15N", "d13C", "C/N")) %>%
+  ggplot(aes(x = value, y = depth)) +
+  geom_lineh() +
+  geom_point() +
+  scale_y_reverse() +
+  facet_geochem_gridh(vars(param)) +
+  labs(x = NULL, y = "Depth (cm)")
+```
+
+### Using a y-axis with ages and depths
+
+When plotting a single core, it is good practice to plot both ages and depths in the core. In **ggplot2**, this comes as a second axis generated by a helper function, `scale_y_depth_age()`, that uses an `age_depth_model()` to produce a second axis. For Alta Lake, the age depth model as published is included in the `alta_lake_bacon_ages` object. It's possible to set the age breaks using the `age_breaks` argument, and the labels using the `age_labels` argument (this is useful for adding error information to ages on a second axis). The axis title can be set using the `age_name` argument.
+
+```{r, message=FALSE}
 alta_adm <- age_depth_model(
   alta_lake_bacon_ages, 
   depth = depth_cm,
   age = 1950 - age_weighted_mean_year_BP
 )
 
-ggplot(alta_lake_geochem, aes(x = value, y = depth)) +
+alta_plot +
+  scale_y_depth_age(
+    alta_adm,
+    age_name = "Age (Year AD)"
+  )
+```
+
+### Adding units to facet labels
+
+Ideally, we'd like to specify the unit in which each of these parameters was measured. This can be done (1) by renaming each parameter before it gets to `ggplot()`, or (2) by using the `units` argument of the `facet_geochem_*()` functions. I suggest using the second option because it maintains the order of the parameters that you've chosen, and keeps the automatic reformatting of `d13C`. The `units` argument takes a named character vector, which you can create using `c("parameter" = "unit")`. If most paremeters are in the same unit, you can pass the default unit using `default_unit = "unit"`, and if you need to suppress a unit for an item, you can use `NA`.
+
+```{r}
+alta_plot +
+  facet_geochem_gridh(
+    vars(param),
+    units = c("C/N" = NA, "Cu" = "ppm", "d13C" = "‰", "d15N" = "‰"),
+    default_units = "%"
+  )
+```
+
+### Multiple cores
+
+So far we've plotted one core. That's great, but often there is more than one core that needs to be plotted. There are two ways to go about this depending on how you would like identical parameters for each lake to be compared: using `facet_geochem_gridh()` will stretch the axis limits to fit values from both cores, and creating (and combining) two separate plots using `patchwork::wrap_plots()` will result in each panel stretching to the min/max of the data for that parameter. We'll illustrate both of these using some other data from Long Lake, Nova Scotia, that is contained in the **mudata2** package.
+
+```{r}
+library(mudata2)
+combined_data <- long_lake %>%
+  tbl_data() %>%
+  bind_rows(alta_lake_geochem) %>%
+  filter(param %in% c("C/N", "d13C", "d15N"))
+
+combined_data
+```
+
+First we'll go over the `facet_geochem_gridh()` approach, which adds `location` as another grouping variable. This will align parameters with themselves vertically, with one row on the plot per core. This usually the best option, as it makes values from one plot to another be directly comparable.
+
+```{r, fig.height=6}
+ggplot(combined_data, aes(x = value, y = depth)) +
   geom_lineh() +
   geom_point() +
-  scale_y_depth_age(alta_adm, age_name = "Age (Year AD)") +
-  facet_geochem_wrap(
-    vars(param), 
-    nrow = 1, 
-    units = c(
-      C = "%",
-      Cu = "ppm",
-      Ti = "ppm",
-      d15N = "‰",
-      d13C = "‰"
-    )
-  ) +
-  labs(y = "Depth (cm)", x = NULL)
+  scale_y_reverse() +
+  facet_geochem_gridh(vars(param), vars(location), scales = "free") +
+  labs(x = NULL, y = "Depth (cm)")
+```
+
+The other way to do this is to create two separate plots, and combine them using the **patchwork** package. This is a good option when values from one core to another are so different that placing them on the same axis results in trends being obscured, or when ages and depths are absolutely necessary for both plots (using `scale_y_depth_age()` doesn't work when combining locations using a facet).
+
+```{r, fig.height=6}
+alta_plot_1 <- combined_data %>% 
+  filter(location == "ALGC2") %>% 
+  ggplot(aes(x = value, y = depth)) +
+  geom_lineh() +
+  geom_point() +
+  scale_y_reverse() +
+  facet_geochem_gridh(vars(param), scales = "free") +
+  labs(x = NULL, y = "Depth (cm)", title = "Alta Lake")
+
+long_plot_2 <- combined_data %>% 
+  filter(location == "LL PC2") %>% 
+  ggplot(aes(x = value, y = depth)) +
+  geom_lineh() +
+  geom_point() +
+  scale_y_reverse() +
+  facet_geochem_gridh(vars(param), scales = "free") +
+  labs(x = NULL, y = "Depth (cm)", title = "Long Lake")
+
+library(patchwork)
+wrap_plots(alta_plot_1, long_plot_2, ncol = 1)
+```
+
+### Adding a dendrogram
+
+It's fairly common to see a CONISS dendrogram at the right of plots, and so **tidypaleo** wouldn't be complete if it couldn't make that happen. For a variety of technical reasons, you have to specify that you need `depth` mapped to the `y` aesthetic for both `layer_zone_boundaries()` and `layer_dendrogram()`. Note that you'll have to do CONISS using `nested_chclust_coniss()`, which uses the **rioja** package to do the constrained cluster analysis. By default, this will calculate the number of plausible zones based on a broken stick simulation.
+
+```{r}
+coniss <- alta_lake_geochem %>%
+  nested_data(qualifiers = c(age, depth), key = param, value = value, trans = scale) %>%
+  nested_chclust_coniss()
+
+alta_plot +
+  layer_dendrogram(coniss, aes(y = depth), param = "CONISS") +
+  layer_zone_boundaries(coniss, aes(y = depth))
+```
+
+### Using `facet_geochem_wraph()`
+
+If you are familiar with `facet_grid()` in **ggplot2**, you will notice that `facet_geochem_gridh()` has done a few things differently, including automatically renaming `d13C` and `d15N` to the proper formatting. This function also rotates axis labels, because this is the only sure-fire way to make sure they don't overlap. You can un-rotate them using `rotate_axis_labels = 0`, and you can wrap panels in a defined number of rows or columns using `facet_geochem_wraph()`. This works well for plotting a larger number of parameters when there is only one core involved.
+
+```{r}
+alta_plot + 
+  facet_geochem_wraph(vars(param), rotate_axis_labels = 0, ncol = 4)
+```
+
+### Going horizontal
+
+Most stratigraphic diagrams are vertical, which is a reflection on the orientation of the core from which the data came. In many cases (especially when age is one of the axes), it may be adventageous to have the plots be horizontal, with time running from left to right along the x-axis. A few things need to change from our original plot, including the mapping, the line geometry, and the facet specification. Here I've used `facet_geochem_grid()` to stack the plots vertically, but you could also use `facet_geochem_wrap()`.
+
+```{r, fig.width=3, fig.height=5}
+ggplot(alta_lake_geochem, aes(x = age, y = value)) +
+  geom_line() +
+  geom_point() +
+  scale_y_reverse() +
+  facet_geochem_grid(vars(param)) +
+  labs(x = "Age (Year AD)", y = NULL)
 ```
 
 ## Species abundance stratigraphic plots

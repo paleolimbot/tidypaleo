@@ -3,6 +3,7 @@
 \name{facet_abundanceh}
 \alias{facet_abundanceh}
 \alias{facet_abundance}
+\alias{facet_geochem_wraph}
 \alias{facet_geochem_wrap}
 \alias{facet_geochem_grid}
 \alias{facet_geochem_gridh}
@@ -18,11 +19,17 @@ facet_abundance(taxon, grouping = NULL, rotate_facet_labels = 0,
   dont_italicize = c("\\\\(.*?\\\\)", "spp?\\\\.", "-complex", "[Oo]ther"),
   ...)
 
-facet_geochem_wrap(param, grouping = NULL, rotate_axis_labels = 90,
+facet_geochem_wraph(param, grouping = NULL, rotate_axis_labels = 90,
   scales = "free_x", labeller = label_geochem,
   renamers = c(`^d([0-9]+)([HCNOS])$` = "paste(delta ^ \\\\1, \\\\2)",
   `^210Pb$` = "paste({}^210, Pb)", `^Pb210$` = "paste({}^210, Pb)"),
   units = character(0), default_units = NA_character_, ...)
+
+facet_geochem_wrap(param, grouping = NULL, scales = "free_y",
+  labeller = label_geochem, renamers = c(`^d([0-9]+)([HCNOS])$` =
+  "paste(delta ^ \\\\1, \\\\2)", `^210Pb$` = "paste({}^210, Pb)", `^Pb210$` =
+  "paste({}^210, Pb)"), units = character(0), default_units = NA_character_,
+  ...)
 
 facet_geochem_grid(param, grouping = NULL, rotate_axis_labels = 0,
   scales = "free_y", space = "fixed", labeller = label_geochem,

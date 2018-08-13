@@ -30,6 +30,13 @@ You can install tidypaleo from github with:
 devtools::install_github("paleolimbot/tidypaleo")
 ```
 
+To get the most out of strat diagrams, you will also need the [patchwork package](https://github.com/thomasp85/patchwork) by [\@thomasp85]((https://github.com/thomasp85). You can also install this from GitHub:
+
+```{r gh-installation-patchwork, eval = FALSE}
+# install.packages("devtools")
+devtools::install_github("thomasp85/patchwork")
+```
+
 ## Examples
 
 ### Age-depth models
