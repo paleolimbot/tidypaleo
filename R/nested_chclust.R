@@ -188,66 +188,106 @@ plot.nested_hclust <- function(x, ..., sub = "", xlab = "", nrow = NULL, ncol = 
   plot_nested_analysis(x, .fun = graphics::plot, sub = !!sub, xlab = !!xlab, ..., nrow = nrow, ncol = ncol)
 }
 
-#' A ggplot2-based dendrogram plot/layer
+#' Display a dendrogram as a ggplot2 layer
 #'
-#' A quick-and-dirty ggplotter for \link{nested_hclust} objects. Use \code{tidyr::unnest(object, segments)} and
-#' \link[ggplot2]{geom_segment} to further customize the apperance of this plot.
+#' @param mapping A mapping created using \link[ggplot2]{aes}. Must map x OR y to a qualifier.
+#' @param data A \link{nested_hclust} object
+#' @param position Position adjustment
+#' @param geom Any geom that takes x, xend, y, and yend. Probably \link[ggplot2]{geom_segment} is
+#'   the only one that makes sense.
+#' @param ... Passed to the the stat/geom (see \link[ggplot2]{geom_segment})
+#' @param inherit.aes Inherit aesthetics from ggplot()?
+#' @param show.legend Show mapped aesthetics in the legend?
 #'
-#' @param object A \link{nested_hclust}
-#' @param mapping A mapping created with \link[ggplot2]{aes}. Must map x and xend. Use flip to flip the axes.
-#' @param label An expression evaluated in \code{tidyr::unnest(object, nodes)} that nodes are labelled with by default.
-#'   Note that this may label non-leaf nodes.
-#' @param segment_geom,node_geom Override the default geometries for segments and nodes, respectively
-#' @param ... Used to create new columns (may be useful for using with facets)
-#' @param nrow,ncol Passed to \link[ggplot2]{facet_wrap}
-#' @param flip Use to switch x/y aesthetics
-#'
-#' @importFrom ggplot2 autolayer
 #' @export
-autoplot.nested_hclust <- function(
-  object,
-  mapping = ggplot2::aes(x = .data$dendro_order, xend = .data$dendro_order_end),
-  ...,
-  label = ifelse(.data$is_leaf, .data$row_number, NA),
-  segment_geom = ggplot2::geom_segment(),
-  node_geom = ggplot2::geom_text(
-    ggplot2::aes(label = .data$auto_label),
-    angle = ifelse(flip, 0, 90),
-    hjust = 1, vjust = 0.5,
-    na.rm = TRUE
-  ),
-  nrow = NULL, ncol = NULL, flip = FALSE
-) {
-  label <- enquo(label)
-  mutate_args <- quos(...)
+#'
+stat_nested_hclust <- function(mapping = NULL, data = NULL,
+                               geom = "segment", position = "identity",
+                               ...,
+                               inherit.aes = TRUE, show.legend = NA) {
 
-  stopifnot(
-    inherits(mapping, "uneval"),
-    all(c("x", "xend") %in% names(mapping))
+  ggplot2::layer(
+    geom = geom,
+    stat = StatNestedHclust,
+    mapping = override_mapping(mapping, ggplot2::aes(model = .data$model, group = .data$..group)),
+    data = data,
+    show.legend = show.legend,
+    inherit.aes = inherit.aes,
+    position = position,
+    params = list(...)
   )
+}
 
-  group_vars <- get_grouping_vars(object)
+#' @rdname stat_nested_hclust
+#' @export
+StatNestedHclust <- ggplot2::ggproto(
+  "StatNestedHclust",
+  ggplot2::Stat,
+  required_aes = "model",
+  default_aes = ggplot2::aes(x = NA_real_, y = NA_real_),
+  compute_group = function(self, data, scales) {
+    # only compute stat once!
+    if(is.null(data$model)) return(data)
 
-  if(flip) {
-    mapping <- mapping[c("x", "xend", setdiff(names(mapping), c("x", "xend")))]
-    names(mapping) <- c("y", "yend", setdiff(names(mapping), c("x", "xend")))
-    default_mapping <- ggplot2::aes(x = .data$dispersion, xend = .data$dispersion_end)
-  } else {
-    default_mapping <- ggplot2::aes(y = .data$dispersion, yend = .data$dispersion_end)
+    model <- data$model[[1]]
+    data$model <- NULL
+
+    if(nrow(data) != length(model$order)) {
+      stop("Group size is not equal to the number of observations in the model. Did you need to set the group aesthetic?")
+    }
+
+    # propogate aesthetics through the calculation
+    aesthetics <- dplyr::slice(data, 1)
+    aesthetics$x <- NULL
+    aesthetics$y <- NULL
+
+    if(is.null(data$y) || all(is.na(data$y))) {
+      if(is.null(data$x) || all(is.na(data$x))) stop("One of 'x' or 'y' must be mapped")
+
+      # x was mapped, y is dispersion
+      nodes <- qualify_dendro_data(model, data["x"], 1L)
+      segments <- dplyr::bind_rows(nodes$segments)
+      segments <- dplyr::rename(segments, y = "dispersion", yend = "dispersion_end", xend = "x_end")
+
+      # map dispersion to y scale
+      if(!is.null(scales$y)) {
+        segments$y <- scales$y$transform(segments$y)
+        segments$yend <- scales$y$transform(segments$yend)
+      }
+    } else if(is.null(data$x) || all(is.na(data$x))) {
+
+      # y was mapped, x is dispersion
+      nodes <- qualify_dendro_data(model, data["y"], 1L)
+      segments <- dplyr::bind_rows(nodes$segments)
+      segments <- dplyr::rename(segments, x = "dispersion", xend = "dispersion_end", yend = "y_end")
+
+      # map dispersion to x scale
+      if(!is.null(scales$x)) {
+        segments$x <- scales$x$transform(segments$x)
+        segments$xend <- scales$x$transform(segments$xend)
+      }
+    } else {
+      stop("One of 'x' or 'y' must be mapped")
+    }
+
+    # recombine aesthetics with data
+    dplyr::bind_cols(segments, aesthetics[rep(1, nrow(segments)), ])
   }
+)
 
-  mapping <- override_mapping(mapping, default_mapping)
+# this is needed so that the object can be passed into ggplot() or some other geom function
+#' @importFrom ggplot2 fortify
+#' @export
+fortify.nested_hclust <- function(model, data, ...) {
+  # need some data pre-processing to be stat_nested_hclust friendly
+  data <- model[c(get_grouping_vars(model), "qualifiers", "model")]
 
-  segments <- tidyr::unnest(object, .data$segments)
-  segments <- dplyr::mutate(segments, !!!mutate_args)
+  # default group should be by model
+  data$..group <- purrr::map_chr(data$model, digest::digest, "md5")
 
-  nodes <- tidyr::unnest(object, .data$nodes)
-  nodes <- dplyr::mutate(nodes, auto_label = !!label, !!!mutate_args)
-
-  ggplot2::ggplot() +
-    override_data(segment_geom, data = segments, mapping = mapping) +
-    override_data(node_geom, data = nodes, mapping = mapping[setdiff(names(mapping), c("xend", "yend"))]) +
-    if(length(group_vars) > 0) ggplot2::facet_wrap(do.call(ggplot2::vars, rlang::syms(group_vars)), nrow = nrow, ncol = ncol)
+  # add unnested qualifier columns to data prior to mapping
+  # model, x, and y column must be mapped
+  tidyr::unnest(data, .data$qualifiers, .drop = FALSE)
 }
 
 group_boundaries <- function(hclust_zones, qualifiers, n_groups = 1) {

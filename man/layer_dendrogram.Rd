@@ -6,13 +6,12 @@
 \alias{layer_zone_boundaries}
 \title{Add a dendrogram as a layer or facet}
 \usage{
-layer_dendrogram(object, mapping, ...,
-  segment_geom = ggplot2::geom_segment(size = 0.4, inherit.aes = FALSE),
-  sequential_facets = TRUE)
+layer_dendrogram(object, mapping, ..., colour = "black", size = 0.5,
+  linetype = 1, alpha = NA, sequential_facets = TRUE)
 
 plot_layer_dendrogram(object, mapping, ..., panel_label = "CONISS")
 
-layer_zone_boundaries(object, mapping, ..., lty = 2, alpha = 0.7,
+layer_zone_boundaries(object, mapping, ..., linetype = 2, alpha = 0.7,
   colour = "black", size = 0.5)
 }
 \arguments{
@@ -22,14 +21,12 @@ layer_zone_boundaries(object, mapping, ..., lty = 2, alpha = 0.7,
 
 \item{...}{Use facet_var = "CONISS" or similar to name the panel}
 
-\item{segment_geom}{Pass some variant of \link[ggplot2]{geom_segment} to customize geometry options}
+\item{linetype, alpha, colour, size}{Customize the apperance of boundary/dendrogram segment lines}
 
 \item{sequential_facets}{TRUE will result in the panel containing the dendrogram added to the right
 of the plot.}
 
 \item{panel_label}{Use to label a pane on a stanalone dendrogram plot}
-
-\item{lty, alpha, colour, size}{Customize the apperance of boundary lines}
 }
 \description{
 Add a dendrogram as a layer or facet

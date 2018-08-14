@@ -60,44 +60,29 @@ plot_layer_scores <- function(object, mapping, which = "PC1", key = "param", val
 #'
 #' @param object A \link{nested_hclust} object.
 #' @param mapping Map at least one axis (x or y) to a qualifier, like \code{aes(x = depth)} or similar.
-#' @param segment_geom Pass some variant of \link[ggplot2]{geom_segment} to customize geometry options
 #' @param sequential_facets TRUE will result in the panel containing the dendrogram added to the right
 #'   of the plot.
-#' @param lty,alpha,colour,size Customize the apperance of boundary lines
+#' @param linetype,alpha,colour,size Customize the apperance of boundary/dendrogram segment lines
 #' @param panel_label Use to label a pane on a stanalone dendrogram plot
 #' @param ... Use facet_var = "CONISS" or similar to name the panel
 #'
 #' @export
 #'
-layer_dendrogram <- function(object, mapping, ..., segment_geom = ggplot2::geom_segment(size = 0.4, inherit.aes = FALSE),
+layer_dendrogram <- function(object, mapping,
+                             ...,
+                             colour = "black", size = 0.5, linetype = 1, alpha = NA,
                              sequential_facets = TRUE) {
   stopifnot(
     xor("x" %in% names(mapping), "y" %in% names(mapping))
   )
 
   mutate_args <- quos(...)
-
-  if("x" %in% names(mapping)) {
-    default_mapping <- ggplot2::aes(
-      xend = !!rlang::sym(paste(rlang::quo_name(mapping$x), "end", sep = "_")),
-      y = .data$dispersion,
-      yend = .data$dispersion_end
-    )
-  } else {
-    default_mapping <- ggplot2::aes(
-      yend = !!rlang::sym(paste(rlang::quo_name(mapping$y), "end", sep = "_")),
-      x = .data$dispersion,
-      xend = .data$dispersion_end
-    )
-  }
-
-  mapping <- override_mapping(mapping, default_mapping)
-
-  segments <- tidyr::unnest(object, .data$segments)
-  segments <- dplyr::mutate(segments, !!!mutate_args)
+  data <- ggplot2::fortify(object)
+  data <- dplyr::mutate(data, !!!mutate_args)
 
   list(
-    override_data(segment_geom, data = segments, mapping = mapping),
+    stat_nested_hclust(mapping = mapping, data = data, colour = colour, size = size,
+                       linetype = linetype, alpha = alpha, inherit.aes = FALSE),
     if(sequential_facets) sequential_layer_facets()
   )
 }
@@ -109,9 +94,9 @@ plot_layer_dendrogram <- function(object, mapping, ..., panel_label = "CONISS") 
   var_groups <- do.call(ggplot2::vars, rlang::syms(group_vars))
 
   if("x" %in% names(mapping)) {
-    facet <- ggplot2::facet_grid(rows = var_groups, cols = ggplot2::vars(!!panel_label))
-  } else {
     facet <- ggplot2::facet_grid(cols = var_groups, rows = ggplot2::vars(!!panel_label))
+  } else {
+    facet <- ggplot2::facet_grid(rows = var_groups, cols = ggplot2::vars(!!panel_label))
   }
 
   ggplot2::ggplot() + layer_dendrogram(object, mapping, ...) + facet
@@ -119,7 +104,7 @@ plot_layer_dendrogram <- function(object, mapping, ..., panel_label = "CONISS") 
 
 #' @rdname layer_dendrogram
 #' @export
-layer_zone_boundaries <- function(object, mapping, ..., lty = 2, alpha = 0.7, colour = "black", size = 0.5) {
+layer_zone_boundaries <- function(object, mapping, ..., linetype = 2, alpha = 0.7, colour = "black", size = 0.5) {
   stopifnot(
     xor("x" %in% names(mapping), "y" %in% names(mapping)),
     "zone_info" %in% names(object), is.list(object$zone_info)
@@ -142,7 +127,7 @@ layer_zone_boundaries <- function(object, mapping, ..., lty = 2, alpha = 0.7, co
   geom(
     mapping = override_mapping(new_mapping, mapping),
     data = zone_info,
-    lty = lty, alpha = alpha, colour = colour, size = size,
+    linetype = linetype, alpha = alpha, colour = colour, size = size,
     na.rm = TRUE
   )
 }

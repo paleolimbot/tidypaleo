@@ -167,20 +167,43 @@ test_that("plot methods for hclust work", {
   expect_true(TRUE)
 })
 
-test_that("autoplot methods work with hclust objects", {
-  ndm <- nested_data(halifax_lakes_plottable, c(location, sample_type), taxon, rel_abund)
+test_that("stat_nested_hclust methods work with hclust objects", {
+  ndm <- nested_data(halifax_lakes_plottable[halifax_lakes_plottable$sample_type == "top",], c(location), taxon, rel_abund)
   nest_hc <- nested_hclust(ndm, method = "average")
-  nest_chc2 <- nested_chclust_conslink(ndm)
-  nest_chc <- nested_chclust_coniss(ndm)
+  nest_hc_order <- dplyr::arrange(tidyr::unnest(nest_hc, qualifiers, dendro_order), dendro_order)$location
 
-  print(ggplot2::autoplot(nest_hc))
-  print(ggplot2::autoplot(nest_hc, ggplot2::aes(x = dendro_order, xend = dendro_order_end, col = hclust_zone), flip = TRUE))
-  print(ggplot2::autoplot(nest_chc))
-  print(ggplot2::autoplot(nest_chc2))
+  print(
+    ggplot2::ggplot(nest_hc, ggplot2::aes(x = location)) +
+      stat_nested_hclust() +
+      ggplot2::scale_x_discrete(limits = nest_hc_order) +
+      rotated_axis_labels() +
+      ggplot2::labs(caption = "Dendrogram with natural order of locations")
+  )
 
+  print(
+    ggplot2::ggplot(nest_hc, ggplot2::aes(y = location)) +
+      stat_nested_hclust() +
+      ggplot2::scale_y_discrete(limits = nest_hc_order) +
+      ggplot2::labs(caption = "Dendrogram with natural order of locations")
+  )
+
+  #  nested version
   ndm_grp <- nested_data(keji_lakes_plottable, depth, taxon, rel_abund, fill = 0, groups = location)
   nested_coniss <- nested_chclust_coniss(ndm_grp)
-  print(ggplot2::autoplot(nested_coniss, ggplot2::aes(x = depth, xend = depth_end), ncol = 1, node_geom = NULL))
+
+  print(
+    ggplot2::ggplot() +
+      stat_nested_hclust(ggplot2::aes(y = depth), data = nested_coniss) +
+      ggplot2::facet_wrap(vars(location)) +
+      ggplot2::scale_y_reverse() +
+      ggplot2::labs(caption = "Dendrograms in different panels")
+  )
+
+  print(
+    ggplot2::ggplot() +
+      stat_nested_hclust(ggplot2::aes(x = depth, col = location), data = nested_coniss) +
+      ggplot2::labs(caption = "Dendrograms in different colours")
+  )
 
   expect_true(TRUE)
 })

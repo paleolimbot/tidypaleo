@@ -127,14 +127,14 @@ To control the order of the facets, the column on which they are facetted (`para
 
 ```{r, eval=FALSE}
 alta_lake_geochem %>%
-  mutate(param = fct_relevel(param, c("Ti", "Cu", "C/N"))) %>%
+  mutate(param = fct_relevel(param, "Ti", "Cu", "C/N")) %>%
   ggplot(aes(x = value, y = depth)) +
   ...
 ```
 
 ```{r, echo=FALSE}
 alta_lake_geochem %>%
-  mutate(param = fct_relevel(param, c("Ti", "Cu", "C/N"))) %>%
+  mutate(param = fct_relevel(param, "Ti", "Cu", "C/N")) %>%
   ggplot(aes(x = value, y = depth)) +
   geom_lineh() +
   geom_point() +
@@ -217,7 +217,7 @@ ggplot(combined_data, aes(x = value, y = depth)) +
   geom_lineh() +
   geom_point() +
   scale_y_reverse() +
-  facet_geochem_gridh(vars(param), vars(location), scales = "free") +
+  facet_geochem_gridh(vars(param), grouping = vars(location), scales = "free") +
   labs(x = NULL, y = "Depth (cm)")
 ```
 
@@ -284,20 +284,169 @@ ggplot(alta_lake_geochem, aes(x = age, y = value)) +
 
 ## Species abundance stratigraphic plots
 
+If our data is relative species abundance, there are a few more restrictions on the plot: each facet must represent values such that 10% abundance on one facet is equal to 10% in another facet, and facet names are often long enough that they must be rotated. The sample data for these exercises is `keji_lakes_plottable`, which again is in the form of one row per measurement. This dataset contains two lakes, Beaverskin Lake and Peskawa Lake, both located within Keji National Park, Nova Scotia, Canada ([Ginn et al. 2007](https://doi.org/10.1007/s10750-007-0644-3)).
+
 ```{r}
 data("keji_lakes_plottable")
 keji_lakes_plottable
 ```
 
+The code to generate the plot is similar to our previous plots, except we use `geom_col_segsh()` (which instead of points or a path, draws lines connected to the x-axis), and  `facet_abundanceh()` (which takes care of rotating facet labels, partially italicizing them, and setting the scales for each panel to start at 0.
+
 ```{r, fig.height=6}
-ggplot(keji_lakes_plottable, aes(x = rel_abund, y = depth)) +
+keji_plot <- ggplot(keji_lakes_plottable, aes(x = rel_abund, y = depth)) +
   geom_col_segsh() +
   scale_y_reverse() +
-  facet_abundanceh(vars(taxon), grouping = vars(location))
+  facet_abundanceh(vars(taxon), grouping = vars(location)) +
+  labs(x = "Relative abundance (%)", y = "Depth (cm)")
+
+keji_plot
 ```
 
-```{r}
-ggplot(halifax_lakes_plottable, aes(x = rel_abund, y = location, fill = sample_type)) +
-  geom_colh(width = 0.5, position = "dodgev") +
-  facet_abundanceh(vars(taxon))
+Most of the modifications you can make on these plots are identical to the modifications you can make on non-abundance plots (see previous section), except for a few that we describe below.
+
+### Adding non-abundance data
+
+To add non-abundance data in the same figure, we need to create two plots and combine them using **patchwork**'s `wrap_plots()` function. In this example, I'm going to use PCA scores, computed by the `nested_prcomp()` function, and get them into parameter-long form using `gather()`. Note that when I create the plots, I make sure the labels still exist, and then I nix the labels inbetween the two plots using a few `theme()` modifications. It's important to make sure that the panel labels and scale lables are the same before removing them!
+
+```{r, fig.height=6}
+keji_pca_scores <- keji_lakes_plottable %>%
+  group_by(location) %>%
+  nested_data(qualifiers = depth, key = taxon, value = rel_abund, trans = sqrt) %>%
+  nested_prcomp() %>%
+  unnest(qualifiers, scores) %>%
+  gather(key = component, value = value, starts_with("PC")) %>%
+  filter(component %in% c("PC1", "PC2"))
+
+keji_pca_plot <- ggplot(keji_pca_scores, aes(x = value, y = depth)) +
+  geom_lineh() +
+  geom_point() +
+  scale_y_reverse() +
+  facet_geochem_gridh(vars(component), grouping = vars(location)) +
+  labs(x = NULL)
+  
+library(patchwork)
+wrap_plots(
+  keji_plot + 
+    theme(strip.background = element_blank(), strip.text.y = element_blank()),
+  keji_pca_plot +
+    theme(axis.text.y.left = element_blank(), axis.ticks.y.left = element_blank()) +
+    labs(y = NULL),
+  nrow = 1,
+  widths = c(4, 1)
+)
 ```
+
+### Adding dendrograms
+
+Adding a CONISS (or other) dendrogram created using `nested_chclust_coniss()` can be done in two ways: if there is already a non-abundance plot that exists, the dendrogram can be added to that plot using `layer_dendrogram()`. If there is not already a non-abundance plot, we need to create that plot. Then, the two plots can be combined using **patchwork**'s `wrap_plots()`.
+
+```{r, fig.height=6}
+keji_coniss <- keji_lakes_plottable %>%
+  group_by(location) %>%
+  nested_data(qualifiers = depth, key = taxon, value = rel_abund) %>%
+  nested_chclust_coniss()
+
+library(patchwork)
+
+# method 1: use existing non-abundance plot
+wrap_plots(
+  keji_plot + 
+    theme(strip.background = element_blank(), strip.text.y = element_blank()),
+  keji_pca_plot +
+    layer_dendrogram(keji_coniss, component = "CONISS", aes(y = depth)) +
+    theme(axis.text.y.left = element_blank(), axis.ticks.y.left = element_blank()) +
+    labs(y = NULL),
+  nrow = 1,
+  widths = c(2, 1)
+)
+```
+
+```{r, fig.height=6}
+# method 2: create a standalone plot for CONISS
+coniss_plot <- ggplot() +
+  layer_dendrogram(keji_coniss, aes(y = depth)) +
+  scale_y_reverse() +
+  facet_geochem_gridh(vars("CONISS"), grouping = vars(location)) +
+  labs(x = NULL)
+
+wrap_plots(
+  keji_plot + 
+    theme(strip.background = element_blank(), strip.text.y = element_blank()),
+  coniss_plot +
+    theme(axis.text.y.left = element_blank(), axis.ticks.y.left = element_blank()) +
+    labs(y = NULL),
+  nrow = 1,
+  widths = c(6, 1)
+)
+```
+
+## Top/bottom/spatial diagrams
+
+So far we have looked at data that have depth as an axis. Another sample strategy includes collecting cores with a small number of samples in each (such as top/bottom, or sometimes just a surface sample). A sample dataset of this type was collected by [Ginn et al. (2015)](https://doi.org/10.1080/10402381.2015.1013648) in lakes near Halifax, Nova Scotia. A subset of these measurements can be found in the `halifax_lakes_plottable` data frame.
+
+```{r}
+data("halifax_lakes_plottable")
+halifax_lakes_plottable
+```
+
+These diagrams are essentially bar charts, and use `geom_colh()` to draw their geometry (this works better than `geom_col_segsh()`, which only draws a thin line). We can separate top/bottom samples by setting an additional aesthetic, `fill = sample_type`, and make sure they dodge vertically by setting `position = "dodgev"`.
+
+```{r}
+halifax_plot <- ggplot(halifax_lakes_plottable, aes(x = rel_abund, y = location, fill = sample_type)) +
+  geom_colh(width = 0.5, position = "dodgev") +
+  facet_abundanceh(vars(taxon)) +
+  labs(x = "Relative abundance (%)", y = NULL, fill = "Sample Type")
+
+halifax_plot
+```
+
+### Ordering lakes on the y-axis
+
+Diagrams with a discrete axis (in this case, the y-axis) tend to be most efffective when they are ordered in some way. By default, **ggplot2** orders them alphabetically and lists them bottom to top. We can change this order in a similar way to changing the facet order, which is to convert the column containing the y-variable to a `factor()` using `fct_relevel()`. In this context, `fct_rev()` is also useful, as it will result in a top-to-bottom ordering rather than a bottom-to-top one.
+
+```{r, eval=FALSE}
+halifax_lakes_plottable %>%
+  mutate(location = fct_relevel(location, "Bell Lake", "Bayers", "Little Springfield") %>% fct_rev()) %>%
+  ggplot(aes(x = rel_abund, y = location, fill = sample_type)) +
+  ...
+```
+
+```{r, echo=FALSE}
+halifax_lakes_plottable %>%
+  mutate(location = fct_relevel(location, "Bell Lake", "Bayers", "Little Springfield") %>% fct_rev()) %>%
+  ggplot(aes(x = rel_abund, y = location, fill = sample_type)) +
+  geom_colh(width = 0.5, position = "dodgev") +
+  facet_abundanceh(vars(taxon)) +
+  labs(x = "Relative abundance (%)", y = NULL, fill = "Sample Type")
+```
+
+### Adding a dendrogram
+
+Adding a dendrogram to a plot with a discrete axis is only tricky because the order of the axes depends on the dendrogram itself. This means that the axes for both plots rely on the result of the clustering.
+
+```{r}
+halifax_clust <- halifax_lakes_plottable %>%
+  filter(sample_type == "top") %>%
+  nested_data(qualifiers = location, key = taxon, value = rel_abund) %>%
+  nested_hclust(method = "average")
+
+dendro_order <- halifax_clust %>%
+  unnest(qualifiers, dendro_order) %>%
+  arrange(dendro_order) %>% 
+  pull(location)
+
+library(patchwork)
+wrap_plots(
+  halifax_plot + 
+    scale_y_discrete(limits = dendro_order) +
+    theme(legend.position = "left"),
+  ggplot() + 
+    layer_dendrogram(halifax_clust, aes(y = location)) +
+    scale_y_discrete(limits = dendro_order) +
+    labs(x = "Dispersion", y = NULL) +
+    theme(axis.text.y.left = element_blank(), axis.ticks.y.left = element_blank()),
+  widths = c(4, 1)
+)
+```
+

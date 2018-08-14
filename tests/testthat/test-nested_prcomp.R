@@ -53,7 +53,7 @@ test_that("nested_prcomp works with a grouping variable", {
   biplot(prcomp_grp, main = location, sub = "grouped PCA biplot")
 })
 
-test_that("autoplot works with nested_prcomp objects", {
+test_that("biplot works with nested_prcomp objects", {
   ndm <- nested_data(
     alta_lake_geochem,
     qualifiers = c(depth, zone),
@@ -73,9 +73,7 @@ test_that("autoplot works with nested_prcomp objects", {
   prcomp_grp <- nested_prcomp(ndm_grp)
 
   biplot(prcomp_grp, main = location)
-  ggplot2::autoplot(prcomp_grp, ncol = 1)
-
   biplot(ndm_pca)
-  expect_is(print(ggplot2::autoplot(ndm_pca)), "ggplot")
-  print(ggplot2::autoplot(ndm_pca, var_geom = NULL, var_label_geom = NULL))
+
+  expect_true(TRUE)
 })

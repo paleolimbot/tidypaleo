@@ -76,16 +76,6 @@ test_that("CONISS can be added to a plot", {
     nested_chclust_coniss()
 
   print(
-    ggplot2::ggplot(keji_lakes_plottable, ggplot2::aes(x = rel_abund, y = depth)) +
-      geom_col_segsh() +
-      ggplot2::scale_y_reverse() +
-      facet_abundanceh(vars(taxon), vars(location)) +
-      layer_dendrogram(grp_coniss, ggplot2::aes(y = depth), taxon = "CONISS") +
-      layer_zone_boundaries(grp_coniss, ggplot2::aes(y = depth)) +
-      ggplot2::labs(caption = "scales will be off, but CONISS should be different for both lakes and will be at end")
-  )
-
-  print(
     patchwork::wrap_plots(
       ggplot2::ggplot(keji_lakes_plottable, ggplot2::aes(x = rel_abund, y = depth)) +
         geom_col_segsh() +
@@ -93,7 +83,7 @@ test_that("CONISS can be added to a plot", {
         facet_abundanceh(vars(taxon), vars(location)),
 
       plot_layer_dendrogram(grp_coniss, ggplot2::aes(y = depth), taxon = "CONISS") +
-        ggplot2::facet_grid(rows = vars(location)) +
+        ggplot2::facet_grid(rows = vars(location), cols = vars(taxon)) +
         ggplot2::scale_y_reverse(),
 
       nrow = 1
@@ -107,7 +97,9 @@ test_that("CONISS can be added to a plot", {
         facet_abundance(vars(taxon), vars(location)),
 
       plot_layer_dendrogram(grp_coniss, ggplot2::aes(x = depth), taxon = "CONISS") +
-        ggplot2::facet_grid(cols = vars(location)),
+        ggplot2::facet_grid(cols = vars(location)) +
+        ggplot2::scale_y_reverse() +
+        ggplot2::labs(caption = "scale_y_reverse should be correct with dendrogram"),
 
       ncol = 1
     )
