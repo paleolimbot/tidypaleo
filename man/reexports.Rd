@@ -6,11 +6,25 @@
 \alias{reexports}
 \alias{vars}
 \alias{reexports}
+\alias{position_fillv}
+\alias{reexports}
+\alias{PositionFillv}
+\alias{reexports}
+\alias{position_stackv}
+\alias{reexports}
+\alias{PositionStackv}
+\alias{reexports}
 \alias{position_dodge2v}
+\alias{reexports}
+\alias{PositionDodge2v}
 \alias{reexports}
 \alias{position_dodgev}
 \alias{reexports}
+\alias{PositionDodgev}
+\alias{reexports}
 \alias{geom_colh}
+\alias{reexports}
+\alias{GeomColh}
 \alias{reexports}
 \alias{filter}
 \title{Objects exported from other packages}
@@ -24,6 +38,6 @@ below to see their documentation.
 
   \item{ggplot2}{\code{\link[ggplot2]{vars}}}
 
-  \item{ggstance}{\code{\link[ggstance]{position_dodge2v}}, \code{\link[ggstance]{position_dodgev}}, \code{\link[ggstance]{geom_colh}}}
+  \item{ggstance}{\code{\link[ggstance]{position_fillv}}, \code{\link[ggstance]{PositionFillv}}, \code{\link[ggstance]{position_stackv}}, \code{\link[ggstance]{PositionStackv}}, \code{\link[ggstance]{position_dodge2v}}, \code{\link[ggstance]{PositionDodge2v}}, \code{\link[ggstance]{position_dodgev}}, \code{\link[ggstance]{PositionDodgev}}, \code{\link[ggstance]{geom_colh}}, \code{\link[ggstance]{GeomColh}}}
 }}
 

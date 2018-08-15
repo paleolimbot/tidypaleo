@@ -305,6 +305,38 @@ keji_plot
 
 Most of the modifications you can make on these plots are identical to the modifications you can make on non-abundance plots (see previous section), except for a few that we describe below.
 
+### Different styles
+
+There are a few famous styles for abundance plots, because a few existing programs (like [Tilia](https://www.tiliait.com/), [C2](https://www.staff.ncl.ac.uk/stephen.juggins/software/C2Home.htm), and [rioja](https://cran.r-project.org/package=rioja)) have some very specific defaults that show up on repeat in the literature. These styles can be replicated by changing or adding to `geom_col_segsh()`. For example, the classic Tilia "area" style for pollen diagrams:
+
+```{r, fig.height=6}
+ggplot(keji_lakes_plottable, aes(x = rel_abund, y = depth)) +
+  geom_areah() +
+  scale_y_reverse() +
+  facet_abundanceh(vars(taxon), grouping = vars(location)) +
+  labs(x = "Relative abundance (%)", y = "Depth (cm)")
+```
+
+Or for rioja-style diagrams, use `geom_col_segsh()` plus `geom_lineh()`:
+
+```{r, fig.height=6}
+ggplot(keji_lakes_plottable, aes(x = rel_abund, y = depth)) +
+  geom_col_segsh() + 
+  geom_lineh() +
+  scale_y_reverse() +
+  facet_abundanceh(vars(taxon), grouping = vars(location)) +
+  labs(x = "Relative abundance (%)", y = "Depth (cm)")
+```
+
+### Exaggerating low-abundance taxa
+
+It's common to see some kind of geometry on abundance diagrams exaggerating low-abundance variation. You can use the `*_exaggerate()` varieties of `geom_lineh()`, `geom_areah()`, and `geom_point()` to display this information without affecting the scales. If you want to include it only for certain taxa, you can pass `data = keji_lakes_plottable %>% filter(...)` to only include certain measurements.
+
+```{r, fig.height=6}
+keji_plot +
+  geom_lineh_exaggerate(exaggerate_x = 5, col = "grey70", lty = 2)
+```
+
 ### Adding non-abundance data
 
 To add non-abundance data in the same figure, we need to create two plots and combine them using **patchwork**'s `wrap_plots()` function. In this example, I'm going to use PCA scores, computed by the `nested_prcomp()` function, and get them into parameter-long form using `gather()`. Note that when I create the plots, I make sure the labels still exist, and then I nix the labels inbetween the two plots using a few `theme()` modifications. It's important to make sure that the panel labels and scale lables are the same before removing them!

@@ -329,6 +329,87 @@ test_that("horizontal and vertical segment geometries look as they should", {
   expect_true(TRUE)
 })
 
+test_that("horizontal area and ribbon plots work as expected", {
+  huron <- data.frame(year = 1875:1972, level = as.vector(LakeHuron), level_half = as.vector(LakeHuron) / 2)
+  h <- ggplot2::ggplot(huron, ggplot2::aes(y = year))
+
+  print(h + geom_ribbonh(ggplot2::aes(xmin=0, xmax=level)))
+  print(h + geom_areah(ggplot2::aes(x = level)))
+
+  print(
+    # Add aesthetic mappings
+    h +
+      geom_ribbonh(ggplot2::aes(xmin = level - 1, xmax = level + 1), fill = "grey70") +
+      geom_lineh(ggplot2::aes(x = level))
+  )
+
+  print(
+    # horizontal stacking by default
+    ggplot2::ggplot(
+      rbind(
+        data.frame(thing = "a", year = 1875:1972, level = as.vector(LakeHuron), stringsAsFactors = FALSE),
+        data.frame(thing = "b", year = 1875:1972, level = as.vector(LakeHuron), stringsAsFactors = FALSE)
+      ),
+      ggplot2::aes(y = year, x = level, fill = thing)
+    ) +
+      geom_areah()
+  )
+
+  expect_true(TRUE)
+})
+
+test_that("exaggerated geometries work", {
+
+  p <- ggplot2::ggplot(
+    data.frame(x = cumsum(runif(100)), y = cumsum(rnorm(100))),
+    ggplot2::aes(x, y)
+  ) +
+    ggplot2::geom_line()
+
+  print(
+    p +
+      geom_point_exaggerate(exaggerate_y = 2, exaggerate_x = 1.5, col = "red", size = 2) +
+      ggplot2::geom_point(ggplot2::aes(x = x * 1.5, y = y * 2), size = 0.5) +
+      ggplot2::labs(caption = "red and black dots aligned, x * 1.5, y * 2")
+  )
+
+  print(
+    p +
+      geom_point_exaggerate(exaggerate_y = 2, exaggerate_x = 1.5, col = "red", size = 2) +
+      ggplot2::labs(caption = "red dots don't train scales, x * 1.5, y * 2")
+  )
+
+  # regular geoms
+  print(
+    patchwork::wrap_plots(
+      p,
+      p + geom_point_exaggerate(exaggerate_y = 2, alpha = 0.3, col = "red"),
+      p + geom_line_exaggerate(exaggerate_y = 2, alpha = 0.3, col = "red"),
+      p + geom_area_exaggerate(exaggerate_y = 2, alpha = 0.3, fill = "red"),
+      ncol = 2
+    )
+  )
+
+  # flipped geoms
+  p2 <- ggplot2::ggplot(
+    data.frame(x = cumsum(runif(100)), y = cumsum(rnorm(100))),
+    ggplot2::aes(y, x)
+  ) +
+    geom_lineh()
+
+  print(
+    patchwork::wrap_plots(
+      p2,
+      p2 + geom_point_exaggerate(exaggerate_x = 2, alpha = 0.3, col = "red"),
+      p2 + geom_lineh_exaggerate(exaggerate_x = 2, alpha = 0.3, col = "red"),
+      p2 + geom_areah_exaggerate(exaggerate_x = 2, alpha = 0.3, fill = "red"),
+      ncol = 2
+    )
+  )
+
+  expect_true(TRUE)
+})
+
 test_that("facet_abundanceh? shortcuts work as expected", {
 
   print(
