@@ -17,6 +17,13 @@ You can install tidypaleo from github with:
 devtools::install_github("paleolimbot/tidypaleo")
 ```
 
+To get the most out of strat diagrams, you will also need the [patchwork package](https://github.com/thomasp85/patchwork) by \[@thomasp85\]((<https://github.com/thomasp85>). You can also install this from GitHub:
+
+``` r
+# install.packages("devtools")
+devtools::install_github("thomasp85/patchwork")
+```
+
 Examples
 --------
 
@@ -28,7 +35,6 @@ This package exposes a number of functions useful when creating stratigraphic di
 
 ``` r
 library(ggplot2)
-#> Warning: package 'ggplot2' was built under R version 3.4.4
 library(tidypaleo)
 theme_set(theme_bw())
 
@@ -60,13 +66,12 @@ alta_adm <- age_depth_model(
   depth = depth_cm,
   age = 1950 - age_weighted_mean_year_BP
 )
-#> Warning: package 'bindrcpp' was built under R version 3.4.4
 
 ggplot(alta_lake_geochem, aes(x = value, y = depth)) +
   geom_lineh() +
   geom_point() +
   scale_y_depth_age(alta_adm, age_name = "Age (Year AD)") +
-  facet_geochem_wrap(
+  facet_geochem_wraph(
     vars(param), 
     nrow = 1, 
     units = c(

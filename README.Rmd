@@ -45,7 +45,7 @@ devtools::install_github("thomasp85/patchwork")
 
 This package exposes a number of functions useful when creating stratigraphic diatrams, including `facet_abundanceh()`, which combines several other functions to help create stratigraphic plots using **ggplot2**. The `geom_col_segsh()` geometry draws horizontal sements, which are commonly used to show species abundance data.
 
-```{r keji-strat}
+```{r keji-strat, message=FALSE, warning=FALSE}
 library(ggplot2)
 library(tidypaleo)
 theme_set(theme_bw())
@@ -79,7 +79,7 @@ ggplot(alta_lake_geochem, aes(x = value, y = depth)) +
   geom_lineh() +
   geom_point() +
   scale_y_depth_age(alta_adm, age_name = "Age (Year AD)") +
-  facet_geochem_wrap(
+  facet_geochem_wraph(
     vars(param), 
     nrow = 1, 
     units = c(
