@@ -111,7 +111,7 @@ layer_zone_boundaries <- function(object, mapping, ..., linetype = 2, alpha = 0.
   )
 
   mutate_args <- quos(...)
-  zone_info <- tidyr::unnest(object, .data$zone_info)
+  zone_info <- tidyr::unnest(drop_list_cols(object,  "zone_info"), .data$zone_info)
   zone_info <- dplyr::mutate(zone_info, !!!mutate_args)
 
   if("x" %in% names(mapping)) {

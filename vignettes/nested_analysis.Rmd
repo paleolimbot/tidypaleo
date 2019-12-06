@@ -4,7 +4,7 @@ author: "Dewey Dunnington"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteIndexEntry{Nested analyses using tidypaleo}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -93,12 +93,13 @@ plot(coniss, main = location, xvar = qualifiers$depth, labels = "")
 ```
 
 ```{r}
-coniss %>% unnest(zone_info)
+coniss %>% select(location, zone_info) %>% unnest()
 ```
 
 ```{r}
 keji_nested %>%
   nested_chclust_coniss(n_groups = c(3, 2)) %>%
+  select(location, zone_info) %>% 
   unnest(zone_info)
 ```
 

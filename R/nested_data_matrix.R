@@ -363,3 +363,8 @@ check_problematic_names <- function(col_names, bad_names, data_name = ".data", a
     )
   }
 }
+
+drop_list_cols <- function(x, except = character(0)) {
+  list_cols <- setdiff(names(x)[vapply(x, is.list, logical(1))], except)
+  x[setdiff(names(x), list_cols)]
+}

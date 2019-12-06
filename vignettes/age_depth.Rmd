@@ -6,7 +6,7 @@ output:
   "rmarkdown::html_vignette":
     df_print: kable
 vignette: >
-  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteIndexEntry{Age-depth models using tidypaleo}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
