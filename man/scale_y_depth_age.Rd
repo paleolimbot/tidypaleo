@@ -7,17 +7,39 @@
 \alias{scale_x_age_depth}
 \title{Age-depth scales}
 \usage{
-scale_y_depth_age(model = NULL, age_name = "age", age_breaks = waiver(),
-  age_labels = waiver(), ...)
+scale_y_depth_age(
+  model = NULL,
+  age_name = "age",
+  age_breaks = waiver(),
+  age_labels = waiver(),
+  ...
+)
 
-scale_y_age_depth(model = NULL, reversed = FALSE, depth_name = "depth",
-  depth_breaks = waiver(), depth_labels = waiver(), ...)
+scale_y_age_depth(
+  model = NULL,
+  reversed = FALSE,
+  depth_name = "depth",
+  depth_breaks = waiver(),
+  depth_labels = waiver(),
+  ...
+)
 
-scale_x_depth_age(model = NULL, age_name = "age", age_breaks = waiver(),
-  age_labels = waiver(), ...)
+scale_x_depth_age(
+  model = NULL,
+  age_name = "age",
+  age_breaks = waiver(),
+  age_labels = waiver(),
+  ...
+)
 
-scale_x_age_depth(model = NULL, reversed = FALSE, depth_name = "depth",
-  depth_breaks = waiver(), depth_labels = waiver(), ...)
+scale_x_age_depth(
+  model = NULL,
+  reversed = FALSE,
+  depth_name = "depth",
+  depth_breaks = waiver(),
+  depth_labels = waiver(),
+  ...
+)
 }
 \arguments{
 \item{model}{An age-depth model, or NULL to suppress the second axis}

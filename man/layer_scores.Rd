@@ -5,12 +5,24 @@
 \alias{plot_layer_scores}
 \title{Add scores to a plot}
 \usage{
-layer_scores(object, mapping = NULL, which = "PC1", key = "param",
-  value = "value", scores_geom = list(ggplot2::geom_path(),
-  ggplot2::geom_point()), sequential_facets = TRUE)
+layer_scores(
+  object,
+  mapping = NULL,
+  which = "PC1",
+  key = "param",
+  value = "value",
+  scores_geom = list(ggplot2::geom_path(), ggplot2::geom_point()),
+  sequential_facets = TRUE
+)
 
-plot_layer_scores(object, mapping, which = "PC1", key = "param",
-  value = "value", ...)
+plot_layer_scores(
+  object,
+  mapping,
+  which = "PC1",
+  key = "param",
+  value = "value",
+  ...
+)
 }
 \arguments{
 \item{object}{A \link{nested_prcomp} or similar object}

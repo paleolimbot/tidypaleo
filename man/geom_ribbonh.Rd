@@ -9,15 +9,29 @@
 \title{Vertical ribbons and area plots}
 \format{An object of class \code{GeomRibbonh} (inherits from \code{Geom}, \code{ggproto}, \code{gg}) of length 6.}
 \usage{
-geom_ribbonh(mapping = NULL, data = NULL, stat = "identity",
-  position = "identity", ..., na.rm = FALSE, show.legend = NA,
-  inherit.aes = TRUE)
+geom_ribbonh(
+  mapping = NULL,
+  data = NULL,
+  stat = "identity",
+  position = "identity",
+  ...,
+  na.rm = FALSE,
+  show.legend = NA,
+  inherit.aes = TRUE
+)
 
 GeomRibbonh
 
-geom_areah(mapping = NULL, data = NULL, stat = "identity",
-  position = "stackv", na.rm = FALSE, show.legend = NA,
-  inherit.aes = TRUE, ...)
+geom_areah(
+  mapping = NULL,
+  data = NULL,
+  stat = "identity",
+  position = "stackv",
+  na.rm = FALSE,
+  show.legend = NA,
+  inherit.aes = TRUE,
+  ...
+)
 
 GeomAreah
 }

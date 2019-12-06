@@ -8,25 +8,70 @@
 \alias{geom_areah_exaggerate}
 \title{Exaggerated geometries that do not train scales}
 \usage{
-geom_point_exaggerate(mapping = NULL, data = NULL, stat = "identity",
-  position = "identity", ..., exaggerate_x = 1, exaggerate_y = 1,
-  na.rm = FALSE, show.legend = NA, inherit.aes = TRUE)
+geom_point_exaggerate(
+  mapping = NULL,
+  data = NULL,
+  stat = "identity",
+  position = "identity",
+  ...,
+  exaggerate_x = 1,
+  exaggerate_y = 1,
+  na.rm = FALSE,
+  show.legend = NA,
+  inherit.aes = TRUE
+)
 
-geom_line_exaggerate(mapping = NULL, data = NULL, stat = "identity",
-  position = "identity", ..., exaggerate_x = 1, exaggerate_y = 1,
-  na.rm = FALSE, show.legend = NA, inherit.aes = TRUE)
+geom_line_exaggerate(
+  mapping = NULL,
+  data = NULL,
+  stat = "identity",
+  position = "identity",
+  ...,
+  exaggerate_x = 1,
+  exaggerate_y = 1,
+  na.rm = FALSE,
+  show.legend = NA,
+  inherit.aes = TRUE
+)
 
-geom_lineh_exaggerate(mapping = NULL, data = NULL, stat = "identity",
-  position = "identity", ..., exaggerate_x = 1, exaggerate_y = 1,
-  na.rm = FALSE, show.legend = NA, inherit.aes = TRUE)
+geom_lineh_exaggerate(
+  mapping = NULL,
+  data = NULL,
+  stat = "identity",
+  position = "identity",
+  ...,
+  exaggerate_x = 1,
+  exaggerate_y = 1,
+  na.rm = FALSE,
+  show.legend = NA,
+  inherit.aes = TRUE
+)
 
-geom_area_exaggerate(mapping = NULL, data = NULL, stat = "identity",
-  position = "identity", ..., exaggerate_x = 1, exaggerate_y = 1,
-  na.rm = FALSE, show.legend = NA, inherit.aes = TRUE)
+geom_area_exaggerate(
+  mapping = NULL,
+  data = NULL,
+  stat = "identity",
+  position = "identity",
+  ...,
+  exaggerate_x = 1,
+  exaggerate_y = 1,
+  na.rm = FALSE,
+  show.legend = NA,
+  inherit.aes = TRUE
+)
 
-geom_areah_exaggerate(mapping = NULL, data = NULL, stat = "identity",
-  position = "identity", ..., exaggerate_x = 1, exaggerate_y = 1,
-  na.rm = FALSE, show.legend = NA, inherit.aes = TRUE)
+geom_areah_exaggerate(
+  mapping = NULL,
+  data = NULL,
+  stat = "identity",
+  position = "identity",
+  ...,
+  exaggerate_x = 1,
+  exaggerate_y = 1,
+  na.rm = FALSE,
+  show.legend = NA,
+  inherit.aes = TRUE
+)
 }
 \arguments{
 \item{mapping, data, stat, position, na.rm, show.legend, inherit.aes, ...}{See

@@ -6,8 +6,7 @@
 \alias{predict_age}
 \title{Predict age and depth values}
 \usage{
-\method{predict}{age_depth_model}(object, .data = NULL, depth = NULL,
-  age = NULL, ...)
+\method{predict}{age_depth_model}(object, .data = NULL, depth = NULL, age = NULL, ...)
 
 predict_depth(object, age)
 

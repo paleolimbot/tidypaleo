@@ -6,13 +6,28 @@
 \alias{layer_zone_boundaries}
 \title{Add a dendrogram as a layer or facet}
 \usage{
-layer_dendrogram(object, mapping, ..., colour = "black", size = 0.5,
-  linetype = 1, alpha = NA, sequential_facets = TRUE)
+layer_dendrogram(
+  object,
+  mapping,
+  ...,
+  colour = "black",
+  size = 0.5,
+  linetype = 1,
+  alpha = NA,
+  sequential_facets = TRUE
+)
 
 plot_layer_dendrogram(object, mapping, ..., panel_label = "CONISS")
 
-layer_zone_boundaries(object, mapping, ..., linetype = 2, alpha = 0.7,
-  colour = "black", size = 0.5)
+layer_zone_boundaries(
+  object,
+  mapping,
+  ...,
+  linetype = 2,
+  alpha = 0.7,
+  colour = "black",
+  size = 0.5
+)
 }
 \arguments{
 \item{object}{A \link{nested_hclust} object.}

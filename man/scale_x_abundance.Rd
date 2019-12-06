@@ -5,11 +5,21 @@
 \alias{scale_y_abundance}
 \title{Scales for relative abundance values}
 \usage{
-scale_x_abundance(..., limits = c(0, NA), breaks = seq(10, 90, 30),
-  minor_breaks = seq(0, 100, 10), expand = c(0, 1))
+scale_x_abundance(
+  ...,
+  limits = c(0, NA),
+  breaks = seq(10, 90, 30),
+  minor_breaks = seq(0, 100, 10),
+  expand = c(0, 1)
+)
 
-scale_y_abundance(..., limits = c(0, NA), breaks = seq(10, 90, 30),
-  minor_breaks = seq(0, 100, 10), expand = c(0, 1))
+scale_y_abundance(
+  ...,
+  limits = c(0, NA),
+  breaks = seq(10, 90, 30),
+  minor_breaks = seq(0, 100, 10),
+  expand = c(0, 1)
+)
 }
 \arguments{
 \item{...}{Passed to \link[ggplot2]{scale_y_continuous} or \link[ggplot2]{scale_x_continuous}}

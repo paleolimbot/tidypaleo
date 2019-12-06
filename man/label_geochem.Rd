@@ -4,10 +4,15 @@
 \alias{label_geochem}
 \title{Geochem facet labelers}
 \usage{
-label_geochem(labels, units = character(0), default_units = NA_character_,
-  geochem_facet = 1, renamers = c(`^d([0-9]+)([HCNOS])$` =
-  "paste(delta ^ \\\\1, \\\\2)", `^210Pb$` = "paste({}^210, Pb)", `^Pb210$` =
-  "paste({}^210, Pb)"), multi_line = TRUE)
+label_geochem(
+  labels,
+  units = character(0),
+  default_units = NA_character_,
+  geochem_facet = 1,
+  renamers = c(`^d([0-9]+)([HCNOS])$` = "paste(delta ^ \\\\1, \\\\2)", `^210Pb$` =
+    "paste({}^210, Pb)", `^Pb210$` = "paste({}^210, Pb)"),
+  multi_line = TRUE
+)
 }
 \arguments{
 \item{labels}{A data.frame of facet label values}

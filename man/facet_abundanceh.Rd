@@ -9,39 +9,80 @@
 \alias{facet_geochem_gridh}
 \title{Facet for relative abundance data}
 \usage{
-facet_abundanceh(taxon, grouping = NULL, rotate_facet_labels = 45,
-  labeller = label_species, scales = "free_x", space = "free_x",
+facet_abundanceh(
+  taxon,
+  grouping = NULL,
+  rotate_facet_labels = 45,
+  labeller = label_species,
+  scales = "free_x",
+  space = "free_x",
   dont_italicize = c("\\\\(.*?\\\\)", "spp?\\\\.", "-complex", "[Oo]ther"),
-  ...)
+  ...
+)
 
-facet_abundance(taxon, grouping = NULL, rotate_facet_labels = 0,
-  labeller = label_species, scales = "free_y", space = "free_y",
+facet_abundance(
+  taxon,
+  grouping = NULL,
+  rotate_facet_labels = 0,
+  labeller = label_species,
+  scales = "free_y",
+  space = "free_y",
   dont_italicize = c("\\\\(.*?\\\\)", "spp?\\\\.", "-complex", "[Oo]ther"),
-  ...)
+  ...
+)
 
-facet_geochem_wraph(param, grouping = NULL, rotate_axis_labels = 90,
-  scales = "free_x", labeller = label_geochem,
-  renamers = c(`^d([0-9]+)([HCNOS])$` = "paste(delta ^ \\\\1, \\\\2)",
-  `^210Pb$` = "paste({}^210, Pb)", `^Pb210$` = "paste({}^210, Pb)"),
-  units = character(0), default_units = NA_character_, ...)
+facet_geochem_wraph(
+  param,
+  grouping = NULL,
+  rotate_axis_labels = 90,
+  scales = "free_x",
+  labeller = label_geochem,
+  renamers = c(`^d([0-9]+)([HCNOS])$` = "paste(delta ^ \\\\1, \\\\2)", `^210Pb$` =
+    "paste({}^210, Pb)", `^Pb210$` = "paste({}^210, Pb)"),
+  units = character(0),
+  default_units = NA_character_,
+  ...
+)
 
-facet_geochem_wrap(param, grouping = NULL, scales = "free_y",
-  labeller = label_geochem, renamers = c(`^d([0-9]+)([HCNOS])$` =
-  "paste(delta ^ \\\\1, \\\\2)", `^210Pb$` = "paste({}^210, Pb)", `^Pb210$` =
-  "paste({}^210, Pb)"), units = character(0), default_units = NA_character_,
-  ...)
+facet_geochem_wrap(
+  param,
+  grouping = NULL,
+  scales = "free_y",
+  labeller = label_geochem,
+  renamers = c(`^d([0-9]+)([HCNOS])$` = "paste(delta ^ \\\\1, \\\\2)", `^210Pb$` =
+    "paste({}^210, Pb)", `^Pb210$` = "paste({}^210, Pb)"),
+  units = character(0),
+  default_units = NA_character_,
+  ...
+)
 
-facet_geochem_grid(param, grouping = NULL, rotate_axis_labels = 0,
-  scales = "free_y", space = "fixed", labeller = label_geochem,
-  renamers = c(`^d([0-9]+)([HCNOS])$` = "paste(delta ^ \\\\1, \\\\2)",
-  `^210Pb$` = "paste({}^210, Pb)", `^Pb210$` = "paste({}^210, Pb)"),
-  units = character(0), default_units = NA_character_, ...)
+facet_geochem_grid(
+  param,
+  grouping = NULL,
+  rotate_axis_labels = 0,
+  scales = "free_y",
+  space = "fixed",
+  labeller = label_geochem,
+  renamers = c(`^d([0-9]+)([HCNOS])$` = "paste(delta ^ \\\\1, \\\\2)", `^210Pb$` =
+    "paste({}^210, Pb)", `^Pb210$` = "paste({}^210, Pb)"),
+  units = character(0),
+  default_units = NA_character_,
+  ...
+)
 
-facet_geochem_gridh(param, grouping = NULL, rotate_axis_labels = 90,
-  scales = "free_x", space = "fixed", labeller = label_geochem,
-  renamers = c(`^d([0-9]+)([HCNOS])$` = "paste(delta ^ \\\\1, \\\\2)",
-  `^210Pb$` = "paste({}^210, Pb)", `^Pb210$` = "paste({}^210, Pb)"),
-  units = character(0), default_units = NA_character_, ...)
+facet_geochem_gridh(
+  param,
+  grouping = NULL,
+  rotate_axis_labels = 90,
+  scales = "free_x",
+  space = "fixed",
+  labeller = label_geochem,
+  renamers = c(`^d([0-9]+)([HCNOS])$` = "paste(delta ^ \\\\1, \\\\2)", `^210Pb$` =
+    "paste({}^210, Pb)", `^Pb210$` = "paste({}^210, Pb)"),
+  units = character(0),
+  default_units = NA_character_,
+  ...
+)
 }
 \arguments{
 \item{taxon, param}{A call to \link[ggplot2]{vars}, defining the column that identifies the taxon (parameter).}

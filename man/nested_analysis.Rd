@@ -4,8 +4,14 @@
 \alias{nested_analysis}
 \title{Perform an analysis on a nested data matrix}
 \usage{
-nested_analysis(.data, .fun, ..., .output_column = "model",
-  .reserved_names = NULL, .env = parent.frame())
+nested_analysis(
+  .data,
+  .fun,
+  ...,
+  .output_column = "model",
+  .reserved_names = NULL,
+  .env = parent.frame()
+)
 }
 \arguments{
 \item{.data}{A data frame with a list column of data frames, possibly created using

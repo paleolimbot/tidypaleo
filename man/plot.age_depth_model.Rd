@@ -4,8 +4,15 @@
 \alias{plot.age_depth_model}
 \title{Plot an age depth model using base graphics}
 \usage{
-\method{plot}{age_depth_model}(x, xlab = "depth", ylab = "age",
-  xlim = NULL, ylim = NULL, add = FALSE, ...)
+\method{plot}{age_depth_model}(
+  x,
+  xlab = "depth",
+  ylab = "age",
+  xlim = NULL,
+  ylim = NULL,
+  add = FALSE,
+  ...
+)
 }
 \arguments{
 \item{x}{An \link{age_depth_model}}

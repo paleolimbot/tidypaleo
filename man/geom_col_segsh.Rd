@@ -10,15 +10,37 @@
 \title{Useful geometries for strat diagrams}
 \format{An object of class \code{GeomColSegsh} (inherits from \code{GeomSegment}, \code{Geom}, \code{ggproto}, \code{gg}) of length 4.}
 \usage{
-geom_col_segsh(mapping = NULL, data = NULL, stat = "identity",
-  position = "identity", ..., xend = 0, arrow = NULL, arrow.fill = NULL,
-  lineend = "butt", linejoin = "round", na.rm = FALSE, show.legend = NA,
-  inherit.aes = TRUE)
+geom_col_segsh(
+  mapping = NULL,
+  data = NULL,
+  stat = "identity",
+  position = "identity",
+  ...,
+  xend = 0,
+  arrow = NULL,
+  arrow.fill = NULL,
+  lineend = "butt",
+  linejoin = "round",
+  na.rm = FALSE,
+  show.legend = NA,
+  inherit.aes = TRUE
+)
 
-geom_col_segs(mapping = NULL, data = NULL, stat = "identity",
-  position = "identity", ..., yend = 0, arrow = NULL, arrow.fill = NULL,
-  lineend = "butt", linejoin = "round", na.rm = FALSE, show.legend = NA,
-  inherit.aes = TRUE)
+geom_col_segs(
+  mapping = NULL,
+  data = NULL,
+  stat = "identity",
+  position = "identity",
+  ...,
+  yend = 0,
+  arrow = NULL,
+  arrow.fill = NULL,
+  lineend = "butt",
+  linejoin = "round",
+  na.rm = FALSE,
+  show.legend = NA,
+  inherit.aes = TRUE
+)
 
 GeomColSegsh
 

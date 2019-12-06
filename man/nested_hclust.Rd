@@ -6,17 +6,34 @@
 \alias{nested_chclust_coniss}
 \title{Nested (Constrained) hierarchical clustering}
 \usage{
-nested_hclust(.data, data_column = "data", qualifiers_column = "qualifiers",
-  distance_fun = stats::dist, n_groups = NULL, ..., .fun = stats::hclust,
-  .reserved_names = character(0))
+nested_hclust(
+  .data,
+  data_column = "data",
+  qualifiers_column = "qualifiers",
+  distance_fun = stats::dist,
+  n_groups = NULL,
+  ...,
+  .fun = stats::hclust,
+  .reserved_names = character(0)
+)
 
-nested_chclust_conslink(.data, data_column = "data",
-  qualifiers_column = "qualifiers", distance_fun = stats::dist,
-  n_groups = NULL, ...)
+nested_chclust_conslink(
+  .data,
+  data_column = "data",
+  qualifiers_column = "qualifiers",
+  distance_fun = stats::dist,
+  n_groups = NULL,
+  ...
+)
 
-nested_chclust_coniss(.data, data_column = "data",
-  qualifiers_column = "qualifiers", distance_fun = stats::dist,
-  n_groups = NULL, ...)
+nested_chclust_coniss(
+  .data,
+  data_column = "data",
+  qualifiers_column = "qualifiers",
+  distance_fun = stats::dist,
+  n_groups = NULL,
+  ...
+)
 }
 \arguments{
 \item{.data}{A data frame with a list column of data frames, possibly created using

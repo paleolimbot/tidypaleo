@@ -5,8 +5,11 @@
 \alias{rotated_axis_labels}
 \title{Common plot modifications for stratigraphic plots}
 \usage{
-rotated_facet_labels(angle = 45, direction = "x",
-  remove_label_background = TRUE)
+rotated_facet_labels(
+  angle = 45,
+  direction = "x",
+  remove_label_background = TRUE
+)
 
 rotated_axis_labels(angle = 90, direction = "x")
 }

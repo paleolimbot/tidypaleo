@@ -6,11 +6,17 @@
 \alias{biplot.nested_prcomp}
 \title{Plot a nested analysis}
 \usage{
-\method{plot}{nested_analysis}(x, ..., main = "", nrow = NULL,
-  ncol = NULL)
+\method{plot}{nested_analysis}(x, ..., main = "", nrow = NULL, ncol = NULL)
 
-plot_nested_analysis(.x, .fun, ..., nrow = NULL, ncol = NULL,
-  .model_column = .data$model, .output_column = NULL)
+plot_nested_analysis(
+  .x,
+  .fun,
+  ...,
+  nrow = NULL,
+  ncol = NULL,
+  .model_column = .data$model,
+  .output_column = NULL
+)
 
 \method{biplot}{nested_prcomp}(x, ..., nrow = NULL, ncol = NULL)
 }

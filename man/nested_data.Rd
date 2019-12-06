@@ -4,9 +4,17 @@
 \alias{nested_data}
 \title{Prepare a parameter-long data frame for statistical analysis}
 \usage{
-nested_data(.data, qualifiers = NULL, key = NULL, value, fill = NA,
-  select_if = ~TRUE, filter_all = any_vars(TRUE), trans = identity,
-  groups = NULL)
+nested_data(
+  .data,
+  qualifiers = NULL,
+  key = NULL,
+  value,
+  fill = NA,
+  select_if = ~TRUE,
+  filter_all = any_vars(TRUE),
+  trans = identity,
+  groups = NULL
+)
 }
 \arguments{
 \item{.data}{Data in parameter-long form}

@@ -4,9 +4,16 @@
 \alias{geom_lineh}
 \title{Connect observations in the vertical direction}
 \usage{
-geom_lineh(mapping = NULL, data = NULL, stat = "identity",
-  position = "identity", na.rm = FALSE, show.legend = NA,
-  inherit.aes = TRUE, ...)
+geom_lineh(
+  mapping = NULL,
+  data = NULL,
+  stat = "identity",
+  position = "identity",
+  na.rm = FALSE,
+  show.legend = NA,
+  inherit.aes = TRUE,
+  ...
+)
 }
 \arguments{
 \item{mapping, data, stat, position, na.rm, show.legend, inherit.aes, ...}{See
