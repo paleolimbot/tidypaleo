@@ -14,7 +14,6 @@ Suggests: testthat,
     knitr,
     mudata2,
     rmarkdown,
-    rioja,
     vegan,
     glue,
     ggrepel,
@@ -38,5 +37,6 @@ Imports: rlang,
     graphics,
     grDevices,
     tidyr,
-    digest
+    digest,
+    rioja
 VignetteBuilder: knitr
