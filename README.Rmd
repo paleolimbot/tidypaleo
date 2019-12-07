@@ -1,21 +1,26 @@
 ---
-output: 
-  github_document:
-    df_print: kable
+output: github_document
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-[![Travis-CI Build Status](https://travis-ci.org/paleolimbot/tidypaleo.svg?branch=master)](https://travis-ci.org/paleolimbot/tidypaleo) [![Coverage Status](https://img.shields.io/codecov/c/github/paleolimbot/tidypaleo/master.svg)](https://codecov.io/github/paleolimbot/tidypaleo?branch=master)
-
-```{r, echo = FALSE}
+```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  fig.path = "README-",
+  fig.path = "man/figures/README-",
+  out.width = "100%",
   dpi = 300
 )
 ```
+
+# tidypaleo
+
+<!-- badges: start -->
+[![Travis-CI Build Status](https://travis-ci.org/paleolimbot/tidypaleo.svg?branch=master)](https://travis-ci.org/paleolimbot/tidypaleo)
+[![Coverage Status](https://img.shields.io/codecov/c/github/paleolimbot/tidypaleo/master.svg)](https://codecov.io/github/paleolimbot/tidypaleo?branch=master)
+[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+<!-- badges: end -->
 
 # tidypaleo
 
@@ -26,20 +31,11 @@ Working with multi-proxy paleo-archive data is inherently difficult. There are m
 You can install tidypaleo from github with:
 
 ```{r gh-installation, eval = FALSE}
-# install.packages("devtools")
-devtools::install_github("paleolimbot/tidypaleo")
-```
-
-To get the most out of strat diagrams, you will also need the [patchwork package](https://github.com/thomasp85/patchwork) by [\@thomasp85]((https://github.com/thomasp85). You can also install this from GitHub:
-
-```{r gh-installation-patchwork, eval = FALSE}
-# install.packages("devtools")
-devtools::install_github("thomasp85/patchwork")
+# install.packages("remotes")
+remotes::install_github("paleolimbot/tidypaleo")
 ```
 
 ## Examples
-
-### Age-depth models
 
 ### Stratigraphic diagrams
 
@@ -55,40 +51,4 @@ ggplot(keji_lakes_plottable, aes(x = rel_abund, y = depth)) +
   scale_y_reverse() +
   facet_abundanceh(vars(taxon), grouping = vars(location)) +
   labs(y = "Depth (cm)")
-```
-
-Relative abundance data with a discrete y axis can be drawn using `geom_colh()` and `position_dodgev()` from the **ggstance** package.
-
-```{r halifax-lakes-plot}
-ggplot(halifax_lakes_plottable, aes(x = rel_abund, y = location, fill = sample_type)) +
-  geom_colh(width = 0.5, position = "dodgev") +
-  facet_abundanceh(vars(taxon)) +
-  labs(fill = NULL, y = NULL)
-```
-
-Age depth models can be constructed (using `age_depth_model()`) and used to draw second axes on stratigraphic plots (using `scale_y_depth_age()`). The `facet_geochem()` function wraps `facet_wrap()`, and includes a labeller (`label_geochem`) that can add units, and automatically renames `d15N`, `d13C` and `d18O` such that they are labelled correctly.
-
-```{r alta-strat}
-alta_adm <- age_depth_model(
-  alta_lake_bacon_ages, 
-  depth = depth_cm,
-  age = 1950 - age_weighted_mean_year_BP
-)
-
-ggplot(alta_lake_geochem, aes(x = value, y = depth)) +
-  geom_lineh() +
-  geom_point() +
-  scale_y_depth_age(alta_adm, age_name = "Age (Year AD)") +
-  facet_geochem_wraph(
-    vars(param), 
-    nrow = 1, 
-    units = c(
-      C = "%",
-      Cu = "ppm",
-      Ti = "ppm",
-      d15N = "‰",
-      d13C = "‰"
-    )
-  ) +
-  labs(y = "Depth (cm)", x = NULL)
 ```
