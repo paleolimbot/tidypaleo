@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Predict age and depth values — predict.age_depth_model • tidypaleo</title>
+<title>Transforms — age_depth_interpolate • tidypaleo</title>
 
 
 <!-- jquery -->
@@ -35,8 +35,8 @@
 
 
 
-<meta property="og:title" content="Predict age and depth values — predict.age_depth_model" />
-<meta property="og:description" content="Predict age and depth values" />
+<meta property="og:title" content="Transforms — age_depth_interpolate" />
+<meta property="og:description" content="Transforms" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -123,47 +123,51 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Predict age and depth values</h1>
+    <h1>Transforms</h1>
     <small class="dont-index">Source: <a href='https://github.com/paleolimbot/tidypaleo/blob/master/R/age_depth_model.R'><code>R/age_depth_model.R</code></a></small>
-    <div class="hidden name"><code>predict.age_depth_model.Rd</code></div>
+    <div class="hidden name"><code>age_depth_interpolate.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Predict age and depth values</p>
+    <p>Transforms</p>
     </div>
 
-    <pre class="usage"><span class='co'># S3 method for age_depth_model</span>
-<span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span>(<span class='no'>object</span>, <span class='kw'>.data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>depth</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>age</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>age_depth_interpolate</span>(<span class='no'>x</span>, <span class='no'>y</span>)
 
-<span class='fu'>predict_depth</span>(<span class='no'>object</span>, <span class='no'>age</span>)
+<span class='fu'>age_depth_extrapolate</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>x0</span> <span class='kw'>=</span> <span class='no'>last</span>, <span class='kw'>y0</span> <span class='kw'>=</span> <span class='no'>last</span>, <span class='kw'>slope</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
 
-<span class='fu'>predict_age</span>(<span class='no'>object</span>, <span class='no'>depth</span>)</pre>
+<span class='fu'>age_depth_exact</span>(<span class='no'>x</span>, <span class='no'>y</span>)
+
+<span class='fu'>age_depth_na</span>(<span class='no'>x</span>, <span class='no'>y</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>object</th>
-      <td><p>An <a href='age_depth_model.html'>age_depth_model</a> object</p></td>
+      <th>x</th>
+      <td><p>A paired vector of x values</p></td>
     </tr>
     <tr>
-      <th>.data</th>
-      <td><p>Optional input data frame</p></td>
+      <th>y</th>
+      <td><p>A paired vector of y values</p></td>
     </tr>
     <tr>
-      <th>depth, age</th>
-      <td><p>Specify exactly one of these to predict the other.</p></td>
+      <th>x0</th>
+      <td><p>The x value to anchor the transform</p></td>
     </tr>
     <tr>
-      <th>...</th>
-      <td><p>Unused</p></td>
+      <th>y0</th>
+      <td><p>The y value to anchor the transform</p></td>
+    </tr>
+    <tr>
+      <th>slope</th>
+      <td><p>The slope (in units of y/x) to use for the transform</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A data frame with the same number of observations as the input age or
-depth vector.</p>
+    <p>A list with component functions <code>trans</code> and <code>inverse</code></p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

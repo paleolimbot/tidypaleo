@@ -138,12 +138,12 @@
   <span class='no'>age</span>,
   <span class='kw'>age_min</span> <span class='kw'>=</span> <span class='fl'>NA_real_</span>,
   <span class='kw'>age_max</span> <span class='kw'>=</span> <span class='fl'>NA_real_</span>,
-  <span class='kw'>interpolate_age</span> <span class='kw'>=</span> <span class='no'>trans_interpolate</span>,
-  <span class='kw'>extrapolate_age_below</span> <span class='kw'>=</span> ~<span class='fu'><a href='trans_interpolate.html'>trans_average</a></span>(<span class='no'>.x</span>, <span class='no'>.y</span>, <span class='kw'>x0</span> <span class='kw'>=</span> <span class='no'>last</span>, <span class='kw'>y0</span> <span class='kw'>=</span> <span class='no'>last</span>),
-  <span class='kw'>extrapolate_age_above</span> <span class='kw'>=</span> ~<span class='fu'><a href='trans_interpolate.html'>trans_average</a></span>(<span class='no'>.x</span>, <span class='no'>.y</span>, <span class='kw'>x0</span> <span class='kw'>=</span> <span class='no'>first</span>, <span class='kw'>y0</span> <span class='kw'>=</span> <span class='no'>first</span>),
-  <span class='kw'>interpolate_age_limits</span> <span class='kw'>=</span> <span class='no'>trans_exact</span>,
-  <span class='kw'>extrapolate_age_limits_below</span> <span class='kw'>=</span> <span class='no'>trans_na</span>,
-  <span class='kw'>extrapolate_age_limits_above</span> <span class='kw'>=</span> <span class='no'>trans_na</span>
+  <span class='kw'>interpolate_age</span> <span class='kw'>=</span> <span class='no'>age_depth_interpolate</span>,
+  <span class='kw'>extrapolate_age_below</span> <span class='kw'>=</span> ~<span class='fu'><a href='age_depth_interpolate.html'>age_depth_extrapolate</a></span>(<span class='no'>.x</span>, <span class='no'>.y</span>, <span class='kw'>x0</span> <span class='kw'>=</span> <span class='no'>last</span>, <span class='kw'>y0</span> <span class='kw'>=</span> <span class='no'>last</span>),
+  <span class='kw'>extrapolate_age_above</span> <span class='kw'>=</span> ~<span class='fu'><a href='age_depth_interpolate.html'>age_depth_extrapolate</a></span>(<span class='no'>.x</span>, <span class='no'>.y</span>, <span class='kw'>x0</span> <span class='kw'>=</span> <span class='no'>first</span>, <span class='kw'>y0</span> <span class='kw'>=</span> <span class='no'>first</span>),
+  <span class='kw'>interpolate_age_limits</span> <span class='kw'>=</span> <span class='no'>age_depth_exact</span>,
+  <span class='kw'>extrapolate_age_limits_below</span> <span class='kw'>=</span> <span class='no'>age_depth_na</span>,
+  <span class='kw'>extrapolate_age_limits_above</span> <span class='kw'>=</span> <span class='no'>age_depth_na</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>

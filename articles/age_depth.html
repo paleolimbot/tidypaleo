@@ -143,10 +143,10 @@
 <a class="sourceLine" id="cb3-15" data-line-number="15"><span class="co">#&gt; # … with 13 more rows</span></a></code></pre></div>
 <p>The default behaviour is to interpolate within known ages/depths, and extrapolate using a linear fit of ages/depths. These can be specified using transform functions, which take XY data and produce forward and inverse predictions based on them. The default call is:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw"><a href="../reference/age_depth_model.html">age_depth_model</a></span>(</a>
-<a class="sourceLine" id="cb4-2" data-line-number="2">  <span class="dt">.data =</span> <span class="ot">NULL</span>, depth, age, <span class="dt">age_min =</span> <span class="ot">NA_real_</span>,</a>
-<a class="sourceLine" id="cb4-3" data-line-number="3">  <span class="dt">age_max =</span> <span class="ot">NA_real_</span>, <span class="dt">interpolate_age =</span> trans_interpolate,</a>
-<a class="sourceLine" id="cb4-4" data-line-number="4">  <span class="dt">extrapolate_age_below =</span> <span class="op">~</span><span class="kw"><a href="../reference/trans_interpolate.html">trans_average</a></span>(.x, .y, <span class="dt">x0 =</span> last, <span class="dt">y0 =</span> last),</a>
-<a class="sourceLine" id="cb4-5" data-line-number="5">  <span class="dt">extrapolate_age_above =</span> <span class="op">~</span><span class="kw"><a href="../reference/trans_interpolate.html">trans_average</a></span>(.x, .y, <span class="dt">x0 =</span> first, <span class="dt">y0 =</span> first),</a>
+<a class="sourceLine" id="cb4-2" data-line-number="2">  ...,</a>
+<a class="sourceLine" id="cb4-3" data-line-number="3">  <span class="dt">interpolate_age =</span> age_depth_interpolate,</a>
+<a class="sourceLine" id="cb4-4" data-line-number="4">  <span class="dt">extrapolate_age_below =</span> <span class="op">~</span><span class="kw"><a href="../reference/age_depth_interpolate.html">age_depth_extrapolate</a></span>(.x, .y, <span class="dt">x0 =</span> last, <span class="dt">y0 =</span> last),</a>
+<a class="sourceLine" id="cb4-5" data-line-number="5">  <span class="dt">extrapolate_age_above =</span> <span class="op">~</span><span class="kw"><a href="../reference/age_depth_interpolate.html">age_depth_extrapolate</a></span>(.x, .y, <span class="dt">x0 =</span> first, <span class="dt">y0 =</span> first),</a>
 <a class="sourceLine" id="cb4-6" data-line-number="6">  <span class="dt">interpolate_age_limits =</span> trans_exact,</a>
 <a class="sourceLine" id="cb4-7" data-line-number="7">  <span class="dt">extrapolate_age_limits_below =</span> trans_na,</a>
 <a class="sourceLine" id="cb4-8" data-line-number="8">  <span class="dt">extrapolate_age_limits_above =</span> trans_na</a>
@@ -157,10 +157,10 @@
 <a class="sourceLine" id="cb5-3" data-line-number="3">  <span class="dt">depth =</span> depth_cm, <span class="dt">age =</span> age_year_ad,</a>
 <a class="sourceLine" id="cb5-4" data-line-number="4">  <span class="dt">age_max =</span> age_year_ad <span class="op">+</span><span class="st"> </span>age_error_yr, </a>
 <a class="sourceLine" id="cb5-5" data-line-number="5">  <span class="dt">age_min =</span> age_year_ad <span class="op">-</span><span class="st"> </span>age_error_yr,</a>
-<a class="sourceLine" id="cb5-6" data-line-number="6">  <span class="dt">extrapolate_age_below =</span> <span class="op">~</span><span class="kw"><a href="../reference/trans_interpolate.html">trans_average</a></span>(</a>
+<a class="sourceLine" id="cb5-6" data-line-number="6">  <span class="dt">extrapolate_age_below =</span> <span class="op">~</span><span class="kw"><a href="../reference/age_depth_interpolate.html">age_depth_extrapolate</a></span>(</a>
 <a class="sourceLine" id="cb5-7" data-line-number="7">    <span class="kw"><a href="https://rdrr.io/r/utils/head.html">tail</a></span>(.x, <span class="dv">3</span>), <span class="kw"><a href="https://rdrr.io/r/utils/head.html">tail</a></span>(.y, <span class="dv">3</span>), <span class="dt">x0 =</span> dplyr<span class="op">::</span>last, <span class="dt">y0 =</span> dplyr<span class="op">::</span>last</a>
 <a class="sourceLine" id="cb5-8" data-line-number="8">  ),</a>
-<a class="sourceLine" id="cb5-9" data-line-number="9">  <span class="dt">extrapolate_age_above =</span> <span class="op">~</span><span class="kw"><a href="../reference/trans_interpolate.html">trans_average</a></span>(</a>
+<a class="sourceLine" id="cb5-9" data-line-number="9">  <span class="dt">extrapolate_age_above =</span> <span class="op">~</span><span class="kw"><a href="../reference/age_depth_interpolate.html">age_depth_extrapolate</a></span>(</a>
 <a class="sourceLine" id="cb5-10" data-line-number="10">    <span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(.x, <span class="dv">3</span>), <span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(.y, <span class="dv">3</span>), <span class="dt">x0 =</span> dplyr<span class="op">::</span>first, <span class="dt">y0 =</span> dplyr<span class="op">::</span>first</a>
 <a class="sourceLine" id="cb5-11" data-line-number="11">  )</a>
 <a class="sourceLine" id="cb5-12" data-line-number="12">)</a>
