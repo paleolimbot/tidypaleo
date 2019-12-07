@@ -13,12 +13,10 @@ Status](https://img.shields.io/codecov/c/github/paleolimbot/tidypaleo/master.svg
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 <!-- badges: end -->
 
-# tidypaleo
-
-Working with multi-proxy paleo-archive data is inherently difficult.
-There are multiple locations, multiple parameters, and a lot of
+Working with multi-proxy paleo-archive data can be difficult. There are
+multiple locations, multiple parameters, and a lot of
 discipline-specific norms for plot layout and notation. This package
-simplifies a few workflows to promote the use of R and reproducible
+simplifies a few workflows to promote the use of R for reproducible
 documents in paleo-based studies.
 
 ## Installation

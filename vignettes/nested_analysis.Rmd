@@ -54,7 +54,7 @@ alta_nested
 
 ```{r}
 alta_nested %>% unnest(data)
-alta_nested %>% unnest(qualifiers, data)
+alta_nested %>% unnest(c(qualifiers, data))
 ```
 
 ## Principal components analysis
@@ -66,7 +66,7 @@ pca
 
 ```{r}
 plot(pca)
-pca %>% unnest(qualifiers, scores)
+pca %>% unnest(c(qualifiers, scores))
 pca %>% unnest(variance)
 pca %>% unnest(loadings)
 ```
@@ -78,7 +78,7 @@ keji_nested <- keji_lakes_plottable %>%
   group_by(location) %>%
   nested_data(qualifiers = depth, key = taxon, value = rel_abund)
 
-keji_nested %>% unnest(qualifiers, data)
+keji_nested %>% unnest(c(qualifiers, data))
 ```
 
 ```{r}
@@ -109,7 +109,7 @@ keji_nested %>%
 halifax_nested <- halifax_lakes_plottable %>%
   nested_data(c(location, sample_type), taxon, rel_abund, fill = 0)
 
-halifax_nested %>% unnest(qualifiers, data)
+halifax_nested %>% unnest(c(qualifiers, data))
 ```
 
 ```{r}
