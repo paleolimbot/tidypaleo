@@ -26,7 +26,7 @@ nested_analysis(
 \item{.reserved_names}{Names that should not be allowed as columns in any
 data frame within this object}
 
-\item{.env}{Passed to \link[rlang]{as_function}}
+\item{.env}{Passed to \link[rlang:as_function]{as_function}}
 }
 \value{
 .data with an additional list column of fun output

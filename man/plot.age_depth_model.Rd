@@ -23,7 +23,7 @@
 
 \item{add}{Pass TRUE to skip creating a new plot}
 
-\item{...}{Passed to \link[graphics]{points} to customize points display}
+\item{...}{Passed to \link[graphics:points]{points} to customize points display}
 }
 \description{
 Plot an age depth model using base graphics

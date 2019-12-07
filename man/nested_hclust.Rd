@@ -43,11 +43,11 @@ nested_chclust_coniss(
 
 \item{qualifiers_column}{The column that contains the qualifiers}
 
-\item{distance_fun}{A distance function like \link[stats]{dist} or \link[vegan]{vegdist}.}
+\item{distance_fun}{A distance function like \link[stats:dist]{dist} or \link[vegan:vegdist]{vegdist}.}
 
 \item{n_groups}{The number of groups to use (can be a vector or expression using vars in .data)}
 
-\item{...}{Passed to \link[rioja]{chclust} or \link[stats]{hclust}.}
+\item{...}{Passed to \link[rioja:chclust]{chclust} or \link[stats:hclust]{hclust}.}
 
 \item{.fun}{Function powering the clustering. Must return an hclust object of some kind.}
 
@@ -58,7 +58,7 @@ data frame within this object}
 .data with additional columns
 }
 \description{
-Powered by \link[rioja]{chclust} and \link[stats]{hclust}; broken stick using \link[rioja]{bstick}.
+Powered by \link[rioja:chclust]{chclust} and \link[stats:hclust]{hclust}; broken stick using \link[rioja:bstick]{bstick}.
 }
 \examples{
 library(tidyr)
@@ -97,5 +97,5 @@ analysis by the method of incremental sum of squares. Computers & Geosciences, 1
 Juggins, S. (2017) rioja: Analysis of Quaternary Science Data, R package version (0.9-15.1).
 (\url{http://cran.r-project.org/package=rioja}).
 
-See \link[stats]{hclust} for hierarchical clustering references
+See \link[stats:hclust]{hclust} for hierarchical clustering references
 }

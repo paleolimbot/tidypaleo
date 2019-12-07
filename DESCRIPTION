@@ -40,3 +40,4 @@ Imports: rlang,
     digest,
     rioja
 VignetteBuilder: knitr
+Roxygen: list(markdown = TRUE)

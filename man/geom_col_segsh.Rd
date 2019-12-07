@@ -50,7 +50,7 @@ GeomLineh
 }
 \arguments{
 \item{mapping, data, stat, position, arrow, arrow.fill, lineend, linejoin, na.rm, show.legend, inherit.aes, ...}{See
-\link[ggplot2]{geom_segment}.}
+\link[ggplot2:geom_segment]{geom_segment}.}
 
 \item{xend, yend}{The end of the horizontal or vertical segment bars, respectively.}
 }

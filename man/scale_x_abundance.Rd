@@ -22,7 +22,7 @@ scale_y_abundance(
 )
 }
 \arguments{
-\item{...}{Passed to \link[ggplot2]{scale_y_continuous} or \link[ggplot2]{scale_x_continuous}}
+\item{...}{Passed to \link[ggplot2:scale_y_continuous]{scale_y_continuous} or \link[ggplot2:scale_x_continuous]{scale_x_continuous}}
 
 \item{limits}{Limits for the scale}
 
@@ -33,7 +33,7 @@ scale_y_abundance(
 \item{expand}{A vector of expantion constants}
 }
 \value{
-A \link[ggplot2]{scale_y_continuous} or \link[ggplot2]{scale_x_continuous}
+A \link[ggplot2:scale_y_continuous]{scale_y_continuous} or \link[ggplot2:scale_x_continuous]{scale_x_continuous}
 }
 \description{
 Continuous scales that (1) always start at 0, (2) always have the same breaks, and

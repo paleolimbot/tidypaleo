@@ -8,14 +8,14 @@
 #' @param fill If a key/value combination doesn't exist in the input, this value will be
 #'   assigned in the data matrix. Generally, using NA for geochemical data and 0 for relative
 #'   abundance data is advised.
-#' @param groups Use \link[dplyr]{group_by} or this argument to group by one or more columns (e.g., core or lake)
-#' @param select_if Use \code{~TRUE} to keep all columns; use \code{~all(is.finite(.))} to keep columns
-#'   with all finite values. See \link[dplyr]{select_if}.
-#' @param filter_all Use \code{any_vars(TRUE)} to keep all observations; use \code{all_vars(is.finite(.))} to
-#'   keep only observations with finite (non-missing) values. See \link[dplyr]{filter_all}.
-#' @param trans A function that will be applied to all columns, column-wise. Use \link[base]{identity}
-#'   to perform no transformation, use \link[base]{scale} to scale each column to a mean of zero and
-#'   variance of 1. See \link[dplyr]{mutate_all}.
+#' @param groups Use [group_by][dplyr::group_by] or this argument to group by one or more columns (e.g., core or lake)
+#' @param select_if Use `~TRUE` to keep all columns; use `~all(is.finite(.))` to keep columns
+#'   with all finite values. See [select_if][dplyr::select_if].
+#' @param filter_all Use `any_vars(TRUE)` to keep all observations; use `all_vars(is.finite(.))` to
+#'   keep only observations with finite (non-missing) values. See [filter_all][dplyr::filter_all].
+#' @param trans A function that will be applied to all columns, column-wise. Use [identity][base::identity]
+#'   to perform no transformation, use [scale][base::scale] to scale each column to a mean of zero and
+#'   variance of 1. See [mutate_all][dplyr::mutate_all].
 #'
 #' @return A nested data matrix
 #' @export
@@ -155,12 +155,12 @@ nested_data <- function(.data, qualifiers = NULL, key = NULL, value, fill = NA,
 #' Perform an analysis on a nested data matrix
 #'
 #' @param .data A data frame with a list column of data frames, possibly created using
-#'   \link{nested_data}.
+#'   [nested_data].
 #' @param .fun A model function
 #' @param .reserved_names Names that should not be allowed as columns in any
 #'   data frame within this object
 #' @param .output_column A column name in which the output of .fun should be stored.
-#' @param .env Passed to \link[rlang]{as_function}
+#' @param .env Passed to [as_function][rlang::as_function]
 #' @param ... Passed to fun
 #'
 #' @return .data with an additional list column of fun output
@@ -294,9 +294,9 @@ mutate.nested_analysis <- function(.data, ...) {
 
 #' Plot a nested analysis
 #'
-#' Calls \link[graphics]{plot} or another (base) plotting function on all models, arranging the output in subplots.
+#' Calls [plot][graphics::plot] or another (base) plotting function on all models, arranging the output in subplots.
 #'
-#' @param x,.x A \link{nested_analysis} object (or subclass)
+#' @param x,.x A [nested_analysis] object (or subclass)
 #' @param .fun A function that produces graphical output
 #' @param main The plot title
 #' @param ... Passed to the plot function. Tidy evaluation is supported, and arguments are evaluated

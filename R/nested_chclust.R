@@ -1,15 +1,15 @@
 
 #' Nested (Constrained) hierarchical clustering
 #'
-#' Powered by \link[rioja]{chclust} and \link[stats]{hclust}; broken stick using \link[rioja]{bstick}.
+#' Powered by [chclust][rioja::chclust] and [hclust][stats::hclust]; broken stick using [bstick][rioja::bstick].
 #'
 #' @inheritParams nested_analysis
 #' @param data_column An expression that evalulates to the data object within each row of .data
-#' @param distance_fun A distance function like \link[stats]{dist} or \link[vegan]{vegdist}.
+#' @param distance_fun A distance function like [dist][stats::dist] or [vegdist][vegan::vegdist].
 #' @param qualifiers_column The column that contains the qualifiers
 #' @param n_groups The number of groups to use (can be a vector or expression using vars in .data)
 #' @param .fun Function powering the clustering. Must return an hclust object of some kind.
-#' @param ... Passed to \link[rioja]{chclust} or \link[stats]{hclust}.
+#' @param ... Passed to [chclust][rioja::chclust] or [hclust][stats::hclust].
 #'
 #' @return .data with additional columns
 #' @export
@@ -18,16 +18,16 @@
 #'
 #' Bennett, K. (1996) Determination of the number of zones in a biostratigraphic sequence.
 #' New Phytologist, 132, 155-170.
-#' \url{http://doi.org/10.1111/j.1469-8137.1996.tb04521.x} (Broken stick)
+#' <http://doi.org/10.1111/j.1469-8137.1996.tb04521.x> (Broken stick)
 #'
 #' Grimm, E.C. (1987) CONISS: A FORTRAN 77 program for stratigraphically constrained cluster
 #' analysis by the method of incremental sum of squares. Computers & Geosciences, 13, 13-35.
-#' \url{http://doi.org/10.1016/0098-3004(87)90022-7}
+#' <http://doi.org/10.1016/0098-3004(87)90022-7>
 #'
 #' Juggins, S. (2017) rioja: Analysis of Quaternary Science Data, R package version (0.9-15.1).
-#' (\url{http://cran.r-project.org/package=rioja}).
+#' (<http://cran.r-project.org/package=rioja>).
 #'
-#' See \link[stats]{hclust} for hierarchical clustering references
+#' See [hclust][stats::hclust] for hierarchical clustering references
 #'
 #' @examples
 #' library(tidyr)
@@ -194,12 +194,12 @@ plot.nested_hclust <- function(x, ..., sub = "", xlab = "", nrow = NULL, ncol = 
 
 #' Display a dendrogram as a ggplot2 layer
 #'
-#' @param mapping A mapping created using \link[ggplot2]{aes}. Must map x OR y to a qualifier.
-#' @param data A \link{nested_hclust} object
+#' @param mapping A mapping created using [aes][ggplot2::aes]. Must map x OR y to a qualifier.
+#' @param data A [nested_hclust] object
 #' @param position Position adjustment
-#' @param geom Any geom that takes x, xend, y, and yend. Probably \link[ggplot2]{geom_segment} is
+#' @param geom Any geom that takes x, xend, y, and yend. Probably [geom_segment][ggplot2::geom_segment] is
 #'   the only one that makes sense.
-#' @param ... Passed to the the stat/geom (see \link[ggplot2]{geom_segment})
+#' @param ... Passed to the the stat/geom (see [geom_segment][ggplot2::geom_segment])
 #' @param inherit.aes Inherit aesthetics from ggplot()?
 #' @param show.legend Show mapped aesthetics in the legend?
 #'

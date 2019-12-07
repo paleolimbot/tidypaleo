@@ -2,10 +2,10 @@
 #' Create age depth models
 #'
 #' @param .data A data frame
-#' @param depth,age,age_min,age_max Expressions evaluated in \code{.data} that
+#' @param depth,age,age_min,age_max Expressions evaluated in `.data` that
 #'   provide the known depths, known ages, and error information if available.
-#'   These expressions are evaluated like they are within \link[dplyr]{mutate}
-#'   if \code{.data} is present.
+#'   These expressions are evaluated like they are within [mutate][dplyr::mutate]
+#'   if `.data` is present.
 #' @param interpolate_age,extrapolate_age_below,extrapolate_age_above These
 #'   arguments provide the rules for interpolating and extrapolating ages based
 #'   on depths.
@@ -123,7 +123,7 @@ validate_age_depth_model <- function(x) {
 
 #' Print summary of age-depth model objects
 #'
-#' @param x An \link{age_depth_model}
+#' @param x An [age_depth_model]
 #' @param ... Unused
 #'
 #' @return The input, invisibly
@@ -150,7 +150,7 @@ is_age_depth_model <- function(x) {
 
 #' Predict age and depth values
 #'
-#' @param object An \link{age_depth_model} object
+#' @param object An [age_depth_model] object
 #' @param .data Optional input data frame
 #' @param depth,age Specify one of these to predict the other.
 #' @param ... Unused
@@ -264,11 +264,11 @@ predict_age <- function(object, depth) {
 
 #' Plot an age depth model using base graphics
 #'
-#' @param x An \link{age_depth_model}
+#' @param x An [age_depth_model]
 #' @param xlab,ylab Axis labels
 #' @param xlim,ylim Axis limits
 #' @param add Pass TRUE to skip creating a new plot
-#' @param ... Passed to \link[graphics]{points} to customize points display
+#' @param ... Passed to [points][graphics::points] to customize points display
 #'
 #' @export
 #'
@@ -359,7 +359,7 @@ create_trans_list <- function(adm) {
 #' @param y0 The y value to anchor the transform
 #' @param slope The slope (in units of y/x) to use for the transform
 #'
-#' @return A list with component functions \code{trans} and \code{inverse}
+#' @return A list with component functions `trans` and `inverse`
 #' @export
 #'
 trans_interpolate <- function(x, y) {
@@ -515,12 +515,12 @@ verify_length <- function(x, y, n = 2) {
 
 #' Use Age Depth Models as a Second ggplot Axis
 #'
-#' @param x An \link{age_depth_model}
+#' @param x An [age_depth_model]
 #' @param primary Specify the primary axis as 'age' or 'depth'
-#' @param ... Passed to \link[ggplot2]{sec_axis}
+#' @param ... Passed to [sec_axis][ggplot2::sec_axis]
 #'
-#' @return A ggplot2 \link[ggplot2]{sec_axis} for use in \link[ggplot2]{scale_x_continuous},
-#'   \link[ggplot2]{scale_y_continuous}, or their reverse variants.
+#' @return A ggplot2 [sec_axis][ggplot2::sec_axis] for use in [scale_x_continuous][ggplot2::scale_x_continuous],
+#'   [scale_y_continuous][ggplot2::scale_y_continuous], or their reverse variants.
 #' @export
 #'
 #' @examples

@@ -27,7 +27,7 @@ plot_layer_scores(
 \arguments{
 \item{object}{A \link{nested_prcomp} or similar object}
 
-\item{mapping}{A mapping created with \link[ggplot2]{aes}}
+\item{mapping}{A mapping created with \link[ggplot2:aes]{aes}}
 
 \item{which}{Which principal components to plot}
 

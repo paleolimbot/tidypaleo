@@ -30,16 +30,16 @@ assigned in the data matrix. Generally, using NA for geochemical data and 0 for 
 abundance data is advised.}
 
 \item{select_if}{Use \code{~TRUE} to keep all columns; use \code{~all(is.finite(.))} to keep columns
-with all finite values. See \link[dplyr]{select_if}.}
+with all finite values. See \link[dplyr:select_if]{select_if}.}
 
 \item{filter_all}{Use \code{any_vars(TRUE)} to keep all observations; use \code{all_vars(is.finite(.))} to
-keep only observations with finite (non-missing) values. See \link[dplyr]{filter_all}.}
+keep only observations with finite (non-missing) values. See \link[dplyr:filter_all]{filter_all}.}
 
-\item{trans}{A function that will be applied to all columns, column-wise. Use \link[base]{identity}
-to perform no transformation, use \link[base]{scale} to scale each column to a mean of zero and
-variance of 1. See \link[dplyr]{mutate_all}.}
+\item{trans}{A function that will be applied to all columns, column-wise. Use \link[base:identity]{identity}
+to perform no transformation, use \link[base:scale]{scale} to scale each column to a mean of zero and
+variance of 1. See \link[dplyr:mutate_all]{mutate_all}.}
 
-\item{groups}{Use \link[dplyr]{group_by} or this argument to group by one or more columns (e.g., core or lake)}
+\item{groups}{Use \link[dplyr:group_by]{group_by} or this argument to group by one or more columns (e.g., core or lake)}
 }
 \value{
 A nested data matrix

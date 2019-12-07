@@ -1,13 +1,13 @@
 
 #' Nested Principal Components Analysis (PCA)
 #'
-#' Powered by \link[stats]{prcomp}. When creating the \link{nested_data},
-#' the data should be scaled (i.e, \code{trans = scale}) if all variables are not
+#' Powered by [prcomp][stats::prcomp]. When creating the [nested_data],
+#' the data should be scaled (i.e, `trans = scale`) if all variables are not
 #' in the same unit.
 #'
 #' @inheritParams nested_analysis
 #' @param data_column An expression that evalulates to the data object within each row of .data
-#' @param ... Passed to \link[stats]{prcomp}.
+#' @param ... Passed to [prcomp][stats::prcomp].
 #'
 #' @return .data with additional columns 'model', 'loadings', 'variance' and 'scores'
 #' @export

@@ -1,12 +1,12 @@
 
 #' Species facet labellers
 #'
-#' Use these to label species with partial italic formatting. See \link[ggplot2]{label_parsed}.
+#' Use these to label species with partial italic formatting. See [label_parsed][ggplot2::label_parsed].
 #'
 #' @param labels A data.frame of facet label values
 #' @param dont_italicize Regular expressions that should not be italicized
 #' @param species_facet Which facet(s) contain species values
-#' @param multi_line See \link[ggplot2]{label_parsed}
+#' @param multi_line See [label_parsed][ggplot2::label_parsed]
 #'
 #' @export
 #'
@@ -111,9 +111,9 @@ partial_italic_expr <- function(labs, dont_italicize) {
 #' @param geochem_facet Which facet to apply formatting
 #' @param renamers Search and replace operations to perform in the form
 #'   search = replace. Replace text can (should) contain backreferences,
-#'   and will be parsed as an expression (see \link[grDevices]{plotmath}). Use
+#'   and will be parsed as an expression (see [plotmath][grDevices::plotmath]). Use
 #'   NULL to suppress renaming.
-#' @param multi_line See \link[ggplot2]{label_parsed}
+#' @param multi_line See [label_parsed][ggplot2::label_parsed]
 #'
 #' @export
 #'

@@ -22,7 +22,7 @@ rotated_axis_labels(angle = 90, direction = "x")
 rotated label axes}
 }
 \value{
-An object or list of objects that can be added to a \link[ggplot2]{ggplot}
+An object or list of objects that can be added to a \link[ggplot2:ggplot]{ggplot}
 }
 \description{
 Common plot modifications for stratigraphic plots

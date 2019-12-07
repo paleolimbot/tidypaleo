@@ -2,19 +2,19 @@
 #' Facet for relative abundance data
 #'
 #' Provides a number of modifications to the plot that are necessary for relative abundance plots
-#' of a number of species. See \link{scale_x_abundance}, \link[ggplot2]{facet_grid},
-#' \link[ggplot2]{facet_grid}, \link{label_species}, \link{label_geochem},
-#' and \link{rotated_facet_labels} \link{rotated_axis_labels}
+#' of a number of species. See [scale_x_abundance], [facet_grid][ggplot2::facet_grid],
+#' [facet_grid][ggplot2::facet_grid], [label_species], [label_geochem],
+#' and [rotated_facet_labels] [rotated_axis_labels]
 #' for examples of how to customize the default behaviour.
 #'
-#' @param taxon,param A call to \link[ggplot2]{vars}, defining the column that identifies the taxon (parameter).
-#' @param grouping  A call to \link[ggplot2]{vars}, identifying additional grouping columns
+#' @param taxon,param A call to [vars][ggplot2::vars], defining the column that identifies the taxon (parameter).
+#' @param grouping  A call to [vars][ggplot2::vars], identifying additional grouping columns
 #' @param rotate_facet_labels,rotate_axis_labels Facet (axis) label rotation (degrees)
-#' @param labeller Labeller to process facet names. Use \link{label_species} to italicize
-#'   species names, \link{label_geochem} to perform common formatting and units,
-#'   or \link[ggplot2]{label_value} to suppress.
+#' @param labeller Labeller to process facet names. Use [label_species] to italicize
+#'   species names, [label_geochem] to perform common formatting and units,
+#'   or [label_value][ggplot2::label_value] to suppress.
 #' @param space,scales Modify default scale freedom behaviour
-#' @param ... Passed to \link[ggplot2]{facet_grid} (abundance) or \link[ggplot2]{facet_wrap} (geochem).
+#' @param ... Passed to [facet_grid][ggplot2::facet_grid] (abundance) or [facet_wrap][ggplot2::facet_wrap] (geochem).
 #' @inheritParams label_geochem
 #' @inheritParams label_species
 #'

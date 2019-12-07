@@ -5,13 +5,13 @@
 #' (3) expand using a constant rather than a percentage. These scales assume that data are
 #' in percentages (i.e., range 0 to 100 rather than 0 to 1).
 #'
-#' @param ... Passed to \link[ggplot2]{scale_y_continuous} or \link[ggplot2]{scale_x_continuous}
+#' @param ... Passed to [scale_y_continuous][ggplot2::scale_y_continuous] or [scale_x_continuous][ggplot2::scale_x_continuous]
 #' @param limits Limits for the scale
 #' @param breaks Where to place labels on the scale
 #' @param minor_breaks Where to place minor breaks
 #' @param expand A vector of expantion constants
 #'
-#' @return A \link[ggplot2]{scale_y_continuous} or \link[ggplot2]{scale_x_continuous}
+#' @return A [scale_y_continuous][ggplot2::scale_y_continuous] or [scale_x_continuous][ggplot2::scale_x_continuous]
 #' @export
 #'
 scale_x_abundance <- function(..., limits = c(0, NA), breaks = seq(10, 90, 30),
@@ -33,9 +33,9 @@ scale_y_abundance <- function(..., limits = c(0, NA), breaks = seq(10, 90, 30),
 #' @param age_name,depth_name Label for the second axis
 #' @param age_breaks,depth_breaks Breaks for the second axis
 #' @param age_labels,depth_labels Labels for each break on the second axis
-#' @param ... Passed to \link[ggplot2]{scale_y_continuous} or \link[ggplot2]{scale_x_continuous}
+#' @param ... Passed to [scale_y_continuous][ggplot2::scale_y_continuous] or [scale_x_continuous][ggplot2::scale_x_continuous]
 #'
-#' @return A \link[ggplot2]{scale_y_continuous} or \link[ggplot2]{scale_x_continuous}
+#' @return A [scale_y_continuous][ggplot2::scale_y_continuous] or [scale_x_continuous][ggplot2::scale_x_continuous]
 #' @export
 #' @importFrom ggplot2 waiver
 #'

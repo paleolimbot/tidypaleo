@@ -6,7 +6,7 @@
 #' @param remove_label_background Whether or not label backgrounds should be removed along
 #'   rotated label axes
 #'
-#' @return An object or list of objects that can be added to a \link[ggplot2]{ggplot}
+#' @return An object or list of objects that can be added to a [ggplot][ggplot2::ggplot]
 #' @export
 #'
 rotated_facet_labels <- function(angle = 45, direction = "x", remove_label_background = TRUE) {
@@ -94,7 +94,7 @@ rotated_axis_labels <- function(angle = 90, direction = "x") {
 #' @param remove_label_background Remove the background of the facet label
 #' @param pad_right_inches Give the plot extra right padding
 #'
-#' @return A partial \link[ggplot2]{theme} object.
+#' @return A partial [theme][ggplot2::theme] object.
 #' @noRd
 #'
 theme_modify_paleo <- function(rotate_labels_x = NULL, rotate_labels_y = NULL, remove_label_background_x = FALSE,

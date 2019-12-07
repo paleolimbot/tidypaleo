@@ -12,13 +12,13 @@ nested_prcomp(.data, data_column = .data$data, ...)
 
 \item{data_column}{An expression that evalulates to the data object within each row of .data}
 
-\item{...}{Passed to \link[stats]{prcomp}.}
+\item{...}{Passed to \link[stats:prcomp]{prcomp}.}
 }
 \value{
 .data with additional columns 'model', 'loadings', 'variance' and 'scores'
 }
 \description{
-Powered by \link[stats]{prcomp}. When creating the \link{nested_data},
+Powered by \link[stats:prcomp]{prcomp}. When creating the \link{nested_data},
 the data should be scaled (i.e, \code{trans = scale}) if all variables are not
 in the same unit.
 }

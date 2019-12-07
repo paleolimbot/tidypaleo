@@ -1,8 +1,8 @@
 
 #' Add scores to a plot
 #'
-#' @param object A \link{nested_prcomp} or similar object
-#' @param mapping A mapping created with \link[ggplot2]{aes}
+#' @param object A [nested_prcomp] or similar object
+#' @param mapping A mapping created with [aes][ggplot2::aes]
 #' @param which Which principal components to plot
 #' @param key The column name to use for the principal component names
 #' @param value The column name to use for the principal component score values
@@ -61,8 +61,8 @@ plot_layer_scores <- function(object, mapping, which = "PC1", key = "param", val
 
 #' Add a dendrogram as a layer or facet
 #'
-#' @param object A \link{nested_hclust} object.
-#' @param mapping Map at least one axis (x or y) to a qualifier, like \code{aes(x = depth)} or similar.
+#' @param object A [nested_hclust] object.
+#' @param mapping Map at least one axis (x or y) to a qualifier, like `aes(x = depth)` or similar.
 #' @param sequential_facets TRUE will result in the panel containing the dendrogram added to the right
 #'   of the plot.
 #' @param linetype,alpha,colour,size Customize the apperance of boundary/dendrogram segment lines
@@ -138,7 +138,7 @@ layer_zone_boundaries <- function(object, mapping, ..., linetype = 2, alpha = 0.
 
 #' Change facet ordering behaviour
 #'
-#' Normally, facets are ordered using \link[base]{as.factor} on all values that occur
+#' Normally, facets are ordered using [as.factor][base::as.factor] on all values that occur
 #' within layer data, which means that when adding additional layers, any ordering
 #' is not preserved unless the factor levels are identical on all factors. This function
 #' changes this behaviour such that facet levels are combined in layer order. This is

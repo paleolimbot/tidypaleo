@@ -20,16 +20,16 @@ stat_nested_hclust(
 StatNestedHclust
 }
 \arguments{
-\item{mapping}{A mapping created using \link[ggplot2]{aes}. Must map x OR y to a qualifier.}
+\item{mapping}{A mapping created using \link[ggplot2:aes]{aes}. Must map x OR y to a qualifier.}
 
 \item{data}{A \link{nested_hclust} object}
 
-\item{geom}{Any geom that takes x, xend, y, and yend. Probably \link[ggplot2]{geom_segment} is
+\item{geom}{Any geom that takes x, xend, y, and yend. Probably \link[ggplot2:geom_segment]{geom_segment} is
 the only one that makes sense.}
 
 \item{position}{Position adjustment}
 
-\item{...}{Passed to the the stat/geom (see \link[ggplot2]{geom_segment})}
+\item{...}{Passed to the the stat/geom (see \link[ggplot2:geom_segment]{geom_segment})}
 
 \item{inherit.aes}{Inherit aesthetics from ggplot()?}
 

@@ -37,7 +37,7 @@ GeomAreah
 }
 \arguments{
 \item{mapping, data, stat, position, na.rm, show.legend, inherit.aes, ...}{See
-\link[ggplot2]{geom_ribbon}.}
+\link[ggplot2:geom_ribbon]{geom_ribbon}.}
 }
 \description{
 Vertical ribbons and area plots

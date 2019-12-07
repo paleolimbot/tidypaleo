@@ -85,25 +85,25 @@ facet_geochem_gridh(
 )
 }
 \arguments{
-\item{taxon, param}{A call to \link[ggplot2]{vars}, defining the column that identifies the taxon (parameter).}
+\item{taxon, param}{A call to \link[ggplot2:vars]{vars}, defining the column that identifies the taxon (parameter).}
 
-\item{grouping}{A call to \link[ggplot2]{vars}, identifying additional grouping columns}
+\item{grouping}{A call to \link[ggplot2:vars]{vars}, identifying additional grouping columns}
 
 \item{rotate_facet_labels, rotate_axis_labels}{Facet (axis) label rotation (degrees)}
 
 \item{labeller}{Labeller to process facet names. Use \link{label_species} to italicize
 species names, \link{label_geochem} to perform common formatting and units,
-or \link[ggplot2]{label_value} to suppress.}
+or \link[ggplot2:label_value]{label_value} to suppress.}
 
 \item{space, scales}{Modify default scale freedom behaviour}
 
 \item{dont_italicize}{Regular expressions that should not be italicized}
 
-\item{...}{Passed to \link[ggplot2]{facet_grid} (abundance) or \link[ggplot2]{facet_wrap} (geochem).}
+\item{...}{Passed to \link[ggplot2:facet_grid]{facet_grid} (abundance) or \link[ggplot2:facet_wrap]{facet_wrap} (geochem).}
 
 \item{renamers}{Search and replace operations to perform in the form
 search = replace. Replace text can (should) contain backreferences,
-and will be parsed as an expression (see \link[grDevices]{plotmath}). Use
+and will be parsed as an expression (see \link[grDevices:plotmath]{plotmath}). Use
 NULL to suppress renaming.}
 
 \item{units}{A named list of values = unit}
@@ -112,8 +112,8 @@ NULL to suppress renaming.}
 }
 \description{
 Provides a number of modifications to the plot that are necessary for relative abundance plots
-of a number of species. See \link{scale_x_abundance}, \link[ggplot2]{facet_grid},
-\link[ggplot2]{facet_grid}, \link{label_species}, \link{label_geochem},
+of a number of species. See \link{scale_x_abundance}, \link[ggplot2:facet_grid]{facet_grid},
+\link[ggplot2:facet_grid]{facet_grid}, \link{label_species}, \link{label_geochem},
 and \link{rotated_facet_labels} \link{rotated_axis_labels}
 for examples of how to customize the default behaviour.
 }

@@ -163,7 +163,7 @@ exaggerated_geom <- function(geom_obj, geom_name = NULL) {
 #' Useful geometries for strat diagrams
 #'
 #' @param mapping,data,stat,position,arrow,arrow.fill,lineend,linejoin,na.rm,show.legend,inherit.aes,... See
-#'   \link[ggplot2]{geom_segment}.
+#'   [geom_segment][ggplot2::geom_segment].
 #' @param xend,yend The end of the horizontal or vertical segment bars, respectively.
 #'
 #' @return A ggplot2 layer
@@ -286,7 +286,7 @@ GeomColSegs <- ggplot2::ggproto(
 #' Connect observations in the vertical direction
 #'
 #' @param mapping,data,stat,position,na.rm,show.legend,inherit.aes,... See
-#' \link[ggplot2]{geom_line}.
+#' [geom_line][ggplot2::geom_line].
 #'
 #' @return A ggplot2 layer.
 #' @export
@@ -323,7 +323,7 @@ GeomLineh <- ggplot2::ggproto(
 #' Vertical ribbons and area plots
 #'
 #' @param mapping,data,stat,position,na.rm,show.legend,inherit.aes,... See
-#'   \link[ggplot2]{geom_ribbon}.
+#'   [geom_ribbon][ggplot2::geom_ribbon].
 #'
 #' @export
 #' @examples

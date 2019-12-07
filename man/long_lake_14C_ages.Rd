@@ -16,7 +16,7 @@ This object contains several uncalibrated Carbon-14 measurements from Long
 Lake (Nova Scotia-New Brunswick Border Region, Canada) core LL-PC2
 (Dunnington et al. 2017; White 2012). The \code{long_lake_bacon_ages} object
 contains the result of the Carbon-14 ages as
-modelled by \link[rbacon]{rbacon-package} (Blaauw and Christen 2011).
+modelled by \link[rbacon:rbacon-package]{rbacon-package} (Blaauw and Christen 2011).
 }
 \examples{
 data(long_lake_14C_ages)
@@ -42,6 +42,6 @@ and Wetland Evolution from the Isthmus of Chignecto Region, Eastern Canada."
 M.Sc. Thesis, Acadia University, 2012.
 }
 \seealso{
-The \link[mudata2]{long_lake} dataset (mudata2 package) for geochemical data.
+The \link[mudata2:long_lake]{long_lake} dataset (mudata2 package) for geochemical data.
 }
 \keyword{datasets}

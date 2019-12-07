@@ -11,11 +11,11 @@ age_depth_as_sec_axis(x, primary = c("depth", "age"), ...)
 
 \item{primary}{Specify the primary axis as 'age' or 'depth'}
 
-\item{...}{Passed to \link[ggplot2]{sec_axis}}
+\item{...}{Passed to \link[ggplot2:sec_axis]{sec_axis}}
 }
 \value{
-A ggplot2 \link[ggplot2]{sec_axis} for use in \link[ggplot2]{scale_x_continuous},
-  \link[ggplot2]{scale_y_continuous}, or their reverse variants.
+A ggplot2 \link[ggplot2:sec_axis]{sec_axis} for use in \link[ggplot2:scale_x_continuous]{scale_x_continuous},
+\link[ggplot2:scale_y_continuous]{scale_y_continuous}, or their reverse variants.
 }
 \description{
 Use Age Depth Models as a Second ggplot Axis

@@ -25,10 +25,10 @@ label_geochem(
 
 \item{renamers}{Search and replace operations to perform in the form
 search = replace. Replace text can (should) contain backreferences,
-and will be parsed as an expression (see \link[grDevices]{plotmath}). Use
+and will be parsed as an expression (see \link[grDevices:plotmath]{plotmath}). Use
 NULL to suppress renaming.}
 
-\item{multi_line}{See \link[ggplot2]{label_parsed}}
+\item{multi_line}{See \link[ggplot2:label_parsed]{label_parsed}}
 }
 \description{
 Geochem facet labelers

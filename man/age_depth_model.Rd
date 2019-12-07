@@ -23,7 +23,7 @@ age_depth_model(
 
 \item{depth, age, age_min, age_max}{Expressions evaluated in \code{.data} that
 provide the known depths, known ages, and error information if available.
-These expressions are evaluated like they are within \link[dplyr]{mutate}
+These expressions are evaluated like they are within \link[dplyr:mutate]{mutate}
 if \code{.data} is present.}
 
 \item{interpolate_age, extrapolate_age_below, extrapolate_age_above}{These

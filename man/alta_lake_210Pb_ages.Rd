@@ -25,7 +25,7 @@ activities using the constant rate of supply (CRS) model (Appleby and
 Oldfield 1983). The \code{alta_lake_14C_ages} object contains one
 uncalibrated Carbon-14 measurement from the same core.
 The \code{alta_lake_bacon_ages} object contains the combined result of the
-Lead-210 and the Carbon-14 ages as modelled by \link[rbacon]{rbacon-package}
+Lead-210 and the Carbon-14 ages as modelled by \link[rbacon:rbacon-package]{rbacon-package}
 (Blaauw and Christen 2011).
 }
 \examples{
@@ -57,6 +57,6 @@ Environmental Change at Alta Lake, Whistler, British Columbia, Canada." M.Sc.
 Thesis, Acadia University, 2015.
 }
 \seealso{
-The \link[mudata2]{alta_lake} dataset (mudata2 package) for geochemical data.
+The \link[mudata2:alta_lake]{alta_lake} dataset (mudata2 package) for geochemical data.
 }
 \keyword{datasets}

@@ -23,7 +23,7 @@ predict_age(object, depth)
 }
 \value{
 A data frame with the same number of observations as the input age or
-  depth vector.
+depth vector.
 }
 \description{
 Predict age and depth values

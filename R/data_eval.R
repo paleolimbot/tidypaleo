@@ -2,10 +2,10 @@
 #' Create tibbles from user objects and/or user data
 #'
 #' @param data A data.frame/tibble, or NULL
-#' @param ... Arguments are passed to \link[dplyr]{transmute} if \code{data} is
-#'   present, and \link[tibble]{tibble} if it is not.
+#' @param ... Arguments are passed to [transmute][dplyr::transmute] if `data` is
+#'   present, and [tibble][tibble::tibble] if it is not.
 #'
-#' @return A \link[tibble]{tibble} with the results of ...
+#' @return A [tibble][tibble::tibble] with the results of ...
 #' @noRd
 #' @importFrom rlang !!!
 #'

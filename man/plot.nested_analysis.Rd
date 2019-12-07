@@ -40,5 +40,5 @@ within a transposed version of x for each row.}
 the input, invisibly
 }
 \description{
-Calls \link[graphics]{plot} or another (base) plotting function on all models, arranging the output in subplots.
+Calls \link[graphics:plot]{plot} or another (base) plotting function on all models, arranging the output in subplots.
 }
