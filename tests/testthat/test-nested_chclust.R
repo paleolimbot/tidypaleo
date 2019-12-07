@@ -23,18 +23,18 @@ test_that("nested_chclust_coniss produces the correct columns", {
   )
 
   expect_setequal(
-    colnames(tidyr::unnest(nested_coniss, segments)),
+    colnames(tidyr::unnest(drop_list_cols(nested_coniss, "segments"), segments)),
     c("node_id", "hclust_zone", "depth", "dendro_order", "depth_end",
       "dendro_order_end", "dispersion", "dispersion_end", "row_number", "row_number_end")
   )
 
   expect_setequal(
-    colnames(tidyr::unnest(nested_coniss, broken_stick)),
+    colnames(tidyr::unnest_legacy(nested_coniss, broken_stick)),
     c("n_groups", "dispersion", "broken_stick_dispersion")
   )
 
   expect_setequal(
-    colnames(tidyr::unnest(nested_coniss, nodes)),
+    colnames(tidyr::unnest_legacy(nested_coniss, nodes)),
     c("depth", "dendro_order", "hclust_zone", "is_leaf", "dispersion",
       "recursive_level", "node_id", "zone", "row_number")
   )
@@ -60,17 +60,17 @@ test_that("nested_chclust_coniss produces the correct segments and nodes", {
       facet_geochem_wrap(vars(param)) +
       ggplot2::geom_point(
         ggplot2::aes(x = dispersion),
-        data = tidyr::unnest(nested_coniss, nodes) %>% dplyr::mutate(param = "Z_CONISS"),
+        data = tidyr::unnest_legacy(nested_coniss, nodes) %>% dplyr::mutate(param = "Z_CONISS"),
         size = 0.4
       ) +
       ggplot2::geom_segment(
         ggplot2::aes(x = dispersion, xend = dispersion_end, yend = depth_end, col = factor(hclust_zone)),
-        data = tidyr::unnest(nested_coniss, segments) %>% dplyr::mutate(param = "Z_CONISS"),
+        data = tidyr::unnest_legacy(nested_coniss, segments) %>% dplyr::mutate(param = "Z_CONISS"),
         size = 0.3
       ) +
       ggplot2::geom_hline(
         ggplot2::aes(yintercept = boundary_depth),
-        data = tidyr::unnest(nested_coniss, zone_info),
+        data = tidyr::unnest_legacy(nested_coniss, zone_info),
         na.rm = TRUE,
         lty = 2, col = "red"
       ) +
@@ -80,7 +80,7 @@ test_that("nested_chclust_coniss produces the correct segments and nodes", {
 
   print(
     nested_coniss %>%
-      tidyr::unnest(broken_stick) %>%
+      tidyr::unnest_legacy(broken_stick) %>%
       tidyr::gather(type, value, broken_stick_dispersion, dispersion) %>%
       ggplot2::ggplot(ggplot2::aes(n_groups, value, col = type)) +
       ggplot2::geom_point() +
@@ -102,12 +102,12 @@ test_that("nested_chclust_coniss works with a grouping variable", {
     ggplot2::ggplot() +
       ggplot2::geom_segment(
         ggplot2::aes(y = depth, x = dispersion, xend = dispersion_end, yend = depth_end, col = factor(hclust_zone)),
-        data = tidyr::unnest(nested_coniss, segments) %>% dplyr::mutate(param = "Z_CONISS"),
+        data = tidyr::unnest_legacy(nested_coniss, segments) %>% dplyr::mutate(param = "Z_CONISS"),
         size = 0.3
       ) +
       ggplot2::geom_hline(
         ggplot2::aes(yintercept = boundary_depth),
-        data = tidyr::unnest(nested_coniss, zone_info),
+        data = tidyr::unnest_legacy(nested_coniss, zone_info),
         na.rm = TRUE,
         lty = 2, col = "red"
       ) +
@@ -118,7 +118,7 @@ test_that("nested_chclust_coniss works with a grouping variable", {
 
   print(
     nested_coniss %>%
-      tidyr::unnest(broken_stick) %>%
+      tidyr::unnest_legacy(broken_stick) %>%
       tidyr::gather(type, value, broken_stick_dispersion, dispersion) %>%
       ggplot2::ggplot(ggplot2::aes(n_groups, value, col = type)) +
       ggplot2::geom_line() +
@@ -170,7 +170,13 @@ test_that("plot methods for hclust work", {
 test_that("stat_nested_hclust methods work with hclust objects", {
   ndm <- nested_data(halifax_lakes_plottable[halifax_lakes_plottable$sample_type == "top",], c(location), taxon, rel_abund)
   nest_hc <- nested_hclust(ndm, method = "average")
-  nest_hc_order <- dplyr::arrange(tidyr::unnest(nest_hc, qualifiers, dendro_order), dendro_order)$location
+  nest_hc_order <- dplyr::arrange(
+    tidyr::unnest(
+      nest_hc,
+      c(qualifiers, dendro_order)
+    ),
+    dendro_order
+  )$location
 
   print(
     ggplot2::ggplot(nest_hc, ggplot2::aes(x = location)) +

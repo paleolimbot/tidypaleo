@@ -93,7 +93,7 @@ plot(coniss, main = location, xvar = qualifiers$depth, labels = "")
 ```
 
 ```{r}
-coniss %>% select(location, zone_info) %>% unnest()
+coniss %>% select(location, zone_info) %>% unnest(zone_info)
 ```
 
 ```{r}

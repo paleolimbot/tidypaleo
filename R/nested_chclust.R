@@ -45,6 +45,7 @@
 #' library(ggplot2)
 #'
 #' nested_coniss %>%
+#'   select(location, broken_stick) %>%
 #'   unnest(broken_stick) %>%
 #'   tidyr::gather(type, value, broken_stick_dispersion, dispersion) %>%
 #'   ggplot(aes(x = n_groups, y = value, col = type)) +
@@ -106,7 +107,10 @@ nested_hclust <- function(.data, data_column = "data", qualifiers_column = "qual
   )
   nchclust$segments <- purrr::map(
     nchclust$nodes,
-    function(df) tidyr::unnest(dplyr::select(df, "node_id", "hclust_zone", "segments"))
+    function(df) tidyr::unnest(
+      dplyr::select(df, "node_id", "hclust_zone", "segments"),
+      .data$segments
+    )
   )
   nchclust$nodes <- purrr::map(nchclust$nodes, function(df) dplyr::select(df, -"segments"))
 
@@ -287,7 +291,7 @@ fortify.nested_hclust <- function(model, data, ...) {
 
   # add unnested qualifier columns to data prior to mapping
   # model, x, and y column must be mapped
-  tidyr::unnest(data, .data$qualifiers, .drop = FALSE)
+  tidyr::unnest(data, .data$qualifiers)
 }
 
 group_boundaries <- function(hclust_zones, qualifiers, n_groups = 1) {
@@ -298,8 +302,7 @@ group_boundaries <- function(hclust_zones, qualifiers, n_groups = 1) {
 
   qualifiers$hclust_zone <- hclust_zones
   group_info <- tidyr::nest(
-    dplyr::group_by(qualifiers, .data$hclust_zone),
-    .key = "data"
+    dplyr::group_by(qualifiers, .data$hclust_zone)
   )
 
   for(var in setdiff(colnames(qualifiers), "hclust_zone")) {

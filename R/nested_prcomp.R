@@ -31,7 +31,7 @@
 #' nested_pca %>% unnest(loadings)
 #'
 #' # scores, requalified
-#' nested_pca %>% unnest(qualifiers, scores)
+#' nested_pca %>% unnest(c(qualifiers, scores))
 #'
 nested_prcomp <- function(.data, data_column = .data$data, ...) {
   data_column <- enquo(data_column)

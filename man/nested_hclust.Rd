@@ -76,6 +76,7 @@ plot(nested_coniss, main = location, ncol = 1)
 library(ggplot2)
 
 nested_coniss \%>\%
+  select(location, broken_stick) \%>\%
   unnest(broken_stick) \%>\%
   tidyr::gather(type, value, broken_stick_dispersion, dispersion) \%>\%
   ggplot(aes(x = n_groups, y = value, col = type)) +

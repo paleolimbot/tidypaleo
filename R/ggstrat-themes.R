@@ -160,7 +160,7 @@ theme_modify_paleo <- function(rotate_labels_x = NULL, rotate_labels_y = NULL, r
   )
 
   # purrr::compact() erroneously gets rid of element_blank() objects
-  rlang::invoke(ggplot2::theme, theme_elements[!vapply(theme_elements, is.null, logical(1))])
+  do.call(ggplot2::theme, theme_elements[!vapply(theme_elements, is.null, logical(1))])
 }
 
 #' Internal facet modification code

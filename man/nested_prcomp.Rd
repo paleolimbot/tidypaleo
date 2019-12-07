@@ -41,6 +41,6 @@ nested_pca \%>\% unnest(variance)
 nested_pca \%>\% unnest(loadings)
 
 # scores, requalified
-nested_pca \%>\% unnest(qualifiers, scores)
+nested_pca \%>\% unnest(c(qualifiers, scores))
 
 }

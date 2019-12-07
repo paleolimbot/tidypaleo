@@ -219,7 +219,7 @@ check_groupings <- function(param, grouping) {
 evaluate_labeller <- function(labeller, default_labeller, ...) {
   if(identical(labeller, default_labeller)) {
     default_labeller_args <- list(...)
-    function(...) purrr::invoke(default_labeller, default_labeller_args, ...)
+    function(...) rlang::exec(default_labeller, !!!default_labeller_args, ...)
   } else {
     labeller
   }

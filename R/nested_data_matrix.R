@@ -98,7 +98,7 @@ nested_data <- function(.data, qualifiers = NULL, key = NULL, value, fill = NA,
     !!group_vars, !!qualifier_vars, !!key_vars, !!value_vars
   )
   grouped <- dplyr::group_by_at(data, dplyr::vars(!!group_vars))
-  nested <- tidyr::nest(grouped, !!qualifier_vars, !!key_vars, !!value_vars, .key = "df_original")
+  nested <- tidyr::nest(grouped, df_original = c(!!qualifier_vars, !!key_vars, !!value_vars))
 
   output <- purrr::map(nested$df_original, function(df) {
     # spread if there is one value var
@@ -194,7 +194,7 @@ nested_analysis <- function(.data, .fun, ..., .output_column = "model", .reserve
 
   result <- purrr::map(purrr::transpose(.data), function(row) {
     args <- purrr::map(more_args, function(arg_q) rlang::eval_tidy(arg_q, data = row))
-    purrr::invoke(.fun, args)
+    do.call(.fun, args)
   })
 
   if(!is.null(.output_column)) {
@@ -272,7 +272,7 @@ mutate.nested_data <- function(.data, ...) {
   if(all(colnames(.data) %in% colnames(result))) {
     structure(result, class = data_class)
   } else {
-    result
+    structure(result, class = setdiff(data_class, "nested_data"))
   }
 }
 
@@ -288,7 +288,7 @@ mutate.nested_analysis <- function(.data, ...) {
   if(all(colnames(.data) %in% colnames(result))) {
     structure(result, class = data_class)
   } else {
-    result
+    structure(result, class = setdiff(data_class, "nested_analysis"))
   }
 }
 

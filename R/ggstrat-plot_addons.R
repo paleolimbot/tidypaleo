@@ -21,7 +21,10 @@ layer_scores <- function(
   key <- enquo(key)
 
   object$scores <- purrr::map(object$scores, function(df) dplyr::select(df, !!which))
-  scores <- tidyr::unnest(object, .data$qualifiers, .data$scores)
+  scores <- tidyr::unnest(
+    drop_list_cols(object, c("qualifiers",  "scores")),
+    c(.data$qualifiers, .data$scores)
+  )
   scores_long <- tidyr::gather(scores, key = !!key, value = !!value, dplyr::starts_with("PC"))
 
   list(
