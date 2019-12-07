@@ -17,7 +17,7 @@ predict_age(object, depth)
 
 \item{.data}{Optional input data frame}
 
-\item{depth, age}{Specify one of these to predict the other.}
+\item{depth, age}{Specify exactly one of these to predict the other.}
 
 \item{...}{Unused}
 }

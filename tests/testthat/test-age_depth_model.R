@@ -27,7 +27,7 @@ test_that("NULL or missing arguments throw an error", {
 test_that("non-finite age/depth values are handled appropriately", {
   expect_error(age_depth_model(depth = c(NA, 0:5), age = c(2000:1995, NA)), "Non-finite values")
   expect_warning(
-    age_depth_model(depth = c(NA, 0:5), age = c(2000:1995, NA), interpolate_age = trans_na),
+    age_depth_model(depth = c(NA, 0:5), age = c(2000:1995, NA), interpolate_age = age_depth_na),
     "Non-finite values"
   )
 })
@@ -125,7 +125,7 @@ test_that("base graphics plotting renders properly", {
   adm_cont_err <- age_depth_model(
     test_data, depth = depth_col, age = age_col,
     age_min = age_col - err, age_max = age_col + err,
-    interpolate_age_limits = trans_interpolate
+    interpolate_age_limits = age_depth_interpolate
   )
   plot(adm_cont_err)
 
@@ -133,8 +133,8 @@ test_that("base graphics plotting renders properly", {
   adm_cont_err_below <- age_depth_model(
     test_data, depth = depth_col, age = age_col,
     age_min = age_col - err, age_max = age_col + err,
-    interpolate_age_limits = trans_interpolate,
-    extrapolate_age_limits_below = trans_average
+    interpolate_age_limits = age_depth_interpolate,
+    extrapolate_age_limits_below = age_depth_extrapolate
   )
   plot(adm_cont_err_below)
 
@@ -189,7 +189,7 @@ test_that("approx transform works as expected", {
   test_depth <- c(0, 10, 15)
   test_age <- c(100, 90, 80)
 
-  test_trans <- trans_interpolate(test_depth, test_age)
+  test_trans <- age_depth_interpolate(test_depth, test_age)
   expect_identical(test_trans$trans(test_depth), test_age)
   expect_identical(test_trans$inverse(test_age), test_depth)
   expect_identical(test_trans$trans(5), 95)
@@ -208,37 +208,37 @@ test_that("lm transform anchors work as expected", {
   test_age <- c(100, 90, 85)
 
   # number anchor
-  test_trans <- trans_average(test_depth, test_age, x0 = 4256, y0 = 1272)
+  test_trans <- age_depth_extrapolate(test_depth, test_age, x0 = 4256, y0 = 1272)
   expect_identical(test_trans$trans(4256), 1272)
   expect_identical(test_trans$inverse(1272), 4256)
 
   # function anchor
-  test_trans2 <- trans_average(c(-1, test_depth), c(200, test_age),
+  test_trans2 <- age_depth_extrapolate(c(-1, test_depth), c(200, test_age),
                                x0 = dplyr::first, y0 = dplyr::first)
   expect_identical(test_trans2$trans(-1), 200)
   expect_identical(test_trans2$inverse(200), -1)
 
-  test_trans3 <- trans_average(c(test_depth, 16), c(test_age, 0),
+  test_trans3 <- age_depth_extrapolate(c(test_depth, 16), c(test_age, 0),
                                x0 = dplyr::last, y0 = dplyr::last)
   expect_identical(test_trans3$trans(16), 0)
   expect_identical(test_trans3$inverse(0), 16)
 
   # null anchor
-  test_trans4 <- trans_average(test_depth, test_age, x0 = NULL, y0 = NULL)
+  test_trans4 <- age_depth_extrapolate(test_depth, test_age, x0 = NULL, y0 = NULL)
   expect_identical(test_trans4$trans(20), 80)
   expect_identical(test_trans4$inverse(80), 20)
 
   # override slope
-  test_trans5 <- trans_average(test_depth, test_age, x0 = 0, y0 = 100, slope = -2)
+  test_trans5 <- age_depth_extrapolate(test_depth, test_age, x0 = 0, y0 = 100, slope = -2)
   expect_identical(test_trans5$trans(20), 60)
   expect_identical(test_trans5$inverse(60), 20)
 })
 
-test_that("trans_exact works as expected", {
+test_that("age_depth_exact works as expected", {
   test_depth <- c(0, 10, 15)
   test_age <- c(100, 90, 80)
 
-  test_trans <- trans_exact(test_depth, test_age)
+  test_trans <- age_depth_exact(test_depth, test_age)
   expect_identical(test_trans$trans(test_depth), test_age)
   expect_identical(test_trans$inverse(test_age), test_depth)
   expect_identical(test_trans$trans(5), NA_real_)
@@ -247,46 +247,46 @@ test_that("trans_exact works as expected", {
   expect_identical(test_trans$inverse(85), NA_real_)
 })
 
-test_that("trans_na works as expected", {
+test_that("age_depth_na works as expected", {
   test_depth <- c(0, 10, 15)
   test_age <- c(100, 90, 80)
 
-  test_trans <- trans_na(test_depth, test_age)
+  test_trans <- age_depth_na(test_depth, test_age)
   expect_identical(test_trans$trans(test_depth), c(NA_real_, NA_real_, NA_real_))
   expect_identical(test_trans$inverse(test_age), c(NA_real_, NA_real_, NA_real_))
 })
 
 test_that("trans factory tester works with all included trans factories", {
-  expect_identical(trans_interpolate, validate_trans_factory(trans_interpolate))
-  expect_identical(trans_average, validate_trans_factory(trans_average))
-  expect_identical(trans_exact, validate_trans_factory(trans_exact))
-  expect_identical(trans_na, validate_trans_factory(trans_na))
+  expect_identical(age_depth_interpolate, validate_trans_factory(age_depth_interpolate))
+  expect_identical(age_depth_extrapolate, validate_trans_factory(age_depth_extrapolate))
+  expect_identical(age_depth_exact, validate_trans_factory(age_depth_exact))
+  expect_identical(age_depth_na, validate_trans_factory(age_depth_na))
 })
 
 test_that("as_trans_factory works with included trans factories", {
-  expect_identical(trans_interpolate, as_trans_factory(trans_interpolate))
-  expect_identical(trans_average, as_trans_factory(trans_average))
-  expect_identical(trans_exact, as_trans_factory(trans_exact))
-  expect_identical(trans_na, as_trans_factory(trans_na))
+  expect_identical(age_depth_interpolate, as_trans_factory(age_depth_interpolate))
+  expect_identical(age_depth_extrapolate, as_trans_factory(age_depth_extrapolate))
+  expect_identical(age_depth_exact, as_trans_factory(age_depth_exact))
+  expect_identical(age_depth_na, as_trans_factory(age_depth_na))
 })
 
 test_that("as_trans_factory works with rlang lambda functions", {
   test_depth <- c(0, 10, 15)
   test_age <- c(100, 90, 80)
 
-  factory <- as_trans_factory(~trans_interpolate(.x, .y))
+  factory <- as_trans_factory(~age_depth_interpolate(.x, .y))
   expect_equal(
     factory(test_depth, test_age),
-    trans_interpolate(test_depth, test_age)
+    age_depth_interpolate(test_depth, test_age)
   )
 
   # check passing of objects from calling environment
   first_fun <- dplyr::first
   last_fun <- dplyr::last
-  factory2 <- as_trans_factory(~trans_average(.x, .y, x0 = first_fun, y0 = last_fun))
+  factory2 <- as_trans_factory(~age_depth_extrapolate(.x, .y, x0 = first_fun, y0 = last_fun))
   expect_equal(
     factory2(test_depth, test_age),
-    trans_average(test_depth, test_age, x0 = first_fun, y0 = last_fun)
+    age_depth_extrapolate(test_depth, test_age, x0 = first_fun, y0 = last_fun)
   )
 })
 
@@ -315,16 +315,16 @@ test_that("invalid trans objects are detected by validate_trans", {
 })
 
 test_that("trans objects can't be created with too few observations", {
-  expect_error(trans_interpolate(1, 1), "greater than or equal to 2")
-  expect_error(trans_interpolate(1, 1:2), "must be equal to length")
-  expect_error(trans_average(1, 1), "greater than or equal to 2")
-  expect_error(trans_average(1, 1:2), "must be equal to length")
-  expect_error(trans_exact(numeric(0), numeric(0)), "must be greater than or equal to 1")
-  expect_error(trans_exact(1, 1:2), "must be equal to length")
+  expect_error(age_depth_interpolate(1, 1), "greater than or equal to 2")
+  expect_error(age_depth_interpolate(1, 1:2), "must be equal to length")
+  expect_error(age_depth_extrapolate(1, 1), "greater than or equal to 2")
+  expect_error(age_depth_extrapolate(1, 1:2), "must be equal to length")
+  expect_error(age_depth_exact(numeric(0), numeric(0)), "must be greater than or equal to 1")
+  expect_error(age_depth_exact(1, 1:2), "must be equal to length")
 })
 
-test_that("args to trans_average are checked", {
-  expect_error(trans_average(1:3, 1:3, x0 = "nope"), "or a scalar numeric")
-  expect_error(trans_average(1:3, 1:3, y0 = "nope"), "or a scalar numeric")
-  expect_error(trans_average(1:3, 1:3, slope = "nope"), "slope must be a numeric scalar")
+test_that("args to age_depth_extrapolate are checked", {
+  expect_error(age_depth_extrapolate(1:3, 1:3, x0 = "nope"), "or a scalar numeric")
+  expect_error(age_depth_extrapolate(1:3, 1:3, y0 = "nope"), "or a scalar numeric")
+  expect_error(age_depth_extrapolate(1:3, 1:3, slope = "nope"), "slope must be a numeric scalar")
 })

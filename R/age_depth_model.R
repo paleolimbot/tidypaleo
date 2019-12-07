@@ -20,12 +20,12 @@
 #'
 age_depth_model <- function(
   .data = NULL, depth, age, age_min = NA_real_, age_max = NA_real_,
-  interpolate_age = trans_interpolate,
-  extrapolate_age_below = ~trans_average(.x, .y, x0 = last, y0 = last),
-  extrapolate_age_above = ~trans_average(.x, .y, x0 = first, y0 = first),
-  interpolate_age_limits = trans_exact,
-  extrapolate_age_limits_below = trans_na,
-  extrapolate_age_limits_above = trans_na
+  interpolate_age = age_depth_interpolate,
+  extrapolate_age_below = ~age_depth_extrapolate(.x, .y, x0 = last, y0 = last),
+  extrapolate_age_above = ~age_depth_extrapolate(.x, .y, x0 = first, y0 = first),
+  interpolate_age_limits = age_depth_exact,
+  extrapolate_age_limits_below = age_depth_na,
+  extrapolate_age_limits_above = age_depth_na
 ) {
   # check missingness of depth and age (odd error message otherwise)
   if(missing(depth)) stop("depth is a required argument")
@@ -152,7 +152,7 @@ is_age_depth_model <- function(x) {
 #'
 #' @param object An [age_depth_model] object
 #' @param .data Optional input data frame
-#' @param depth,age Specify one of these to predict the other.
+#' @param depth,age Specify exactly one of these to predict the other.
 #' @param ... Unused
 #'
 #' @return A data frame with the same number of observations as the input age or
@@ -362,7 +362,7 @@ create_trans_list <- function(adm) {
 #' @return A list with component functions `trans` and `inverse`
 #' @export
 #'
-trans_interpolate <- function(x, y) {
+age_depth_interpolate <- function(x, y) {
   if(!all(is.finite(c(x, y)))) stop("Non-finite values in transformation")
   verify_length(x, y)
   force(x)
@@ -379,9 +379,9 @@ trans_interpolate <- function(x, y) {
 
 #' @importFrom dplyr last
 #' @importFrom dplyr first
-#' @rdname trans_interpolate
+#' @rdname age_depth_interpolate
 #' @export
-trans_average <- function(x, y, x0 = last, y0 = last, slope = NULL) {
+age_depth_extrapolate <- function(x, y, x0 = last, y0 = last, slope = NULL) {
   if(!all(is.finite(c(x, y)))) warning("Non-finite values in average transformation")
   verify_length(x, y)
 
@@ -424,9 +424,9 @@ trans_average <- function(x, y, x0 = last, y0 = last, slope = NULL) {
   )
 }
 
-#' @rdname trans_interpolate
+#' @rdname age_depth_interpolate
 #' @export
-trans_exact <- function(x, y) {
+age_depth_exact <- function(x, y) {
   verify_length(x, y, 1)
   list(
     trans = function(new_x) {
@@ -438,9 +438,9 @@ trans_exact <- function(x, y) {
   )
 }
 
-#' @rdname trans_interpolate
+#' @rdname age_depth_interpolate
 #' @export
-trans_na <- function(x, y) {
+age_depth_na <- function(x, y) {
   verify_length(x, y, 0)
   list(
     trans = function(new_x) {

@@ -10,12 +10,12 @@ age_depth_model(
   age,
   age_min = NA_real_,
   age_max = NA_real_,
-  interpolate_age = trans_interpolate,
-  extrapolate_age_below = ~trans_average(.x, .y, x0 = last, y0 = last),
-  extrapolate_age_above = ~trans_average(.x, .y, x0 = first, y0 = first),
-  interpolate_age_limits = trans_exact,
-  extrapolate_age_limits_below = trans_na,
-  extrapolate_age_limits_above = trans_na
+  interpolate_age = age_depth_interpolate,
+  extrapolate_age_below = ~age_depth_extrapolate(.x, .y, x0 = last, y0 = last),
+  extrapolate_age_above = ~age_depth_extrapolate(.x, .y, x0 = first, y0 = first),
+  interpolate_age_limits = age_depth_exact,
+  extrapolate_age_limits_below = age_depth_na,
+  extrapolate_age_limits_above = age_depth_na
 )
 }
 \arguments{
