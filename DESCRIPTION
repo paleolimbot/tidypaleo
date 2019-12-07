@@ -1,7 +1,9 @@
 Package: tidypaleo
 Title: Tidy tools for paleoenvironmental archives
 Version: 0.0.0.9000
-Authors@R: person("Dewey", "Dunnington", email = "dewey@fishandwhistle.net", role = c("aut", "cre"))
+Authors@R: person("Dewey", "Dunnington", 
+                  email = "dewey@fishandwhistle.net", 
+                  role = c("aut", "cre"), comment = c(ORCID = "0000-0002-9415-4582"))
 Description: Provides a set of functions with a common framework for age-depth model management, 
   stratigraphic visualization, and common statistical transformations.
 Depends: R (>= 3.4.0)
