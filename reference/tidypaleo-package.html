@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Age-depth model interpolators/extrapolators — age_depth_interpolate • tidypaleo</title>
+<title>tidypaleo: Tidy tools for paleoenvironmental archives — tidypaleo-package • tidypaleo</title>
 
 
 <!-- jquery -->
@@ -35,8 +35,9 @@
 
 
 
-<meta property="og:title" content="Age-depth model interpolators/extrapolators — age_depth_interpolate" />
-<meta property="og:description" content="Age-depth model interpolators/extrapolators" />
+<meta property="og:title" content="tidypaleo: Tidy tools for paleoenvironmental archives — tidypaleo-package" />
+<meta property="og:description" content="Provides a set of functions with a common framework for age-depth model management, 
+  stratigraphic visualization, and common statistical transformations." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -123,60 +124,37 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Age-depth model interpolators/extrapolators</h1>
-    <small class="dont-index">Source: <a href='https://github.com/paleolimbot/tidypaleo/blob/master/R/age_depth_model.R'><code>R/age_depth_model.R</code></a></small>
-    <div class="hidden name"><code>age_depth_interpolate.Rd</code></div>
+    <h1>tidypaleo: Tidy tools for paleoenvironmental archives</h1>
+    <small class="dont-index">Source: <a href='https://github.com/paleolimbot/tidypaleo/blob/master/R/tidypaleo-package.R'><code>R/tidypaleo-package.R</code></a></small>
+    <div class="hidden name"><code>tidypaleo-package.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Age-depth model interpolators/extrapolators</p>
+    <p>Provides a set of functions with a common framework for age-depth model management, 
+  stratigraphic visualization, and common statistical transformations.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>age_depth_interpolate</span>(<span class='no'>x</span>, <span class='no'>y</span>)
 
-<span class='fu'>age_depth_extrapolate</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>x0</span> <span class='kw'>=</span> <span class='no'>last</span>, <span class='kw'>y0</span> <span class='kw'>=</span> <span class='no'>last</span>, <span class='kw'>slope</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
 
-<span class='fu'>age_depth_exact</span>(<span class='no'>x</span>, <span class='no'>y</span>)
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-<span class='fu'>age_depth_na</span>(<span class='no'>x</span>, <span class='no'>y</span>)</pre>
+    <div class='dont-index'><p>Useful links:</p><ul>
+<li><p><a href='https://paleolimbot.github.io/tidypaleo'>https://paleolimbot.github.io/tidypaleo</a></p></li>
+<li><p><a href='https://github.com/paleolimbot/tidypaleo'>https://github.com/paleolimbot/tidypaleo</a></p></li>
+<li><p>Report bugs at <a href='https://github.com/paleolimbot/tidypaleo/issues'>https://github.com/paleolimbot/tidypaleo/issues</a></p></li>
+</ul>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>x</th>
-      <td><p>A paired vector of x values</p></td>
-    </tr>
-    <tr>
-      <th>y</th>
-      <td><p>A paired vector of y values</p></td>
-    </tr>
-    <tr>
-      <th>x0</th>
-      <td><p>The x value to anchor the transform</p></td>
-    </tr>
-    <tr>
-      <th>y0</th>
-      <td><p>The y value to anchor the transform</p></td>
-    </tr>
-    <tr>
-      <th>slope</th>
-      <td><p>The slope (in units of y/x) to use for the transform</p></td>
-    </tr>
-    </table>
-
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>A list with component functions <code>trans</code> and <code>inverse</code></p>
+</div>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#value">Value</a></li>
+      <li><a href="#see-also">See also</a></li>
     </ul>
 
+    <h2>Author</h2>
+    <p><strong>Maintainer</strong>: Dewey Dunnington <a href='mailto:dewey@fishandwhistle.net'>dewey@fishandwhistle.net</a></p>
   </div>
 </div>
 
