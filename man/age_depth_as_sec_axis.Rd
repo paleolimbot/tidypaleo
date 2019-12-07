@@ -34,4 +34,3 @@ ggplot(alta_lake_210Pb_ages, aes(y = depth_cm, x = age_year_ad)) +
   scale_y_reverse(sec.axis = age_depth_as_sec_axis(alta_lake_adm))
 
 }
-\concept{Strat diagrams}

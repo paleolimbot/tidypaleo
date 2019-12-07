@@ -1,10 +1,10 @@
 ---
-title: "Stratigraphic diagrams with tidypaleo"
+title: "Stratigraphic diagrams"
 author: "Dewey Dunnington"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Stratigraphic diagrams with tidypaleo}
+  %\VignetteIndexEntry{Stratigraphic diagrams}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

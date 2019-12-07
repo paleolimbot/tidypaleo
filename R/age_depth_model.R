@@ -15,7 +15,6 @@
 #'
 #' @return An age depth model object.
 #' @export
-#' @concept Age-depth models
 #' @importFrom rlang !!
 #' @importFrom rlang .data
 #'
@@ -92,7 +91,6 @@ age_depth_model <- function(
 #'
 #' @return An age depth model object
 #' @export
-#' @concept Age-depth models
 #'
 new_age_depth_model <- function(x) {
   if(!is.list(x)) stop("objects of class age_depth_model must be a list")
@@ -105,7 +103,6 @@ new_age_depth_model <- function(x) {
 #'
 #' @return The input, invisibly
 #' @export
-#' @concept Age-depth models
 #'
 validate_age_depth_model <- function(x) {
   if(!is.list(x)) stop("objects of class age_depth_model must be a list")
@@ -131,7 +128,6 @@ validate_age_depth_model <- function(x) {
 #'
 #' @return The input, invisibly
 #' @export
-#' @concept Age-depth models
 #'
 print.age_depth_model <- function(x, ...) {
   cat("<age_depth_model>\n")
@@ -147,7 +143,6 @@ print.age_depth_model <- function(x, ...) {
 #'
 #' @return TRUE if the object is an age depth model, FALSE otherwise
 #' @export
-#' @concept Age-depth models
 #'
 is_age_depth_model <- function(x) {
   inherits(x, "age_depth_model")
@@ -163,7 +158,6 @@ is_age_depth_model <- function(x) {
 #' @return A data frame with the same number of observations as the input age or
 #'   depth vector.
 #' @export
-#' @concept Age-depth models
 #'
 #' @importFrom stats predict
 #'
@@ -277,7 +271,6 @@ predict_age <- function(object, depth) {
 #' @param ... Passed to [points][graphics::points] to customize points display
 #'
 #' @export
-#' @concept Age-depth models
 #'
 #' @importFrom graphics plot
 #'
@@ -368,7 +361,6 @@ create_trans_list <- function(adm) {
 #'
 #' @return A list with component functions `trans` and `inverse`
 #' @export
-#' @concept Age-depth models
 #'
 age_depth_interpolate <- function(x, y) {
   if(!all(is.finite(c(x, y)))) stop("Non-finite values in transformation")
@@ -478,7 +470,6 @@ age_depth_na <- function(x, y) {
 #'   rlang lambda-style functions.
 #'
 #' @return The input, invisibly.
-#' @concept Age-depth models
 #' @export
 #'
 as_trans_factory <- function(factory, env = parent.frame()) {
@@ -539,7 +530,6 @@ verify_length <- function(x, y, n = 2) {
 #' @return A ggplot2 [sec_axis][ggplot2::sec_axis] for use in [scale_x_continuous][ggplot2::scale_x_continuous],
 #'   [scale_y_continuous][ggplot2::scale_y_continuous], or their reverse variants.
 #' @export
-#' @concept Strat diagrams
 #'
 #' @examples
 #' library(ggplot2)

@@ -28,4 +28,3 @@
 \description{
 Plot an age depth model using base graphics
 }
-\concept{Age-depth models}

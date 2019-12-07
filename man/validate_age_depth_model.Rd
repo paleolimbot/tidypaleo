@@ -15,4 +15,3 @@ The input, invisibly
 \description{
 Validate age depth model objects
 }
-\concept{Age-depth models}

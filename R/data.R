@@ -91,6 +91,7 @@
 #' Dunnington, Dewey W. "A 500-Year Applied Paleolimnological Assessment of
 #' Environmental Change at Alta Lake, Whistler, British Columbia, Canada." M.Sc.
 #' Thesis, Acadia University, 2015.
+#' <https://scholar.acadiau.ca/islandora/object/theses:411>.
 #'
 #' @seealso
 #' The [alta_lake][mudata2::alta_lake] dataset (mudata2 package) for geochemical data.
@@ -136,6 +137,7 @@
 #' White, Hilary E. "Paleolimnological Records of Post-Glacial Lake
 #' and Wetland Evolution from the Isthmus of Chignecto Region, Eastern Canada."
 #' M.Sc. Thesis, Acadia University, 2012.
+#' <https://scholar.acadiau.ca/islandora/object/theses:247>.
 #'
 #' @seealso
 #' The [long_lake][mudata2::long_lake] dataset (mudata2 package) for geochemical data.

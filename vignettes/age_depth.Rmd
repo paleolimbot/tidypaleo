@@ -1,12 +1,12 @@
 ---
-title: "Age-depth models using tidypaleo"
+title: "Age-depth models"
 author: "Dewey Dunnington"
 date: "`r Sys.Date()`"
 output: 
   "rmarkdown::html_vignette":
     df_print: kable
 vignette: >
-  %\VignetteIndexEntry{Age-depth models using tidypaleo}
+  %\VignetteIndexEntry{Age-depth models}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

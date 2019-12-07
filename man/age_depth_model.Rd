@@ -39,4 +39,3 @@ An age depth model object.
 \description{
 Create age depth models
 }
-\concept{Age-depth models}

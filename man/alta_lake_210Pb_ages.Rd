@@ -55,6 +55,7 @@ Paleolimnology 56, no. 4 (November 2016): 315–330.
 Dunnington, Dewey W. "A 500-Year Applied Paleolimnological Assessment of
 Environmental Change at Alta Lake, Whistler, British Columbia, Canada." M.Sc.
 Thesis, Acadia University, 2015.
+\url{https://scholar.acadiau.ca/islandora/object/theses:411}.
 }
 \seealso{
 The \link[mudata2:alta_lake]{alta_lake} dataset (mudata2 package) for geochemical data.

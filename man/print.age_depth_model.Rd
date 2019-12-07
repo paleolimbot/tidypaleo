@@ -17,4 +17,3 @@ The input, invisibly
 \description{
 Print summary of age-depth model objects
 }
-\concept{Age-depth models}

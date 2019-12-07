@@ -1,10 +1,10 @@
 ---
-title: "Nested analyses using tidypaleo"
+title: "Nested analyses"
 author: "Dewey Dunnington"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Nested analyses using tidypaleo}
+  %\VignetteIndexEntry{Nested analyses}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

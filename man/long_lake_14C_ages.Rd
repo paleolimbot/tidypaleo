@@ -40,6 +40,7 @@ Atlantic Canada." FACETS 2, no. 1 (May 23, 2017): 440–60.
 White, Hilary E. "Paleolimnological Records of Post-Glacial Lake
 and Wetland Evolution from the Isthmus of Chignecto Region, Eastern Canada."
 M.Sc. Thesis, Acadia University, 2012.
+\url{https://scholar.acadiau.ca/islandora/object/theses:247}.
 }
 \seealso{
 The \link[mudata2:long_lake]{long_lake} dataset (mudata2 package) for geochemical data.

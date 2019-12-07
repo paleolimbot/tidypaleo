@@ -32,4 +32,3 @@ A list with component functions \code{trans} and \code{inverse}
 \description{
 Age-depth model interpolators/extrapolators
 }
-\concept{Age-depth models}
