@@ -90,13 +90,13 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/age_depth.html">Age-depth models using tidypaleo</a>
+      <a href="../articles/age_depth.html">Age-depth models</a>
     </li>
     <li>
-      <a href="../articles/nested_analysis.html">Nested analyses using tidypaleo</a>
+      <a href="../articles/nested_analysis.html">Nested analyses</a>
     </li>
     <li>
-      <a href="../articles/strat_diagrams.html">Stratigraphic diagrams with tidypaleo</a>
+      <a href="../articles/strat_diagrams.html">Stratigraphic diagrams</a>
     </li>
   </ul>
 </li>
@@ -135,11 +135,23 @@
     <tbody>
       <tr>
         <th colspan="2">
-          <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
-          <p class="section-desc"></p>
+          <h2 id="section-age-depth-models" class="hasAnchor"><a href="#section-age-depth-models" class="anchor"></a>Age-depth models</h2>
+          <p class="section-desc"><p>Functions to interpolate/extrapolate ages and depths given a set of paired age/depth values.</p></p>
         </th>
       </tr>
       <tr>
+        
+        <td>
+          <p><code><a href="age_depth_model.html">age_depth_model()</a></code> </p>
+        </td>
+        <td><p>Create age depth models</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="predict.age_depth_model.html">predict(<i>&lt;age_depth_model&gt;</i>)</a></code> <code><a href="predict.age_depth_model.html">predict_depth()</a></code> <code><a href="predict.age_depth_model.html">predict_age()</a></code> </p>
+        </td>
+        <td><p>Predict age and depth values</p></td>
+      </tr><tr>
         
         <td>
           <p><code><a href="age_depth_as_sec_axis.html">age_depth_as_sec_axis()</a></code> </p>
@@ -151,31 +163,15 @@
           <p><code><a href="age_depth_interpolate.html">age_depth_interpolate()</a></code> <code><a href="age_depth_interpolate.html">age_depth_extrapolate()</a></code> <code><a href="age_depth_interpolate.html">age_depth_exact()</a></code> <code><a href="age_depth_interpolate.html">age_depth_na()</a></code> </p>
         </td>
         <td><p>Age-depth model interpolators/extrapolators</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="age_depth_model.html">age_depth_model()</a></code> </p>
-        </td>
-        <td><p>Create age depth models</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="alta_lake_210Pb_ages.html">alta_lake_210Pb_ages</a></code> <code><a href="alta_lake_210Pb_ages.html">alta_lake_14C_ages</a></code> <code><a href="alta_lake_210Pb_ages.html">alta_lake_bacon_ages</a></code> <code><a href="alta_lake_210Pb_ages.html">alta_lake_geochem</a></code> </p>
-        </td>
-        <td><p>Alta Lake Lead-210 and Carbon-14 Ages</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="as_trans_factory.html">as_trans_factory()</a></code> <code><a href="as_trans_factory.html">validate_trans_factory()</a></code> <code><a href="as_trans_factory.html">validate_trans()</a></code> </p>
-        </td>
-        <td><p>Coerce and validate transforms and functions that produce them</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="facet_abundanceh.html">facet_abundanceh()</a></code> <code><a href="facet_abundanceh.html">facet_abundance()</a></code> <code><a href="facet_abundanceh.html">facet_geochem_wraph()</a></code> <code><a href="facet_abundanceh.html">facet_geochem_wrap()</a></code> <code><a href="facet_abundanceh.html">facet_geochem_grid()</a></code> <code><a href="facet_abundanceh.html">facet_geochem_gridh()</a></code> </p>
-        </td>
-        <td><p>Facet for relative abundance data</p></td>
-      </tr><tr>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-stratigraphic-diagrams" class="hasAnchor"><a href="#section-stratigraphic-diagrams" class="anchor"></a>Stratigraphic diagrams</h2>
+          <p class="section-desc"><p>Helpers for ggplot2-based stratigraphic diagrams.</p></p>
+        </th>
+      </tr>
+      <tr>
         
         <td>
           <p><code><a href="geom_col_segsh.html">geom_col_segsh()</a></code> <code><a href="geom_col_segsh.html">geom_col_segs()</a></code> <code><a href="geom_col_segsh.html">GeomColSegsh</a></code> <code><a href="geom_col_segsh.html">GeomColSegs</a></code> <code><a href="geom_col_segsh.html">GeomLineh</a></code> </p>
@@ -202,33 +198,27 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="halifax_lakes.html">halifax_lakes</a></code> <code><a href="halifax_lakes.html">halifax_lakes_plottable</a></code> </p>
+          <p><code><a href="stat_nested_hclust.html">stat_nested_hclust()</a></code> <code><a href="stat_nested_hclust.html">StatNestedHclust</a></code> </p>
         </td>
-        <td><p>Halifax lakes water chemistry and top/bottom diatom counts</p></td>
+        <td><p>Display a dendrogram as a ggplot2 layer</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="is_age_depth_model.html">is_age_depth_model()</a></code> </p>
+          <p><code><a href="scale_x_abundance.html">scale_x_abundance()</a></code> <code><a href="scale_x_abundance.html">scale_y_abundance()</a></code> </p>
         </td>
-        <td><p>Test for age depth models</p></td>
+        <td><p>Scales for relative abundance values</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="keji_lakes.html">keji_lakes</a></code> <code><a href="keji_lakes.html">keji_lakes_plottable</a></code> </p>
+          <p><code><a href="scale_y_depth_age.html">scale_y_depth_age()</a></code> <code><a href="scale_y_depth_age.html">scale_y_age_depth()</a></code> <code><a href="scale_y_depth_age.html">scale_x_depth_age()</a></code> <code><a href="scale_y_depth_age.html">scale_x_age_depth()</a></code> </p>
         </td>
-        <td><p>Keji lakes core diatom counts</p></td>
+        <td><p>Age-depth scales</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="label_geochem.html">label_geochem()</a></code> </p>
+          <p><code><a href="facet_abundanceh.html">facet_abundanceh()</a></code> <code><a href="facet_abundanceh.html">facet_abundance()</a></code> <code><a href="facet_abundanceh.html">facet_geochem_wraph()</a></code> <code><a href="facet_abundanceh.html">facet_geochem_wrap()</a></code> <code><a href="facet_abundanceh.html">facet_geochem_grid()</a></code> <code><a href="facet_abundanceh.html">facet_geochem_gridh()</a></code> </p>
         </td>
-        <td><p>Geochem facet labelers</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="label_species.html">label_species()</a></code> </p>
-        </td>
-        <td><p>Species facet labellers</p></td>
+        <td><p>Facet for relative abundance data</p></td>
       </tr><tr>
         
         <td>
@@ -244,10 +234,36 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="long_lake_14C_ages.html">long_lake_14C_ages</a></code> <code><a href="long_lake_14C_ages.html">long_lake_bacon_ages</a></code> </p>
+          <p><code><a href="rotated_facet_labels.html">rotated_facet_labels()</a></code> <code><a href="rotated_facet_labels.html">rotated_axis_labels()</a></code> </p>
         </td>
-        <td><p>Long Lake Carbon-14 Ages</p></td>
+        <td><p>Common plot modifications for stratigraphic plots</p></td>
       </tr><tr>
+        
+        <td>
+          <p><code><a href="label_geochem.html">label_geochem()</a></code> </p>
+        </td>
+        <td><p>Geochem facet labelers</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="label_species.html">label_species()</a></code> </p>
+        </td>
+        <td><p>Species facet labellers</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="sequential_layer_facets.html">sequential_layer_facets()</a></code> </p>
+        </td>
+        <td><p>Change facet ordering behaviour</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-nested-analyses" class="hasAnchor"><a href="#section-nested-analyses" class="anchor"></a>Nested analyses</h2>
+          <p class="section-desc"><p>Helpers for clustering and ordination of stratigraphic data. These functions are experimental and may be removed in future a version.</p></p>
+        </th>
+      </tr>
+      <tr>
         
         <td>
           <p><code><a href="nested_analysis.html">nested_analysis()</a></code> </p>
@@ -271,72 +287,38 @@
           <p><code><a href="nested_prcomp.html">nested_prcomp()</a></code> </p>
         </td>
         <td><p>Nested Principal Components Analysis (PCA)</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-example-data" class="hasAnchor"><a href="#section-example-data" class="anchor"></a>Example data</h2>
+          <p class="section-desc"><p>Real data sets to test and document this package.</p></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="alta_lake_210Pb_ages.html">alta_lake_210Pb_ages</a></code> <code><a href="alta_lake_210Pb_ages.html">alta_lake_14C_ages</a></code> <code><a href="alta_lake_210Pb_ages.html">alta_lake_bacon_ages</a></code> <code><a href="alta_lake_210Pb_ages.html">alta_lake_geochem</a></code> </p>
+        </td>
+        <td><p>Alta Lake Lead-210 and Carbon-14 Ages</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="new_age_depth_model.html">new_age_depth_model()</a></code> </p>
+          <p><code><a href="halifax_lakes.html">halifax_lakes</a></code> <code><a href="halifax_lakes.html">halifax_lakes_plottable</a></code> </p>
         </td>
-        <td><p>Create age depth model objects</p></td>
+        <td><p>Halifax lakes water chemistry and top/bottom diatom counts</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="plot.age_depth_model.html">plot(<i>&lt;age_depth_model&gt;</i>)</a></code> </p>
+          <p><code><a href="keji_lakes.html">keji_lakes</a></code> <code><a href="keji_lakes.html">keji_lakes_plottable</a></code> </p>
         </td>
-        <td><p>Plot an age depth model using base graphics</p></td>
+        <td><p>Keji lakes core diatom counts</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="plot.nested_analysis.html">plot(<i>&lt;nested_analysis&gt;</i>)</a></code> <code><a href="plot.nested_analysis.html">plot_nested_analysis()</a></code> <code><a href="plot.nested_analysis.html">biplot(<i>&lt;nested_prcomp&gt;</i>)</a></code> </p>
+          <p><code><a href="long_lake_14C_ages.html">long_lake_14C_ages</a></code> <code><a href="long_lake_14C_ages.html">long_lake_bacon_ages</a></code> </p>
         </td>
-        <td><p>Plot a nested analysis</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="predict.age_depth_model.html">predict(<i>&lt;age_depth_model&gt;</i>)</a></code> <code><a href="predict.age_depth_model.html">predict_depth()</a></code> <code><a href="predict.age_depth_model.html">predict_age()</a></code> </p>
-        </td>
-        <td><p>Predict age and depth values</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="print.age_depth_model.html">print(<i>&lt;age_depth_model&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Print summary of age-depth model objects</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="rotated_facet_labels.html">rotated_facet_labels()</a></code> <code><a href="rotated_facet_labels.html">rotated_axis_labels()</a></code> </p>
-        </td>
-        <td><p>Common plot modifications for stratigraphic plots</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="scale_x_abundance.html">scale_x_abundance()</a></code> <code><a href="scale_x_abundance.html">scale_y_abundance()</a></code> </p>
-        </td>
-        <td><p>Scales for relative abundance values</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="scale_y_depth_age.html">scale_y_depth_age()</a></code> <code><a href="scale_y_depth_age.html">scale_y_age_depth()</a></code> <code><a href="scale_y_depth_age.html">scale_x_depth_age()</a></code> <code><a href="scale_y_depth_age.html">scale_x_age_depth()</a></code> </p>
-        </td>
-        <td><p>Age-depth scales</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="sequential_layer_facets.html">sequential_layer_facets()</a></code> </p>
-        </td>
-        <td><p>Change facet ordering behaviour</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="stat_nested_hclust.html">stat_nested_hclust()</a></code> <code><a href="stat_nested_hclust.html">StatNestedHclust</a></code> </p>
-        </td>
-        <td><p>Display a dendrogram as a ggplot2 layer</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="validate_age_depth_model.html">validate_age_depth_model()</a></code> </p>
-        </td>
-        <td><p>Validate age depth model objects</p></td>
+        <td><p>Long Lake Carbon-14 Ages</p></td>
       </tr>
     </tbody>
     </table>
@@ -345,7 +327,10 @@
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#section-all-functions">All functions</a></li>
+      <li><a href="#section-age-depth-models">Age-depth models</a></li>
+      <li><a href="#section-stratigraphic-diagrams">Stratigraphic diagrams</a></li>
+      <li><a href="#section-nested-analyses">Nested analyses</a></li>
+      <li><a href="#section-example-data">Example data</a></li>
     </ul>
   </div>
 </div>
