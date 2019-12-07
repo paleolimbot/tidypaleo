@@ -25,6 +25,8 @@ knitr::opts_chunk$set(
 )
 ```
 
+**These functions are experimental and may be removed in a future version!**
+
 Load the packages:
 
 ```{r, eval=FALSE}

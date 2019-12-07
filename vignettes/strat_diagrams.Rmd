@@ -15,7 +15,7 @@ library(tidyr)
 library(forcats)
 library(ggplot2)
 library(tidypaleo)
-theme_set(theme_bw(8))
+theme_set(theme_paleo(8))
 
 knitr::opts_chunk$set(
   collapse = TRUE,
@@ -33,7 +33,7 @@ First, you will need to load the packages. For this tutorial, I will use **tidyp
 ```{r, eval=FALSE}
 library(tidyverse)
 library(tidypaleo)
-theme_set(theme_bw(8))
+theme_set(theme_paleo(8))
 ```
 
 Next, you will need to load the example data. This vignette uses 3 datasets that are already in the correct format for plotting. These are datasets in the **tidypaleo** package: `alta_lake_geochem`, `keji_lakes_plottable`, and `halifax_lakes_plottable`. These represent three common dataset types for which stratigraphic plots are created.

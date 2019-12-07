@@ -41,7 +41,7 @@ which are commonly used to show species abundance data.
 ``` r
 library(ggplot2)
 library(tidypaleo)
-theme_set(theme_bw())
+theme_set(theme_paleo())
 
 ggplot(keji_lakes_plottable, aes(x = rel_abund, y = depth)) +
   geom_col_segsh() +

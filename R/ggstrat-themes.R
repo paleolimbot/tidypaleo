@@ -1,4 +1,17 @@
 
+#' A Paleo-friendly ggplot2 theme
+#'
+#' Essentially, this is [ggplot2::theme_bw()] with a few modifications
+#'
+#' @param ... Passed to [ggplot2::theme_bw()]
+#'
+#' @export
+#'
+theme_paleo <- function(...) {
+  ggplot2::theme_bw(...) +
+    ggplot2::theme(strip.background = ggplot2::element_blank())
+}
+
 #' Common plot modifications for stratigraphic plots
 #'
 #' @param angle The angle at which labels should be rotated
