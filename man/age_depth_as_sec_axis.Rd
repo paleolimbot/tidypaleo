@@ -2,7 +2,7 @@
 % Please edit documentation in R/age_depth_model.R
 \name{age_depth_as_sec_axis}
 \alias{age_depth_as_sec_axis}
-\title{Use Age Depth Models as a Second ggplot Axis}
+\title{Use an age depth model as a second ggplot axis}
 \usage{
 age_depth_as_sec_axis(x, primary = c("depth", "age"), ...)
 }
@@ -18,7 +18,7 @@ A ggplot2 \link[ggplot2:sec_axis]{sec_axis} for use in \link[ggplot2:scale_x_con
 \link[ggplot2:scale_y_continuous]{scale_y_continuous}, or their reverse variants.
 }
 \description{
-Use Age Depth Models as a Second ggplot Axis
+Use an age depth model as a second ggplot axis
 }
 \examples{
 library(ggplot2)
@@ -34,3 +34,4 @@ ggplot(alta_lake_210Pb_ages, aes(y = depth_cm, x = age_year_ad)) +
   scale_y_reverse(sec.axis = age_depth_as_sec_axis(alta_lake_adm))
 
 }
+\concept{Strat diagrams}

@@ -5,7 +5,7 @@
 \alias{age_depth_extrapolate}
 \alias{age_depth_exact}
 \alias{age_depth_na}
-\title{Transforms}
+\title{Age-depth model interpolators/extrapolators}
 \usage{
 age_depth_interpolate(x, y)
 
@@ -30,5 +30,6 @@ age_depth_na(x, y)
 A list with component functions \code{trans} and \code{inverse}
 }
 \description{
-Transforms
+Age-depth model interpolators/extrapolators
 }
+\concept{Age-depth models}

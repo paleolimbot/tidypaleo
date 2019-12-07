@@ -15,3 +15,4 @@ TRUE if the object is an age depth model, FALSE otherwise
 \description{
 Test for age depth models
 }
+\concept{Age-depth models}
