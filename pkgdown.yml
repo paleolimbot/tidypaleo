@@ -1,0 +1,8 @@
+pandoc: '2.2'
+pkgdown: 1.4.1
+pkgdown_sha: ~
+articles:
+  age_depth: age_depth.html
+  nested_analysis: nested_analysis.html
+  strat_diagrams: strat_diagrams.html
+
