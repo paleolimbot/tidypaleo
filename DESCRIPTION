@@ -19,7 +19,7 @@ Suggests: testthat,
     ggrepel,
     patchwork,
     forcats
-URL: https://github.com/paleolimbot/tidypaleo
+URL: https://paleolimbot.github.io/tidypaleo, https://github.com/paleolimbot/tidypaleo
 BugReports: https://github.com/paleolimbot/tidypaleo/issues
 Imports: rlang,
     tidyselect,

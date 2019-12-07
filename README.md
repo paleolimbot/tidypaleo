@@ -32,7 +32,7 @@ remotes::install_github("paleolimbot/tidypaleo")
 
 ## Examples
 
-### Stratigraphic diagrams
+### Strat diagrams
 
 This package exposes a number of functions useful when creating
 stratigraphic diatrams, including `facet_abundanceh()`, which combines
