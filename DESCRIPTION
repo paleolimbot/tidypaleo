@@ -10,7 +10,7 @@ Depends: R (>= 3.4.0)
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.0.1
+RoxygenNote: 7.0.2
 Suggests: testthat,
     covr,
     knitr,
@@ -20,7 +20,8 @@ Suggests: testthat,
     glue,
     ggrepel,
     patchwork,
-    forcats
+    forcats,
+    vdiffr
 URL: https://paleolimbot.github.io/tidypaleo, https://github.com/paleolimbot/tidypaleo
 BugReports: https://github.com/paleolimbot/tidypaleo/issues
 Imports: rlang,

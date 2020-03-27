@@ -1,349 +1,300 @@
 context("test-ggstrat.R")
 
 test_that("facet label rotating works properly", {
-  test_data <- rbind(
-    data.frame(
-      facet = c("a very very very very long facet name 1"),
-      facet2 = c("a very very very very long facet name 1"),
-      x = runif(10),
-      y = runif(10),
-      stringsAsFactors = FALSE
-    ),
-    data.frame(
-      facet = c("a very very very long facet name 2"),
-      facet2 = c("a very very very very very very very long facet name 1"),
-      x = rnorm(10),
-      y = rnorm(10),
-      stringsAsFactors = FALSE
-    ),
-    data.frame(
-      facet = c("a very very long facet name 3"),
-      facet2 = c("a very very very very long facet name 2"),
-      x = rlnorm(10),
-      y = rlnorm(10),
-      stringsAsFactors = FALSE
-    ),
-    data.frame(
-      facet = c("a very long facet name 4"),
-      facet2 = c("a very very very very long facet name 2"),
-      x = rlnorm(10),
-      y = rlnorm(10),
-      stringsAsFactors = FALSE
+
+  test_data <- withr::with_seed(238,{
+    rbind(
+      data.frame(
+        facet = c("a very very very very long facet name 1"),
+        facet2 = c("a very very very very long facet name 1"),
+        x = runif(10),
+        y = runif(10),
+        stringsAsFactors = FALSE
+      ),
+      data.frame(
+        facet = c("a very very very long facet name 2"),
+        facet2 = c("a very very very very very very very long facet name 1"),
+        x = rnorm(10),
+        y = rnorm(10),
+        stringsAsFactors = FALSE
+      ),
+      data.frame(
+        facet = c("a very very long facet name 3"),
+        facet2 = c("a very very very very long facet name 2"),
+        x = rlnorm(10),
+        y = rlnorm(10),
+        stringsAsFactors = FALSE
+      ),
+      data.frame(
+        facet = c("a very long facet name 4"),
+        facet2 = c("a very very very very long facet name 2"),
+        x = rlnorm(10),
+        y = rlnorm(10),
+        stringsAsFactors = FALSE
+      )
     )
-  )
+  })
 
   p <- ggplot2::ggplot(test_data, ggplot2::aes(x, y)) + ggplot2::geom_point()
 
-  print(
+  vdiffr::expect_doppelganger(
+    "label rotation",
     p +
       ggplot2::facet_grid(facet2 ~ facet) +
-      rotated_facet_labels(45, direction = c("x", "y")) +
-      ggplot2::labs(caption = "x and y labels rotated by 45 degrees with no strip background")
+      rotated_facet_labels(45, direction = c("x", "y"))
   )
 
-  print(
+  vdiffr::expect_doppelganger(
+    "label rotation switch",
     p +
       ggplot2::facet_grid(facet2 ~ facet, switch = "both") +
-      rotated_facet_labels(45, direction = c("x", "y")) +
-      ggplot2::labs(caption = "x and y labels rotated by 45 degrees with no strip background")
+      rotated_facet_labels(45, direction = c("x", "y"))
   )
 
-  print(
+  vdiffr::expect_doppelganger(
+    "label rotation x",
     p +
       ggplot2::facet_grid(facet2 ~ facet) +
-      rotated_facet_labels(45) +
-      ggplot2::labs(caption = "only x rotated by 45 degrees (default) with no strip background")
+      rotated_facet_labels(45)
   )
 
-  print(
+  vdiffr::expect_doppelganger(
+    "label rotation switch x",
     p +
       ggplot2::facet_grid(facet2 ~ facet, switch = "both") +
-      rotated_facet_labels(45, direction = "x") +
-      ggplot2::labs(
-        caption = "only x rotated by 45 degrees with no strip background (lack of clip on left is not our fault ggplot2 #2772...)")
+      rotated_facet_labels(45, direction = "x")
   )
 
-  print(
+  vdiffr::expect_doppelganger(
+    "label rotation y",
     p +
       ggplot2::facet_grid(facet2 ~ facet) +
-      rotated_facet_labels(45, direction = "y") +
-      ggplot2::labs(caption = "only y rotated by 45 degrees with no strip background")
+      rotated_facet_labels(45, direction = "y")
   )
 
-  print(
+  vdiffr::expect_doppelganger(
+    "label rotation switch y",
     p +
       ggplot2::facet_grid(facet2 ~ facet, switch = "both") +
-      rotated_facet_labels(45, direction = "y") +
-      ggplot2::labs(caption = "only y rotated by 45 degrees with no strip background")
+      rotated_facet_labels(45, direction = "y")
   )
 
-  print(
+  vdiffr::expect_doppelganger(
+    "label rotation neg",
     p +
       ggplot2::facet_grid(facet2 ~ facet) +
-      rotated_facet_labels(-45, direction = c("x", "y")) +
-      ggplot2::labs(caption = "labels rotated by -45 degrees in both directions (text base should align to top/right of plot)")
+      rotated_facet_labels(-45, direction = c("x", "y"))
   )
 
-  print(
+  vdiffr::expect_doppelganger(
+    "label rotation neg switch",
     p +
       ggplot2::facet_grid(facet2 ~ facet, switch = "both") +
-      rotated_facet_labels(-45, direction = c("x", "y")) +
-      ggplot2::labs(caption = "labels rotated by -45 degrees in both directions (text base should align to top/right of plot)")
+      rotated_facet_labels(-45, direction = c("x", "y"))
   )
 
-  print(
+  vdiffr::expect_doppelganger(
+    "label rotation 0",
     p +
       ggplot2::facet_grid(facet2 ~ facet) +
-      rotated_facet_labels(0, direction = c("x", "y")) +
-      ggplot2::labs(caption = "labels rotated by 0 degrees in both directions (text should align to middle)")
+      rotated_facet_labels(0, direction = c("x", "y"))
   )
 
-  print(
+  vdiffr::expect_doppelganger(
+    "label rotation 0 switch",
     p +
       ggplot2::facet_grid(facet2 ~ facet, switch = "both") +
-      rotated_facet_labels(0, direction = c("x", "y")) +
-      ggplot2::labs(caption = "labels rotated by 0 degrees in both directions (text should align to middle)")
+      rotated_facet_labels(0, direction = c("x", "y"))
   )
 
-  print(
+  vdiffr::expect_doppelganger(
+    "label rotation 90",
     p +
       ggplot2::facet_grid(facet2 ~ facet) +
-      rotated_facet_labels(90, direction = c("x", "y")) +
-      ggplot2::labs(caption = "labels rotated by 90 degrees in both directions (text should align to middle)")
+      rotated_facet_labels(90, direction = c("x", "y"))
   )
 
-  print(
+  vdiffr::expect_doppelganger(
+    "label rotation 90 switch",
     p +
       ggplot2::facet_grid(facet2 ~ facet, switch = "both") +
-      rotated_facet_labels(90, direction = c("x", "y")) +
-      ggplot2::labs(caption = "labels rotated by 90 degrees in both directions (text should align to middle)")
+      rotated_facet_labels(90, direction = c("x", "y"))
   )
 
-  print(
+  vdiffr::expect_doppelganger(
+    "label rotation neg90",
     p +
       ggplot2::facet_grid(facet2 ~ facet) +
-      rotated_facet_labels(-90, direction = c("x", "y")) +
-      ggplot2::labs(caption = "labels rotated by -90 degrees in both directions (text should align to middle)")
+      rotated_facet_labels(-90, direction = c("x", "y"))
   )
 
-  print(
+  vdiffr::expect_doppelganger(
+    "label rotation neg90 switch",
     p +
       ggplot2::facet_grid(facet2 ~ facet, switch = "both") +
-      rotated_facet_labels(-90, direction = c("x", "y")) +
-      ggplot2::labs(caption = "labels rotated by -90 degrees in both directions (text should align to middle)")
+      rotated_facet_labels(-90, direction = c("x", "y"))
   )
 
-  print(
+  vdiffr::expect_doppelganger(
+    "label rotation (wrap)",
     p +
       ggplot2::facet_wrap(~facet, strip.position = "top") +
-      rotated_facet_labels(45, direction = c("x", "y")) +
-      ggplot2::labs(caption = "facet_wrap with top labels, 45 degree rotation")
+      rotated_facet_labels(45, direction = c("x", "y"))
   )
 
-  print(
+  vdiffr::expect_doppelganger(
+    "label rotation (wrap, left)",
     p +
       ggplot2::facet_wrap(~facet, strip.position = "left") +
-      rotated_facet_labels(45, direction = c("x", "y")) +
-      ggplot2::labs(caption = "facet_wrap with left labels, 45 degree rotation")
+      rotated_facet_labels(45, direction = c("x", "y"))
   )
 
-  print(
+  vdiffr::expect_doppelganger(
+    "label rotation (wrap, bottom)",
     p +
       ggplot2::facet_wrap(~facet, strip.position = "bottom") +
-      rotated_facet_labels(45, direction = c("x", "y")) +
-      ggplot2::labs(caption = "facet_wrap with bottom labels, 45 degree rotation")
+      rotated_facet_labels(45, direction = c("x", "y"))
   )
 
-  print(
+  vdiffr::expect_doppelganger(
+    "label rotation (wrap, right)",
     p +
       ggplot2::facet_wrap(~facet, strip.position = "right") +
-      rotated_facet_labels(45, direction = c("x", "y")) +
-      ggplot2::labs(caption = "facet_wrap with right labels, 45 degree rotation")
+      rotated_facet_labels(45, direction = c("x", "y"))
   )
 
-  expect_true(TRUE)
-})
-
-test_that("axis label rotating works properly", {
-  p <- ggplot2::ggplot(
-    data.frame(x = runif(10), y = runif(10)),
-    ggplot2::aes(x, y)
-  ) +
-    ggplot2::geom_point() +
-    ggplot2::scale_x_continuous(
-      breaks = c(0, 0.2, 0.4, 0.6, 0.8, 1),
-      labels = c("0", "0.2000000", "0.4", "0.6000", "0.80", "1.000"),
-      limits = c(0, 1),
-      sec.axis = ggplot2::dup_axis()
-    ) +
-    ggplot2::scale_y_continuous(
-      breaks = c(0, 0.2, 0.4, 0.6, 0.8, 1),
-      labels = c("0", "0.2000000", "0.4", "0.6000", "0.80", "1.000"),
-      limits = c(0, 1),
-      sec.axis = ggplot2::dup_axis()
-    )
-
-  print(
-    p +
-      rotated_axis_labels(0, direction = c("x", "y")) +
-      ggplot2::labs(caption = "axis labels rotated by 0 degrees, text aligned naturally")
-  )
-
-  print(
-    p +
-      rotated_axis_labels(90, direction = c("x", "y")) +
-      ggplot2::labs(caption = "axis labels rotated by 90 degrees, text aligned naturally")
-  )
-
-  print(
-    p +
-      rotated_axis_labels(-90, direction = c("x", "y")) +
-      ggplot2::labs(caption = "axis labels rotated by 90 degrees, text aligned naturally")
-  )
-
-  print(
-    p +
-      rotated_axis_labels(45, direction = c("x", "y")) +
-      ggplot2::labs(caption = "axis labels rotated by 90 degrees, text aligned naturally")
-  )
-
-  print(
-    p +
-      rotated_axis_labels(-45, direction = c("x", "y")) +
-      ggplot2::labs(caption = "axis labels rotated by 90 degrees, text aligned naturally")
-  )
-
-  # plot-generating tests
-  expect_true(TRUE)
+  warning("facet labels at positions bottom, left are incorrect (fix!)")
 })
 
 test_that("age depth axes work as expected", {
 
   adm_ident <- age_depth_model(depth = 1:10, age = -(1:10))
-  test_data <- data.frame(depth = 1:20, age = -(1:20), value = cumsum(rnorm(20)))
+  test_data <- withr::with_seed(394, {
+    data.frame(depth = 1:20, age = -(1:20), value = cumsum(rnorm(20)))
+  })
   py <- ggplot2::ggplot(test_data, ggplot2::aes(y = depth, x = value)) + ggplot2::geom_path()
   px <- ggplot2::ggplot(test_data, ggplot2::aes(y = value, x = depth)) + ggplot2::geom_path()
 
-  print(
-    py + scale_y_depth_age(adm_ident, age_name = "age axis", age_breaks = seq(0, -20, -4)) +
-      ggplot2::labs(caption = "reversed y axis, negative age axis with name, non-standard breaks")
+  vdiffr::expect_doppelganger(
+    "adm rev yaxis depth age",
+    py + scale_y_depth_age(adm_ident, age_name = "age axis", age_breaks = seq(0, -20, -4))
   )
 
-  print(
-    px + scale_x_depth_age(adm_ident, age_name = "age axis", age_breaks = seq(0, -20, -4)) +
-      ggplot2::labs(caption = "reversed x axis, negative age axis with name, non-standard breaks")
+  vdiffr::expect_doppelganger(
+    "adm rev xaxis depth age",
+    px + scale_x_depth_age(adm_ident, age_name = "age axis", age_breaks = seq(0, -20, -4))
   )
 
-  print(
-    py + scale_y_depth_age(NULL) +
-      ggplot2::labs(caption = "reversed y axis, no age axis")
+  vdiffr::expect_doppelganger(
+    "adm null yaxis depth age",
+    py + scale_y_depth_age(NULL)
   )
 
-  print(
-    px + scale_x_depth_age(NULL) +
-      ggplot2::labs(caption = "reversed x axis, no age axis")
+  vdiffr::expect_doppelganger(
+    "adm null xaxis depth age",
+    px + scale_x_depth_age(NULL)
   )
 
   py <- ggplot2::ggplot(test_data, ggplot2::aes(y = age, x = value)) + ggplot2::geom_path()
   px <- ggplot2::ggplot(test_data, ggplot2::aes(y = value, x = age)) + ggplot2::geom_path()
 
-  print(
-    py + scale_y_age_depth(adm_ident, depth_name = "depth axis", depth_breaks = seq(0, 20, 4)) +
-      ggplot2::labs(caption = "normal y axis, negative depth axis with name, non-standard breaks")
+  vdiffr::expect_doppelganger(
+    "adm yaxis age depth",
+    py + scale_y_age_depth(adm_ident, depth_name = "depth axis", depth_breaks = seq(0, 20, 4))
   )
 
-  print(
-    px + scale_x_age_depth(adm_ident, depth_name = "depth axis", depth_breaks = seq(0, 20, 4)) +
-      ggplot2::labs(caption = "normal x axis, negative age axis with name, non-standard breaks")
+  vdiffr::expect_doppelganger(
+    "adm xaxis age depth",
+    px + scale_x_age_depth(adm_ident, depth_name = "depth axis", depth_breaks = seq(0, 20, 4))
   )
 
-  print(
-    py + scale_y_age_depth(NULL) +
-      ggplot2::labs(caption = "normal y axis, no age axis")
+  vdiffr::expect_doppelganger(
+    "adm null yaxis age depth",
+    py + scale_y_age_depth(NULL)
   )
 
-  print(
-    py + scale_y_age_depth(NULL, reversed = TRUE) +
-      ggplot2::labs(caption = "reversed y axis, no age axis")
+  vdiffr::expect_doppelganger(
+    "adm null rev yaxis age depth",
+    py + scale_y_age_depth(NULL, reversed = TRUE)
   )
 
-  print(
-    px + scale_x_age_depth(NULL) +
-      ggplot2::labs(caption = "normal x axis, no age axis")
+  vdiffr::expect_doppelganger(
+    "adm null xaxis age depth",
+    px + scale_x_age_depth(NULL)
   )
 
-  print(
-    px + scale_x_age_depth(NULL, reversed = TRUE) +
-      ggplot2::labs(caption = "reversed x axis, no age axis")
+  vdiffr::expect_doppelganger(
+    "adm null rev xaxis age depth",
+    px + scale_x_age_depth(NULL, reversed = TRUE)
   )
-
-  # plot-generating tests
-  expect_true(TRUE)
 })
 
 test_that("relative abundance scales", {
 
-  print(
+  vdiffr::expect_doppelganger(
+    "rel abund x",
     ggplot2::ggplot(keji_lakes_plottable, ggplot2::aes(x = rel_abund, y = depth)) +
       geom_col_segsh() +
       ggplot2::scale_y_reverse() +
       ggplot2::facet_grid(location ~ taxon, scales = "free_x", space = "free_x") +
       rotated_facet_labels() +
-      scale_x_abundance() +
-      ggplot2::labs(caption = "zero-based x scale with minor breaks every 10%")
+      scale_x_abundance()
   )
 
-  print(
+  vdiffr::expect_doppelganger(
+    "rel abund y",
     ggplot2::ggplot(keji_lakes_plottable, ggplot2::aes(y = rel_abund, x = depth)) +
       geom_col_segs() +
       ggplot2::scale_x_reverse() +
       ggplot2::facet_grid(taxon ~ location, scales = "free_y", space = "free_y") +
       rotated_facet_labels(direction = "y") +
-      scale_y_abundance() +
-      ggplot2::labs(caption = "zero-based y scale with minor breaks every 10%")
+      scale_y_abundance()
   )
-
-  # plot-generating tests
-  expect_true(TRUE)
 })
 
 test_that("horizontal and vertical segment geometries look as they should", {
-  test_data <- data.frame(a = 1:20, b = cumsum(rnorm(20)))
-  test_data <- dplyr::sample_n(test_data, 20, replace = FALSE)
+  test_data <- withr::with_seed(202, data.frame(a = 1:20, b = cumsum(rnorm(20))))
+  test_data <- withr::with_seed(203, dplyr::sample_n(test_data, 20, replace = FALSE))
 
-  print(
+  vdiffr::expect_doppelganger(
+    "vertical col segs",
     ggplot2::ggplot(test_data, ggplot2::aes(x = a, y = b)) +
       geom_col_segs(yend = 1) +
-      ggplot2::geom_line() +
-      ggplot2::labs(caption = "vertical segments starting at 1, path geom in x order")
+      ggplot2::geom_line()
   )
 
-  print(
+  vdiffr::expect_doppelganger(
+    "horizontal col segs",
     ggplot2::ggplot(test_data, ggplot2::aes(x = b, y = a)) +
       geom_col_segsh(xend = 1) +
-      geom_lineh() +
-      ggplot2::labs(caption = "horizontal segments starting at 1, path geom in y order")
+      geom_lineh()
   )
-
-  # plot-generating tests
-  expect_true(TRUE)
 })
 
 test_that("horizontal area and ribbon plots work as expected", {
   huron <- data.frame(year = 1875:1972, level = as.vector(LakeHuron), level_half = as.vector(LakeHuron) / 2)
   h <- ggplot2::ggplot(huron, ggplot2::aes(y = year))
 
-  print(h + geom_ribbonh(ggplot2::aes(xmin=0, xmax=level)))
-  print(h + geom_areah(ggplot2::aes(x = level)))
+  vdiffr::expect_doppelganger(
+    "horizontal ribbon",
+    h + geom_ribbonh(ggplot2::aes(xmin = 0, xmax = level))
+  )
 
-  print(
+  vdiffr::expect_doppelganger(
+    "horizontal area",
+    h + geom_areah(ggplot2::aes(x = level))
+  )
+
+  vdiffr::expect_doppelganger(
+    "horizontal ribbon with aes",
     # Add aesthetic mappings
     h +
       geom_ribbonh(ggplot2::aes(xmin = level - 1, xmax = level + 1), fill = "grey70") +
       geom_lineh(ggplot2::aes(x = level))
   )
 
-  print(
+  vdiffr::expect_doppelganger(
+    "horizontal area (stacked)",
     # horizontal stacking by default
     ggplot2::ggplot(
       rbind(
@@ -354,33 +305,32 @@ test_that("horizontal area and ribbon plots work as expected", {
     ) +
       geom_areah()
   )
-
-  expect_true(TRUE)
 })
 
 test_that("exaggerated geometries work", {
 
   p <- ggplot2::ggplot(
-    data.frame(x = cumsum(runif(100)), y = cumsum(rnorm(100))),
+    withr::with_seed(23, data.frame(x = cumsum(runif(100)), y = cumsum(rnorm(100)))),
     ggplot2::aes(x, y)
   ) +
     ggplot2::geom_line()
 
-  print(
+  vdiffr::expect_doppelganger(
+    "exaggerate (point align)",
     p +
       geom_point_exaggerate(exaggerate_y = 2, exaggerate_x = 1.5, col = "red", size = 2) +
-      ggplot2::geom_point(ggplot2::aes(x = x * 1.5, y = y * 2), size = 0.5) +
-      ggplot2::labs(caption = "red and black dots aligned, x * 1.5, y * 2")
+      ggplot2::geom_point(ggplot2::aes(x = x * 1.5, y = y * 2), size = 0.5)
   )
 
-  print(
+  vdiffr::expect_doppelganger(
+    "exaggerate (point)",
     p +
-      geom_point_exaggerate(exaggerate_y = 2, exaggerate_x = 1.5, col = "red", size = 2) +
-      ggplot2::labs(caption = "red dots don't train scales, x * 1.5, y * 2")
+      geom_point_exaggerate(exaggerate_y = 2, exaggerate_x = 1.5, col = "red", size = 2)
   )
 
   # regular geoms
-  print(
+  vdiffr::expect_doppelganger(
+    "exaggerate (point, line area)",
     patchwork::wrap_plots(
       p,
       p + geom_point_exaggerate(exaggerate_y = 2, alpha = 0.3, col = "red"),
@@ -392,12 +342,13 @@ test_that("exaggerated geometries work", {
 
   # flipped geoms
   p2 <- ggplot2::ggplot(
-    data.frame(x = cumsum(runif(100)), y = cumsum(rnorm(100))),
+    withr::with_seed(21, data.frame(x = cumsum(runif(100)), y = cumsum(rnorm(100)))),
     ggplot2::aes(y, x)
   ) +
     geom_lineh()
 
-  print(
+  vdiffr::expect_doppelganger(
+    "exaggerate (point, lineh, areah)",
     patchwork::wrap_plots(
       p2,
       p2 + geom_point_exaggerate(exaggerate_x = 2, alpha = 0.3, col = "red"),
@@ -406,37 +357,33 @@ test_that("exaggerated geometries work", {
       ncol = 2
     )
   )
-
-  expect_true(TRUE)
 })
 
 test_that("facet_abundanceh? shortcuts work as expected", {
 
-  print(
+  vdiffr::expect_doppelganger(
+    "facet_abundance",
     ggplot2::ggplot(keji_lakes_plottable, ggplot2::aes(y = rel_abund, x = depth)) +
       geom_col_segs() +
       ggplot2::scale_x_reverse() +
-      facet_abundance(vars(taxon), vars(location)) +
-      ggplot2::labs(caption = "zero-based fixed-space y scale with minor breaks every 10%, partial italics on facets")
+      facet_abundance(vars(taxon), vars(location))
   )
 
-  print(
+  vdiffr::expect_doppelganger(
+    "facet_abundanceh",
     ggplot2::ggplot(keji_lakes_plottable, ggplot2::aes(x = rel_abund, y = depth)) +
       geom_col_segsh() +
       ggplot2::scale_y_reverse() +
-      facet_abundanceh(vars(taxon), vars(location)) +
-      ggplot2::labs(caption = "zero-based fixed-space x scale with minor breaks every 10%, partial italics on facets")
+      facet_abundanceh(vars(taxon), vars(location))
   )
 
-  print(
+  vdiffr::expect_doppelganger(
+    "facet_abundanceh, value labeller",
     ggplot2::ggplot(keji_lakes_plottable, ggplot2::aes(x = rel_abund, y = depth)) +
       geom_col_segsh() +
       ggplot2::scale_y_reverse() +
-      facet_abundanceh(vars(taxon), vars(location), labeller = ggplot2::label_value) +
-      ggplot2::labs(caption = "zero-based fixed-space x scale with minor breaks every 10%, no italics on facets")
+      facet_abundanceh(vars(taxon), vars(location), labeller = ggplot2::label_value)
   )
-
-  expect_true(TRUE)
 })
 
 test_that("Species italicizer works as planned", {
@@ -450,30 +397,28 @@ test_that("Species italicizer works as planned", {
     not_species = "Contain's \"weird\" ~things "
   )
 
-  print(
+  vdiffr::expect_doppelganger(
+    "partial italics",
     ggplot2::ggplot(test_data, ggplot2::aes(x, y)) +
       ggplot2::geom_point() +
-      ggplot2::facet_wrap(vars(species, not_species), labeller = label_species) +
-      ggplot2::labs(caption = "partially italicised strip 1, non-italicized strip 2")
+      ggplot2::facet_wrap(vars(species, not_species), labeller = label_species)
   )
 
-  print(
+  vdiffr::expect_doppelganger(
+    "partial italics multi facet",
     ggplot2::ggplot(test_data, ggplot2::aes(x, y)) +
       ggplot2::geom_point() +
       ggplot2::facet_grid(cols = vars(species), rows = vars(not_species),
-                          labeller = function(...) label_species(..., species_facet = "species")) +
-      ggplot2::labs(caption = "partially italicised strip top, non-italicized strip right")
+                          labeller = function(...) label_species(..., species_facet = "species"))
   )
 
-  print(
+  vdiffr::expect_doppelganger(
+    "partial italics mult facet 2",
     ggplot2::ggplot(test_data, ggplot2::aes(x, y)) +
       ggplot2::geom_point() +
       ggplot2::facet_grid(rows = vars(species), cols = vars(not_species),
-                          labeller = function(...) label_species(..., species_facet = "species")) +
-      ggplot2::labs(caption = "partially italicised strip right, non-italicized strip top")
+                          labeller = function(...) label_species(..., species_facet = "species"))
   )
-
-  expect_true(TRUE)
 })
 
 test_that("facets for geochem work as expected", {
@@ -487,27 +432,29 @@ test_that("facets for geochem work as expected", {
     not_geochem = "Contain's \"weird\" ~things "
   )
 
-  print(
+  skip("parsed label tests are unstable")
+  vdiffr::expect_doppelganger(
+    "facet_geochem_wraph",
     ggplot2::ggplot(test_data, ggplot2::aes(x, y)) +
       ggplot2::geom_point() +
       facet_geochem_wraph(
         vars(geochem),
         grouping = vars(not_geochem)
-      ) +
-      ggplot2::labs(caption = "label_geochem by default, facet_wrap() with rotated labs")
+      )
   )
 
-  print(
+  vdiffr::expect_doppelganger(
+    "facet_geochem_wrap",
     ggplot2::ggplot(test_data, ggplot2::aes(x, y)) +
       ggplot2::geom_point() +
       facet_geochem_wrap(
         vars(geochem),
         grouping = vars(not_geochem)
-      ) +
-      ggplot2::labs(caption = "label_geochem by default, facet_wrap() with no rotated labs")
+      )
   )
 
-  print(
+  vdiffr::expect_doppelganger(
+    "facet_geochem_wraph, units",
     ggplot2::ggplot(test_data, ggplot2::aes(x, y)) +
       ggplot2::geom_point() +
       facet_geochem_wraph(
@@ -520,31 +467,28 @@ test_that("facets for geochem work as expected", {
           "d13C" = "permille",
           "C/N" = NA
         )
-      ) +
-      ggplot2::labs(caption = "label_geochem by default, facet_wrap(), units as appropriate")
+      )
   )
 
-  print(
+  vdiffr::expect_doppelganger(
+    "facet_geochem_grid",
     ggplot2::ggplot(test_data, ggplot2::aes(x, y)) +
       ggplot2::geom_point() +
       facet_geochem_grid(
         vars(geochem),
         grouping = vars(not_geochem)
-      ) +
-      ggplot2::labs(caption = "label_geochem by default (y direction), facet_grid()")
+      )
   )
 
-  print(
+  vdiffr::expect_doppelganger(
+    "facet_geochem_gridh",
     ggplot2::ggplot(test_data, ggplot2::aes(x, y)) +
       ggplot2::geom_point() +
       facet_geochem_gridh(
         vars(geochem),
         grouping = vars(not_geochem)
-      ) +
-      ggplot2::labs(caption = "label_geochem by default (x direction), facet_grid()")
+      )
   )
-
-  expect_true(TRUE)
 })
 
 test_that("geochem labeller works as planned", {
@@ -558,7 +502,9 @@ test_that("geochem labeller works as planned", {
     not_geochem = "Contain's \"weird\" ~things "
   )
 
-  print(
+  skip("parsed label tests are unstable")
+  vdiffr::expect_doppelganger(
+    "label_geochem",
     ggplot2::ggplot(test_data, ggplot2::aes(x, y)) +
       ggplot2::geom_point() +
       ggplot2::facet_wrap(
@@ -573,12 +519,12 @@ test_that("geochem labeller works as planned", {
           ),
           default_units = "def"
         )
-      ) +
-      ggplot2::labs(caption = "lots of default units, 'deltas', superscript 210, ppms")
+      )
   )
 
   # NULL (disabled) renamer
-  print(
+  vdiffr::expect_doppelganger(
+    "label_geochem (no renamer)",
     ggplot2::ggplot(test_data, ggplot2::aes(x, y)) +
       ggplot2::geom_point() +
       ggplot2::facet_wrap(
@@ -587,8 +533,7 @@ test_that("geochem labeller works as planned", {
           ...,
           renamers = NULL
         )
-      ) +
-      ggplot2::labs(caption = "lots of default units, 'deltas', superscript 210, ppms")
+      )
   )
 
 
