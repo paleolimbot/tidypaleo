@@ -23,27 +23,25 @@ test_that("facet reordering works", {
       col = "red"
     )
 
-  print(
+  vdiffr::expect_doppelganger(
+    "sequential_layer_facet grid",
     p +
       ggplot2::facet_grid(ggplot2::vars(cyl_fct), ggplot2::vars(gear_fct)) +
-      sequential_layer_facets() +
-      ggplot2::labs(caption = "cyl order: 8 4 6 2")
+      sequential_layer_facets()
   )
 
-  print(
+  vdiffr::expect_doppelganger(
+    "sequential_layer_facet wrap",
     p +
       ggplot2::facet_wrap(ggplot2::vars(cyl_fct, gear_fct)) +
-      sequential_layer_facets() +
-      ggplot2::labs(caption = "cyl order: 8 4 6 2")
+      sequential_layer_facets()
   )
 
   expect_silent(
-    print(
+    ggplot2::ggplot_build(
       p + ggplot2::facet_null()
     )
   )
-
-  expect_true(TRUE)
 })
 
 test_that("CONISS can be added to a plot", {
@@ -52,22 +50,23 @@ test_that("CONISS can be added to a plot", {
     nested_data(age, param, value, trans = scale) %>%
     nested_chclust_coniss()
 
-  print(
+  skip("CONISS plots are unstable")
+  vdiffr::expect_doppelganger(
+    "plot coniss y",
     ggplot2::ggplot(alta_lake_geochem, ggplot2::aes(x = value, y = age)) +
       geom_lineh() +
-      facet_geochem_gridh(vars(param)) +
+      ggplot2::facet_grid(cols = vars(param)) +
       layer_dendrogram(coniss, ggplot2::aes(y = age), param = "CONISS") +
-      layer_zone_boundaries(coniss, ggplot2::aes(y = age)) +
-      ggplot2::labs(caption = "CONISS at the right plus boundary lines in the right place")
+      layer_zone_boundaries(coniss, ggplot2::aes(y = age))
   )
 
-  print(
+  vdiffr::expect_doppelganger(
+    "plot coniss x",
     ggplot2::ggplot(alta_lake_geochem, ggplot2::aes(x = age, y = value)) +
       ggplot2::geom_line() +
-      facet_geochem_grid(vars(param)) +
+      ggplot2::facet_grid(rows = vars(param)) +
       layer_dendrogram(coniss, ggplot2::aes(x = age), param = "CONISS") +
-      layer_zone_boundaries(coniss, ggplot2::aes(x = age)) +
-      ggplot2::labs(caption = "CONISS at the bottom plus boundary lines in the right place")
+      layer_zone_boundaries(coniss, ggplot2::aes(x = age))
   )
 
   grp_coniss <- keji_lakes_plottable %>%
@@ -75,37 +74,19 @@ test_that("CONISS can be added to a plot", {
     nested_data(depth, taxon, rel_abund) %>%
     nested_chclust_coniss()
 
-  print(
-    patchwork::wrap_plots(
-      ggplot2::ggplot(keji_lakes_plottable, ggplot2::aes(x = rel_abund, y = depth)) +
-        geom_col_segsh() +
-        ggplot2::scale_y_reverse() +
-        facet_abundanceh(vars(taxon), vars(location)),
-
-      plot_layer_dendrogram(grp_coniss, ggplot2::aes(y = depth), taxon = "CONISS") +
-        ggplot2::facet_grid(rows = vars(location), cols = vars(taxon)) +
-        ggplot2::scale_y_reverse(),
-
-      nrow = 1
-    )
+  vdiffr::expect_doppelganger(
+    "plot coniss abundance y",
+    plot_layer_dendrogram(grp_coniss, ggplot2::aes(y = depth), taxon = "CONISS") +
+      ggplot2::facet_grid(rows = vars(location), cols = vars(taxon)) +
+      ggplot2::scale_y_reverse()
   )
 
-  print(
-    patchwork::wrap_plots(
-      ggplot2::ggplot(keji_lakes_plottable, ggplot2::aes(x = depth, y = rel_abund)) +
-        geom_col_segs() +
-        facet_abundance(vars(taxon), vars(location)),
-
-      plot_layer_dendrogram(grp_coniss, ggplot2::aes(x = depth), taxon = "CONISS") +
-        ggplot2::facet_grid(cols = vars(location)) +
-        ggplot2::scale_y_reverse() +
-        ggplot2::labs(caption = "scale_y_reverse should be correct with dendrogram"),
-
-      ncol = 1
-    )
+  vdiffr::expect_doppelganger(
+    "plot coniss abundance x",
+    plot_layer_dendrogram(grp_coniss, ggplot2::aes(x = depth), taxon = "CONISS") +
+      ggplot2::facet_grid(cols = vars(location)) +
+      ggplot2::scale_y_reverse()
   )
-
-  expect_true(TRUE)
 })
 
 test_that("PCAs can be added to a plot", {
@@ -114,20 +95,21 @@ test_that("PCAs can be added to a plot", {
     nested_data(age, param, value, trans = scale) %>%
     nested_prcomp()
 
-  print(
+  skip("PCA plots are unstable")
+  vdiffr::expect_doppelganger(
+    "plot PCA x",
     ggplot2::ggplot(alta_lake_geochem, ggplot2::aes(x = value, y = age)) +
       geom_lineh() +
-      facet_geochem_gridh(vars(param)) +
-      layer_scores(pca, key = "param", which = c("PC1", "PC2")) +
-      ggplot2::labs(caption = "PCA scores at the right")
+      ggplot2::facet_grid(cols = vars(param)) +
+      layer_scores(pca, key = "param", which = c("PC1", "PC2"))
   )
 
-  print(
+  vdiffr::expect_doppelganger(
+    "plot PCA y",
     ggplot2::ggplot(alta_lake_geochem, ggplot2::aes(y = value, x = age)) +
       ggplot2::geom_line() +
-      facet_geochem_grid(vars(param)) +
-      layer_scores(pca, key = "param", value = "value", which = c("PC1", "PC2")) +
-      ggplot2::labs(caption = "PCA scores at the bottom")
+      ggplot2::facet_grid(rows = vars(param)) +
+      layer_scores(pca, key = "param", value = "value", which = c("PC1", "PC2"))
   )
 
   grp_pca <- keji_lakes_plottable %>%
@@ -135,31 +117,14 @@ test_that("PCAs can be added to a plot", {
     nested_data(depth, taxon, rel_abund, trans = sqrt) %>%
     nested_prcomp()
 
-  print(
-    patchwork::wrap_plots(
-      ggplot2::ggplot(keji_lakes_plottable, ggplot2::aes(x = rel_abund, y = depth)) +
-        geom_col_segsh() +
-        ggplot2::scale_y_reverse() +
-        facet_abundanceh(vars(taxon), vars(location)),
-
-      plot_layer_scores(grp_pca, ggplot2::aes(y = depth), which = c("PC1", "PC2")) +
-        ggplot2::scale_y_reverse(),
-
-      nrow = 1
-    )
+  vdiffr::expect_doppelganger(
+    "plot PCA scores y (rev)",
+    plot_layer_scores(grp_pca, ggplot2::aes(y = depth), which = c("PC1", "PC2")) +
+      ggplot2::scale_y_reverse()
   )
 
-  print(
-    patchwork::wrap_plots(
-      ggplot2::ggplot(keji_lakes_plottable, ggplot2::aes(y = rel_abund, x = depth)) +
-        geom_col_segs() +
-        facet_abundance(vars(taxon), vars(location)),
-
-      plot_layer_scores(grp_pca, ggplot2::aes(x = depth), which = c("PC1", "PC2")),
-
-      ncol = 1
-    )
+  vdiffr::expect_doppelganger(
+    "plot PCA scores x",
+    plot_layer_scores(grp_pca, ggplot2::aes(x = depth), which = c("PC1", "PC2"))
   )
-
-  expect_true(TRUE)
 })

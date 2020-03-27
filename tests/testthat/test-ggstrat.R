@@ -331,13 +331,10 @@ test_that("exaggerated geometries work", {
   # regular geoms
   vdiffr::expect_doppelganger(
     "exaggerate (point, line area)",
-    patchwork::wrap_plots(
-      p,
-      p + geom_point_exaggerate(exaggerate_y = 2, alpha = 0.3, col = "red"),
-      p + geom_line_exaggerate(exaggerate_y = 2, alpha = 0.3, col = "red"),
-      p + geom_area_exaggerate(exaggerate_y = 2, alpha = 0.3, fill = "red"),
-      ncol = 2
-    )
+    p +
+      geom_point_exaggerate(exaggerate_y = 2, alpha = 0.3, col = "red") +
+      geom_line_exaggerate(exaggerate_y = 2, alpha = 0.3, col = "red") +
+      geom_area_exaggerate(exaggerate_y = 2, alpha = 0.3, fill = "red")
   )
 
   # flipped geoms
@@ -349,13 +346,10 @@ test_that("exaggerated geometries work", {
 
   vdiffr::expect_doppelganger(
     "exaggerate (point, lineh, areah)",
-    patchwork::wrap_plots(
-      p2,
-      p2 + geom_point_exaggerate(exaggerate_x = 2, alpha = 0.3, col = "red"),
-      p2 + geom_lineh_exaggerate(exaggerate_x = 2, alpha = 0.3, col = "red"),
-      p2 + geom_areah_exaggerate(exaggerate_x = 2, alpha = 0.3, fill = "red"),
-      ncol = 2
-    )
+    p2 +
+      geom_point_exaggerate(exaggerate_x = 2, alpha = 0.3, col = "red") +
+      geom_lineh_exaggerate(exaggerate_x = 2, alpha = 0.3, col = "red") +
+      geom_areah_exaggerate(exaggerate_x = 2, alpha = 0.3, fill = "red")
   )
 })
 
