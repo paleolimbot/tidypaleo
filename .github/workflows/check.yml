@@ -23,6 +23,7 @@ jobs:
         shell: Rscript {0}
 
       - name: Test coverage
+        if: success()
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
         run: covr::codecov()
