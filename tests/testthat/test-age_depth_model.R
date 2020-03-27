@@ -105,8 +105,6 @@ test_that("print outputs things", {
 })
 
 test_that("base graphics plotting renders properly", {
-  # mostly a graphical test
-  expect_true(TRUE)
 
   test_data <- tibble::tibble(
     depth_col = 0:5,
@@ -119,7 +117,8 @@ test_that("base graphics plotting renders properly", {
     test_data, depth = depth_col, age = age_col,
     age_min = age_col - err, age_max = age_col + err
   )
-  plot(adm)
+
+  vdiffr::expect_doppelganger("only error bars", function() plot(adm))
 
   # should have dotted lines for interpolated error
   adm_cont_err <- age_depth_model(
@@ -127,7 +126,8 @@ test_that("base graphics plotting renders properly", {
     age_min = age_col - err, age_max = age_col + err,
     interpolate_age_limits = age_depth_interpolate
   )
-  plot(adm_cont_err)
+
+  vdiffr::expect_doppelganger("continuous error", function() plot(adm_cont_err))
 
   # should have dotted lines for extrapolated below error
   adm_cont_err_below <- age_depth_model(
@@ -136,8 +136,8 @@ test_that("base graphics plotting renders properly", {
     interpolate_age_limits = age_depth_interpolate,
     extrapolate_age_limits_below = age_depth_extrapolate
   )
-  plot(adm_cont_err_below)
 
+  vdiffr::expect_doppelganger("continuous error below", function() plot(adm_cont_err_below))
 })
 
 test_that("invalid age depth model objects are detected", {

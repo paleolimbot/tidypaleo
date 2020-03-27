@@ -53,11 +53,13 @@ test_that("nested_chclust_coniss produces the correct segments and nodes", {
 
   nested_coniss <- nested_chclust_coniss(ndm)
 
-  print(
+  skip("coniss placement test is unstable")
+  vdiffr::expect_doppelganger(
+    "CONISS placement",
     ggplot2::ggplot(alta_lake_geochem, ggplot2::aes(x = value, y = depth)) +
       geom_lineh() +
       ggplot2::geom_point() +
-      facet_geochem_wrap(vars(param)) +
+      ggplot2::facet_wrap(vars(param), scales = "free_x") +
       ggplot2::geom_point(
         ggplot2::aes(x = dispersion),
         data = tidyr::unnest_legacy(nested_coniss, nodes) %>% dplyr::mutate(param = "Z_CONISS"),
@@ -74,21 +76,18 @@ test_that("nested_chclust_coniss produces the correct segments and nodes", {
         na.rm = TRUE,
         lty = 2, col = "red"
       ) +
-      ggplot2::scale_y_reverse() +
-      ggplot2::labs(caption = "CONISS nodes in the right place, dendroram, and boundary lines in the correct place")
+      ggplot2::scale_y_reverse()
   )
 
-  print(
+  vdiffr::expect_doppelganger(
+    "CONISS bstick",
     nested_coniss %>%
       tidyr::unnest_legacy(broken_stick) %>%
       tidyr::gather(type, value, broken_stick_dispersion, dispersion) %>%
       ggplot2::ggplot(ggplot2::aes(n_groups, value, col = type)) +
       ggplot2::geom_point() +
-      ggplot2::geom_line() +
-      ggplot2::labs(caption = "3 groups should be a plausible number based on this")
+      ggplot2::geom_line()
   )
-
-  expect_true(TRUE)
 })
 
 test_that("nested_chclust_coniss works with a grouping variable", {
@@ -98,10 +97,15 @@ test_that("nested_chclust_coniss works with a grouping variable", {
   expect_true("location" %in% colnames(nested_coniss))
   expect_true(is.atomic(nested_coniss$location))
 
-  print(
+  vdiffr::expect_doppelganger(
+    "CONISS placement grouped",
     ggplot2::ggplot() +
       ggplot2::geom_segment(
-        ggplot2::aes(y = depth, x = dispersion, xend = dispersion_end, yend = depth_end, col = factor(hclust_zone)),
+        ggplot2::aes(
+          y = depth, x = dispersion,
+          xend = dispersion_end, yend = depth_end,
+          col = factor(hclust_zone)
+        ),
         data = tidyr::unnest_legacy(nested_coniss, segments) %>% dplyr::mutate(param = "Z_CONISS"),
         size = 0.3
       ) +
@@ -112,19 +116,18 @@ test_that("nested_chclust_coniss works with a grouping variable", {
         lty = 2, col = "red"
       ) +
       ggplot2::scale_y_reverse() +
-      ggplot2::facet_wrap(vars(location)) +
-      ggplot2::labs(caption = "two CONISS dendrorams, with two groups each and one boundary line")
+      ggplot2::facet_wrap(vars(location))
   )
 
-  print(
+  vdiffr::expect_doppelganger(
+    "CONISS bstick grouped",
     nested_coniss %>%
       tidyr::unnest_legacy(broken_stick) %>%
       tidyr::gather(type, value, broken_stick_dispersion, dispersion) %>%
       ggplot2::ggplot(ggplot2::aes(n_groups, value, col = type)) +
       ggplot2::geom_line() +
       ggplot2::geom_point() +
-      ggplot2::facet_wrap(vars(location)) +
-      ggplot2::labs(caption = "2 groups should be a plausible number for both based on this")
+      ggplot2::facet_wrap(vars(location))
   )
 })
 
@@ -140,31 +143,38 @@ test_that("plot methods for hclust work", {
   nest_chc2 <- nested_chclust_conslink(ndm)
   nest_chc <- nested_chclust_coniss(ndm)
 
-  plot(
-    nest_hc,
-    main = sprintf("CCC = %0.2f", CCC),
-    labels = paste(qualifiers$location, qualifiers$sample_type),
-    sub = "no fishy subtext (unconstrained)",
-    cex = 0.6
+  vdiffr::expect_doppelganger(
+    "nested hclust plot",
+    function() plot(
+      nest_hc,
+      main = sprintf("CCC = %0.2f", CCC),
+      labels = paste(qualifiers$location, qualifiers$sample_type),
+      sub = "no fishy subtext (unconstrained)",
+      cex = 0.6
+    )
   )
 
-  plot(
-    nest_chc,
-    main = sprintf("CCC = %0.2f", CCC),
-    labels = paste(qualifiers$location, qualifiers$sample_type),
-    sub = "no fishy subtext (unconstrained)",
-    cex = 0.6
+  vdiffr::expect_doppelganger(
+    "nested CONISS plot",
+    function() plot(
+      nest_chc,
+      main = sprintf("CCC = %0.2f", CCC),
+      labels = paste(qualifiers$location, qualifiers$sample_type),
+      sub = "no fishy subtext (unconstrained)",
+      cex = 0.6
+    )
   )
 
-  plot(
-    nest_chc2,
-    main = sprintf("CCC = %0.2f", CCC),
-    labels = paste(qualifiers$location, qualifiers$sample_type),
-    sub = "no fishy subtext (unconstrained, conslink)",
-    cex = 0.6
+  vdiffr::expect_doppelganger(
+    "nested conslink plot",
+    function() plot(
+      nest_chc2,
+      main = sprintf("CCC = %0.2f", CCC),
+      labels = paste(qualifiers$location, qualifiers$sample_type),
+      sub = "no fishy subtext (unconstrained, conslink)",
+      cex = 0.6
+    )
   )
-
-  expect_true(TRUE)
 })
 
 test_that("stat_nested_hclust methods work with hclust objects", {
@@ -178,26 +188,27 @@ test_that("stat_nested_hclust methods work with hclust objects", {
     dendro_order
   )$location
 
-  print(
+  vdiffr::expect_doppelganger(
+    "stat_nested_hclust x",
     ggplot2::ggplot(nest_hc, ggplot2::aes(x = location)) +
       stat_nested_hclust() +
       ggplot2::scale_x_discrete(limits = nest_hc_order) +
-      rotated_axis_labels() +
-      ggplot2::labs(caption = "Dendrogram with natural order of locations")
+      rotated_axis_labels()
   )
 
-  print(
+  vdiffr::expect_doppelganger(
+    "stat_nested_hclust y",
     ggplot2::ggplot(nest_hc, ggplot2::aes(y = location)) +
       stat_nested_hclust() +
-      ggplot2::scale_y_discrete(limits = nest_hc_order) +
-      ggplot2::labs(caption = "Dendrogram with natural order of locations")
+      ggplot2::scale_y_discrete(limits = nest_hc_order)
   )
 
   #  nested version
   ndm_grp <- nested_data(keji_lakes_plottable, depth, taxon, rel_abund, fill = 0, groups = location)
   nested_coniss <- nested_chclust_coniss(ndm_grp)
 
-  print(
+  vdiffr::expect_doppelganger(
+    "depth stat_nested_hclust",
     ggplot2::ggplot() +
       stat_nested_hclust(ggplot2::aes(y = depth), data = nested_coniss) +
       ggplot2::facet_wrap(vars(location)) +
@@ -205,11 +216,10 @@ test_that("stat_nested_hclust methods work with hclust objects", {
       ggplot2::labs(caption = "Dendrograms in different panels")
   )
 
-  print(
+  vdiffr::expect_doppelganger(
+    "stat_nested_hclust aes",
     ggplot2::ggplot() +
       stat_nested_hclust(ggplot2::aes(x = depth, col = location), data = nested_coniss) +
       ggplot2::labs(caption = "Dendrograms in different colours")
   )
-
-  expect_true(TRUE)
 })
