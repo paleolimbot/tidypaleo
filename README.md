@@ -5,8 +5,7 @@
 
 <!-- badges: start -->
 
-[![Travis-CI Build
-Status](https://travis-ci.org/paleolimbot/tidypaleo.svg?branch=master)](https://travis-ci.org/paleolimbot/tidypaleo)
+![R-CMD-check](https://github.com/paleolimbot/tidypaleo/workflows/R-CMD-check/badge.svg)
 [![Coverage
 Status](https://img.shields.io/codecov/c/github/paleolimbot/tidypaleo/master.svg)](https://codecov.io/github/paleolimbot/tidypaleo?branch=master)
 [![Lifecycle:
