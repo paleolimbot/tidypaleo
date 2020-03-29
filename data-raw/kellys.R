@@ -55,7 +55,16 @@ kellys_lake_cladocera <- kellys_lake %>%
   tbl_data() %>%
   select(-c(dataset, error, error_type, n_detect, n)) %>%
   rename(rel_abund = value, taxon = param) %>%
-  mutate(taxon = taxon %>% str_remove("Cladocera/"))
+  mutate(taxon = taxon %>% str_remove("Cladocera/")) %>%
+  # select only ~8 taxa to include in toy data set
+  mutate(
+    taxon = fct_lump(taxon, 8, w = rel_abund) %>% fct_reorder(rel_abund)
+  ) %>%
+  filter(taxon != "Other")
+
+# ggplot(kellys_lake_cladocera, aes(x = rel_abund, y = depth)) +
+#   tidypaleo::geom_col_segsh() +
+#   tidypaleo::facet_abundanceh(vars(taxon))
 
 usethis::use_data(kellys_lake_cladocera, overwrite = TRUE)
 
