@@ -1,0 +1,48 @@
+dataset,param
+cbrm_2017,C_N/SINLAB
+cbrm_2017,C/SINLAB
+cbrm_2017,d13C/SINLAB
+cbrm_2017,d15N/SINLAB
+cbrm_2017,Fe/XRF/Vanta
+cbrm_2017,K/XRF/Vanta
+cbrm_2017,Mn/XRF/Vanta
+cbrm_2017,Pb/XRF/Vanta
+cbrm_2017,Ti/XRF/Vanta
+cbrm_2017,Zn/XRF/Vanta
+cbrm_2017,Cladocera/Bosmina sp./RelAbund
+cbrm_2017,Cladocera/D. pulex complex/RelAbund
+cbrm_2017,Cladocera/H. glacialis/RelAbund
+cbrm_2017,Cladocera/Eurycercus sp./RelAbund
+cbrm_2017,Cladocera/Camptocercus sp./RelAbund
+cbrm_2017,Cladocera/Acroperus harpae/RelAbund
+cbrm_2017,Cladocera/Alonopsis americanus/RelAbund
+cbrm_2017,Cladocera/Anchistropus minor/RelAbund
+cbrm_2017,Cladocera/Alona affinis/RelAbund
+cbrm_2017,Cladocera/Alona quadrangularis/RelAbund
+cbrm_2017,Cladocera/Alona guttata/RelAbund
+cbrm_2017,Cladocera/Alona intermedia/RelAbund
+cbrm_2017,Cladocera/Alona costata/RelAbund
+cbrm_2017,Cladocera/Alona rustica/RelAbund
+cbrm_2017,Cladocera/Graptoleberis testudinaria/RelAbund
+cbrm_2017,Cladocera/Rynchotalona falcata/RelAbund
+cbrm_2017,Cladocera/Monospilus dispar/RelAbund
+cbrm_2017,Cladocera/Alonella excisa/RelAbund
+cbrm_2017,Cladocera/Alonella nana/RelAbund
+cbrm_2017,Cladocera/Alonella pulchetta/RelAbund
+cbrm_2017,Cladocera/Disparalona acutirostris/RelAbund
+cbrm_2017,Cladocera/Kurzia sp./RelAbund
+cbrm_2017,Cladocera/Pleuroxus sp/RelAbund
+cbrm_2017,Cladocera/Chydorus bicornutus/RelAbund
+cbrm_2017,Cladocera/Chydorus faviformis/RelAbund
+cbrm_2017,Cladocera/Chydorus linguilabris/RelAbund
+cbrm_2017,Cladocera/Paralona pigra/RelAbund
+cbrm_2017,Cladocera/Chydorus brevilabris/RelAbund
+cbrm_2017,Cladocera/Leptodora kindti/RelAbund
+cbrm_2017,Cladocera/Sida crystallina/RelAbund
+cbrm_2017,Cladocera/Latona setifera/RelAbund
+cbrm_2017,Cladocera/Ophryoxus gracilis/RelAbund
+cbrm_2017,Cladocera/Acantholebris curvirostris/RelAbund
+cbrm_2017,Cladocera/Polyphemus pediculus/RelAbund
+cbrm_2017,Cladocera/Ilyocryptus/RelAbund
+cbrm_2017,210Pb/Unsupported/MyCore
+cbrm_2017,age_ad/210Pb/CRS/MyCore

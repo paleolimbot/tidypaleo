@@ -153,3 +153,22 @@
 
 #' @rdname long_lake_14C_ages
 "long_lake_bacon_ages"
+
+#' Kellys Lake Data
+#'
+#' Geochemistry measurements and Cladocera counts from Kellys Lake,
+#' Cape Breton Island, Nova Scotia, Canada.
+#'
+#' @references
+#' Joshua Kurek, Ian Spooner, and Dewey Dunnington (unpublished data).
+#'
+"kellys_lake"
+
+#' @rdname kellys_lake
+"kellys_lake_cladocera"
+
+#' @rdname kellys_lake
+"kellys_lake_geochem"
+
+#' @rdname kellys_lake
+"kellys_lake_ages"
