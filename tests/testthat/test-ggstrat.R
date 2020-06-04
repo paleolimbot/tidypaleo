@@ -424,63 +424,65 @@ test_that("facets for geochem work as expected", {
     not_geochem = "Contain's \"weird\" ~things "
   )
 
-  skip("parsed label tests do not render identically between vdiffrAddin() and CMD check")
-  vdiffr::expect_doppelganger(
-    "facet_geochem_wraph",
-    ggplot2::ggplot(test_data, ggplot2::aes(x, y)) +
-      ggplot2::geom_point() +
-      facet_geochem_wraph(
-        vars(geochem),
-        grouping = vars(not_geochem)
-      )
-  )
-
-  vdiffr::expect_doppelganger(
-    "facet_geochem_wrap",
-    ggplot2::ggplot(test_data, ggplot2::aes(x, y)) +
-      ggplot2::geom_point() +
-      facet_geochem_wrap(
-        vars(geochem),
-        grouping = vars(not_geochem)
-      )
-  )
-
-  vdiffr::expect_doppelganger(
-    "facet_geochem_wraph, units",
-    ggplot2::ggplot(test_data, ggplot2::aes(x, y)) +
-      ggplot2::geom_point() +
-      facet_geochem_wraph(
-        vars(geochem),
-        units = c(
-          "210Pb" = "Bq/g",
-          "Ca" = "ppm",
-          "Pb" = "ppm",
-          "d15N" = "permille",
-          "d13C" = "permille",
-          "C/N" = NA
+  # skip("parsed label tests do not render identically between vdiffrAddin() and CMD check")
+  withr::with_envvar(list(VDIFFR_RUN_TESTS = FALSE), {
+    vdiffr::expect_doppelganger(
+      "facet_geochem_wraph",
+      ggplot2::ggplot(test_data, ggplot2::aes(x, y)) +
+        ggplot2::geom_point() +
+        facet_geochem_wraph(
+          vars(geochem),
+          grouping = vars(not_geochem)
         )
-      )
-  )
+    )
 
-  vdiffr::expect_doppelganger(
-    "facet_geochem_grid",
-    ggplot2::ggplot(test_data, ggplot2::aes(x, y)) +
-      ggplot2::geom_point() +
-      facet_geochem_grid(
-        vars(geochem),
-        grouping = vars(not_geochem)
-      )
-  )
+    vdiffr::expect_doppelganger(
+      "facet_geochem_wrap",
+      ggplot2::ggplot(test_data, ggplot2::aes(x, y)) +
+        ggplot2::geom_point() +
+        facet_geochem_wrap(
+          vars(geochem),
+          grouping = vars(not_geochem)
+        )
+    )
 
-  vdiffr::expect_doppelganger(
-    "facet_geochem_gridh",
-    ggplot2::ggplot(test_data, ggplot2::aes(x, y)) +
-      ggplot2::geom_point() +
-      facet_geochem_gridh(
-        vars(geochem),
-        grouping = vars(not_geochem)
-      )
-  )
+    vdiffr::expect_doppelganger(
+      "facet_geochem_wraph, units",
+      ggplot2::ggplot(test_data, ggplot2::aes(x, y)) +
+        ggplot2::geom_point() +
+        facet_geochem_wraph(
+          vars(geochem),
+          units = c(
+            "210Pb" = "Bq/g",
+            "Ca" = "ppm",
+            "Pb" = "ppm",
+            "d15N" = "permille",
+            "d13C" = "permille",
+            "C/N" = NA
+          )
+        )
+    )
+
+    vdiffr::expect_doppelganger(
+      "facet_geochem_grid",
+      ggplot2::ggplot(test_data, ggplot2::aes(x, y)) +
+        ggplot2::geom_point() +
+        facet_geochem_grid(
+          vars(geochem),
+          grouping = vars(not_geochem)
+        )
+    )
+
+    vdiffr::expect_doppelganger(
+      "facet_geochem_gridh",
+      ggplot2::ggplot(test_data, ggplot2::aes(x, y)) +
+        ggplot2::geom_point() +
+        facet_geochem_gridh(
+          vars(geochem),
+          grouping = vars(not_geochem)
+        )
+    )
+  })
 })
 
 test_that("geochem labeller works as planned", {
@@ -494,42 +496,41 @@ test_that("geochem labeller works as planned", {
     not_geochem = "Contain's \"weird\" ~things "
   )
 
-  skip("parsed label tests do not render identically between vdiffrAddin() and CMD check")
-  vdiffr::expect_doppelganger(
-    "label_geochem",
-    ggplot2::ggplot(test_data, ggplot2::aes(x, y)) +
-      ggplot2::geom_point() +
-      ggplot2::facet_wrap(
-        vars(geochem, not_geochem),
-        labeller = function(...) label_geochem(
-          ...,
-          units = c(
-            "Contain's \"weird\" ~things " = "ppm",
-            'Wierd"s things~' = "ppm",
-            "d15N" = "permille",
-            "C/N" = NA
-          ),
-          default_units = "def"
+  # skip("parsed label tests do not render identically between vdiffrAddin() and CMD check")
+  withr::with_envvar(list(VDIFFR_RUN_TESTS = FALSE), {
+    vdiffr::expect_doppelganger(
+      "label_geochem",
+      ggplot2::ggplot(test_data, ggplot2::aes(x, y)) +
+        ggplot2::geom_point() +
+        ggplot2::facet_wrap(
+          vars(geochem, not_geochem),
+          labeller = function(...) label_geochem(
+            ...,
+            units = c(
+              "Contain's \"weird\" ~things " = "ppm",
+              'Wierd"s things~' = "ppm",
+              "d15N" = "permille",
+              "C/N" = NA
+            ),
+            default_units = "def"
+          )
         )
-      )
-  )
+    )
 
-  # NULL (disabled) renamer
-  vdiffr::expect_doppelganger(
-    "label_geochem (no renamer)",
-    ggplot2::ggplot(test_data, ggplot2::aes(x, y)) +
-      ggplot2::geom_point() +
-      ggplot2::facet_wrap(
-        vars(geochem, not_geochem),
-        labeller = function(...) label_geochem(
-          ...,
-          renamers = NULL
+    # NULL (disabled) renamer
+    vdiffr::expect_doppelganger(
+      "label_geochem (no renamer)",
+      ggplot2::ggplot(test_data, ggplot2::aes(x, y)) +
+        ggplot2::geom_point() +
+        ggplot2::facet_wrap(
+          vars(geochem, not_geochem),
+          labeller = function(...) label_geochem(
+            ...,
+            renamers = NULL
+          )
         )
-      )
-  )
-
-
-  expect_true(TRUE)
+    )
+  })
 })
 
 test_that("default args for facet_* functions are consistent", {

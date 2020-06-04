@@ -45,48 +45,50 @@ test_that("facet reordering works", {
 })
 
 test_that("CONISS can be added to a plot", {
-
+  print(Sys.getenv())
   coniss <- alta_lake_geochem %>%
     nested_data(age, param, value, trans = scale) %>%
     nested_chclust_coniss()
 
-  skip("CONISS plots do not render identically between vdiffrAddin() and CMD check")
-  vdiffr::expect_doppelganger(
-    "plot coniss y",
-    ggplot2::ggplot(alta_lake_geochem, ggplot2::aes(x = value, y = age)) +
-      geom_lineh() +
-      ggplot2::facet_grid(cols = vars(param)) +
-      layer_dendrogram(coniss, ggplot2::aes(y = age), param = "CONISS") +
-      layer_zone_boundaries(coniss, ggplot2::aes(y = age))
-  )
+  # skip("CONISS plots do not render identically between vdiffrAddin() and CMD check")
+  withr::with_envvar(list(VDIFFR_RUN_TESTS = FALSE), {
+    vdiffr::expect_doppelganger(
+      "plot coniss y",
+      ggplot2::ggplot(alta_lake_geochem, ggplot2::aes(x = value, y = age)) +
+        geom_lineh() +
+        ggplot2::facet_grid(cols = vars(param)) +
+        layer_dendrogram(coniss, ggplot2::aes(y = age), param = "CONISS") +
+        layer_zone_boundaries(coniss, ggplot2::aes(y = age))
+    )
 
-  vdiffr::expect_doppelganger(
-    "plot coniss x",
-    ggplot2::ggplot(alta_lake_geochem, ggplot2::aes(x = age, y = value)) +
-      ggplot2::geom_line() +
-      ggplot2::facet_grid(rows = vars(param)) +
-      layer_dendrogram(coniss, ggplot2::aes(x = age), param = "CONISS") +
-      layer_zone_boundaries(coniss, ggplot2::aes(x = age))
-  )
+    vdiffr::expect_doppelganger(
+      "plot coniss x",
+      ggplot2::ggplot(alta_lake_geochem, ggplot2::aes(x = age, y = value)) +
+        ggplot2::geom_line() +
+        ggplot2::facet_grid(rows = vars(param)) +
+        layer_dendrogram(coniss, ggplot2::aes(x = age), param = "CONISS") +
+        layer_zone_boundaries(coniss, ggplot2::aes(x = age))
+    )
 
-  grp_coniss <- keji_lakes_plottable %>%
-    dplyr::group_by(location) %>%
-    nested_data(depth, taxon, rel_abund) %>%
-    nested_chclust_coniss()
+    grp_coniss <- keji_lakes_plottable %>%
+      dplyr::group_by(location) %>%
+      nested_data(depth, taxon, rel_abund) %>%
+      nested_chclust_coniss()
 
-  vdiffr::expect_doppelganger(
-    "plot coniss abundance y",
-    plot_layer_dendrogram(grp_coniss, ggplot2::aes(y = depth), taxon = "CONISS") +
-      ggplot2::facet_grid(rows = vars(location), cols = vars(taxon)) +
-      ggplot2::scale_y_reverse()
-  )
+    vdiffr::expect_doppelganger(
+      "plot coniss abundance y",
+      plot_layer_dendrogram(grp_coniss, ggplot2::aes(y = depth), taxon = "CONISS") +
+        ggplot2::facet_grid(rows = vars(location), cols = vars(taxon)) +
+        ggplot2::scale_y_reverse()
+    )
 
-  vdiffr::expect_doppelganger(
-    "plot coniss abundance x",
-    plot_layer_dendrogram(grp_coniss, ggplot2::aes(x = depth), taxon = "CONISS") +
-      ggplot2::facet_grid(cols = vars(location)) +
-      ggplot2::scale_y_reverse()
-  )
+    vdiffr::expect_doppelganger(
+      "plot coniss abundance x",
+      plot_layer_dendrogram(grp_coniss, ggplot2::aes(x = depth), taxon = "CONISS") +
+        ggplot2::facet_grid(cols = vars(location)) +
+        ggplot2::scale_y_reverse()
+    )
+  })
 })
 
 test_that("PCAs can be added to a plot", {
@@ -95,36 +97,38 @@ test_that("PCAs can be added to a plot", {
     nested_data(age, param, value, trans = scale) %>%
     nested_prcomp()
 
-  skip("PCA plots do not render identically between vdiffrAddin() and CMD check")
-  vdiffr::expect_doppelganger(
-    "plot PCA x",
-    ggplot2::ggplot(alta_lake_geochem, ggplot2::aes(x = value, y = age)) +
-      geom_lineh() +
-      ggplot2::facet_grid(cols = vars(param)) +
-      layer_scores(pca, key = "param", which = c("PC1", "PC2"))
-  )
+  # skip("PCA plots do not render identically between vdiffrAddin() and CMD check")
+  withr::with_envvar(list(VDIFFR_RUN_TESTS = FALSE), {
+    vdiffr::expect_doppelganger(
+      "plot PCA x",
+      ggplot2::ggplot(alta_lake_geochem, ggplot2::aes(x = value, y = age)) +
+        geom_lineh() +
+        ggplot2::facet_grid(cols = vars(param)) +
+        layer_scores(pca, key = "param", which = c("PC1", "PC2"))
+    )
 
-  vdiffr::expect_doppelganger(
-    "plot PCA y",
-    ggplot2::ggplot(alta_lake_geochem, ggplot2::aes(y = value, x = age)) +
-      ggplot2::geom_line() +
-      ggplot2::facet_grid(rows = vars(param)) +
-      layer_scores(pca, key = "param", value = "value", which = c("PC1", "PC2"))
-  )
+    vdiffr::expect_doppelganger(
+      "plot PCA y",
+      ggplot2::ggplot(alta_lake_geochem, ggplot2::aes(y = value, x = age)) +
+        ggplot2::geom_line() +
+        ggplot2::facet_grid(rows = vars(param)) +
+        layer_scores(pca, key = "param", value = "value", which = c("PC1", "PC2"))
+    )
 
-  grp_pca <- keji_lakes_plottable %>%
-    dplyr::group_by(location) %>%
-    nested_data(depth, taxon, rel_abund, trans = sqrt) %>%
-    nested_prcomp()
+    grp_pca <- keji_lakes_plottable %>%
+      dplyr::group_by(location) %>%
+      nested_data(depth, taxon, rel_abund, trans = sqrt) %>%
+      nested_prcomp()
 
-  vdiffr::expect_doppelganger(
-    "plot PCA scores y (rev)",
-    plot_layer_scores(grp_pca, ggplot2::aes(y = depth), which = c("PC1", "PC2")) +
-      ggplot2::scale_y_reverse()
-  )
+    vdiffr::expect_doppelganger(
+      "plot PCA scores y (rev)",
+      plot_layer_scores(grp_pca, ggplot2::aes(y = depth), which = c("PC1", "PC2")) +
+        ggplot2::scale_y_reverse()
+    )
 
-  vdiffr::expect_doppelganger(
-    "plot PCA scores x",
-    plot_layer_scores(grp_pca, ggplot2::aes(x = depth), which = c("PC1", "PC2"))
-  )
+    vdiffr::expect_doppelganger(
+      "plot PCA scores x",
+      plot_layer_scores(grp_pca, ggplot2::aes(x = depth), which = c("PC1", "PC2"))
+    )
+  })
 })

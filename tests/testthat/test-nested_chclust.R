@@ -53,41 +53,43 @@ test_that("nested_chclust_coniss produces the correct segments and nodes", {
 
   nested_coniss <- nested_chclust_coniss(ndm)
 
-  skip("coniss placement test do not render identically between vdiffrAddin() and CMD check")
-  vdiffr::expect_doppelganger(
-    "CONISS placement",
-    ggplot2::ggplot(alta_lake_geochem, ggplot2::aes(x = value, y = depth)) +
-      geom_lineh() +
-      ggplot2::geom_point() +
-      ggplot2::facet_wrap(vars(param), scales = "free_x") +
-      ggplot2::geom_point(
-        ggplot2::aes(x = dispersion),
-        data = tidyr::unnest_legacy(nested_coniss, nodes) %>% dplyr::mutate(param = "Z_CONISS"),
-        size = 0.4
-      ) +
-      ggplot2::geom_segment(
-        ggplot2::aes(x = dispersion, xend = dispersion_end, yend = depth_end, col = factor(hclust_zone)),
-        data = tidyr::unnest_legacy(nested_coniss, segments) %>% dplyr::mutate(param = "Z_CONISS"),
-        size = 0.3
-      ) +
-      ggplot2::geom_hline(
-        ggplot2::aes(yintercept = boundary_depth),
-        data = tidyr::unnest_legacy(nested_coniss, zone_info),
-        na.rm = TRUE,
-        lty = 2, col = "red"
-      ) +
-      ggplot2::scale_y_reverse()
-  )
+  # skip("coniss placement test do not render identically between vdiffrAddin() and CMD check")
+  withr::with_envvar(list(VDIFFR_RUN_TESTS = FALSE), {
+    vdiffr::expect_doppelganger(
+      "CONISS placement",
+      ggplot2::ggplot(alta_lake_geochem, ggplot2::aes(x = value, y = depth)) +
+        geom_lineh() +
+        ggplot2::geom_point() +
+        ggplot2::facet_wrap(vars(param), scales = "free_x") +
+        ggplot2::geom_point(
+          ggplot2::aes(x = dispersion),
+          data = tidyr::unnest_legacy(nested_coniss, nodes) %>% dplyr::mutate(param = "Z_CONISS"),
+          size = 0.4
+        ) +
+        ggplot2::geom_segment(
+          ggplot2::aes(x = dispersion, xend = dispersion_end, yend = depth_end, col = factor(hclust_zone)),
+          data = tidyr::unnest_legacy(nested_coniss, segments) %>% dplyr::mutate(param = "Z_CONISS"),
+          size = 0.3
+        ) +
+        ggplot2::geom_hline(
+          ggplot2::aes(yintercept = boundary_depth),
+          data = tidyr::unnest_legacy(nested_coniss, zone_info),
+          na.rm = TRUE,
+          lty = 2, col = "red"
+        ) +
+        ggplot2::scale_y_reverse()
+    )
 
-  vdiffr::expect_doppelganger(
-    "CONISS bstick",
-    nested_coniss %>%
-      tidyr::unnest_legacy(broken_stick) %>%
-      tidyr::gather(type, value, broken_stick_dispersion, dispersion) %>%
-      ggplot2::ggplot(ggplot2::aes(n_groups, value, col = type)) +
-      ggplot2::geom_point() +
-      ggplot2::geom_line()
-  )
+    vdiffr::expect_doppelganger(
+      "CONISS bstick",
+      nested_coniss %>%
+        tidyr::unnest_legacy(broken_stick) %>%
+        tidyr::gather(type, value, broken_stick_dispersion, dispersion) %>%
+        ggplot2::ggplot(ggplot2::aes(n_groups, value, col = type)) +
+        ggplot2::geom_point() +
+        ggplot2::geom_line()
+    )
+  })
 })
 
 test_that("nested_chclust_coniss works with a grouping variable", {
@@ -216,11 +218,13 @@ test_that("stat_nested_hclust methods work with hclust objects", {
       ggplot2::labs(caption = "Dendrograms in different panels")
   )
 
-  skip("nested hclust test with aes does not render identically between R 3.6 and R 4.0")
-  vdiffr::expect_doppelganger(
-    "stat_nested_hclust aes",
-    ggplot2::ggplot() +
-      stat_nested_hclust(ggplot2::aes(x = depth, col = location), data = nested_coniss) +
-      ggplot2::labs(caption = "Dendrograms in different colours")
-  )
+  # skip("nested hclust test with aes does not render identically between R 3.6 and R 4.0")
+  withr::with_envvar(list(VDIFFR_RUN_TESTS = FALSE), {
+    vdiffr::expect_doppelganger(
+      "stat_nested_hclust aes",
+      ggplot2::ggplot() +
+        stat_nested_hclust(ggplot2::aes(x = depth, col = location), data = nested_coniss) +
+        ggplot2::labs(caption = "Dendrograms in different colours")
+    )
+  })
 })
