@@ -424,7 +424,7 @@ test_that("facets for geochem work as expected", {
     not_geochem = "Contain's \"weird\" ~things "
   )
 
-  skip("parsed label tests are unstable")
+  skip("parsed label tests do not render identically between vdiffrAddin() and CMD check")
   vdiffr::expect_doppelganger(
     "facet_geochem_wraph",
     ggplot2::ggplot(test_data, ggplot2::aes(x, y)) +
@@ -494,7 +494,7 @@ test_that("geochem labeller works as planned", {
     not_geochem = "Contain's \"weird\" ~things "
   )
 
-  skip("parsed label tests are unstable")
+  skip("parsed label tests do not render identically between vdiffrAddin() and CMD check")
   vdiffr::expect_doppelganger(
     "label_geochem",
     ggplot2::ggplot(test_data, ggplot2::aes(x, y)) +

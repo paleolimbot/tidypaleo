@@ -53,7 +53,7 @@ test_that("nested_chclust_coniss produces the correct segments and nodes", {
 
   nested_coniss <- nested_chclust_coniss(ndm)
 
-  skip("coniss placement test is unstable")
+  skip("coniss placement test do not render identically between vdiffrAddin() and CMD check")
   vdiffr::expect_doppelganger(
     "CONISS placement",
     ggplot2::ggplot(alta_lake_geochem, ggplot2::aes(x = value, y = depth)) +
@@ -216,6 +216,7 @@ test_that("stat_nested_hclust methods work with hclust objects", {
       ggplot2::labs(caption = "Dendrograms in different panels")
   )
 
+  skip("nested hclust test with aes does not render identically between R 3.6 and R 4.0")
   vdiffr::expect_doppelganger(
     "stat_nested_hclust aes",
     ggplot2::ggplot() +

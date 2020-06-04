@@ -50,7 +50,7 @@ test_that("CONISS can be added to a plot", {
     nested_data(age, param, value, trans = scale) %>%
     nested_chclust_coniss()
 
-  skip("CONISS plots are unstable")
+  skip("CONISS plots do not render identically between vdiffrAddin() and CMD check")
   vdiffr::expect_doppelganger(
     "plot coniss y",
     ggplot2::ggplot(alta_lake_geochem, ggplot2::aes(x = value, y = age)) +
@@ -95,7 +95,7 @@ test_that("PCAs can be added to a plot", {
     nested_data(age, param, value, trans = scale) %>%
     nested_prcomp()
 
-  skip("PCA plots are unstable")
+  skip("PCA plots do not render identically between vdiffrAddin() and CMD check")
   vdiffr::expect_doppelganger(
     "plot PCA x",
     ggplot2::ggplot(alta_lake_geochem, ggplot2::aes(x = value, y = age)) +
