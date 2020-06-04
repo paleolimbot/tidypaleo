@@ -10,6 +10,8 @@ reference:
   - predict_age
   - predict_depth
   - starts_with("age_depth_")
+  - contains("age_depth_model")
+  - as_trans_factory
 
 - title: Stratigraphic diagrams
   desc: Helpers for ggplot2-based stratigraphic diagrams.
@@ -28,6 +30,7 @@ reference:
   desc: Helpers for clustering and ordination of stratigraphic data. These functions are experimental and may be removed in future a version.
   contents:
   - starts_with("nested_")
+  - plot.nested_analysis
 
 - title: Example data
   desc: Real data sets to test and document this package.
