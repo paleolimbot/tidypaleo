@@ -17,7 +17,6 @@ Suggests: testthat,
     rmarkdown,
     vegan,
     glue,
-    ggrepel,
     patchwork,
     forcats,
     vdiffr
