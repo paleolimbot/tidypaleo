@@ -26,6 +26,7 @@ BugReports: https://github.com/paleolimbot/tidypaleo/issues
 Imports: rlang,
     tidyselect,
     dplyr,
+    vctrs,
     tibble,
     scales,
     ggplot2 (>= 3.0.0),

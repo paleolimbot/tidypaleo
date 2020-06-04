@@ -212,56 +212,44 @@ new_nested_analysis <- function(x, subclasses = character(0)) {
   structure(x, class = unique(c(subclasses, "nested_analysis", class(x))))
 }
 
-# this is necessary because of the masking of stats::filter() by dplyr
-#' @importFrom dplyr filter
-#' @export
-dplyr::filter
-
-
-#' @importFrom dplyr filter
-#' @export
+# dynamically exported in zzz.R
 filter.nested_data <- function(.data, ...) {
   data_class <- class(.data)
   structure(NextMethod(), class = data_class)
 }
 
-#' @importFrom dplyr filter
-#' @export
+
+# dynamically exported in zzz.R
 filter.nested_analysis <- function(.data, ...) {
   data_class <- class(.data)
   structure(NextMethod(), class = data_class)
 }
 
-#' @importFrom dplyr slice
-#' @export
+# dynamically exported in zzz.R
 slice.nested_data <- function(.data, ...) {
   data_class <- class(.data)
   structure(NextMethod(), class = data_class)
 }
 
-#' @importFrom dplyr slice
-#' @export
+# dynamically exported in zzz.R
 slice.nested_analysis <- function(.data, ...) {
   data_class <- class(.data)
   structure(NextMethod(), class = data_class)
 }
 
-#' @importFrom dplyr arrange
-#' @export
+# dynamically exported in zzz.R
 arrange.nested_data <- function(.data, ...) {
   data_class <- class(.data)
   structure(NextMethod(), class = data_class)
 }
 
-#' @importFrom dplyr arrange
-#' @export
+# dynamically exported in zzz.R
 arrange.nested_analysis <- function(.data, ...) {
   data_class <- class(.data)
   structure(NextMethod(), class = data_class)
 }
 
-#' @importFrom dplyr mutate
-#' @export
+# dynamically exported in zzz.R
 mutate.nested_data <- function(.data, ...) {
   data_class <- class(.data)
   result <- NextMethod()
@@ -276,8 +264,7 @@ mutate.nested_data <- function(.data, ...) {
   }
 }
 
-#' @importFrom dplyr mutate
-#' @export
+# dynamically exported in zzz.R
 mutate.nested_analysis <- function(.data, ...) {
   data_class <- class(.data)
   result <- NextMethod()
