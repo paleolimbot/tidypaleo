@@ -5,7 +5,11 @@
 \alias{halifax_lakes}
 \alias{halifax_lakes_plottable}
 \title{Halifax lakes water chemistry and top/bottom diatom counts}
-\format{An object of class \code{mudata} (inherits from \code{list}) of length 5.}
+\format{
+An object of class \code{mudata} (inherits from \code{list}) of length 5.
+
+An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 114 rows and 5 columns.
+}
 \source{
 Neotoma paleoecology database (\url{http://neotomadb.org/})
 }

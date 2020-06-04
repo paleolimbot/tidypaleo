@@ -7,7 +7,15 @@
 \alias{kellys_lake_geochem}
 \alias{kellys_lake_ages}
 \title{Kellys Lake Data}
-\format{An object of class \code{mudata} (inherits from \code{list}) of length 5.}
+\format{
+An object of class \code{mudata} (inherits from \code{list}) of length 5.
+
+An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 300 rows and 5 columns.
+
+An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 305 rows and 9 columns.
+
+An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 14 rows and 5 columns.
+}
 \usage{
 kellys_lake
 

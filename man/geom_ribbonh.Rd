@@ -7,7 +7,11 @@
 \alias{geom_areah}
 \alias{GeomAreah}
 \title{Vertical ribbons and area plots}
-\format{An object of class \code{GeomRibbonh} (inherits from \code{Geom}, \code{ggproto}, \code{gg}) of length 6.}
+\format{
+An object of class \code{GeomRibbonh} (inherits from \code{Geom}, \code{ggproto}, \code{gg}) of length 6.
+
+An object of class \code{GeomAreah} (inherits from \code{GeomRibbonh}, \code{Geom}, \code{ggproto}, \code{gg}) of length 4.
+}
 \usage{
 geom_ribbonh(
   mapping = NULL,

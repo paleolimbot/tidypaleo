@@ -5,7 +5,9 @@
 \alias{stat_nested_hclust}
 \alias{StatNestedHclust}
 \title{Display a dendrogram as a ggplot2 layer}
-\format{An object of class \code{StatNestedHclust} (inherits from \code{Stat}, \code{ggproto}, \code{gg}) of length 4.}
+\format{
+An object of class \code{StatNestedHclust} (inherits from \code{Stat}, \code{ggproto}, \code{gg}) of length 4.
+}
 \usage{
 stat_nested_hclust(
   mapping = NULL,

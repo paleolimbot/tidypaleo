@@ -5,7 +5,11 @@
 \alias{long_lake_14C_ages}
 \alias{long_lake_bacon_ages}
 \title{Long Lake Carbon-14 Ages}
-\format{An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 5 rows and 5 columns.}
+\format{
+An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 5 rows and 5 columns.
+
+An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 86 rows and 5 columns.
+}
 \usage{
 long_lake_14C_ages
 

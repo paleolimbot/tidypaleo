@@ -5,7 +5,11 @@
 \alias{keji_lakes}
 \alias{keji_lakes_plottable}
 \title{Keji lakes core diatom counts}
-\format{An object of class \code{mudata} (inherits from \code{list}) of length 5.}
+\format{
+An object of class \code{mudata} (inherits from \code{list}) of length 5.
+
+An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 202 rows and 5 columns.
+}
 \source{
 Neotoma paleoecology database (\url{http://neotomadb.org/})
 }

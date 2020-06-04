@@ -27,7 +27,9 @@ raw$data$param <- rename_param(raw$data$param)
 # add ages
 adm <- tidypaleo::age_depth_model(ages, depth, age_ad)
 raw$data$age_ad <- raw$data$depth %>% tidypaleo::predict_age(object = adm)
-raw$data <- raw$data %>% select(dataset, location, param, depth, age_ad, everything())
+raw$data <- raw$data %>%
+  select(dataset, location, param, depth, age_ad, everything()) %>%
+  arrange(param, depth)
 attr(raw, "x_columns")  <- c("depth", "age_ad")
 
 # make sure we didn't invalidate the object
@@ -56,15 +58,17 @@ kellys_lake_cladocera <- kellys_lake %>%
   select(-c(dataset, error, error_type, n_detect, n)) %>%
   rename(rel_abund = value, taxon = param) %>%
   mutate(taxon = taxon %>% str_remove("Cladocera/")) %>%
-  # select only ~8 taxa to include in toy data set
+  # select only some taxa to include in toy data set
   mutate(
-    taxon = fct_lump(taxon, 8, w = rel_abund) %>% fct_reorder(rel_abund)
+    taxon = fct_lump(taxon, 12, w = rel_abund) %>%
+      fct_reorder(rel_abund) %>%
+      fct_recode("D. pulex-complex" = "D. pulex complex")
   ) %>%
   filter(taxon != "Other")
 
-# ggplot(kellys_lake_cladocera, aes(x = rel_abund, y = depth)) +
-#   tidypaleo::geom_col_segsh() +
-#   tidypaleo::facet_abundanceh(vars(taxon))
+ggplot(kellys_lake_cladocera, aes(x = rel_abund, y = depth)) +
+  tidypaleo::geom_col_segsh() +
+  tidypaleo::facet_abundanceh(vars(taxon))
 
 usethis::use_data(kellys_lake_cladocera, overwrite = TRUE)
 

@@ -7,7 +7,15 @@
 \alias{alta_lake_bacon_ages}
 \alias{alta_lake_geochem}
 \title{Alta Lake Lead-210 and Carbon-14 Ages}
-\format{An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 9 rows and 5 columns.}
+\format{
+An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 9 rows and 5 columns.
+
+An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 1 rows and 5 columns.
+
+An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 58 rows and 5 columns.
+
+An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 192 rows and 9 columns.
+}
 \usage{
 alta_lake_210Pb_ages
 

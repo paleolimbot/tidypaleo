@@ -29,6 +29,6 @@ below to see their documentation.
 
   \item{ggplot2}{\code{\link[ggplot2]{vars}}}
 
-  \item{ggstance}{\code{\link[ggstance]{GeomColh}}, \code{\link[ggstance]{PositionDodge2v}}, \code{\link[ggstance]{PositionDodgev}}, \code{\link[ggstance]{PositionFillv}}, \code{\link[ggstance]{PositionStackv}}, \code{\link[ggstance]{geom_colh}}, \code{\link[ggstance]{position_dodge2v}}, \code{\link[ggstance]{position_dodgev}}, \code{\link[ggstance]{position_fillv}}, \code{\link[ggstance]{position_stackv}}}
+  \item{ggstance}{\code{\link[ggstance]{geom_colh}}, \code{\link[ggstance]{GeomColh}}, \code{\link[ggstance]{position_dodge2v}}, \code{\link[ggstance]{position_dodgev}}, \code{\link[ggstance]{position_fillv}}, \code{\link[ggstance]{position_stackv}}, \code{\link[ggstance]{PositionDodge2v}}, \code{\link[ggstance]{PositionDodgev}}, \code{\link[ggstance]{PositionFillv}}, \code{\link[ggstance]{PositionStackv}}}
 }}
 
