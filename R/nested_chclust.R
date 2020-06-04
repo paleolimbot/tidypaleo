@@ -249,6 +249,7 @@ StatNestedHclust <- ggplot2::ggproto(
       if(is.null(data$x) || all(is.na(data$x))) stop("One of 'x' or 'y' must be mapped")
 
       # x was mapped, y is dispersion
+      attributes(data$x) <- NULL # must remove "mapped_discrete" class + attrs, or dplyr may fail
       nodes <- qualify_dendro_data(model, data["x"], 1L)
       segments <- dplyr::bind_rows(nodes$segments)
       segments <- dplyr::rename(segments, y = "dispersion", yend = "dispersion_end", xend = "x_end")
@@ -261,6 +262,7 @@ StatNestedHclust <- ggplot2::ggproto(
     } else if(is.null(data$x) || all(is.na(data$x))) {
 
       # y was mapped, x is dispersion
+      attributes(data$y) <- NULL # must remove "mapped_discrete" class + attrs, or dplyr may fail
       nodes <- qualify_dendro_data(model, data["y"], 1L)
       segments <- dplyr::bind_rows(nodes$segments)
       segments <- dplyr::rename(segments, x = "dispersion", xend = "dispersion_end", yend = "y_end")
