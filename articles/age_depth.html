@@ -103,11 +103,6 @@
 <a href="#example" class="anchor"></a>Example</h2>
 <p>Using the built-in dataset <code>alta_lake_210Pb_ages</code>, which contains a Lead-210 (CRS) age-depth relationship for a core from <a href="https://en.wikipedia.org/wiki/Alta_Lake_(British_Columbia)">Alta Lake, Whistler, British Columbia</a>, we can create an age-depth model (note that <code>age</code> and <code>depth</code> are evaluated within <code>.data</code>, if it is provided, and support tidy evaluation):</p>
 <div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">tidypaleo</span>)
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Attaching package: 'tidypaleo'</span>
-<span class="co">#&gt; The following object is masked from 'package:stats':</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;     filter</span>
 <span class="no">alta_lake_adm</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/age_depth_model.html">age_depth_model</a></span>(
   <span class="no">alta_lake_210Pb_ages</span>,
   <span class="kw">depth</span> <span class="kw">=</span> <span class="no">depth_cm</span>, <span class="kw">age</span> <span class="kw">=</span> <span class="no">age_year_ad</span>,

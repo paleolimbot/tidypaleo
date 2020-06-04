@@ -195,9 +195,9 @@
 <div id="plotting-a-subset-of-the-data" class="section level3">
 <h3 class="hasAnchor">
 <a href="#plotting-a-subset-of-the-data" class="anchor"></a>Plotting a subset of the data</h3>
-<p>The <code>halifax_geochem</code> data frame was designed so that it is a reasonable number of parameters to plot at one time. Usually you will have a data frame with many more parameters, which you can subset using <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> before calling <code>ggplot()</code>. Usually I do this using a pipe (<code><a href="https://rdrr.io/pkg/mudata2/man/reexports.html">%&gt;%</a></code>) to avoid assigning any intermediate variables.</p>
+<p>The <code>halifax_geochem</code> data frame was designed so that it is a reasonable number of parameters to plot at one time. Usually you will have a data frame with many more parameters, which you can subset using <code><a href="https://rdrr.io/r/stats/filter.html">filter()</a></code> before calling <code>ggplot()</code>. Usually I do this using a pipe (<code><a href="https://rdrr.io/pkg/mudata2/man/reexports.html">%&gt;%</a></code>) to avoid assigning any intermediate variables.</p>
 <div class="sourceCode" id="cb10"><html><body><pre class="r"><span class="no">alta_lake_geochem</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="no">param</span> <span class="kw">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"d15N"</span>, <span class="st">"d13C"</span>, <span class="st">"C/N"</span>)) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(<span class="no">param</span> <span class="kw">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"d15N"</span>, <span class="st">"d13C"</span>, <span class="st">"C/N"</span>)) <span class="kw">%&gt;%</span>
   <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">value</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="no">depth</span>)) +
   <span class="no">...</span></pre></body></html></div>
 <p><img src="strat_diagrams_files/figure-html/unnamed-chunk-12-1.png" width="576"></p>
@@ -239,7 +239,7 @@
 <span class="no">combined_data</span> <span class="kw">&lt;-</span> <span class="no">long_lake</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="https://rdrr.io/pkg/mudata2/man/tbl_data.html">tbl_data</a></span>() <span class="kw">%&gt;%</span>
   <span class="fu">bind_rows</span>(<span class="no">alta_lake_geochem</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="no">param</span> <span class="kw">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"C/N"</span>, <span class="st">"d13C"</span>, <span class="st">"d15N"</span>))
+  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(<span class="no">param</span> <span class="kw">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"C/N"</span>, <span class="st">"d13C"</span>, <span class="st">"d15N"</span>))
 
 <span class="no">combined_data</span>
 <span class="co">#&gt; # A tibble: 147 x 14</span>
@@ -267,7 +267,7 @@
 <p><img src="strat_diagrams_files/figure-html/unnamed-chunk-16-1.png" width="576"></p>
 <p>The other way to do this is to create two separate plots, and combine them using the <strong>patchwork</strong> package. This is a good option when values from one core to another are so different that placing them on the same axis results in trends being obscured, or when ages and depths are absolutely necessary for both plots (using <code><a href="../reference/scale_y_depth_age.html">scale_y_depth_age()</a></code> doesn’t work when combining locations using a facet).</p>
 <div class="sourceCode" id="cb15"><html><body><pre class="r"><span class="no">alta_plot_1</span> <span class="kw">&lt;-</span> <span class="no">combined_data</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="no">location</span> <span class="kw">==</span> <span class="st">"ALGC2"</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(<span class="no">location</span> <span class="kw">==</span> <span class="st">"ALGC2"</span>) <span class="kw">%&gt;%</span>
   <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">value</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="no">depth</span>)) +
   <span class="fu"><a href="../reference/geom_lineh.html">geom_lineh</a></span>() +
   <span class="fu">geom_point</span>() +
@@ -276,7 +276,7 @@
   <span class="fu">labs</span>(<span class="kw">x</span> <span class="kw">=</span> <span class="kw">NULL</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="st">"Depth (cm)"</span>, <span class="kw">title</span> <span class="kw">=</span> <span class="st">"Alta Lake"</span>)
 
 <span class="no">long_plot_2</span> <span class="kw">&lt;-</span> <span class="no">combined_data</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="no">location</span> <span class="kw">==</span> <span class="st">"LL PC2"</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(<span class="no">location</span> <span class="kw">==</span> <span class="st">"LL PC2"</span>) <span class="kw">%&gt;%</span>
   <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">value</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="no">depth</span>)) +
   <span class="fu"><a href="../reference/geom_lineh.html">geom_lineh</a></span>() +
   <span class="fu">geom_point</span>() +
@@ -390,7 +390,7 @@
   <span class="fu"><a href="../reference/nested_prcomp.html">nested_prcomp</a></span>() <span class="kw">%&gt;%</span>
   <span class="fu">unnest</span>(<span class="no">qualifiers</span>, <span class="no">scores</span>) <span class="kw">%&gt;%</span>
   <span class="fu">gather</span>(<span class="kw">key</span> <span class="kw">=</span> <span class="no">component</span>, <span class="kw">value</span> <span class="kw">=</span> <span class="no">value</span>, <span class="fu"><a href="https://rdrr.io/pkg/mudata2/man/reexports.html">starts_with</a></span>(<span class="st">"PC"</span>)) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="no">component</span> <span class="kw">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"PC1"</span>, <span class="st">"PC2"</span>))
+  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(<span class="no">component</span> <span class="kw">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"PC1"</span>, <span class="st">"PC2"</span>))
 <span class="co">#&gt; Warning: unnest() has a new interface. See ?unnest for details.</span>
 <span class="co">#&gt; Try `df %&gt;% unnest(c(qualifiers, scores))`, with `mutate()` if needed</span>
 
@@ -498,7 +498,7 @@
 <a href="#adding-a-dendrogram-1" class="anchor"></a>Adding a dendrogram</h3>
 <p>Adding a dendrogram to a plot with a discrete axis is only tricky because the order of the axes depends on the dendrogram itself. This means that the axes for both plots rely on the result of the clustering.</p>
 <div class="sourceCode" id="cb30"><html><body><pre class="r"><span class="no">halifax_clust</span> <span class="kw">&lt;-</span> <span class="no">halifax_lakes_plottable</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="no">sample_type</span> <span class="kw">==</span> <span class="st">"top"</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(<span class="no">sample_type</span> <span class="kw">==</span> <span class="st">"top"</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="../reference/nested_data.html">nested_data</a></span>(<span class="kw">qualifiers</span> <span class="kw">=</span> <span class="no">location</span>, <span class="kw">key</span> <span class="kw">=</span> <span class="no">taxon</span>, <span class="kw">value</span> <span class="kw">=</span> <span class="no">rel_abund</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="../reference/nested_hclust.html">nested_hclust</a></span>(<span class="kw">method</span> <span class="kw">=</span> <span class="st">"average"</span>)
 
