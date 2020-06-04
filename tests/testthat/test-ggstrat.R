@@ -162,8 +162,6 @@ test_that("facet label rotating works properly", {
       ggplot2::facet_wrap(~facet, strip.position = "right") +
       rotated_facet_labels(45, direction = c("x", "y"))
   )
-
-  warning("facet labels at positions bottom, left are incorrect (fix!)")
 })
 
 test_that("age depth axes work as expected", {
