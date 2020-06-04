@@ -32,9 +32,9 @@ remotes::install_github("paleolimbot/tidypaleo")
 ### Strat diagrams
 
 This package exposes a number of functions useful when creating
-stratigraphic diatrams, including `facet_abundanceh()`, which combines
+stratigraphic diagrams, including `facet_abundanceh()`, which combines
 several other functions to help create stratigraphic plots using
-**ggplot2**. The `geom_col_segsh()` geometry draws horizontal sements,
+**ggplot2**. The `geom_col_segsh()` geometry draws horizontal segments,
 which are commonly used to show species abundance data.
 
 ``` r
