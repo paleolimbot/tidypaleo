@@ -43,3 +43,4 @@ Imports: rlang,
     rioja
 VignetteBuilder: knitr
 Roxygen: list(markdown = TRUE)
+Remotes: tidyverse/ggplot2
