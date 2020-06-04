@@ -194,5 +194,5 @@ halifax_lakes_plottable <- halifax_lakes %>%
   ungroup()
 
 
-devtools::use_data(halifax_lakes, overwrite = TRUE)
-devtools::use_data(halifax_lakes_plottable, overwrite = TRUE)
+usethis::use_data(halifax_lakes, overwrite = TRUE)
+usethis::use_data(halifax_lakes_plottable, overwrite = TRUE)
