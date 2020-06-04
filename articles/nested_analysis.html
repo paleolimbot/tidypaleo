@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">tidypaleo</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1</span>
       </span>
     </div>
 
@@ -97,7 +97,6 @@
 
     
     
-<p><strong>These functions are experimental and may be removed in a future version!</strong></p>
 <p>Load the packages:</p>
 <div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">tidyverse</span>)
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">tidypaleo</span>)</pre></body></html></div>
@@ -133,37 +132,36 @@
 <span class="co">#&gt;   discarded_columns discarded_rows   qualifiers        data             </span>
 <span class="co">#&gt; * &lt;list&gt;            &lt;list&gt;           &lt;list&gt;            &lt;list&gt;           </span>
 <span class="co">#&gt; 1 &lt;tibble [32 × 0]&gt; &lt;tibble [0 × 9]&gt; &lt;tibble [32 × 4]&gt; &lt;tibble [32 × 6]&gt;</span></pre></body></html></div>
-<div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="no">alta_nested</span> <span class="kw">%&gt;%</span> <span class="fu">unnest</span>(<span class="no">data</span>)
-<span class="co">#&gt; # A tibble: 32 x 9</span>
-<span class="co">#&gt;    discarded_colum… discarded_rows qualifiers  C[,1] `C/N`[,1] Cu[,1] d13C[,1]</span>
-<span class="co">#&gt;    &lt;list&gt;           &lt;list&gt;         &lt;list&gt;      &lt;dbl&gt;     &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;</span>
-<span class="co">#&gt;  1 &lt;tibble [32 × 0… &lt;tibble [0 × … &lt;tibble [… -1.54      1.26  -0.794    1.03 </span>
-<span class="co">#&gt;  2 &lt;tibble [32 × 0… &lt;tibble [0 × … &lt;tibble [… -1.59      1.36  -0.559    1.19 </span>
-<span class="co">#&gt;  3 &lt;tibble [32 × 0… &lt;tibble [0 × … &lt;tibble [… -1.98      0.960 -0.721    1.10 </span>
-<span class="co">#&gt;  4 &lt;tibble [32 × 0… &lt;tibble [0 × … &lt;tibble [… -0.189     1.61  -0.749    0.836</span>
-<span class="co">#&gt;  5 &lt;tibble [32 × 0… &lt;tibble [0 × … &lt;tibble […  0.993     2.48  -0.694    1.06 </span>
-<span class="co">#&gt;  6 &lt;tibble [32 × 0… &lt;tibble [0 × … &lt;tibble [… -0.157     1.76  -0.712    1.17 </span>
-<span class="co">#&gt;  7 &lt;tibble [32 × 0… &lt;tibble [0 × … &lt;tibble [… -0.642     1.36  -0.667    1.07 </span>
-<span class="co">#&gt;  8 &lt;tibble [32 × 0… &lt;tibble [0 × … &lt;tibble [… -1.07      0.924 -0.559    0.820</span>
-<span class="co">#&gt;  9 &lt;tibble [32 × 0… &lt;tibble [0 × … &lt;tibble [… -0.722     0.696 -0.830    0.765</span>
-<span class="co">#&gt; 10 &lt;tibble [32 × 0… &lt;tibble [0 × … &lt;tibble [… -0.631     0.309 -0.504    0.409</span>
-<span class="co">#&gt; # … with 22 more rows, and 2 more variables: d15N[,1] &lt;dbl&gt;, Ti[,1] &lt;dbl&gt;</span>
-<span class="no">alta_nested</span> <span class="kw">%&gt;%</span> <span class="fu">unnest</span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="no">qualifiers</span>, <span class="no">data</span>))
-<span class="co">#&gt; # A tibble: 32 x 12</span>
-<span class="co">#&gt;    discarded_colum… discarded_rows   age depth zone  row_number  C[,1] `C/N`[,1]</span>
-<span class="co">#&gt;    &lt;list&gt;           &lt;list&gt;         &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;int&gt;  &lt;dbl&gt;     &lt;dbl&gt;</span>
-<span class="co">#&gt;  1 &lt;tibble [32 × 0… &lt;tibble [0 × … 1550   29.5 Zone…          1 -1.54      1.26 </span>
-<span class="co">#&gt;  2 &lt;tibble [32 × 0… &lt;tibble [0 × … 1566.  28.5 Zone…          2 -1.59      1.36 </span>
-<span class="co">#&gt;  3 &lt;tibble [32 × 0… &lt;tibble [0 × … 1581.  27.5 Zone…          3 -1.98      0.960</span>
-<span class="co">#&gt;  4 &lt;tibble [32 × 0… &lt;tibble [0 × … 1597.  26.5 Zone…          4 -0.189     1.61 </span>
-<span class="co">#&gt;  5 &lt;tibble [32 × 0… &lt;tibble [0 × … 1613.  25.5 Zone…          5  0.993     2.48 </span>
-<span class="co">#&gt;  6 &lt;tibble [32 × 0… &lt;tibble [0 × … 1629.  24.5 Zone…          6 -0.157     1.76 </span>
-<span class="co">#&gt;  7 &lt;tibble [32 × 0… &lt;tibble [0 × … 1644.  23.5 Zone…          7 -0.642     1.36 </span>
-<span class="co">#&gt;  8 &lt;tibble [32 × 0… &lt;tibble [0 × … 1660.  22.5 Zone…          8 -1.07      0.924</span>
-<span class="co">#&gt;  9 &lt;tibble [32 × 0… &lt;tibble [0 × … 1676.  21.5 Zone…          9 -0.722     0.696</span>
-<span class="co">#&gt; 10 &lt;tibble [32 × 0… &lt;tibble [0 × … 1692.  20.5 Zone…         10 -0.631     0.309</span>
-<span class="co">#&gt; # … with 22 more rows, and 4 more variables: Cu[,1] &lt;dbl&gt;, d13C[,1] &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   d15N[,1] &lt;dbl&gt;, Ti[,1] &lt;dbl&gt;</span></pre></body></html></div>
+<div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="no">alta_nested</span> <span class="kw">%&gt;%</span> <span class="fu"><a href="../reference/nested_data.html">unnested_data</a></span>(<span class="no">data</span>)
+<span class="co">#&gt; # A tibble: 32 x 6</span>
+<span class="co">#&gt;     C[,1] `C/N`[,1] Cu[,1] d13C[,1] d15N[,1] Ti[,1]</span>
+<span class="co">#&gt;     &lt;dbl&gt;     &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;</span>
+<span class="co">#&gt;  1 -1.54      1.26  -0.794    1.03   -0.670   0.807</span>
+<span class="co">#&gt;  2 -1.59      1.36  -0.559    1.19    0.0499  1.33 </span>
+<span class="co">#&gt;  3 -1.98      0.960 -0.721    1.10   -0.511   0.682</span>
+<span class="co">#&gt;  4 -0.189     1.61  -0.749    0.836  -2.37    0.233</span>
+<span class="co">#&gt;  5  0.993     2.48  -0.694    1.06   -2.55    0.908</span>
+<span class="co">#&gt;  6 -0.157     1.76  -0.712    1.17   -1.52    0.941</span>
+<span class="co">#&gt;  7 -0.642     1.36  -0.667    1.07   -1.39    1.14 </span>
+<span class="co">#&gt;  8 -1.07      0.924 -0.559    0.820  -0.439   1.16 </span>
+<span class="co">#&gt;  9 -0.722     0.696 -0.830    0.765  -0.929   0.932</span>
+<span class="co">#&gt; 10 -0.631     0.309 -0.504    0.409  -0.166   0.882</span>
+<span class="co">#&gt; # … with 22 more rows</span>
+<span class="no">alta_nested</span> <span class="kw">%&gt;%</span> <span class="fu"><a href="../reference/nested_data.html">unnested_data</a></span>(<span class="no">qualifiers</span>, <span class="no">data</span>)
+<span class="co">#&gt; # A tibble: 32 x 10</span>
+<span class="co">#&gt;      age depth zone  row_number  C[,1] `C/N`[,1] Cu[,1] d13C[,1] d15N[,1] Ti[,1]</span>
+<span class="co">#&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;int&gt;  &lt;dbl&gt;     &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;</span>
+<span class="co">#&gt;  1 1550   29.5 Zone…          1 -1.54      1.26  -0.794    1.03   -0.670   0.807</span>
+<span class="co">#&gt;  2 1566.  28.5 Zone…          2 -1.59      1.36  -0.559    1.19    0.0499  1.33 </span>
+<span class="co">#&gt;  3 1581.  27.5 Zone…          3 -1.98      0.960 -0.721    1.10   -0.511   0.682</span>
+<span class="co">#&gt;  4 1597.  26.5 Zone…          4 -0.189     1.61  -0.749    0.836  -2.37    0.233</span>
+<span class="co">#&gt;  5 1613.  25.5 Zone…          5  0.993     2.48  -0.694    1.06   -2.55    0.908</span>
+<span class="co">#&gt;  6 1629.  24.5 Zone…          6 -0.157     1.76  -0.712    1.17   -1.52    0.941</span>
+<span class="co">#&gt;  7 1644.  23.5 Zone…          7 -0.642     1.36  -0.667    1.07   -1.39    1.14 </span>
+<span class="co">#&gt;  8 1660.  22.5 Zone…          8 -1.07      0.924 -0.559    0.820  -0.439   1.16 </span>
+<span class="co">#&gt;  9 1676.  21.5 Zone…          9 -0.722     0.696 -0.830    0.765  -0.929   0.932</span>
+<span class="co">#&gt; 10 1692.  20.5 Zone…         10 -0.631     0.309 -0.504    0.409  -0.166   0.882</span>
+<span class="co">#&gt; # … with 22 more rows</span></pre></body></html></div>
 </div>
 <div id="principal-components-analysis" class="section level2">
 <h2 class="hasAnchor">
@@ -177,47 +175,42 @@
 <span class="co">#&gt; # … with 1 more variable: scores &lt;list&gt;</span></pre></body></html></div>
 <div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span>(<span class="no">pca</span>)</pre></body></html></div>
 <p><img src="nested_analysis_files/figure-html/unnamed-chunk-6-1.png" width="750"></p>
-<div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="no">pca</span> <span class="kw">%&gt;%</span> <span class="fu">unnest</span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="no">qualifiers</span>, <span class="no">scores</span>))
-<span class="co">#&gt; # A tibble: 32 x 16</span>
-<span class="co">#&gt;    discarded_colum… discarded_rows   age depth zone  row_number data  model</span>
-<span class="co">#&gt;    &lt;list&gt;           &lt;list&gt;         &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;int&gt; &lt;lis&gt; &lt;lis&gt;</span>
-<span class="co">#&gt;  1 &lt;tibble [32 × 0… &lt;tibble [0 × … 1550   29.5 Zone…          1 &lt;tib… &lt;prc…</span>
-<span class="co">#&gt;  2 &lt;tibble [32 × 0… &lt;tibble [0 × … 1566.  28.5 Zone…          2 &lt;tib… &lt;prc…</span>
-<span class="co">#&gt;  3 &lt;tibble [32 × 0… &lt;tibble [0 × … 1581.  27.5 Zone…          3 &lt;tib… &lt;prc…</span>
-<span class="co">#&gt;  4 &lt;tibble [32 × 0… &lt;tibble [0 × … 1597.  26.5 Zone…          4 &lt;tib… &lt;prc…</span>
-<span class="co">#&gt;  5 &lt;tibble [32 × 0… &lt;tibble [0 × … 1613.  25.5 Zone…          5 &lt;tib… &lt;prc…</span>
-<span class="co">#&gt;  6 &lt;tibble [32 × 0… &lt;tibble [0 × … 1629.  24.5 Zone…          6 &lt;tib… &lt;prc…</span>
-<span class="co">#&gt;  7 &lt;tibble [32 × 0… &lt;tibble [0 × … 1644.  23.5 Zone…          7 &lt;tib… &lt;prc…</span>
-<span class="co">#&gt;  8 &lt;tibble [32 × 0… &lt;tibble [0 × … 1660.  22.5 Zone…          8 &lt;tib… &lt;prc…</span>
-<span class="co">#&gt;  9 &lt;tibble [32 × 0… &lt;tibble [0 × … 1676.  21.5 Zone…          9 &lt;tib… &lt;prc…</span>
-<span class="co">#&gt; 10 &lt;tibble [32 × 0… &lt;tibble [0 × … 1692.  20.5 Zone…         10 &lt;tib… &lt;prc…</span>
-<span class="co">#&gt; # … with 22 more rows, and 8 more variables: variance &lt;list&gt;, loadings &lt;list&gt;,</span>
-<span class="co">#&gt; #   PC1 &lt;dbl&gt;, PC2 &lt;dbl&gt;, PC3 &lt;dbl&gt;, PC4 &lt;dbl&gt;, PC5 &lt;dbl&gt;, PC6 &lt;dbl&gt;</span>
-<span class="no">pca</span> <span class="kw">%&gt;%</span> <span class="fu">unnest</span>(<span class="no">variance</span>)
-<span class="co">#&gt; # A tibble: 6 x 13</span>
-<span class="co">#&gt;   discarded_colum… discarded_rows qualifiers data  model component</span>
-<span class="co">#&gt;   &lt;list&gt;           &lt;list&gt;         &lt;list&gt;     &lt;lis&gt; &lt;lis&gt;     &lt;int&gt;</span>
-<span class="co">#&gt; 1 &lt;tibble [32 × 0… &lt;tibble [0 × … &lt;tibble [… &lt;tib… &lt;prc…         1</span>
-<span class="co">#&gt; 2 &lt;tibble [32 × 0… &lt;tibble [0 × … &lt;tibble [… &lt;tib… &lt;prc…         2</span>
-<span class="co">#&gt; 3 &lt;tibble [32 × 0… &lt;tibble [0 × … &lt;tibble [… &lt;tib… &lt;prc…         3</span>
-<span class="co">#&gt; 4 &lt;tibble [32 × 0… &lt;tibble [0 × … &lt;tibble [… &lt;tib… &lt;prc…         4</span>
-<span class="co">#&gt; 5 &lt;tibble [32 × 0… &lt;tibble [0 × … &lt;tibble [… &lt;tib… &lt;prc…         5</span>
-<span class="co">#&gt; 6 &lt;tibble [32 × 0… &lt;tibble [0 × … &lt;tibble [… &lt;tib… &lt;prc…         6</span>
-<span class="co">#&gt; # … with 7 more variables: component_text &lt;chr&gt;, standard_deviation &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   variance &lt;dbl&gt;, variance_proportion &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   variance_proportion_cumulative &lt;dbl&gt;, loadings &lt;list&gt;, scores &lt;list&gt;</span>
-<span class="no">pca</span> <span class="kw">%&gt;%</span> <span class="fu">unnest</span>(<span class="no">loadings</span>)
-<span class="co">#&gt; # A tibble: 6 x 14</span>
-<span class="co">#&gt;   discarded_colum… discarded_rows qualifiers data  model variance variable</span>
-<span class="co">#&gt;   &lt;list&gt;           &lt;list&gt;         &lt;list&gt;     &lt;lis&gt; &lt;lis&gt; &lt;list&gt;   &lt;chr&gt;   </span>
-<span class="co">#&gt; 1 &lt;tibble [32 × 0… &lt;tibble [0 × … &lt;tibble [… &lt;tib… &lt;prc… &lt;tibble… C       </span>
-<span class="co">#&gt; 2 &lt;tibble [32 × 0… &lt;tibble [0 × … &lt;tibble [… &lt;tib… &lt;prc… &lt;tibble… C/N     </span>
-<span class="co">#&gt; 3 &lt;tibble [32 × 0… &lt;tibble [0 × … &lt;tibble [… &lt;tib… &lt;prc… &lt;tibble… Cu      </span>
-<span class="co">#&gt; 4 &lt;tibble [32 × 0… &lt;tibble [0 × … &lt;tibble [… &lt;tib… &lt;prc… &lt;tibble… d13C    </span>
-<span class="co">#&gt; 5 &lt;tibble [32 × 0… &lt;tibble [0 × … &lt;tibble [… &lt;tib… &lt;prc… &lt;tibble… d15N    </span>
-<span class="co">#&gt; 6 &lt;tibble [32 × 0… &lt;tibble [0 × … &lt;tibble [… &lt;tib… &lt;prc… &lt;tibble… Ti      </span>
-<span class="co">#&gt; # … with 7 more variables: PC1 &lt;dbl&gt;, PC2 &lt;dbl&gt;, PC3 &lt;dbl&gt;, PC4 &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   PC5 &lt;dbl&gt;, PC6 &lt;dbl&gt;, scores &lt;list&gt;</span></pre></body></html></div>
+<div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="no">pca</span> <span class="kw">%&gt;%</span> <span class="fu"><a href="../reference/nested_data.html">unnested_data</a></span>(<span class="no">qualifiers</span>, <span class="no">scores</span>)
+<span class="co">#&gt; # A tibble: 32 x 10</span>
+<span class="co">#&gt;      age depth zone   row_number   PC1     PC2     PC3     PC4     PC5     PC6</span>
+<span class="co">#&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;       &lt;int&gt; &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;</span>
+<span class="co">#&gt;  1 1550   29.5 Zone 1          1 -2.48 -0.273   0.409   0.518   0.316  -0.0538</span>
+<span class="co">#&gt;  2 1566.  28.5 Zone 1          2 -2.48 -0.675   0.902   0.561  -0.364  -0.190 </span>
+<span class="co">#&gt;  3 1581.  27.5 Zone 1          3 -2.41 -0.721   0.576   0.465   0.619  -0.184 </span>
+<span class="co">#&gt;  4 1597.  26.5 Zone 1          4 -2.39  1.73   -0.527   0.197   0.742   0.0656</span>
+<span class="co">#&gt;  5 1613.  25.5 Zone 1          5 -2.73  2.82   -0.666   0.212  -0.432   0.0715</span>
+<span class="co">#&gt;  6 1629.  24.5 Zone 1          6 -2.56  1.22   -0.155   0.235  -0.208  -0.105 </span>
+<span class="co">#&gt;  7 1644.  23.5 Zone 1          7 -2.57  0.708   0.123  -0.0210 -0.0114  0.0286</span>
+<span class="co">#&gt;  8 1660.  22.5 Zone 1          8 -2.04 -0.243   0.490   0.101  -0.157   0.0834</span>
+<span class="co">#&gt;  9 1676.  21.5 Zone 1          9 -1.98  0.0702 -0.0657 -0.147   0.0813  0.186 </span>
+<span class="co">#&gt; 10 1692.  20.5 Zone 1         10 -1.20 -0.376   0.202  -0.132  -0.202   0.220 </span>
+<span class="co">#&gt; # … with 22 more rows</span>
+<span class="no">pca</span> <span class="kw">%&gt;%</span> <span class="fu"><a href="../reference/nested_data.html">unnested_data</a></span>(<span class="no">variance</span>)
+<span class="co">#&gt; # A tibble: 6 x 6</span>
+<span class="co">#&gt;   component component_text standard_deviat… variance variance_propor…</span>
+<span class="co">#&gt;       &lt;int&gt; &lt;chr&gt;                     &lt;dbl&gt;    &lt;dbl&gt;            &lt;dbl&gt;</span>
+<span class="co">#&gt; 1         1 PC1                       2.15    4.61            0.768  </span>
+<span class="co">#&gt; 2         2 PC2                       0.884   0.781           0.130  </span>
+<span class="co">#&gt; 3         3 PC3                       0.603   0.364           0.0607 </span>
+<span class="co">#&gt; 4         4 PC4                       0.381   0.145           0.0242 </span>
+<span class="co">#&gt; 5         5 PC5                       0.276   0.0761          0.0127 </span>
+<span class="co">#&gt; 6         6 PC6                       0.151   0.0228          0.00380</span>
+<span class="co">#&gt; # … with 1 more variable: variance_proportion_cumulative &lt;dbl&gt;</span>
+<span class="no">pca</span> <span class="kw">%&gt;%</span> <span class="fu"><a href="../reference/nested_data.html">unnested_data</a></span>(<span class="no">loadings</span>)
+<span class="co">#&gt; # A tibble: 6 x 7</span>
+<span class="co">#&gt;   variable    PC1     PC2    PC3    PC4     PC5     PC6</span>
+<span class="co">#&gt;   &lt;chr&gt;     &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;</span>
+<span class="co">#&gt; 1 C         0.380  0.540  -0.460 -0.162 -0.567  -0.0718</span>
+<span class="co">#&gt; 2 C/N      -0.401  0.451   0.207  0.735 -0.223   0.0408</span>
+<span class="co">#&gt; 3 Cu        0.387  0.340   0.760 -0.173  0.0609 -0.352 </span>
+<span class="co">#&gt; 4 d13C     -0.458 -0.0890 -0.144 -0.145 -0.126  -0.851 </span>
+<span class="co">#&gt; 5 d15N      0.377 -0.613   0.144  0.386 -0.539  -0.149 </span>
+<span class="co">#&gt; 6 Ti       -0.439 -0.0783  0.356 -0.483 -0.565   0.350</span></pre></body></html></div>
 </div>
 <div id="constrained-hierarchical-clustering" class="section level2">
 <h2 class="hasAnchor">
@@ -226,23 +219,22 @@
   <span class="fu">group_by</span>(<span class="no">location</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="../reference/nested_data.html">nested_data</a></span>(<span class="kw">qualifiers</span> <span class="kw">=</span> <span class="no">depth</span>, <span class="kw">key</span> <span class="kw">=</span> <span class="no">taxon</span>, <span class="kw">value</span> <span class="kw">=</span> <span class="no">rel_abund</span>)
 
-<span class="no">keji_nested</span> <span class="kw">%&gt;%</span> <span class="fu">unnest</span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="no">qualifiers</span>, <span class="no">data</span>))
-<span class="co">#&gt; # A tibble: 37 x 11</span>
-<span class="co">#&gt;    location discarded_colum… discarded_rows depth row_number `Asterionella r…</span>
-<span class="co">#&gt;    &lt;chr&gt;    &lt;list&gt;           &lt;list&gt;         &lt;dbl&gt;      &lt;int&gt;            &lt;dbl&gt;</span>
-<span class="co">#&gt;  1 Beavers… &lt;tibble [17 × 0… &lt;tibble [0 × … 0.125          1            0    </span>
-<span class="co">#&gt;  2 Beavers… &lt;tibble [17 × 0… &lt;tibble [0 × … 0.375          2            0    </span>
-<span class="co">#&gt;  3 Beavers… &lt;tibble [17 × 0… &lt;tibble [0 × … 0.825          3            1.32 </span>
-<span class="co">#&gt;  4 Beavers… &lt;tibble [17 × 0… &lt;tibble [0 × … 2.12           4            0.333</span>
-<span class="co">#&gt;  5 Beavers… &lt;tibble [17 × 0… &lt;tibble [0 × … 3.12           5            0    </span>
-<span class="co">#&gt;  6 Beavers… &lt;tibble [17 × 0… &lt;tibble [0 × … 4.12           6            0    </span>
-<span class="co">#&gt;  7 Beavers… &lt;tibble [17 × 0… &lt;tibble [0 × … 5.38           7            0.987</span>
-<span class="co">#&gt;  8 Beavers… &lt;tibble [17 × 0… &lt;tibble [0 × … 6.38           8            0.993</span>
-<span class="co">#&gt;  9 Beavers… &lt;tibble [17 × 0… &lt;tibble [0 × … 7.62           9            1.63 </span>
-<span class="co">#&gt; 10 Beavers… &lt;tibble [17 × 0… &lt;tibble [0 × … 9.12          10            0.328</span>
-<span class="co">#&gt; # … with 27 more rows, and 5 more variables: `Aulacoseira distans` &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   `Aulacoseira lirata` &lt;dbl&gt;, `Cyclotella stelligera` &lt;dbl&gt;, `Tabellaria</span>
-<span class="co">#&gt; #   flocculosa (strain III)` &lt;dbl&gt;, Other &lt;dbl&gt;</span></pre></body></html></div>
+<span class="no">keji_nested</span> <span class="kw">%&gt;%</span> <span class="fu"><a href="../reference/nested_data.html">unnested_data</a></span>(<span class="no">qualifiers</span>, <span class="no">data</span>)
+<span class="co">#&gt; # A tibble: 37 x 9</span>
+<span class="co">#&gt;    location depth row_number `Asterionella r… `Aulacoseira di… `Aulacoseira li…</span>
+<span class="co">#&gt;    &lt;chr&gt;    &lt;dbl&gt;      &lt;int&gt;            &lt;dbl&gt;            &lt;dbl&gt;            &lt;dbl&gt;</span>
+<span class="co">#&gt;  1 Beavers… 0.125          1            0                 3.02             1.72</span>
+<span class="co">#&gt;  2 Beavers… 0.375          2            0                 3.25             2.03</span>
+<span class="co">#&gt;  3 Beavers… 0.825          3            1.32              0                2.32</span>
+<span class="co">#&gt;  4 Beavers… 2.12           4            0.333             0                2.67</span>
+<span class="co">#&gt;  5 Beavers… 3.12           5            0                 0                5.32</span>
+<span class="co">#&gt;  6 Beavers… 4.12           6            0                 0                3.54</span>
+<span class="co">#&gt;  7 Beavers… 5.38           7            0.987             0               10.2 </span>
+<span class="co">#&gt;  8 Beavers… 6.38           8            0.993             0                8.94</span>
+<span class="co">#&gt;  9 Beavers… 7.62           9            1.63              0                8.82</span>
+<span class="co">#&gt; 10 Beavers… 9.12          10            0.328             0               10.8 </span>
+<span class="co">#&gt; # … with 27 more rows, and 3 more variables: `Cyclotella stelligera` &lt;dbl&gt;,</span>
+<span class="co">#&gt; #   `Tabellaria flocculosa (strain III)` &lt;dbl&gt;, Other &lt;dbl&gt;</span></pre></body></html></div>
 <div class="sourceCode" id="cb9"><html><body><pre class="r"><span class="no">coniss</span> <span class="kw">&lt;-</span> <span class="no">keji_nested</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="../reference/nested_hclust.html">nested_chclust_coniss</a></span>()
 
@@ -263,7 +255,7 @@
 <div class="sourceCode" id="cb12"><html><body><pre class="r"><span class="no">keji_nested</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="../reference/nested_hclust.html">nested_chclust_coniss</a></span>(<span class="kw">n_groups</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">3</span>, <span class="fl">2</span>)) <span class="kw">%&gt;%</span>
   <span class="fu">select</span>(<span class="no">location</span>, <span class="no">zone_info</span>) <span class="kw">%&gt;%</span>
-  <span class="fu">unnest</span>(<span class="no">zone_info</span>)
+  <span class="fu"><a href="../reference/nested_data.html">unnested_data</a></span>(<span class="no">zone_info</span>)
 <span class="co">#&gt; # A tibble: 5 x 12</span>
 <span class="co">#&gt;   location hclust_zone min_depth max_depth first_depth last_depth min_row_number</span>
 <span class="co">#&gt;   &lt;chr&gt;          &lt;int&gt;     &lt;dbl&gt;     &lt;dbl&gt;       &lt;dbl&gt;      &lt;dbl&gt;          &lt;dbl&gt;</span>
@@ -281,33 +273,32 @@
 <div class="sourceCode" id="cb13"><html><body><pre class="r"><span class="no">halifax_nested</span> <span class="kw">&lt;-</span> <span class="no">halifax_lakes_plottable</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="../reference/nested_data.html">nested_data</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="no">location</span>, <span class="no">sample_type</span>), <span class="no">taxon</span>, <span class="no">rel_abund</span>, <span class="kw">fill</span> <span class="kw">=</span> <span class="fl">0</span>)
 
-<span class="no">halifax_nested</span> <span class="kw">%&gt;%</span> <span class="fu">unnest</span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="no">qualifiers</span>, <span class="no">data</span>))
-<span class="co">#&gt; # A tibble: 20 x 11</span>
-<span class="co">#&gt;    discarded_colum… discarded_rows location sample_type row_number</span>
-<span class="co">#&gt;    &lt;list&gt;           &lt;list&gt;         &lt;chr&gt;    &lt;chr&gt;            &lt;int&gt;</span>
-<span class="co">#&gt;  1 &lt;tibble [20 × 0… &lt;tibble [0 × … Anderso… bottom               1</span>
-<span class="co">#&gt;  2 &lt;tibble [20 × 0… &lt;tibble [0 × … Anderso… top                  2</span>
-<span class="co">#&gt;  3 &lt;tibble [20 × 0… &lt;tibble [0 × … Bayers   bottom               3</span>
-<span class="co">#&gt;  4 &lt;tibble [20 × 0… &lt;tibble [0 × … Bayers   top                  4</span>
-<span class="co">#&gt;  5 &lt;tibble [20 × 0… &lt;tibble [0 × … Bell La… bottom               5</span>
-<span class="co">#&gt;  6 &lt;tibble [20 × 0… &lt;tibble [0 × … Bell La… top                  6</span>
-<span class="co">#&gt;  7 &lt;tibble [20 × 0… &lt;tibble [0 × … Cranber… bottom               7</span>
-<span class="co">#&gt;  8 &lt;tibble [20 × 0… &lt;tibble [0 × … Cranber… top                  8</span>
-<span class="co">#&gt;  9 &lt;tibble [20 × 0… &lt;tibble [0 × … Frasers… bottom               9</span>
-<span class="co">#&gt; 10 &lt;tibble [20 × 0… &lt;tibble [0 × … Frasers… top                 10</span>
-<span class="co">#&gt; 11 &lt;tibble [20 × 0… &lt;tibble [0 × … Kinsac … bottom              11</span>
-<span class="co">#&gt; 12 &lt;tibble [20 × 0… &lt;tibble [0 × … Kinsac … top                 12</span>
-<span class="co">#&gt; 13 &lt;tibble [20 × 0… &lt;tibble [0 × … Little … bottom              13</span>
-<span class="co">#&gt; 14 &lt;tibble [20 × 0… &lt;tibble [0 × … Little … top                 14</span>
-<span class="co">#&gt; 15 &lt;tibble [20 × 0… &lt;tibble [0 × … Little … bottom              15</span>
-<span class="co">#&gt; 16 &lt;tibble [20 × 0… &lt;tibble [0 × … Little … top                 16</span>
-<span class="co">#&gt; 17 &lt;tibble [20 × 0… &lt;tibble [0 × … Maynard… bottom              17</span>
-<span class="co">#&gt; 18 &lt;tibble [20 × 0… &lt;tibble [0 × … Maynard… top                 18</span>
-<span class="co">#&gt; 19 &lt;tibble [20 × 0… &lt;tibble [0 × … Miller … bottom              19</span>
-<span class="co">#&gt; 20 &lt;tibble [20 × 0… &lt;tibble [0 × … Miller … top                 20</span>
-<span class="co">#&gt; # … with 6 more variables: `Aulacoseira distans` &lt;dbl&gt;, `Eunotia exigua` &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   `Fragilariforma exigua` &lt;dbl&gt;, `Tabellaria fenestrata` &lt;dbl&gt;, `Tabellaria</span>
-<span class="co">#&gt; #   flocculosa (strain IV)` &lt;dbl&gt;, Other &lt;dbl&gt;</span></pre></body></html></div>
+<span class="no">halifax_nested</span> <span class="kw">%&gt;%</span> <span class="fu"><a href="../reference/nested_data.html">unnested_data</a></span>(<span class="no">qualifiers</span>, <span class="no">data</span>)
+<span class="co">#&gt; # A tibble: 20 x 9</span>
+<span class="co">#&gt;    location sample_type row_number `Aulacoseira di… `Eunotia exigua`</span>
+<span class="co">#&gt;    &lt;chr&gt;    &lt;chr&gt;            &lt;int&gt;            &lt;dbl&gt;            &lt;dbl&gt;</span>
+<span class="co">#&gt;  1 Anderso… bottom               1            4.65             2.42 </span>
+<span class="co">#&gt;  2 Anderso… top                  2            1.87             0    </span>
+<span class="co">#&gt;  3 Bayers   bottom               3           11.6              5.71 </span>
+<span class="co">#&gt;  4 Bayers   top                  4            0.993            6.81 </span>
+<span class="co">#&gt;  5 Bell La… bottom               5            0.476            2.62 </span>
+<span class="co">#&gt;  6 Bell La… top                  6            9.22             0.432</span>
+<span class="co">#&gt;  7 Cranber… bottom               7            0                9.17 </span>
+<span class="co">#&gt;  8 Cranber… top                  8            0                7.72 </span>
+<span class="co">#&gt;  9 Frasers… bottom               9            6.42             0.714</span>
+<span class="co">#&gt; 10 Frasers… top                 10            4.85             0    </span>
+<span class="co">#&gt; 11 Kinsac … bottom              11           11.3              8.33 </span>
+<span class="co">#&gt; 12 Kinsac … top                 12            0                3.85 </span>
+<span class="co">#&gt; 13 Little … bottom              13            2.34             2.34 </span>
+<span class="co">#&gt; 14 Little … top                 14            5.78             2.61 </span>
+<span class="co">#&gt; 15 Little … bottom              15           12.1              2.64 </span>
+<span class="co">#&gt; 16 Little … top                 16            0               19.8  </span>
+<span class="co">#&gt; 17 Maynard… bottom              17            9.75             4    </span>
+<span class="co">#&gt; 18 Maynard… top                 18            2.98             1.23 </span>
+<span class="co">#&gt; 19 Miller … bottom              19            1.79             2.19 </span>
+<span class="co">#&gt; 20 Miller … top                 20            0.816            4.35 </span>
+<span class="co">#&gt; # … with 4 more variables: `Fragilariforma exigua` &lt;dbl&gt;, `Tabellaria</span>
+<span class="co">#&gt; #   fenestrata` &lt;dbl&gt;, `Tabellaria flocculosa (strain IV)` &lt;dbl&gt;, Other &lt;dbl&gt;</span></pre></body></html></div>
 <div class="sourceCode" id="cb14"><html><body><pre class="r"><span class="no">hclust</span> <span class="kw">&lt;-</span> <span class="no">halifax_nested</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="../reference/nested_hclust.html">nested_hclust</a></span>(<span class="kw">method</span> <span class="kw">=</span> <span class="st">"average"</span>)
 

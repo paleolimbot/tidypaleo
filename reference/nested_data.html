@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">tidypaleo</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1</span>
       </span>
     </div>
 
@@ -145,7 +145,9 @@
   <span class='kw'>filter_all</span> <span class='kw'>=</span> <span class='fu'>any_vars</span>(<span class='fl'>TRUE</span>),
   <span class='kw'>trans</span> <span class='kw'>=</span> <span class='no'>identity</span>,
   <span class='kw'>groups</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
-)</pre>
+)
+
+<span class='fu'>unnested_data</span>(<span class='no'>.data</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -191,6 +193,10 @@ variance of 1. See <a href='https://dplyr.tidyverse.org/reference/mutate_all.htm
     <tr>
       <th>groups</th>
       <td><p>Use <a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a> or this argument to group by one or more columns (e.g., core or lake)</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>One or more columns to unnest.</p></td>
     </tr>
     </table>
 
