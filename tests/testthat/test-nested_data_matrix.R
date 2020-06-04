@@ -90,6 +90,19 @@ test_that("nested_data works as intended", {
   )
 })
 
+test_that("unnested_data works", {
+  grouped_ndm <- nested_data(
+    alta_lake_geochem,
+    key = param,
+    value = value,
+    qualifiers = c(depth, zone),
+    groups = location
+  )
+
+  expect_true("location" %in% names(unnested_data(grouped_ndm, data)))
+  expect_equal(nrow(unnested_data(grouped_ndm, qualifiers, data)), nrow(grouped_ndm$data[[1]]))
+})
+
 test_that("nested_data works as intended with wide data", {
 
   alg_wide <- tidyr::spread(dplyr::select(alta_lake_geochem, depth, zone, param, value), param, value)

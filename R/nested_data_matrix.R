@@ -16,6 +16,7 @@
 #' @param trans A function that will be applied to all columns, column-wise. Use [identity][base::identity]
 #'   to perform no transformation, use [scale][base::scale] to scale each column to a mean of zero and
 #'   variance of 1. See [mutate_all][dplyr::mutate_all].
+#' @param ... One or more columns to unnest.
 #'
 #' @return A nested data matrix
 #' @export
@@ -151,6 +152,17 @@ nested_data <- function(.data, qualifiers = NULL, key = NULL, value, fill = NA,
     )
   )
 }
+
+#' @rdname nested_data
+#' @export
+unnested_data <- function(.data, ...) {
+  not_list_cols <- names(.data)[!vapply(.data, is.list, logical(1))]
+  dots <- rlang::quos(...)
+
+  .data <- dplyr::select(.data, !!not_list_cols, !!!dots)
+  tidyr::unnest(.data, c(!!!dots))
+}
+
 
 #' Perform an analysis on a nested data matrix
 #'

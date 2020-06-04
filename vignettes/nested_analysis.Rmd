@@ -25,8 +25,6 @@ knitr::opts_chunk$set(
 )
 ```
 
-**These functions are experimental and may be removed in a future version!**
-
 Load the packages:
 
 ```{r, eval=FALSE}
@@ -55,8 +53,8 @@ alta_nested
 ```
 
 ```{r}
-alta_nested %>% unnest(data)
-alta_nested %>% unnest(c(qualifiers, data))
+alta_nested %>% unnested_data(data)
+alta_nested %>% unnested_data(qualifiers, data)
 ```
 
 ## Principal components analysis
@@ -68,9 +66,9 @@ pca
 
 ```{r}
 plot(pca)
-pca %>% unnest(c(qualifiers, scores))
-pca %>% unnest(variance)
-pca %>% unnest(loadings)
+pca %>% unnested_data(qualifiers, scores)
+pca %>% unnested_data(variance)
+pca %>% unnested_data(loadings)
 ```
 
 ## Constrained hierarchical clustering
@@ -80,7 +78,7 @@ keji_nested <- keji_lakes_plottable %>%
   group_by(location) %>%
   nested_data(qualifiers = depth, key = taxon, value = rel_abund)
 
-keji_nested %>% unnest(c(qualifiers, data))
+keji_nested %>% unnested_data(qualifiers, data)
 ```
 
 ```{r}
@@ -102,7 +100,7 @@ coniss %>% select(location, zone_info) %>% unnest(zone_info)
 keji_nested %>%
   nested_chclust_coniss(n_groups = c(3, 2)) %>%
   select(location, zone_info) %>% 
-  unnest(zone_info)
+  unnested_data(zone_info)
 ```
 
 ## Unconstrained hierarchical clustering
@@ -111,7 +109,7 @@ keji_nested %>%
 halifax_nested <- halifax_lakes_plottable %>%
   nested_data(c(location, sample_type), taxon, rel_abund, fill = 0)
 
-halifax_nested %>% unnest(c(qualifiers, data))
+halifax_nested %>% unnested_data(qualifiers, data)
 ```
 
 ```{r}
@@ -132,4 +130,3 @@ alta_nested %>%
 ```{r}
 biplot(pca)
 ```
-

@@ -38,7 +38,7 @@ Imports: rlang,
     withr,
     graphics,
     grDevices,
-    tidyr,
+    tidyr (>= 1.0.2),
     digest,
     rioja
 VignetteBuilder: knitr

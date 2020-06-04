@@ -2,6 +2,7 @@
 % Please edit documentation in R/nested_data_matrix.R
 \name{nested_data}
 \alias{nested_data}
+\alias{unnested_data}
 \title{Prepare a parameter-long data frame for statistical analysis}
 \usage{
 nested_data(
@@ -15,6 +16,8 @@ nested_data(
   trans = identity,
   groups = NULL
 )
+
+unnested_data(.data, ...)
 }
 \arguments{
 \item{.data}{Data in parameter-long form}
@@ -40,6 +43,8 @@ to perform no transformation, use \link[base:scale]{scale} to scale each column 
 variance of 1. See \link[dplyr:mutate_all]{mutate_all}.}
 
 \item{groups}{Use \link[dplyr:group_by]{group_by} or this argument to group by one or more columns (e.g., core or lake)}
+
+\item{...}{One or more columns to unnest.}
 }
 \value{
 A nested data matrix
