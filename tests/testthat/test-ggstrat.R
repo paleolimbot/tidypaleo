@@ -327,13 +327,15 @@ test_that("exaggerated geometries work", {
   )
 
   # regular geoms
-  vdiffr::expect_doppelganger(
-    "exaggerate (point, line area)",
-    p +
-      geom_point_exaggerate(exaggerate_y = 2, alpha = 0.3, col = "red") +
-      geom_line_exaggerate(exaggerate_y = 2, alpha = 0.3, col = "red") +
-      geom_area_exaggerate(exaggerate_y = 2, alpha = 0.3, fill = "red")
-  )
+  withr::with_envvar(list(VDIFFR_RUN_TESTS = FALSE), {
+    vdiffr::expect_doppelganger(
+      "exaggerate (point, line area)",
+      p +
+        geom_point_exaggerate(exaggerate_y = 2, alpha = 0.3, col = "red") +
+        geom_line_exaggerate(exaggerate_y = 2, alpha = 0.3, col = "red") +
+        geom_area_exaggerate(exaggerate_y = 2, alpha = 0.3, fill = "red")
+    )
+  })
 
   # flipped geoms
   p2 <- ggplot2::ggplot(
