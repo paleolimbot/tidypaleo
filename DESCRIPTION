@@ -1,6 +1,6 @@
 Package: tidypaleo
 Title: Tidy tools for paleoenvironmental archives
-Version: 0.0.1
+Version: 0.0.1.9000
 Authors@R: person("Dewey", "Dunnington", 
                   email = "dewey@fishandwhistle.net", 
                   role = c("aut", "cre"), comment = c(ORCID = "0000-0002-9415-4582"))
@@ -43,4 +43,3 @@ Imports: rlang,
     rioja
 VignetteBuilder: knitr
 Roxygen: list(markdown = TRUE)
-Remotes: tidyverse/ggplot2

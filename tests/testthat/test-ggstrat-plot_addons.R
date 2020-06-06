@@ -45,7 +45,6 @@ test_that("facet reordering works", {
 })
 
 test_that("CONISS can be added to a plot", {
-  print(Sys.getenv())
   coniss <- alta_lake_geochem %>%
     nested_data(age, param, value, trans = scale) %>%
     nested_chclust_coniss()
