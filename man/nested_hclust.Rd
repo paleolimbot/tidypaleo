@@ -95,7 +95,7 @@ analysis by the method of incremental sum of squares. Computers & Geosciences, 1
 \url{http://doi.org/10.1016/0098-3004(87)90022-7}
 
 Juggins, S. (2017) rioja: Analysis of Quaternary Science Data, R package version (0.9-15.1).
-(\url{http://cran.r-project.org/package=rioja}).
+(\url{https://cran.r-project.org/package=rioja}).
 
 See \link[stats:hclust]{hclust} for hierarchical clustering references
 }

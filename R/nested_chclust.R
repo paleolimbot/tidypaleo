@@ -25,7 +25,7 @@
 #' <http://doi.org/10.1016/0098-3004(87)90022-7>
 #'
 #' Juggins, S. (2017) rioja: Analysis of Quaternary Science Data, R package version (0.9-15.1).
-#' (<http://cran.r-project.org/package=rioja>).
+#' (<https://cran.r-project.org/package=rioja>).
 #'
 #' See [hclust][stats::hclust] for hierarchical clustering references
 #'

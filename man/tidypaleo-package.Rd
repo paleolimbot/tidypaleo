@@ -4,7 +4,7 @@
 \name{tidypaleo-package}
 \alias{tidypaleo}
 \alias{tidypaleo-package}
-\title{tidypaleo: Tidy tools for paleoenvironmental archives}
+\title{tidypaleo: Tidy Tools for Paleoenvironmental Archives}
 \description{
 Provides a set of functions with a common framework for age-depth model management, 
   stratigraphic visualization, and common statistical transformations.

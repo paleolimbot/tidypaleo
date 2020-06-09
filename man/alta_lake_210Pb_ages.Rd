@@ -33,7 +33,7 @@ activities using the constant rate of supply (CRS) model (Appleby and
 Oldfield 1983). The \code{alta_lake_14C_ages} object contains one
 uncalibrated Carbon-14 measurement from the same core.
 The \code{alta_lake_bacon_ages} object contains the combined result of the
-Lead-210 and the Carbon-14 ages as modelled by \link[rbacon:rbacon-package]{rbacon-package}
+Lead-210 and the Carbon-14 ages as modelled by \link[rbacon:Bacon]{rbacon}
 (Blaauw and Christen 2011).
 }
 \examples{

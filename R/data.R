@@ -70,7 +70,7 @@
 #' Oldfield 1983). The `alta_lake_14C_ages` object contains one
 #' uncalibrated Carbon-14 measurement from the same core.
 #' The `alta_lake_bacon_ages` object contains the combined result of the
-#' Lead-210 and the Carbon-14 ages as modelled by [rbacon-package][rbacon::rbacon-package]
+#' Lead-210 and the Carbon-14 ages as modelled by [rbacon][rbacon::Bacon]
 #' (Blaauw and Christen 2011).
 #'
 #' @references
@@ -121,7 +121,7 @@
 #' Lake (Nova Scotia-New Brunswick Border Region, Canada) core LL-PC2
 #' (Dunnington et al. 2017; White 2012). The `long_lake_bacon_ages` object
 #' contains the result of the Carbon-14 ages as
-#' modelled by [rbacon-package][rbacon::rbacon-package] (Blaauw and Christen 2011).
+#' modelled by [rbacon][rbacon::Bacon] (Blaauw and Christen 2011).
 #'
 #' @references
 #' Blaauw, Maarten, and J. Andrés Christen. "Flexible Paleoclimate Age-Depth
