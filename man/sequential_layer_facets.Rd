@@ -10,7 +10,7 @@ sequential_layer_facets(reverse = FALSE)
 \item{reverse}{Use TRUE to process layers in reverse order}
 }
 \description{
-Normally, facets are ordered using \link[base:as.factor]{as.factor} on all values that occur
+Normally, facets are ordered using \link[base:factor]{as.factor} on all values that occur
 within layer data, which means that when adding additional layers, any ordering
 is not preserved unless the factor levels are identical on all factors. This function
 changes this behaviour such that facet levels are combined in layer order. This is

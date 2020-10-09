@@ -58,7 +58,7 @@ data frame within this object}
 .data with additional columns
 }
 \description{
-Powered by \link[rioja:chclust]{chclust} and \link[stats:hclust]{hclust}; broken stick using \link[rioja:bstick]{bstick}.
+Powered by \link[rioja:chclust]{chclust} and \link[stats:hclust]{hclust}; broken stick using \link[rioja:chclust]{bstick}.
 }
 \examples{
 library(tidyr)

@@ -18,10 +18,10 @@ label_species(
 
 \item{species_facet}{Which facet(s) contain species values}
 
-\item{multi_line}{See \link[ggplot2:label_parsed]{label_parsed}}
+\item{multi_line}{See \link[ggplot2:labellers]{label_parsed}}
 }
 \description{
-Use these to label species with partial italic formatting. See \link[ggplot2:label_parsed]{label_parsed}.
+Use these to label species with partial italic formatting. See \link[ggplot2:labellers]{label_parsed}.
 }
 \examples{
 

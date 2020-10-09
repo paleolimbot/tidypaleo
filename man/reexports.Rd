@@ -24,10 +24,10 @@ These objects are imported from other packages. Follow the links
 below to see their documentation.
 
 \describe{
-  \item{dplyr}{\code{\link[dplyr]{first}}, \code{\link[dplyr]{last}}}
+  \item{dplyr}{\code{\link[dplyr:nth]{first}}, \code{\link[dplyr:nth]{last}}}
 
   \item{ggplot2}{\code{\link[ggplot2]{vars}}}
 
-  \item{ggstance}{\code{\link[ggstance]{geom_colh}}, \code{\link[ggstance]{GeomColh}}, \code{\link[ggstance]{position_dodge2v}}, \code{\link[ggstance]{position_dodgev}}, \code{\link[ggstance]{position_fillv}}, \code{\link[ggstance]{position_stackv}}, \code{\link[ggstance]{PositionDodge2v}}, \code{\link[ggstance]{PositionDodgev}}, \code{\link[ggstance]{PositionFillv}}, \code{\link[ggstance]{PositionStackv}}}
+  \item{ggstance}{\code{\link[ggstance:ggstance-ggproto]{GeomColh}}, \code{\link[ggstance:ggstance-ggproto]{PositionDodge2v}}, \code{\link[ggstance:ggstance-ggproto]{PositionDodgev}}, \code{\link[ggstance:ggstance-ggproto]{PositionFillv}}, \code{\link[ggstance:ggstance-ggproto]{PositionStackv}}, \code{\link[ggstance:geom_barh]{geom_colh}}, \code{\link[ggstance:position-vertical]{position_dodge2v}}, \code{\link[ggstance:position-vertical]{position_dodgev}}, \code{\link[ggstance:position-vertical]{position_fillv}}, \code{\link[ggstance:position-vertical]{position_stackv}}}
 }}
 

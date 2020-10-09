@@ -23,7 +23,7 @@ A subset of well-labeled, clean diatom count data for 44 Halifax-area (Nova Scot
 an analysis of which has been published by Ginn et al. (2015). These data are
 in the form of a \link[mudata2:mudata]{mudata} object, from which location
 information, parameter information, and data can be extracted using
-\link[mudata2:tbl_locations]{tbl_locations}, \link[mudata2:tbl_params]{tbl_params}, and
+\link[mudata2:tbl_data]{tbl_locations}, \link[mudata2:tbl_data]{tbl_params}, and
 \link[mudata2:tbl_data]{tbl_data} (respectively). Also, a subset of these
 data amenable to plotting have been made available.
 }

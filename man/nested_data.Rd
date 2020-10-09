@@ -33,7 +33,7 @@ assigned in the data matrix. Generally, using NA for geochemical data and 0 for 
 abundance data is advised.}
 
 \item{select_if}{Use \code{~TRUE} to keep all columns; use \code{~all(is.finite(.))} to keep columns
-with all finite values. See \link[dplyr:select_if]{select_if}.}
+with all finite values. See \link[dplyr:select_all]{select_if}.}
 
 \item{filter_all}{Use \code{any_vars(TRUE)} to keep all observations; use \code{all_vars(is.finite(.))} to
 keep only observations with finite (non-missing) values. See \link[dplyr:filter_all]{filter_all}.}
