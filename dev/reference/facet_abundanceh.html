@@ -83,12 +83,6 @@ for examples of how to customize the default behaviour." />
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -143,80 +137,80 @@ and <a href='rotated_facet_labels.html'>rotated_facet_labels</a> <a href='rotate
 for examples of how to customize the default behaviour.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>facet_abundanceh</span>(
-  <span class='no'>taxon</span>,
-  <span class='kw'>grouping</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>rotate_facet_labels</span> <span class='kw'>=</span> <span class='fl'>45</span>,
-  <span class='kw'>labeller</span> <span class='kw'>=</span> <span class='no'>label_species</span>,
-  <span class='kw'>scales</span> <span class='kw'>=</span> <span class='st'>"free_x"</span>,
-  <span class='kw'>space</span> <span class='kw'>=</span> <span class='st'>"free_x"</span>,
-  <span class='kw'>dont_italicize</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"\\(.*?\\)"</span>, <span class='st'>"spp?\\."</span>, <span class='st'>"-complex"</span>, <span class='st'>"[Oo]ther"</span>),
-  <span class='no'>...</span>
-)
+    <pre class="usage"><span class='fu'>facet_abundanceh</span><span class='op'>(</span>
+  <span class='va'>taxon</span>,
+  grouping <span class='op'>=</span> <span class='cn'>NULL</span>,
+  rotate_facet_labels <span class='op'>=</span> <span class='fl'>45</span>,
+  labeller <span class='op'>=</span> <span class='va'>label_species</span>,
+  scales <span class='op'>=</span> <span class='st'>"free_x"</span>,
+  space <span class='op'>=</span> <span class='st'>"free_x"</span>,
+  dont_italicize <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"\\(.*?\\)"</span>, <span class='st'>"spp?\\."</span>, <span class='st'>"-complex"</span>, <span class='st'>"[Oo]ther"</span><span class='op'>)</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span>
 
-<span class='fu'>facet_abundance</span>(
-  <span class='no'>taxon</span>,
-  <span class='kw'>grouping</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>rotate_facet_labels</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-  <span class='kw'>labeller</span> <span class='kw'>=</span> <span class='no'>label_species</span>,
-  <span class='kw'>scales</span> <span class='kw'>=</span> <span class='st'>"free_y"</span>,
-  <span class='kw'>space</span> <span class='kw'>=</span> <span class='st'>"free_y"</span>,
-  <span class='kw'>dont_italicize</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"\\(.*?\\)"</span>, <span class='st'>"spp?\\."</span>, <span class='st'>"-complex"</span>, <span class='st'>"[Oo]ther"</span>),
-  <span class='no'>...</span>
-)
+<span class='fu'>facet_abundance</span><span class='op'>(</span>
+  <span class='va'>taxon</span>,
+  grouping <span class='op'>=</span> <span class='cn'>NULL</span>,
+  rotate_facet_labels <span class='op'>=</span> <span class='fl'>0</span>,
+  labeller <span class='op'>=</span> <span class='va'>label_species</span>,
+  scales <span class='op'>=</span> <span class='st'>"free_y"</span>,
+  space <span class='op'>=</span> <span class='st'>"free_y"</span>,
+  dont_italicize <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"\\(.*?\\)"</span>, <span class='st'>"spp?\\."</span>, <span class='st'>"-complex"</span>, <span class='st'>"[Oo]ther"</span><span class='op'>)</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span>
 
-<span class='fu'>facet_geochem_wraph</span>(
-  <span class='no'>param</span>,
-  <span class='kw'>grouping</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>rotate_axis_labels</span> <span class='kw'>=</span> <span class='fl'>90</span>,
-  <span class='kw'>scales</span> <span class='kw'>=</span> <span class='st'>"free_x"</span>,
-  <span class='kw'>labeller</span> <span class='kw'>=</span> <span class='no'>label_geochem</span>,
-  <span class='kw'>renamers</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>`^d([0-9]+)([HCNOS])$`</span> <span class='kw'>=</span> <span class='st'>"paste(delta ^ \\1, \\2)"</span>, <span class='kw'>`^210Pb$`</span> <span class='kw'>=</span>
-    <span class='st'>"paste({}^210, Pb)"</span>, <span class='kw'>`^Pb210$`</span> <span class='kw'>=</span> <span class='st'>"paste({}^210, Pb)"</span>),
-  <span class='kw'>units</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span>(<span class='fl'>0</span>),
-  <span class='kw'>default_units</span> <span class='kw'>=</span> <span class='fl'>NA_character_</span>,
-  <span class='no'>...</span>
-)
+<span class='fu'>facet_geochem_wraph</span><span class='op'>(</span>
+  <span class='va'>param</span>,
+  grouping <span class='op'>=</span> <span class='cn'>NULL</span>,
+  rotate_axis_labels <span class='op'>=</span> <span class='fl'>90</span>,
+  scales <span class='op'>=</span> <span class='st'>"free_x"</span>,
+  labeller <span class='op'>=</span> <span class='va'>label_geochem</span>,
+  renamers <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>`^d([0-9]+)([HCNOS])$` <span class='op'>=</span> <span class='st'>"paste(delta ^ \\1, \\2)"</span>, `^210Pb$` <span class='op'>=</span>
+    <span class='st'>"paste({}^210, Pb)"</span>, `^Pb210$` <span class='op'>=</span> <span class='st'>"paste({}^210, Pb)"</span><span class='op'>)</span>,
+  units <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span><span class='op'>(</span><span class='fl'>0</span><span class='op'>)</span>,
+  default_units <span class='op'>=</span> <span class='cn'>NA_character_</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span>
 
-<span class='fu'>facet_geochem_wrap</span>(
-  <span class='no'>param</span>,
-  <span class='kw'>grouping</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>scales</span> <span class='kw'>=</span> <span class='st'>"free_y"</span>,
-  <span class='kw'>labeller</span> <span class='kw'>=</span> <span class='no'>label_geochem</span>,
-  <span class='kw'>renamers</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>`^d([0-9]+)([HCNOS])$`</span> <span class='kw'>=</span> <span class='st'>"paste(delta ^ \\1, \\2)"</span>, <span class='kw'>`^210Pb$`</span> <span class='kw'>=</span>
-    <span class='st'>"paste({}^210, Pb)"</span>, <span class='kw'>`^Pb210$`</span> <span class='kw'>=</span> <span class='st'>"paste({}^210, Pb)"</span>),
-  <span class='kw'>units</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span>(<span class='fl'>0</span>),
-  <span class='kw'>default_units</span> <span class='kw'>=</span> <span class='fl'>NA_character_</span>,
-  <span class='no'>...</span>
-)
+<span class='fu'>facet_geochem_wrap</span><span class='op'>(</span>
+  <span class='va'>param</span>,
+  grouping <span class='op'>=</span> <span class='cn'>NULL</span>,
+  scales <span class='op'>=</span> <span class='st'>"free_y"</span>,
+  labeller <span class='op'>=</span> <span class='va'>label_geochem</span>,
+  renamers <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>`^d([0-9]+)([HCNOS])$` <span class='op'>=</span> <span class='st'>"paste(delta ^ \\1, \\2)"</span>, `^210Pb$` <span class='op'>=</span>
+    <span class='st'>"paste({}^210, Pb)"</span>, `^Pb210$` <span class='op'>=</span> <span class='st'>"paste({}^210, Pb)"</span><span class='op'>)</span>,
+  units <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span><span class='op'>(</span><span class='fl'>0</span><span class='op'>)</span>,
+  default_units <span class='op'>=</span> <span class='cn'>NA_character_</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span>
 
-<span class='fu'>facet_geochem_grid</span>(
-  <span class='no'>param</span>,
-  <span class='kw'>grouping</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>rotate_axis_labels</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-  <span class='kw'>scales</span> <span class='kw'>=</span> <span class='st'>"free_y"</span>,
-  <span class='kw'>space</span> <span class='kw'>=</span> <span class='st'>"fixed"</span>,
-  <span class='kw'>labeller</span> <span class='kw'>=</span> <span class='no'>label_geochem</span>,
-  <span class='kw'>renamers</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>`^d([0-9]+)([HCNOS])$`</span> <span class='kw'>=</span> <span class='st'>"paste(delta ^ \\1, \\2)"</span>, <span class='kw'>`^210Pb$`</span> <span class='kw'>=</span>
-    <span class='st'>"paste({}^210, Pb)"</span>, <span class='kw'>`^Pb210$`</span> <span class='kw'>=</span> <span class='st'>"paste({}^210, Pb)"</span>),
-  <span class='kw'>units</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span>(<span class='fl'>0</span>),
-  <span class='kw'>default_units</span> <span class='kw'>=</span> <span class='fl'>NA_character_</span>,
-  <span class='no'>...</span>
-)
+<span class='fu'>facet_geochem_grid</span><span class='op'>(</span>
+  <span class='va'>param</span>,
+  grouping <span class='op'>=</span> <span class='cn'>NULL</span>,
+  rotate_axis_labels <span class='op'>=</span> <span class='fl'>0</span>,
+  scales <span class='op'>=</span> <span class='st'>"free_y"</span>,
+  space <span class='op'>=</span> <span class='st'>"fixed"</span>,
+  labeller <span class='op'>=</span> <span class='va'>label_geochem</span>,
+  renamers <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>`^d([0-9]+)([HCNOS])$` <span class='op'>=</span> <span class='st'>"paste(delta ^ \\1, \\2)"</span>, `^210Pb$` <span class='op'>=</span>
+    <span class='st'>"paste({}^210, Pb)"</span>, `^Pb210$` <span class='op'>=</span> <span class='st'>"paste({}^210, Pb)"</span><span class='op'>)</span>,
+  units <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span><span class='op'>(</span><span class='fl'>0</span><span class='op'>)</span>,
+  default_units <span class='op'>=</span> <span class='cn'>NA_character_</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span>
 
-<span class='fu'>facet_geochem_gridh</span>(
-  <span class='no'>param</span>,
-  <span class='kw'>grouping</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>rotate_axis_labels</span> <span class='kw'>=</span> <span class='fl'>90</span>,
-  <span class='kw'>scales</span> <span class='kw'>=</span> <span class='st'>"free_x"</span>,
-  <span class='kw'>space</span> <span class='kw'>=</span> <span class='st'>"fixed"</span>,
-  <span class='kw'>labeller</span> <span class='kw'>=</span> <span class='no'>label_geochem</span>,
-  <span class='kw'>renamers</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>`^d([0-9]+)([HCNOS])$`</span> <span class='kw'>=</span> <span class='st'>"paste(delta ^ \\1, \\2)"</span>, <span class='kw'>`^210Pb$`</span> <span class='kw'>=</span>
-    <span class='st'>"paste({}^210, Pb)"</span>, <span class='kw'>`^Pb210$`</span> <span class='kw'>=</span> <span class='st'>"paste({}^210, Pb)"</span>),
-  <span class='kw'>units</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span>(<span class='fl'>0</span>),
-  <span class='kw'>default_units</span> <span class='kw'>=</span> <span class='fl'>NA_character_</span>,
-  <span class='no'>...</span>
-)</pre>
+<span class='fu'>facet_geochem_gridh</span><span class='op'>(</span>
+  <span class='va'>param</span>,
+  grouping <span class='op'>=</span> <span class='cn'>NULL</span>,
+  rotate_axis_labels <span class='op'>=</span> <span class='fl'>90</span>,
+  scales <span class='op'>=</span> <span class='st'>"free_x"</span>,
+  space <span class='op'>=</span> <span class='st'>"fixed"</span>,
+  labeller <span class='op'>=</span> <span class='va'>label_geochem</span>,
+  renamers <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>`^d([0-9]+)([HCNOS])$` <span class='op'>=</span> <span class='st'>"paste(delta ^ \\1, \\2)"</span>, `^210Pb$` <span class='op'>=</span>
+    <span class='st'>"paste({}^210, Pb)"</span>, `^Pb210$` <span class='op'>=</span> <span class='st'>"paste({}^210, Pb)"</span><span class='op'>)</span>,
+  units <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span><span class='op'>(</span><span class='fl'>0</span><span class='op'>)</span>,
+  default_units <span class='op'>=</span> <span class='cn'>NA_character_</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -270,36 +264,41 @@ NULL to suppress renaming.</p></td>
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>ggplot2</span>)
+    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='http://ggplot2.tidyverse.org'>ggplot2</a></span><span class='op'>)</span>
 
-<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='no'>keji_lakes_plottable</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>rel_abund</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>depth</span>)) +
-  <span class='fu'><a href='geom_col_segsh.html'>geom_col_segsh</a></span>() +
-  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/scale_continuous.html'>scale_y_reverse</a></span>() +
-  <span class='fu'>facet_abundanceh</span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>taxon</span>), <span class='kw'>grouping</span> <span class='kw'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>location</span>)) +
-  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span>(<span class='kw'>y</span> <span class='kw'>=</span> <span class='st'>"Depth (cm)"</span>)</div><div class='img'><img src='facet_abundanceh-1.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='no'>keji_lakes_plottable</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>rel_abund</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>depth</span>)) +
-  <span class='fu'><a href='geom_col_segsh.html'>geom_col_segs</a></span>() +
-  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/scale_continuous.html'>scale_x_reverse</a></span>() +
-  <span class='fu'>facet_abundance</span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>taxon</span>), <span class='kw'>grouping</span> <span class='kw'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>location</span>)) +
-  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>"Depth (cm)"</span>)</div><div class='img'><img src='facet_abundanceh-2.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='no'>alta_lake_geochem</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>value</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>depth</span>)) +
-  <span class='fu'><a href='geom_lineh.html'>geom_lineh</a></span>() +
-  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span>() +
-  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/scale_continuous.html'>scale_y_reverse</a></span>() +
-  <span class='fu'>facet_geochem_wrap</span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>param</span>), <span class='kw'>units</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>C</span> <span class='kw'>=</span> <span class='st'>"%"</span>, <span class='kw'>Cu</span> <span class='kw'>=</span> <span class='st'>"ppm"</span>, <span class='kw'>Ti</span> <span class='kw'>=</span> <span class='st'>"ppm"</span>), <span class='kw'>nrow</span> <span class='kw'>=</span> <span class='fl'>1</span>) +
-  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='st'>"Depth (cm)"</span>)</div><div class='img'><img src='facet_abundanceh-3.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='no'>alta_lake_geochem</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>value</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>depth</span>)) +
-  <span class='fu'><a href='geom_lineh.html'>geom_lineh</a></span>() +
-  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span>() +
-  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/scale_continuous.html'>scale_y_reverse</a></span>() +
-  <span class='fu'>facet_geochem_gridh</span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>param</span>), <span class='kw'>units</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>C</span> <span class='kw'>=</span> <span class='st'>"%"</span>, <span class='kw'>Cu</span> <span class='kw'>=</span> <span class='st'>"ppm"</span>, <span class='kw'>Ti</span> <span class='kw'>=</span> <span class='st'>"ppm"</span>)) +
-  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='st'>"Depth (cm)"</span>)</div><div class='img'><img src='facet_abundanceh-4.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='no'>alta_lake_geochem</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>value</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>depth</span>)) +
-  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_path.html'>geom_line</a></span>() +
-  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span>() +
-  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/scale_continuous.html'>scale_x_reverse</a></span>() +
-  <span class='fu'>facet_geochem_grid</span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>param</span>), <span class='kw'>units</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>C</span> <span class='kw'>=</span> <span class='st'>"%"</span>, <span class='kw'>Cu</span> <span class='kw'>=</span> <span class='st'>"ppm"</span>, <span class='kw'>Ti</span> <span class='kw'>=</span> <span class='st'>"ppm"</span>)) +
-  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span>(<span class='kw'>y</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>"Depth (cm)"</span>)</div><div class='img'><img src='facet_abundanceh-5.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>keji_lakes_plottable</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>rel_abund</span>, y <span class='op'>=</span> <span class='va'>depth</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='geom_col_segsh.html'>geom_col_segsh</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/scale_continuous.html'>scale_y_reverse</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'>facet_abundanceh</span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>taxon</span><span class='op'>)</span>, grouping <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>location</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span>y <span class='op'>=</span> <span class='st'>"Depth (cm)"</span><span class='op'>)</span>
+</div><div class='img'><img src='facet_abundanceh-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>keji_lakes_plottable</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>y <span class='op'>=</span> <span class='va'>rel_abund</span>, x <span class='op'>=</span> <span class='va'>depth</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='geom_col_segsh.html'>geom_col_segs</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/scale_continuous.html'>scale_x_reverse</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'>facet_abundance</span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>taxon</span><span class='op'>)</span>, grouping <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>location</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='st'>"Depth (cm)"</span><span class='op'>)</span>
+</div><div class='img'><img src='facet_abundanceh-2.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>alta_lake_geochem</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>value</span>, y <span class='op'>=</span> <span class='va'>depth</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='geom_lineh.html'>geom_lineh</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/scale_continuous.html'>scale_y_reverse</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'>facet_geochem_wrap</span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>param</span><span class='op'>)</span>, units <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>C <span class='op'>=</span> <span class='st'>"%"</span>, Cu <span class='op'>=</span> <span class='st'>"ppm"</span>, Ti <span class='op'>=</span> <span class='st'>"ppm"</span><span class='op'>)</span>, nrow <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='cn'>NULL</span>, y <span class='op'>=</span> <span class='st'>"Depth (cm)"</span><span class='op'>)</span>
+</div><div class='img'><img src='facet_abundanceh-3.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>alta_lake_geochem</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>value</span>, y <span class='op'>=</span> <span class='va'>depth</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='geom_lineh.html'>geom_lineh</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/scale_continuous.html'>scale_y_reverse</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'>facet_geochem_gridh</span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>param</span><span class='op'>)</span>, units <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>C <span class='op'>=</span> <span class='st'>"%"</span>, Cu <span class='op'>=</span> <span class='st'>"ppm"</span>, Ti <span class='op'>=</span> <span class='st'>"ppm"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='cn'>NULL</span>, y <span class='op'>=</span> <span class='st'>"Depth (cm)"</span><span class='op'>)</span>
+</div><div class='img'><img src='facet_abundanceh-4.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>alta_lake_geochem</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>y <span class='op'>=</span> <span class='va'>value</span>, x <span class='op'>=</span> <span class='va'>depth</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_path.html'>geom_line</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/scale_continuous.html'>scale_x_reverse</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'>facet_geochem_grid</span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>param</span><span class='op'>)</span>, units <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>C <span class='op'>=</span> <span class='st'>"%"</span>, Cu <span class='op'>=</span> <span class='st'>"ppm"</span>, Ti <span class='op'>=</span> <span class='st'>"ppm"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span>y <span class='op'>=</span> <span class='cn'>NULL</span>, x <span class='op'>=</span> <span class='st'>"Depth (cm)"</span><span class='op'>)</span>
+</div><div class='img'><img src='facet_abundanceh-5.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -316,7 +315,7 @@ NULL to suppress renaming.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
 </div>
 
       </footer>

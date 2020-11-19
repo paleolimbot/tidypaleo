@@ -79,12 +79,6 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -135,19 +129,19 @@
     <p>Prepare a parameter-long data frame for statistical analysis</p>
     </div>
 
-    <pre class="usage"><span class='fu'>nested_data</span>(
-  <span class='no'>.data</span>,
-  <span class='kw'>qualifiers</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>key</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='no'>value</span>,
-  <span class='kw'>fill</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>select_if</span> <span class='kw'>=</span> ~<span class='fl'>TRUE</span>,
-  <span class='kw'>filter_all</span> <span class='kw'>=</span> <span class='fu'>any_vars</span>(<span class='fl'>TRUE</span>),
-  <span class='kw'>trans</span> <span class='kw'>=</span> <span class='no'>identity</span>,
-  <span class='kw'>groups</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
-)
+    <pre class="usage"><span class='fu'>nested_data</span><span class='op'>(</span>
+  <span class='va'>.data</span>,
+  qualifiers <span class='op'>=</span> <span class='cn'>NULL</span>,
+  key <span class='op'>=</span> <span class='cn'>NULL</span>,
+  <span class='va'>value</span>,
+  fill <span class='op'>=</span> <span class='cn'>NA</span>,
+  select_if <span class='op'>=</span> <span class='op'>~</span><span class='cn'>TRUE</span>,
+  filter_all <span class='op'>=</span> <span class='fu'>any_vars</span><span class='op'>(</span><span class='cn'>TRUE</span><span class='op'>)</span>,
+  trans <span class='op'>=</span> <span class='va'>identity</span>,
+  groups <span class='op'>=</span> <span class='cn'>NULL</span>
+<span class='op'>)</span>
 
-<span class='fu'>unnested_data</span>(<span class='no'>.data</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>unnested_data</span><span class='op'>(</span><span class='va'>.data</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -219,7 +213,7 @@ variance of 1. See <a href='https://dplyr.tidyverse.org/reference/mutate_all.htm
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
 </div>
 
       </footer>
