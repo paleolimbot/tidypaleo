@@ -20,7 +20,7 @@ documents in paleo-based studies.
 
 ## Installation
 
-You can install tidypaleo from github with:
+You can install tidypaleo from [GitHub](https://github.com) with:
 
 ``` r
 # install.packages("remotes")
