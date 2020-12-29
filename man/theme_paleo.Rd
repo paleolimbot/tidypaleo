@@ -7,8 +7,8 @@
 theme_paleo(...)
 }
 \arguments{
-\item{...}{Passed to \code{\link[ggplot2:theme_bw]{ggplot2::theme_bw()}}}
+\item{...}{Passed to \code{\link[ggplot2:ggtheme]{ggplot2::theme_bw()}}}
 }
 \description{
-Essentially, this is \code{\link[ggplot2:theme_bw]{ggplot2::theme_bw()}} with a few modifications
+Essentially, this is \code{\link[ggplot2:ggtheme]{ggplot2::theme_bw()}} with a few modifications
 }

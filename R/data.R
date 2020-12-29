@@ -2,12 +2,7 @@
 #' Halifax lakes water chemistry and top/bottom diatom counts
 #'
 #' A subset of well-labeled, clean diatom count data for 44 Halifax-area (Nova Scotia) lakes,
-#' an analysis of which has been published by Ginn et al. (2015). These data are
-#' in the form of a [mudata][mudata2::mudata] object, from which location
-#' information, parameter information, and data can be extracted using
-#' [tbl_locations][mudata2::tbl_locations], [tbl_params][mudata2::tbl_params], and
-#' [tbl_data][mudata2::tbl_data] (respectively). Also, a subset of these
-#' data amenable to plotting have been made available.
+#' an analysis of which has been published by Ginn et al. (2015).
 #'
 #' @source
 #' Neotoma paleoecology database (<http://neotomadb.org/>)
@@ -20,26 +15,14 @@
 #' <https://doi.org/10.1080/10402381.2015.1013648>.
 #'
 #' @examples
-#' library(mudata2)
-#' data(halifax_lakes)
+#' halifax_lakes_plottable
 #'
-#' halifax_lakes %>%
-#'   tbl_data()
-#'
-"halifax_lakes"
-
-#' @rdname halifax_lakes
 "halifax_lakes_plottable"
 
 #' Keji lakes core diatom counts
 #'
 #' A subset of well-labeled, clean diatom count data for 3 Keji-area (Nova
 #' Scotia) lakes, which form part of the analysis in Ginn et al. (2007).
-#' These data are in the form of a [mudata][mudata2::mudata] object, from which
-#' location information, parameter information, and data can be extracted using
-#' [tbl_locations][mudata2::tbl_locations], [tbl_params][mudata2::tbl_params], and
-#' [tbl_data][mudata2::tbl_data] (respectively). Also, a subset of these
-#' data amenable to plotting have been made available.
 #'
 #' @source Neotoma paleoecology database (<http://neotomadb.org/>)
 #'
@@ -50,15 +33,8 @@
 #' <https://doi.org/10.1007/s10750-007-0644-3>.
 #'
 #' @examples
-#' library(mudata2)
-#' data(keji_lakes)
+#' keji_lakes_plottable
 #'
-#' keji_lakes %>%
-#'   tbl_data()
-#'
-"keji_lakes"
-
-#' @rdname keji_lakes
 "keji_lakes_plottable"
 
 #' Alta Lake Lead-210 and Carbon-14 Ages
@@ -70,7 +46,7 @@
 #' Oldfield 1983). The `alta_lake_14C_ages` object contains one
 #' uncalibrated Carbon-14 measurement from the same core.
 #' The `alta_lake_bacon_ages` object contains the combined result of the
-#' Lead-210 and the Carbon-14 ages as modelled by [rbacon][rbacon::Bacon]
+#' Lead-210 and the Carbon-14 ages as modelled by the rbacon package
 #' (Blaauw and Christen 2011).
 #'
 #' @references
@@ -93,16 +69,10 @@
 #' Thesis, Acadia University, 2015.
 #' <https://scholar.acadiau.ca/islandora/object/theses:411>.
 #'
-#' @seealso
-#' The [alta_lake][mudata2::alta_lake] dataset (mudata2 package) for geochemical data.
-#'
 #' @examples
-#' data(alta_lake_210Pb_ages)
-#' data(alta_lake_14C_ages)
-#' data(alta_lake_bacon_ages)
-#'
-#' library(mudata2)
-#' data(alta_lake)
+#' alta_lake_210Pb_ages
+#' alta_lake_14C_ages
+#' alta_lake_bacon_ages
 #'
 "alta_lake_210Pb_ages"
 
@@ -121,7 +91,7 @@
 #' Lake (Nova Scotia-New Brunswick Border Region, Canada) core LL-PC2
 #' (Dunnington et al. 2017; White 2012). The `long_lake_bacon_ages` object
 #' contains the result of the Carbon-14 ages as
-#' modelled by [rbacon][rbacon::Bacon] (Blaauw and Christen 2011).
+#' modelled by the rbacon package (Blaauw and Christen 2011).
 #'
 #' @references
 #' Blaauw, Maarten, and J. Andrés Christen. "Flexible Paleoclimate Age-Depth
@@ -139,15 +109,9 @@
 #' M.Sc. Thesis, Acadia University, 2012.
 #' <https://scholar.acadiau.ca/islandora/object/theses:247>.
 #'
-#' @seealso
-#' The [long_lake][mudata2::long_lake] dataset (mudata2 package) for geochemical data.
-#'
 #' @examples
-#' data(long_lake_14C_ages)
-#' data(long_lake_bacon_ages)
-#'
-#' library(mudata2)
-#' data(long_lake)
+#' long_lake_14C_ages
+#' long_lake_bacon_ages
 #'
 "long_lake_14C_ages"
 
@@ -159,12 +123,11 @@
 #' Geochemistry measurements and Cladocera counts from Kellys Lake,
 #' Cape Breton Island, Nova Scotia, Canada.
 #'
+#' @rdname kellys_lake
+#'
 #' @references
 #' Joshua Kurek, Ian Spooner, and Dewey Dunnington (unpublished data).
 #'
-"kellys_lake"
-
-#' @rdname kellys_lake
 "kellys_lake_cladocera"
 
 #' @rdname kellys_lake

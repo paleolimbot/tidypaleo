@@ -33,16 +33,13 @@ activities using the constant rate of supply (CRS) model (Appleby and
 Oldfield 1983). The \code{alta_lake_14C_ages} object contains one
 uncalibrated Carbon-14 measurement from the same core.
 The \code{alta_lake_bacon_ages} object contains the combined result of the
-Lead-210 and the Carbon-14 ages as modelled by \link[rbacon:Bacon]{rbacon}
+Lead-210 and the Carbon-14 ages as modelled by the rbacon package
 (Blaauw and Christen 2011).
 }
 \examples{
-data(alta_lake_210Pb_ages)
-data(alta_lake_14C_ages)
-data(alta_lake_bacon_ages)
-
-library(mudata2)
-data(alta_lake)
+alta_lake_210Pb_ages
+alta_lake_14C_ages
+alta_lake_bacon_ages
 
 }
 \references{
@@ -64,8 +61,5 @@ Dunnington, Dewey W. "A 500-Year Applied Paleolimnological Assessment of
 Environmental Change at Alta Lake, Whistler, British Columbia, Canada." M.Sc.
 Thesis, Acadia University, 2015.
 \url{https://scholar.acadiau.ca/islandora/object/theses:411}.
-}
-\seealso{
-The \link[mudata2:alta_lake]{alta_lake} dataset (mudata2 package) for geochemical data.
 }
 \keyword{datasets}

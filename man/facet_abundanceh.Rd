@@ -93,7 +93,7 @@ facet_geochem_gridh(
 
 \item{labeller}{Labeller to process facet names. Use \link{label_species} to italicize
 species names, \link{label_geochem} to perform common formatting and units,
-or \link[ggplot2:label_value]{label_value} to suppress.}
+or \link[ggplot2:labellers]{label_value} to suppress.}
 
 \item{space, scales}{Modify default scale freedom behaviour}
 

@@ -17,7 +17,7 @@ geom_lineh(
 }
 \arguments{
 \item{mapping, data, stat, position, na.rm, show.legend, inherit.aes, ...}{See
-\link[ggplot2:geom_line]{geom_line}.}
+\link[ggplot2:geom_path]{geom_line}.}
 }
 \value{
 A ggplot2 layer.

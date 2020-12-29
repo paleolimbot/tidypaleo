@@ -50,12 +50,12 @@ scale_x_age_depth(
 
 \item{age_labels, depth_labels}{Labels for each break on the second axis}
 
-\item{...}{Passed to \link[ggplot2:scale_y_continuous]{scale_y_continuous} or \link[ggplot2:scale_x_continuous]{scale_x_continuous}}
+\item{...}{Passed to \link[ggplot2:scale_continuous]{scale_y_continuous} or \link[ggplot2:scale_continuous]{scale_x_continuous}}
 
 \item{reversed}{Reverse the primary age axis (for years BP or similar)}
 }
 \value{
-A \link[ggplot2:scale_y_continuous]{scale_y_continuous} or \link[ggplot2:scale_x_continuous]{scale_x_continuous}
+A \link[ggplot2:scale_continuous]{scale_y_continuous} or \link[ggplot2:scale_continuous]{scale_x_continuous}
 }
 \description{
 Age-depth scales
