@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Change facet ordering behaviour — sequential_layer_facets • tidypaleo</title>
+<title>Keji lakes core diatom counts — keji_lakes_plottable • tidypaleo</title>
 
 
 <!-- jquery -->
@@ -39,12 +39,9 @@
 
 
 
-<meta property="og:title" content="Change facet ordering behaviour — sequential_layer_facets" />
-<meta property="og:description" content="Normally, facets are ordered using as.factor on all values that occur
-within layer data, which means that when adding additional layers, any ordering
-is not preserved unless the factor levels are identical on all factors. This function
-changes this behaviour such that facet levels are combined in layer order. This is
-useful when adding standalone layers to a plot without disturbing the existing order." />
+<meta property="og:title" content="Keji lakes core diatom counts — keji_lakes_plottable" />
+<meta property="og:description" content="A subset of well-labeled, clean diatom count data for 3 Keji-area (Nova
+Scotia) lakes, which form part of the analysis in Ginn et al. (2007)." />
 
 
 <meta name="robots" content="noindex">
@@ -124,31 +121,49 @@ useful when adding standalone layers to a plot without disturbing the existing o
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Change facet ordering behaviour</h1>
-    <small class="dont-index">Source: <a href='https://github.com/paleolimbot/tidypaleo/blob/master/R/ggstrat-plot_addons.R'><code>R/ggstrat-plot_addons.R</code></a></small>
-    <div class="hidden name"><code>sequential_layer_facets.Rd</code></div>
+    <h1>Keji lakes core diatom counts</h1>
+    <small class="dont-index">Source: <a href='https://github.com/paleolimbot/tidypaleo/blob/master/R/data.R'><code>R/data.R</code></a></small>
+    <div class="hidden name"><code>keji_lakes_plottable.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Normally, facets are ordered using <a href='https://rdrr.io/r/base/factor.html'>as.factor</a> on all values that occur
-within layer data, which means that when adding additional layers, any ordering
-is not preserved unless the factor levels are identical on all factors. This function
-changes this behaviour such that facet levels are combined in layer order. This is
-useful when adding standalone layers to a plot without disturbing the existing order.</p>
+    <p>A subset of well-labeled, clean diatom count data for 3 Keji-area (Nova
+Scotia) lakes, which form part of the analysis in Ginn et al. (2007).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>sequential_layer_facets</span><span class='op'>(</span>reverse <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
-
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>reverse</th>
-      <td><p>Use TRUE to process layers in reverse order</p></td>
-    </tr>
-    </table>
+    <pre class="usage"><span class='va'>keji_lakes_plottable</span></pre>
 
 
+    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
+
+    <p>An object of class <code>tbl_df</code> (inherits from <code>tbl</code>, <code>data.frame</code>) with 202 rows and 5 columns.</p>
+    <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
+
+    <p>Neotoma paleoecology database (<a href='http://neotomadb.org/'>http://neotomadb.org/</a>)</p>
+    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
+
+    <p>Ginn, Brian K., Brian F. Cumming, and John P. Smol. "Long-Term
+Lake Acidification Trends in High- and Low-Sulphate Deposition Regions from
+Nova Scotia, Canada." Hydrobiologia 586, no. 1 (July 1, 2007): 261-75.
+<a href='https://doi.org/10.1007/s10750-007-0644-3'>https://doi.org/10.1007/s10750-007-0644-3</a>.</p>
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='va'>keji_lakes_plottable</span>
+</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 202 x 5</span><span>
+#&gt;    location        depth taxon                                   count rel_abund
+#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>           </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>                                   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #555555;'> 1</span><span> Beaverskin Lake 0.125 Asterionella ralfsii var. americana (l…     0      0   
+#&gt; </span><span style='color: #555555;'> 2</span><span> Beaverskin Lake 0.125 Aulacoseira distans                         7      3.02
+#&gt; </span><span style='color: #555555;'> 3</span><span> Beaverskin Lake 0.125 Aulacoseira lirata                          4      1.72
+#&gt; </span><span style='color: #555555;'> 4</span><span> Beaverskin Lake 0.125 Cyclotella stelligera                       8      3.45
+#&gt; </span><span style='color: #555555;'> 5</span><span> Beaverskin Lake 0.125 Tabellaria flocculosa (strain III)          0      0   
+#&gt; </span><span style='color: #555555;'> 6</span><span> Beaverskin Lake 0.125 Other                                     213     91.8 
+#&gt; </span><span style='color: #555555;'> 7</span><span> Beaverskin Lake 0.375 Asterionella ralfsii var. americana (l…     0      0   
+#&gt; </span><span style='color: #555555;'> 8</span><span> Beaverskin Lake 0.375 Aulacoseira distans                         8      3.25
+#&gt; </span><span style='color: #555555;'> 9</span><span> Beaverskin Lake 0.375 Aulacoseira lirata                          5      2.03
+#&gt; </span><span style='color: #555555;'>10</span><span> Beaverskin Lake 0.375 Cyclotella stelligera                      14      5.69
+#&gt; </span><span style='color: #555555;'># … with 192 more rows</span><span></div><div class='input'>
+</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

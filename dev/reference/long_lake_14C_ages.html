@@ -44,7 +44,7 @@
 Lake (Nova Scotia-New Brunswick Border Region, Canada) core LL-PC2
 (Dunnington et al. 2017; White 2012). The long_lake_bacon_ages object
 contains the result of the Carbon-14 ages as
-modelled by rbacon (Blaauw and Christen 2011)." />
+modelled by the rbacon package (Blaauw and Christen 2011)." />
 
 
 <meta name="robots" content="noindex">
@@ -107,7 +107,7 @@ modelled by rbacon (Blaauw and Christen 2011)." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/paleolimbot/tidypaleo/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -134,7 +134,7 @@ modelled by rbacon (Blaauw and Christen 2011)." />
 Lake (Nova Scotia-New Brunswick Border Region, Canada) core LL-PC2
 (Dunnington et al. 2017; White 2012). The <code>long_lake_bacon_ages</code> object
 contains the result of the Carbon-14 ages as
-modelled by rbacon (Blaauw and Christen 2011).</p>
+modelled by the rbacon package (Blaauw and Christen 2011).</p>
     </div>
 
     <pre class="usage"><span class='va'>long_lake_14C_ages</span>
@@ -160,18 +160,32 @@ Atlantic Canada." FACETS 2, no. 1 (May 23, 2017): 440–60.
 and Wetland Evolution from the Isthmus of Chignecto Region, Eastern Canada."
 M.Sc. Thesis, Acadia University, 2012.
 <a href='https://scholar.acadiau.ca/islandora/object/theses:247'>https://scholar.acadiau.ca/islandora/object/theses:247</a>.</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <div class='dont-index'><p>The <a href='https://paleolimbot.github.io/mudata2/reference/long_lake.html'>long_lake</a> dataset (mudata2 package) for geochemical data.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>long_lake_14C_ages</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>long_lake_bacon_ages</span><span class='op'>)</span>
-
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://paleolimbot.github.io/mudata2'>mudata2</a></span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>long_lake</span><span class='op'>)</span>
-
-</div></pre>
+    <pre class="examples"><div class='input'><span class='va'>long_lake_14C_ages</span>
+</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 5 x 5</span><span>
+#&gt;   core                     depth_cm age_14C age_error_14C type                  
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                 
+#&gt; </span><span style='color: #555555;'>1</span><span> Dunnington et al. 2017 …      9       623            34 Carbon-14 age / twig …
+#&gt; </span><span style='color: #555555;'>2</span><span> Dunnington et al. 2017 …     37.3     575            18 Carbon-14 age / plant 
+#&gt; </span><span style='color: #555555;'>3</span><span> Dunnington et al. 2017 …     46      </span><span style='text-decoration: underline;'>4</span><span>396            55 Carbon-14 age / wood …
+#&gt; </span><span style='color: #555555;'>4</span><span> Dunnington et al. 2017 …     70.5    </span><span style='text-decoration: underline;'>8</span><span>482            28 Carbon-14 age / wood  
+#&gt; </span><span style='color: #555555;'>5</span><span> Dunnington et al. 2017 …     94      </span><span style='text-decoration: underline;'>9</span><span>148            49 Carbon-14 age / wood …</div><div class='input'><span class='va'>long_lake_bacon_ages</span>
+</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 86 x 5</span><span>
+#&gt;    depth   min   max median wmean
+#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #555555;'> 1</span><span>     9  536.  667    598.  603.
+#&gt; </span><span style='color: #555555;'> 2</span><span>    10  572.  942.   695.  714.
+#&gt; </span><span style='color: #555555;'> 3</span><span>    11  583. </span><span style='text-decoration: underline;'>1</span><span>263.   775.  822.
+#&gt; </span><span style='color: #555555;'> 4</span><span>    12  637. </span><span style='text-decoration: underline;'>1</span><span>378.   893.  928.
+#&gt; </span><span style='color: #555555;'> 5</span><span>    13  669. </span><span style='text-decoration: underline;'>1</span><span>580.   996. </span><span style='text-decoration: underline;'>1</span><span>034.
+#&gt; </span><span style='color: #555555;'> 6</span><span>    14  738. </span><span style='text-decoration: underline;'>1</span><span>703.  </span><span style='text-decoration: underline;'>1</span><span>112. </span><span style='text-decoration: underline;'>1</span><span>144.
+#&gt; </span><span style='color: #555555;'> 7</span><span>    15  787. </span><span style='text-decoration: underline;'>1</span><span>922   </span><span style='text-decoration: underline;'>1</span><span>218. </span><span style='text-decoration: underline;'>1</span><span>254.
+#&gt; </span><span style='color: #555555;'> 8</span><span>    16  870. </span><span style='text-decoration: underline;'>2</span><span>031.  </span><span style='text-decoration: underline;'>1</span><span>331. </span><span style='text-decoration: underline;'>1</span><span>365.
+#&gt; </span><span style='color: #555555;'> 9</span><span>    17  925. </span><span style='text-decoration: underline;'>2</span><span>218.  </span><span style='text-decoration: underline;'>1</span><span>443. </span><span style='text-decoration: underline;'>1</span><span>478.
+#&gt; </span><span style='color: #555555;'>10</span><span>    18 </span><span style='text-decoration: underline;'>1</span><span>014. </span><span style='text-decoration: underline;'>2</span><span>329.  </span><span style='text-decoration: underline;'>1</span><span>556. </span><span style='text-decoration: underline;'>1</span><span>589.
+#&gt; </span><span style='color: #555555;'># … with 76 more rows</span><span></div><div class='input'>
+</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

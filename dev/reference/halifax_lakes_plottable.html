@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Change facet ordering behaviour — sequential_layer_facets • tidypaleo</title>
+<title>Halifax lakes water chemistry and top/bottom diatom counts — halifax_lakes_plottable • tidypaleo</title>
 
 
 <!-- jquery -->
@@ -39,12 +39,9 @@
 
 
 
-<meta property="og:title" content="Change facet ordering behaviour — sequential_layer_facets" />
-<meta property="og:description" content="Normally, facets are ordered using as.factor on all values that occur
-within layer data, which means that when adding additional layers, any ordering
-is not preserved unless the factor levels are identical on all factors. This function
-changes this behaviour such that facet levels are combined in layer order. This is
-useful when adding standalone layers to a plot without disturbing the existing order." />
+<meta property="og:title" content="Halifax lakes water chemistry and top/bottom diatom counts — halifax_lakes_plottable" />
+<meta property="og:description" content="A subset of well-labeled, clean diatom count data for 44 Halifax-area (Nova Scotia) lakes,
+an analysis of which has been published by Ginn et al. (2015)." />
 
 
 <meta name="robots" content="noindex">
@@ -124,31 +121,50 @@ useful when adding standalone layers to a plot without disturbing the existing o
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Change facet ordering behaviour</h1>
-    <small class="dont-index">Source: <a href='https://github.com/paleolimbot/tidypaleo/blob/master/R/ggstrat-plot_addons.R'><code>R/ggstrat-plot_addons.R</code></a></small>
-    <div class="hidden name"><code>sequential_layer_facets.Rd</code></div>
+    <h1>Halifax lakes water chemistry and top/bottom diatom counts</h1>
+    <small class="dont-index">Source: <a href='https://github.com/paleolimbot/tidypaleo/blob/master/R/data.R'><code>R/data.R</code></a></small>
+    <div class="hidden name"><code>halifax_lakes_plottable.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Normally, facets are ordered using <a href='https://rdrr.io/r/base/factor.html'>as.factor</a> on all values that occur
-within layer data, which means that when adding additional layers, any ordering
-is not preserved unless the factor levels are identical on all factors. This function
-changes this behaviour such that facet levels are combined in layer order. This is
-useful when adding standalone layers to a plot without disturbing the existing order.</p>
+    <p>A subset of well-labeled, clean diatom count data for 44 Halifax-area (Nova Scotia) lakes,
+an analysis of which has been published by Ginn et al. (2015).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>sequential_layer_facets</span><span class='op'>(</span>reverse <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
-
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>reverse</th>
-      <td><p>Use TRUE to process layers in reverse order</p></td>
-    </tr>
-    </table>
+    <pre class="usage"><span class='va'>halifax_lakes_plottable</span></pre>
 
 
+    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
+
+    <p>An object of class <code>tbl_df</code> (inherits from <code>tbl</code>, <code>data.frame</code>) with 114 rows and 5 columns.</p>
+    <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
+
+    <p>Neotoma paleoecology database (<a href='http://neotomadb.org/'>http://neotomadb.org/</a>)</p>
+    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
+
+    <p>Ginn, Brian K., Thiyake Rajaratnam, Brian F. Cumming, and John P.
+Smol. "Establishing Realistic Management Objectives for Urban Lakes Using
+Paleolimnological Techniques: An Example from Halifax Region (Nova Scotia,
+Canada)." Lake and Reservoir Management 31, no. 2 (April 3, 2015): 92-108.
+<a href='https://doi.org/10.1080/10402381.2015.1013648'>https://doi.org/10.1080/10402381.2015.1013648</a>.</p>
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='va'>halifax_lakes_plottable</span>
+</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 114 x 5</span><span>
+#&gt;    location      sample_type taxon                             count rel_abund
+#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>                             </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #555555;'> 1</span><span> Anderson Lake bottom      Aulacoseira distans                26       4.65 
+#&gt; </span><span style='color: #555555;'> 2</span><span> Anderson Lake bottom      Eunotia exigua                     13.5     2.42 
+#&gt; </span><span style='color: #555555;'> 3</span><span> Anderson Lake bottom      Fragilariforma exigua               6.5     1.16 
+#&gt; </span><span style='color: #555555;'> 4</span><span> Anderson Lake bottom      Tabellaria fenestrata              23       4.11 
+#&gt; </span><span style='color: #555555;'> 5</span><span> Anderson Lake bottom      Tabellaria flocculosa (strain IV)  21       3.76 
+#&gt; </span><span style='color: #555555;'> 6</span><span> Anderson Lake bottom      Other                             469      83.9  
+#&gt; </span><span style='color: #555555;'> 7</span><span> Anderson Lake top         Aulacoseira distans                 8.5     1.87 
+#&gt; </span><span style='color: #555555;'> 8</span><span> Anderson Lake top         Eunotia exigua                      0       0    
+#&gt; </span><span style='color: #555555;'> 9</span><span> Anderson Lake top         Fragilariforma exigua               1.5     0.330
+#&gt; </span><span style='color: #555555;'>10</span><span> Anderson Lake top         Tabellaria fenestrata              26       5.71 
+#&gt; </span><span style='color: #555555;'># … with 104 more rows</span><span></div><div class='input'>
+</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
