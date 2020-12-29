@@ -26,7 +26,7 @@ Working with multi-proxy paleo-archive data can be difficult. There are multiple
 
 ## Installation
 
-You can install tidypaleo from github with:
+You can install tidypaleo from [GitHub](https://github.com) with:
 
 ```{r gh-installation, eval = FALSE}
 # install.packages("remotes")
