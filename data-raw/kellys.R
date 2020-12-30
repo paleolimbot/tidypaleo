@@ -37,7 +37,6 @@ validate_mudata(raw)
 
 # use data
 kellys_lake <- raw
-usethis::use_data(kellys_lake, overwrite = TRUE)
 
 kellys_lake_geochem <- kellys_lake %>%
   select_params(-Fe, -Mn,-age_ad, -`Unsupported 210Pb`, -Zn, -Ti) %>%
@@ -57,7 +56,11 @@ kellys_lake_cladocera <- kellys_lake %>%
   tbl_data() %>%
   select(-c(dataset, error, error_type, n_detect, n)) %>%
   rename(rel_abund = value, taxon = param) %>%
-  mutate(taxon = taxon %>% str_remove("Cladocera/")) %>%
+  mutate(
+    taxon = taxon %>%
+      str_remove("Cladocera/") %>%
+      str_replace("Acantholebris curvirostris", "Acantholeberis curvirostris")
+  ) %>%
   # select only some taxa to include in toy data set
   mutate(
     taxon = fct_lump(taxon, 12, w = rel_abund) %>%
