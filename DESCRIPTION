@@ -3,7 +3,7 @@ Title: Tidy Tools for Paleoenvironmental Archives
 Version: 0.0.1.9000
 Authors@R: person("Dewey", "Dunnington", 
                   email = "dewey@fishandwhistle.net", 
-                  role = c("aut", "cre"), comment = c(ORCID = "0000-0002-9415-4582"))
+                  role = c("aut", "cre", "cph"), comment = c(ORCID = "0000-0002-9415-4582"))
 Description: Provides a set of functions with a common framework for age-depth model management, 
   stratigraphic visualization, and common statistical transformations. The focus of the
   package is stratigraphic visualization, for which 'ggplot2' components are provided
@@ -20,7 +20,6 @@ Suggests: testthat,
     knitr,
     rmarkdown,
     vegan,
-    glue,
     patchwork,
     forcats,
     vdiffr
@@ -37,7 +36,6 @@ Imports: rlang,
     purrr,
     ggstance,
     stringr,
-    grid,
     withr,
     tidyr (>= 1.0.2),
     digest,

@@ -116,7 +116,14 @@ halifax_nested %>% unnested_data(qualifiers, data)
 hclust <- halifax_nested %>%
   nested_hclust(method = "average")
 
-plot(hclust, labels = glue::glue("{qualifiers$location} ({qualifiers$sample_type})"))
+plot(
+  hclust, 
+  labels = sprintf(
+    "%s (%s)",
+    qualifiers$location,
+    qualifiers$sample_type
+  )
+)
 ```
 
 ## Nested analysis of other functions
