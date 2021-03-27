@@ -8,6 +8,13 @@
 #' @return A complete [ggplot2::theme()]
 #' @export
 #'
+#' @examples
+#' library(ggplot2)
+#'
+#' ggplot(mpg, aes(cty, hwy)) +
+#'   geom_point() +
+#'   theme_paleo()
+#'
 theme_paleo <- function(...) {
   ggplot2::theme_bw(...) +
     ggplot2::theme(strip.background = ggplot2::element_blank())
@@ -22,6 +29,14 @@ theme_paleo <- function(...) {
 #'
 #' @return An object or list of objects that can be added to a [ggplot][ggplot2::ggplot]
 #' @export
+#'
+#' @examples
+#' library(ggplot2)
+#'
+#' ggplot(mpg, aes(cty, hwy)) +
+#'   geom_point() +
+#'   facet_wrap(vars(class)) +
+#'   rotated_facet_labels(45, "x")
 #'
 rotated_facet_labels <- function(angle = 45, direction = "x", remove_label_background = TRUE) {
   stopifnot(
