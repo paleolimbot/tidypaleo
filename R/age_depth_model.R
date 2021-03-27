@@ -15,6 +15,15 @@
 #'
 #' @return An age depth model object.
 #' @export
+#'
+#' @examples
+#' age_depth_model(
+#'   alta_lake_210Pb_ages,
+#'   depth = depth_cm, age = age_year_ad,
+#'   age_max = age_year_ad + age_error_yr,
+#'   age_min = age_year_ad - age_error_yr
+#' )
+#'
 #' @importFrom rlang !!
 #' @importFrom rlang .data
 #'
@@ -88,22 +97,13 @@ age_depth_model <- function(
 #' Create age depth model objects
 #'
 #' @param x A list to be classed as an age depth model object
-#'
-#' @return An age depth model object
-#' @export
+#' @noRd
 #'
 new_age_depth_model <- function(x) {
   if(!is.list(x)) stop("objects of class age_depth_model must be a list")
   structure(x, class = "age_depth_model")
 }
 
-#' Validate age depth model objects
-#'
-#' @param x An age depth model object
-#'
-#' @return The input, invisibly
-#' @export
-#'
 validate_age_depth_model <- function(x) {
   if(!is.list(x)) stop("objects of class age_depth_model must be a list")
   if(!all(c("trans", "trans_factories", "data", "call_label") %in% names(x))) {
@@ -121,14 +121,7 @@ validate_age_depth_model <- function(x) {
   invisible(x)
 }
 
-#' Print summary of age-depth model objects
-#'
-#' @param x An [age_depth_model]
-#' @param ... Unused
-#'
-#' @return The input, invisibly
 #' @export
-#'
 print.age_depth_model <- function(x, ...) {
   cat("<age_depth_model>\n")
   cat("Call: \n")
@@ -137,13 +130,6 @@ print.age_depth_model <- function(x, ...) {
   invisible(x)
 }
 
-#' Test for age depth models
-#'
-#' @param x An object
-#'
-#' @return TRUE if the object is an age depth model, FALSE otherwise
-#' @export
-#'
 is_age_depth_model <- function(x) {
   inherits(x, "age_depth_model")
 }
@@ -158,6 +144,16 @@ is_age_depth_model <- function(x) {
 #' @return A data frame with the same number of observations as the input age or
 #'   depth vector.
 #' @export
+#'
+#' @examples
+#' adm <- age_depth_model(
+#'   alta_lake_210Pb_ages,
+#'   depth = depth_cm, age = age_year_ad,
+#'   age_max = age_year_ad + age_error_yr,
+#'   age_min = age_year_ad - age_error_yr
+#' )
+#'
+#' predict(adm, depth = 1:5)
 #'
 #' @importFrom stats predict
 #'
@@ -272,6 +268,16 @@ predict_age <- function(object, depth) {
 #'
 #' @export
 #'
+#' @examples
+#' adm <- age_depth_model(
+#'   alta_lake_210Pb_ages,
+#'   depth = depth_cm, age = age_year_ad,
+#'   age_max = age_year_ad + age_error_yr,
+#'   age_min = age_year_ad - age_error_yr
+#' )
+#'
+#' plot(adm)
+#'
 #' @importFrom graphics plot
 #'
 plot.age_depth_model <- function(x, xlab = "depth", ylab = "age", xlim = NULL, ylim = NULL,
@@ -361,6 +367,20 @@ create_trans_list <- function(adm) {
 #'
 #' @return A list with component functions `trans` and `inverse`
 #' @export
+#'
+#' @examples
+#' age_depth_model(
+#'   alta_lake_210Pb_ages,
+#'   depth = depth_cm, age = age_year_ad,
+#'   age_max = age_year_ad + age_error_yr,
+#'   age_min = age_year_ad - age_error_yr,
+#'   extrapolate_age_below = ~age_depth_extrapolate(
+#'     tail(.x, 3), tail(.y, 3), x0 = dplyr::last, y0 = dplyr::last
+#'   ),
+#'   extrapolate_age_above = ~age_depth_extrapolate(
+#'     head(.x, 3), head(.y, 3), x0 = dplyr::first, y0 = dplyr::first
+#'   )
+#' )
 #'
 age_depth_interpolate <- function(x, y) {
   if(!all(is.finite(c(x, y)))) stop("Non-finite values in transformation")
@@ -471,6 +491,9 @@ age_depth_na <- function(x, y) {
 #'
 #' @return The input, invisibly.
 #' @export
+#'
+#' @examples
+#' as_trans_factory(age_depth_interpolate)
 #'
 as_trans_factory <- function(factory, env = parent.frame()) {
   if(is.function(factory)) {

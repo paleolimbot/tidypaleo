@@ -32,3 +32,18 @@ A list with component functions \code{trans} and \code{inverse}
 \description{
 Age-depth model interpolators/extrapolators
 }
+\examples{
+age_depth_model(
+  alta_lake_210Pb_ages,
+  depth = depth_cm, age = age_year_ad,
+  age_max = age_year_ad + age_error_yr,
+  age_min = age_year_ad - age_error_yr,
+  extrapolate_age_below = ~age_depth_extrapolate(
+    tail(.x, 3), tail(.y, 3), x0 = dplyr::last, y0 = dplyr::last
+  ),
+  extrapolate_age_above = ~age_depth_extrapolate(
+    head(.x, 3), head(.y, 3), x0 = dplyr::first, y0 = dplyr::first
+  )
+)
+
+}

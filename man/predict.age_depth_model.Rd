@@ -28,3 +28,14 @@ depth vector.
 \description{
 Predict age and depth values
 }
+\examples{
+adm <- age_depth_model(
+  alta_lake_210Pb_ages,
+  depth = depth_cm, age = age_year_ad,
+  age_max = age_year_ad + age_error_yr,
+  age_min = age_year_ad - age_error_yr
+)
+
+predict(adm, depth = 1:5)
+
+}

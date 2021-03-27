@@ -30,3 +30,7 @@ The input, invisibly.
 \description{
 Coerce and validate transforms and functions that produce them
 }
+\examples{
+as_trans_factory(age_depth_interpolate)
+
+}

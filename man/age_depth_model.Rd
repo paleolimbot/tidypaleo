@@ -39,3 +39,12 @@ An age depth model object.
 \description{
 Create age depth models
 }
+\examples{
+age_depth_model(
+  alta_lake_210Pb_ages,
+  depth = depth_cm, age = age_year_ad,
+  age_max = age_year_ad + age_error_yr,
+  age_min = age_year_ad - age_error_yr
+)
+
+}
