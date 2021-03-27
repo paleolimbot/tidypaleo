@@ -74,6 +74,23 @@ plot_layer_scores <- function(object, mapping, which = "PC1", key = "param", val
 #' @return A [ggplot2::layer()]
 #' @export
 #'
+#' @examples
+#' library(ggplot2)
+#' library(dplyr, warn.conflicts = FALSE)
+#'
+#' alta_coniss <- nested_data(
+#'   alta_lake_geochem,
+#'   qualifiers = c(age, depth, zone),
+#'   key = param,
+#'   value = value,
+#'   trans = scale
+#' ) %>%
+#'   nested_chclust_coniss()
+#'
+#' ggplot() +
+#'   layer_dendrogram(alta_coniss, aes(y = depth)) +
+#'   scale_y_reverse()
+#'
 layer_dendrogram <- function(object, mapping,
                              ...,
                              colour = "black", size = 0.5, linetype = 1, alpha = NA,
@@ -151,6 +168,17 @@ layer_zone_boundaries <- function(object, mapping, ..., linetype = 2, alpha = 0.
 #'
 #' @return An object that can be added to a [ggplot2::ggplot()]
 #' @export
+#'
+#' @examples
+#' library(ggplot2)
+#'
+#' p <- ggplot(mapping = aes(x, y)) +
+#'   geom_point(data = data.frame(x = 1:5, y = 1:5, facet = "b")) +
+#'   geom_point(data = data.frame(x = 1:5, y = 1:5, facet = "a")) +
+#'   facet_wrap(vars(facet))
+#'
+#' p
+#' p + sequential_layer_facets()
 #'
 sequential_layer_facets <- function(reverse = FALSE) {
   structure(list(reverse = reverse), class = "sequential_layer_facet_spec")

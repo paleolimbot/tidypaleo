@@ -85,3 +85,14 @@ A subclass of \link[ggplot2:ggplot2-ggproto]{ggplot2::Geom}.
 \description{
 Exaggerated geometries that do not train scales
 }
+\examples{
+library(ggplot2)
+
+ggplot(keji_lakes_plottable, aes(x = rel_abund, y = depth)) +
+  geom_lineh_exaggerate(exaggerate_x = 2, lty = 2) +
+  geom_col_segsh() +
+  scale_y_reverse() +
+  facet_abundanceh(vars(taxon), grouping = vars(location)) +
+  labs(y = "Depth (cm)")
+
+}

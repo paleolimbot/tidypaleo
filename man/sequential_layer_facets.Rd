@@ -19,3 +19,15 @@ is not preserved unless the factor levels are identical on all factors. This fun
 changes this behaviour such that facet levels are combined in layer order. This is
 useful when adding standalone layers to a plot without disturbing the existing order.
 }
+\examples{
+library(ggplot2)
+
+p <- ggplot(mapping = aes(x, y)) +
+  geom_point(data = data.frame(x = 1:5, y = 1:5, facet = "b")) +
+  geom_point(data = data.frame(x = 1:5, y = 1:5, facet = "a")) +
+  facet_wrap(vars(facet))
+
+p
+p + sequential_layer_facets()
+
+}

@@ -14,6 +14,17 @@
 #' @return A [scale_y_continuous][ggplot2::scale_y_continuous] or [scale_x_continuous][ggplot2::scale_x_continuous]
 #' @export
 #'
+#' @examples
+#' library(dplyr, warn.conflicts = FALSE)
+#' library(ggplot2)
+#'
+#' keji_lakes_plottable %>%
+#'   filter(taxon == "Other", location == "Beaverskin Lake") %>%
+#'   ggplot(aes(rel_abund, depth)) +
+#'   geom_col_segsh() +
+#'   scale_x_abundance() +
+#'   scale_y_reverse()
+#'
 scale_x_abundance <- function(..., limits = c(0, NA), breaks = seq(10, 90, 30),
                               minor_breaks = seq(0, 100, 10), expand = c(0, 1)) {
   ggplot2::scale_x_continuous(..., limits = limits, breaks = breaks, expand = expand, minor_breaks = minor_breaks)
@@ -37,6 +48,22 @@ scale_y_abundance <- function(..., limits = c(0, NA), breaks = seq(10, 90, 30),
 #'
 #' @return A [scale_y_continuous][ggplot2::scale_y_continuous] or [scale_x_continuous][ggplot2::scale_x_continuous]
 #' @export
+#'
+#' @examples
+#' library(ggplot2)
+#' library(dplyr, warn.conflicts = FALSE)
+#'
+#' adm <- age_depth_model(
+#'   alta_lake_210Pb_ages,
+#'   depth = depth_cm, age = age_year_ad
+#' )
+#'
+#' alta_lake_geochem %>%
+#'   filter(param == "Cu") %>%
+#'   ggplot(aes(value, depth)) +
+#'   geom_point() +
+#'   scale_y_depth_age(adm)
+#'
 #' @importFrom ggplot2 waiver
 #'
 scale_y_depth_age <- function(model = NULL, age_name = "age", age_breaks = waiver(),

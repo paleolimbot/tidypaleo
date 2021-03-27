@@ -40,3 +40,15 @@ Continuous scales that (1) always start at 0, (2) always have the same breaks, a
 (3) expand using a constant rather than a percentage. These scales assume that data are
 in percentages (i.e., range 0 to 100 rather than 0 to 1).
 }
+\examples{
+library(dplyr, warn.conflicts = FALSE)
+library(ggplot2)
+
+keji_lakes_plottable \%>\%
+  filter(taxon == "Other", location == "Beaverskin Lake") \%>\%
+  ggplot(aes(rel_abund, depth)) +
+  geom_col_segsh() +
+  scale_x_abundance() +
+  scale_y_reverse()
+
+}

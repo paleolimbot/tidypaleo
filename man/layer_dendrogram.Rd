@@ -49,3 +49,21 @@ A \code{\link[ggplot2:layer]{ggplot2::layer()}}
 \description{
 Add a dendrogram as a layer or facet
 }
+\examples{
+library(ggplot2)
+library(dplyr, warn.conflicts = FALSE)
+
+alta_coniss <- nested_data(
+  alta_lake_geochem,
+  qualifiers = c(age, depth, zone),
+  key = param,
+  value = value,
+  trans = scale
+) \%>\%
+  nested_chclust_coniss()
+
+ggplot() +
+  layer_dendrogram(alta_coniss, aes(y = depth)) +
+  scale_y_reverse()
+
+}

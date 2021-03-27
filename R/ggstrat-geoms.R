@@ -8,6 +8,16 @@
 #' @return A subclass of [ggplot2::Geom].
 #' @export
 #'
+#' @examples
+#' library(ggplot2)
+#'
+#' ggplot(keji_lakes_plottable, aes(x = rel_abund, y = depth)) +
+#'   geom_lineh_exaggerate(exaggerate_x = 2, lty = 2) +
+#'   geom_col_segsh() +
+#'   scale_y_reverse() +
+#'   facet_abundanceh(vars(taxon), grouping = vars(location)) +
+#'   labs(y = "Depth (cm)")
+#'
 geom_point_exaggerate <- function(mapping = NULL, data = NULL,
                                   stat = "identity", position = "identity",
                                   ...,

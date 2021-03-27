@@ -60,3 +60,19 @@ A \link[ggplot2:scale_continuous]{scale_y_continuous} or \link[ggplot2:scale_con
 \description{
 Age-depth scales
 }
+\examples{
+library(ggplot2)
+library(dplyr, warn.conflicts = FALSE)
+
+adm <- age_depth_model(
+  alta_lake_210Pb_ages,
+  depth = depth_cm, age = age_year_ad
+)
+
+alta_lake_geochem \%>\%
+  filter(param == "Cu") \%>\%
+  ggplot(aes(value, depth)) +
+  geom_point() +
+  scale_y_depth_age(adm)
+
+}
