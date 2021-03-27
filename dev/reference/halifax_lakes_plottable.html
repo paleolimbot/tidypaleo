@@ -46,6 +46,8 @@ an analysis of which has been published by Ginn et al. (2015)." />
 
 <meta name="robots" content="noindex">
 
+
+
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -57,9 +59,18 @@ an analysis of which has been published by Ginn et al. (2015)." />
 
 
 
+<!-- dependencies from examples -->
+
+
+  
+
+  
+
   </head>
 
   <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -150,20 +161,20 @@ Canada)." Lake and Reservoir Management 31, no. 2 (April 3, 2015): 92-108.
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='va'>halifax_lakes_plottable</span>
-</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 114 x 5</span><span>
+</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 114 x 5</span><span>
 #&gt;    location      sample_type taxon                             count rel_abund
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>                             </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'> 1</span><span> Anderson Lake bottom      Aulacoseira distans                26       4.65 
-#&gt; </span><span style='color: #555555;'> 2</span><span> Anderson Lake bottom      Eunotia exigua                     13.5     2.42 
-#&gt; </span><span style='color: #555555;'> 3</span><span> Anderson Lake bottom      Fragilariforma exigua               6.5     1.16 
-#&gt; </span><span style='color: #555555;'> 4</span><span> Anderson Lake bottom      Tabellaria fenestrata              23       4.11 
-#&gt; </span><span style='color: #555555;'> 5</span><span> Anderson Lake bottom      Tabellaria flocculosa (strain IV)  21       3.76 
-#&gt; </span><span style='color: #555555;'> 6</span><span> Anderson Lake bottom      Other                             469      83.9  
-#&gt; </span><span style='color: #555555;'> 7</span><span> Anderson Lake top         Aulacoseira distans                 8.5     1.87 
-#&gt; </span><span style='color: #555555;'> 8</span><span> Anderson Lake top         Eunotia exigua                      0       0    
-#&gt; </span><span style='color: #555555;'> 9</span><span> Anderson Lake top         Fragilariforma exigua               1.5     0.330
-#&gt; </span><span style='color: #555555;'>10</span><span> Anderson Lake top         Tabellaria fenestrata              26       5.71 
-#&gt; </span><span style='color: #555555;'># … with 104 more rows</span><span></div><div class='input'>
+#&gt;    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>         </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>       </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>                             </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'> 1</span><span> Anderson Lake bottom      Aulacoseira distans                26       4.65 
+#&gt; </span><span style='color: #BCBCBC;'> 2</span><span> Anderson Lake bottom      Eunotia exigua                     13.5     2.42 
+#&gt; </span><span style='color: #BCBCBC;'> 3</span><span> Anderson Lake bottom      Fragilariforma exigua               6.5     1.16 
+#&gt; </span><span style='color: #BCBCBC;'> 4</span><span> Anderson Lake bottom      Tabellaria fenestrata              23       4.11 
+#&gt; </span><span style='color: #BCBCBC;'> 5</span><span> Anderson Lake bottom      Tabellaria flocculosa (strain IV)  21       3.76 
+#&gt; </span><span style='color: #BCBCBC;'> 6</span><span> Anderson Lake bottom      Other                             469      83.9  
+#&gt; </span><span style='color: #BCBCBC;'> 7</span><span> Anderson Lake top         Aulacoseira distans                 8.5     1.87 
+#&gt; </span><span style='color: #BCBCBC;'> 8</span><span> Anderson Lake top         Eunotia exigua                      0       0    
+#&gt; </span><span style='color: #BCBCBC;'> 9</span><span> Anderson Lake top         Fragilariforma exigua               1.5     0.330
+#&gt; </span><span style='color: #BCBCBC;'>10</span><span> Anderson Lake top         Tabellaria fenestrata              26       5.71 
+#&gt; </span><span style='color: #949494;'># … with 104 more rows</span><span></div><div class='input'>
 </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -176,11 +187,11 @@ Canada)." Lake and Reservoir Management 31, no. 2 (April 3, 2015): 92-108.
 
       <footer>
       <div class="copyright">
-  <p>Developed by Dewey Dunnington.</p>
+  <p><p>Developed by Dewey Dunnington.</p></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p></p>
 </div>
 
       </footer>
@@ -188,6 +199,8 @@ Canada)." Lake and Reservoir Management 31, no. 2 (April 3, 2015): 92-108.
 
   
 
+
+  
 
   </body>
 </html>

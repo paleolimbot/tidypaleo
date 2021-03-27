@@ -53,6 +53,8 @@ Lead-210 and the Carbon-14 ages as modelled by the rbacon package
 
 <meta name="robots" content="noindex">
 
+
+
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -64,9 +66,18 @@ Lead-210 and the Carbon-14 ages as modelled by the rbacon package
 
 
 
+<!-- dependencies from examples -->
+
+
+  
+
+  
+
   </head>
 
   <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -180,36 +191,36 @@ Thesis, Acadia University, 2015.
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='va'>alta_lake_210Pb_ages</span>
-</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 9 x 5</span><span>
+</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 9 x 5</span><span>
 #&gt;   core                       depth_cm age_year_ad age_error_yr type             
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                         </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>            
-#&gt; </span><span style='color: #555555;'>1</span><span> Dunnington et al. 2016 / …      0         </span><span style='text-decoration: underline;'>2</span><span>015.         0    Sediment Lead-21…
-#&gt; </span><span style='color: #555555;'>2</span><span> Dunnington et al. 2016 / …      1         </span><span style='text-decoration: underline;'>2</span><span>008          0.34 Sediment Lead-21…
-#&gt; </span><span style='color: #555555;'>3</span><span> Dunnington et al. 2016 / …      1.5       </span><span style='text-decoration: underline;'>2</span><span>003.         0.56 Sediment Lead-21…
-#&gt; </span><span style='color: #555555;'>4</span><span> Dunnington et al. 2016 / …      2         </span><span style='text-decoration: underline;'>1</span><span>998.         0.86 Sediment Lead-21…
-#&gt; </span><span style='color: #555555;'>5</span><span> Dunnington et al. 2016 / …      3         </span><span style='text-decoration: underline;'>1</span><span>982.         2.25 Sediment Lead-21…
-#&gt; </span><span style='color: #555555;'>6</span><span> Dunnington et al. 2016 / …      4         </span><span style='text-decoration: underline;'>1</span><span>966.         4.73 Sediment Lead-21…
-#&gt; </span><span style='color: #555555;'>7</span><span> Dunnington et al. 2016 / …      5         </span><span style='text-decoration: underline;'>1</span><span>947.         8.21 Sediment Lead-21…
-#&gt; </span><span style='color: #555555;'>8</span><span> Dunnington et al. 2016 / …      6         </span><span style='text-decoration: underline;'>1</span><span>922.        27.0  Sediment Lead-21…
-#&gt; </span><span style='color: #555555;'>9</span><span> Dunnington et al. 2016 / …      7         </span><span style='text-decoration: underline;'>1</span><span>896         57.2  Sediment Lead-21…</div><div class='input'><span class='va'>alta_lake_14C_ages</span>
-</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 1 x 5</span><span>
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>                         </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>       </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>        </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>            
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> Dunnington et al. 2016 / …      0         </span><span style='text-decoration: underline;'>2</span><span>015.         0    Sediment Lead-21…
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> Dunnington et al. 2016 / …      1         </span><span style='text-decoration: underline;'>2</span><span>008          0.34 Sediment Lead-21…
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span> Dunnington et al. 2016 / …      1.5       </span><span style='text-decoration: underline;'>2</span><span>003.         0.56 Sediment Lead-21…
+#&gt; </span><span style='color: #BCBCBC;'>4</span><span> Dunnington et al. 2016 / …      2         </span><span style='text-decoration: underline;'>1</span><span>998.         0.86 Sediment Lead-21…
+#&gt; </span><span style='color: #BCBCBC;'>5</span><span> Dunnington et al. 2016 / …      3         </span><span style='text-decoration: underline;'>1</span><span>982.         2.25 Sediment Lead-21…
+#&gt; </span><span style='color: #BCBCBC;'>6</span><span> Dunnington et al. 2016 / …      4         </span><span style='text-decoration: underline;'>1</span><span>966.         4.73 Sediment Lead-21…
+#&gt; </span><span style='color: #BCBCBC;'>7</span><span> Dunnington et al. 2016 / …      5         </span><span style='text-decoration: underline;'>1</span><span>947.         8.21 Sediment Lead-21…
+#&gt; </span><span style='color: #BCBCBC;'>8</span><span> Dunnington et al. 2016 / …      6         </span><span style='text-decoration: underline;'>1</span><span>922.        27.0  Sediment Lead-21…
+#&gt; </span><span style='color: #BCBCBC;'>9</span><span> Dunnington et al. 2016 / …      7         </span><span style='text-decoration: underline;'>1</span><span>896         57.2  Sediment Lead-21…</div><div class='input'><span class='va'>alta_lake_14C_ages</span>
+</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 1 x 5</span><span>
 #&gt;   core                      depth_cm age_14C age_error_14C type                 
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                        </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                
-#&gt; </span><span style='color: #555555;'>1</span><span> Dunnington et al. 2015 /…     29.5     340            30 Carbon-14 age / fir …</div><div class='input'><span class='va'>alta_lake_bacon_ages</span>
-</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 58 x 5</span><span>
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>                        </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>         </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>                
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> Dunnington et al. 2015 /…     29.5     340            30 Carbon-14 age / fir …</div><div class='input'><span class='va'>alta_lake_bacon_ages</span>
+</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 58 x 5</span><span>
 #&gt;    depth_cm age_min_year_BP age_max_year_BP age_median_year_… age_weighted_mean…
-#&gt;  </span><span style='color: #555555;'>*</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>           </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>           </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>             </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>              </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'> 1</span><span>      1            -</span><span style='color: #BB0000;'>59.1</span><span>           -</span><span style='color: #BB0000;'>57.1</span><span>             -</span><span style='color: #BB0000;'>58.1</span><span>              -</span><span style='color: #BB0000;'>58.1</span><span> 
-#&gt; </span><span style='color: #555555;'> 2</span><span>      1.5          -</span><span style='color: #BB0000;'>54.3</span><span>           -</span><span style='color: #BB0000;'>52.4</span><span>             -</span><span style='color: #BB0000;'>53.3</span><span>              -</span><span style='color: #BB0000;'>53.3</span><span> 
-#&gt; </span><span style='color: #555555;'> 3</span><span>      2            -</span><span style='color: #BB0000;'>50.5</span><span>           -</span><span style='color: #BB0000;'>46.7</span><span>             -</span><span style='color: #BB0000;'>48.6</span><span>              -</span><span style='color: #BB0000;'>48.6</span><span> 
-#&gt; </span><span style='color: #555555;'> 4</span><span>      2.5          -</span><span style='color: #BB0000;'>43.9</span><span>           -</span><span style='color: #BB0000;'>37.1</span><span>             -</span><span style='color: #BB0000;'>40.5</span><span>              -</span><span style='color: #BB0000;'>40.5</span><span> 
-#&gt; </span><span style='color: #555555;'> 5</span><span>      3            -</span><span style='color: #BB0000;'>39.3</span><span>           -</span><span style='color: #BB0000;'>25.8</span><span>             -</span><span style='color: #BB0000;'>32.4</span><span>              -</span><span style='color: #BB0000;'>32.4</span><span> 
-#&gt; </span><span style='color: #555555;'> 6</span><span>      3.5          -</span><span style='color: #BB0000;'>30.9</span><span>           -</span><span style='color: #BB0000;'>17.8</span><span>             -</span><span style='color: #BB0000;'>24.5</span><span>              -</span><span style='color: #BB0000;'>24.4</span><span> 
-#&gt; </span><span style='color: #555555;'> 7</span><span>      4            -</span><span style='color: #BB0000;'>26.8</span><span>            -</span><span style='color: #BB0000;'>4.42</span><span>            -</span><span style='color: #BB0000;'>16.7</span><span>              -</span><span style='color: #BB0000;'>16.3</span><span> 
-#&gt; </span><span style='color: #555555;'> 8</span><span>      4.5          -</span><span style='color: #BB0000;'>18.0</span><span>             3.28             -</span><span style='color: #BB0000;'>7.79</span><span>              -</span><span style='color: #BB0000;'>7.61</span><span>
-#&gt; </span><span style='color: #555555;'> 9</span><span>      5            -</span><span style='color: #BB0000;'>13.6</span><span>            17.8               0.46               1.01
-#&gt; </span><span style='color: #555555;'>10</span><span>      5.5           -</span><span style='color: #BB0000;'>5.91</span><span>           29.0               9.8               10.4 
-#&gt; </span><span style='color: #555555;'># … with 48 more rows</span><span></div><div class='input'>
+#&gt;  </span><span style='color: #BCBCBC;'>*</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>           </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>           </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>             </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>              </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'> 1</span><span>      1            -</span><span style='color: #BB0000;'>59.1</span><span>           -</span><span style='color: #BB0000;'>57.1</span><span>             -</span><span style='color: #BB0000;'>58.1</span><span>              -</span><span style='color: #BB0000;'>58.1</span><span> 
+#&gt; </span><span style='color: #BCBCBC;'> 2</span><span>      1.5          -</span><span style='color: #BB0000;'>54.3</span><span>           -</span><span style='color: #BB0000;'>52.4</span><span>             -</span><span style='color: #BB0000;'>53.3</span><span>              -</span><span style='color: #BB0000;'>53.3</span><span> 
+#&gt; </span><span style='color: #BCBCBC;'> 3</span><span>      2            -</span><span style='color: #BB0000;'>50.5</span><span>           -</span><span style='color: #BB0000;'>46.7</span><span>             -</span><span style='color: #BB0000;'>48.6</span><span>              -</span><span style='color: #BB0000;'>48.6</span><span> 
+#&gt; </span><span style='color: #BCBCBC;'> 4</span><span>      2.5          -</span><span style='color: #BB0000;'>43.9</span><span>           -</span><span style='color: #BB0000;'>37.1</span><span>             -</span><span style='color: #BB0000;'>40.5</span><span>              -</span><span style='color: #BB0000;'>40.5</span><span> 
+#&gt; </span><span style='color: #BCBCBC;'> 5</span><span>      3            -</span><span style='color: #BB0000;'>39.3</span><span>           -</span><span style='color: #BB0000;'>25.8</span><span>             -</span><span style='color: #BB0000;'>32.4</span><span>              -</span><span style='color: #BB0000;'>32.4</span><span> 
+#&gt; </span><span style='color: #BCBCBC;'> 6</span><span>      3.5          -</span><span style='color: #BB0000;'>30.9</span><span>           -</span><span style='color: #BB0000;'>17.8</span><span>             -</span><span style='color: #BB0000;'>24.5</span><span>              -</span><span style='color: #BB0000;'>24.4</span><span> 
+#&gt; </span><span style='color: #BCBCBC;'> 7</span><span>      4            -</span><span style='color: #BB0000;'>26.8</span><span>            -</span><span style='color: #BB0000;'>4.42</span><span>            -</span><span style='color: #BB0000;'>16.7</span><span>              -</span><span style='color: #BB0000;'>16.3</span><span> 
+#&gt; </span><span style='color: #BCBCBC;'> 8</span><span>      4.5          -</span><span style='color: #BB0000;'>18.0</span><span>             3.28             -</span><span style='color: #BB0000;'>7.79</span><span>              -</span><span style='color: #BB0000;'>7.61</span><span>
+#&gt; </span><span style='color: #BCBCBC;'> 9</span><span>      5            -</span><span style='color: #BB0000;'>13.6</span><span>            17.8               0.46               1.01
+#&gt; </span><span style='color: #BCBCBC;'>10</span><span>      5.5           -</span><span style='color: #BB0000;'>5.91</span><span>           29.0               9.8               10.4 
+#&gt; </span><span style='color: #949494;'># … with 48 more rows</span><span></div><div class='input'>
 </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -222,11 +233,11 @@ Thesis, Acadia University, 2015.
 
       <footer>
       <div class="copyright">
-  <p>Developed by Dewey Dunnington.</p>
+  <p><p>Developed by Dewey Dunnington.</p></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p></p>
 </div>
 
       </footer>
@@ -234,6 +245,8 @@ Thesis, Acadia University, 2015.
 
   
 
+
+  
 
   </body>
 </html>
