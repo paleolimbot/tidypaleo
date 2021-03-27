@@ -100,7 +100,7 @@
 <a href="#example" class="anchor"></a>Example</h2>
 <p>Using the built-in dataset <code>alta_lake_210Pb_ages</code>, which contains a Lead-210 (CRS) age-depth relationship for a core from <a href="https://en.wikipedia.org/wiki/Alta_Lake_(British_Columbia)" class="external-link">Alta Lake, Whistler, British Columbia</a>, we can create an age-depth model (note that <code>age</code> and <code>depth</code> are evaluated within <code>.data</code>, if it is provided, and support tidy evaluation):</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://paleolimbot.github.io/tidypaleo" class="external-link">tidypaleo</a></span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://paleolimbot.github.io/tidypaleo/" class="external-link">tidypaleo</a></span><span class="op">)</span>
 <span class="va">alta_lake_adm</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/age_depth_model.html">age_depth_model</a></span><span class="op">(</span>
   <span class="va">alta_lake_210Pb_ages</span>,
   depth <span class="op">=</span> <span class="va">depth_cm</span>, age <span class="op">=</span> <span class="va">age_year_ad</span>,

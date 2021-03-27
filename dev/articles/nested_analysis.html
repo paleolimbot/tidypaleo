@@ -97,7 +97,7 @@
 <p>Load the packages:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">tidyverse</span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://paleolimbot.github.io/tidypaleo" class="external-link">tidypaleo</a></span><span class="op">)</span></code></pre></div>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://paleolimbot.github.io/tidypaleo/" class="external-link">tidypaleo</a></span><span class="op">)</span></code></pre></div>
 <div id="creating-nested-data" class="section level2">
 <h2 class="hasAnchor">
 <a href="#creating-nested-data" class="anchor"></a>Creating nested data</h2>
@@ -314,7 +314,14 @@
 <code class="sourceCode R"><span class="va">hclust</span> <span class="op">&lt;-</span> <span class="va">halifax_nested</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/nested_hclust.html">nested_hclust</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"average"</span><span class="op">)</span>
 
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">hclust</span>, labels <span class="op">=</span> <span class="fu">glue</span><span class="fu">::</span><span class="fu"><a href="https://glue.tidyverse.org/reference/glue.html" class="external-link">glue</a></span><span class="op">(</span><span class="st">"{qualifiers$location} ({qualifiers$sample_type})"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span>
+  <span class="va">hclust</span>, 
+  labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sprintf.html" class="external-link">sprintf</a></span><span class="op">(</span>
+    <span class="st">"%s (%s)"</span>,
+    <span class="va">qualifiers</span><span class="op">$</span><span class="va">location</span>,
+    <span class="va">qualifiers</span><span class="op">$</span><span class="va">sample_type</span>
+  <span class="op">)</span>
+<span class="op">)</span></code></pre></div>
 <p><img src="nested_analysis_files/figure-html/unnamed-chunk-13-1.png" width="750"></p>
 </div>
 <div id="nested-analysis-of-other-functions" class="section level2">
