@@ -47,8 +47,10 @@ activities using the constant rate of supply (CRS) model (Appleby and
 Oldfield 1983). The alta_lake_14C_ages object contains one
 uncalibrated Carbon-14 measurement from the same core.
 The alta_lake_bacon_ages object contains the combined result of the
-Lead-210 and the Carbon-14 ages as modelled by rbacon-package
+Lead-210 and the Carbon-14 ages as modelled by the rbacon package
 (Blaauw and Christen 2011)." />
+
+
 
 
 
@@ -64,9 +66,18 @@ Lead-210 and the Carbon-14 ages as modelled by rbacon-package
 
 
 
+<!-- dependencies from examples -->
+
+
+  
+
+  
+
   </head>
 
   <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -80,19 +91,13 @@ Lead-210 and the Carbon-14 ages as modelled by rbacon-package
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">tidypaleo</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -117,7 +122,7 @@ Lead-210 and the Carbon-14 ages as modelled by rbacon-package
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/paleolimbot/tidypaleo/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -147,17 +152,17 @@ activities using the constant rate of supply (CRS) model (Appleby and
 Oldfield 1983). The <code>alta_lake_14C_ages</code> object contains one
 uncalibrated Carbon-14 measurement from the same core.
 The <code>alta_lake_bacon_ages</code> object contains the combined result of the
-Lead-210 and the Carbon-14 ages as modelled by rbacon-package
+Lead-210 and the Carbon-14 ages as modelled by the rbacon package
 (Blaauw and Christen 2011).</p>
     </div>
 
-    <pre class="usage"><span class='no'>alta_lake_210Pb_ages</span>
+    <pre class="usage"><span class='va'>alta_lake_210Pb_ages</span>
 
-<span class='no'>alta_lake_14C_ages</span>
+<span class='va'>alta_lake_14C_ages</span>
 
-<span class='no'>alta_lake_bacon_ages</span>
+<span class='va'>alta_lake_bacon_ages</span>
 
-<span class='no'>alta_lake_geochem</span></pre>
+<span class='va'>alta_lake_geochem</span></pre>
 
 
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
@@ -170,30 +175,56 @@ Lead-210 and the Carbon-14 ages as modelled by rbacon-package
 
     <p>Appleby, P. G., and F. Oldfield. "The Assessment of 210Pb Data from Sites
 with Varying Sediment Accumulation Rates." Hydrobiologia 103, no. 1 (July 1,
-1983): 29–35. <a href='https://doi.org/10.1007/BF00028424'>https://doi.org/10.1007/BF00028424</a>.</p>
+1983): 29–35. doi: <a href='https://doi.org/10.1007/BF00028424'>10.1007/BF00028424</a>
+.</p>
 <p>Blaauw, Maarten, and J. Andrés Christen. "Flexible Paleoclimate Age-Depth
 Models Using an Autoregressive Gamma Process." Bayesian Analysis 6, no. 3
-(September 2011): 457–74. <a href='https://doi.org/10.1214/ba/1339616472'>https://doi.org/10.1214/ba/1339616472</a>.</p>
+(September 2011): 457–74. doi: <a href='https://doi.org/10.1214/ba/1339616472'>10.1214/ba/1339616472</a>
+.</p>
 <p>Dunnington, Dewey W., Ian S. Spooner, Chris E. White, R. Jack Cornett, Dave
 Williamson, and Mike Nelson. "A Geochemical Perspective on the Impact of
 Development at Alta Lake, British Columbia, Canada." Journal of
 Paleolimnology 56, no. 4 (November 2016): 315–330.
-<a href='https://doi.org/10.1007/s10933-016-9919-x'>https://doi.org/10.1007/s10933-016-9919-x</a>.</p>
+doi: <a href='https://doi.org/10.1007/s10933-016-9919-x'>10.1007/s10933-016-9919-x</a>
+.</p>
 <p>Dunnington, Dewey W. "A 500-Year Applied Paleolimnological Assessment of
 Environmental Change at Alta Lake, Whistler, British Columbia, Canada." M.Sc.
 Thesis, Acadia University, 2015.
 <a href='https://scholar.acadiau.ca/islandora/object/theses:411'>https://scholar.acadiau.ca/islandora/object/theses:411</a>.</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <div class='dont-index'><p>The <a href='https://rdrr.io/pkg/mudata2/man/alta_lake.html'>alta_lake</a> dataset (mudata2 package) for geochemical data.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>alta_lake_210Pb_ages</span>)
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>alta_lake_14C_ages</span>)
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>alta_lake_bacon_ages</span>)
-
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>mudata2</span>)
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>alta_lake</span>)</div></pre>
+    <pre class="examples"><div class='input'><span class='va'>alta_lake_210Pb_ages</span>
+</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 9 x 5</span><span>
+#&gt;   core                       depth_cm age_year_ad age_error_yr type             
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>                         </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>       </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>        </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>            
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> Dunnington et al. 2016 / …      0         </span><span style='text-decoration: underline;'>2</span><span>015.         0    Sediment Lead-21…
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> Dunnington et al. 2016 / …      1         </span><span style='text-decoration: underline;'>2</span><span>008          0.34 Sediment Lead-21…
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span> Dunnington et al. 2016 / …      1.5       </span><span style='text-decoration: underline;'>2</span><span>003.         0.56 Sediment Lead-21…
+#&gt; </span><span style='color: #BCBCBC;'>4</span><span> Dunnington et al. 2016 / …      2         </span><span style='text-decoration: underline;'>1</span><span>998.         0.86 Sediment Lead-21…
+#&gt; </span><span style='color: #BCBCBC;'>5</span><span> Dunnington et al. 2016 / …      3         </span><span style='text-decoration: underline;'>1</span><span>982.         2.25 Sediment Lead-21…
+#&gt; </span><span style='color: #BCBCBC;'>6</span><span> Dunnington et al. 2016 / …      4         </span><span style='text-decoration: underline;'>1</span><span>966.         4.73 Sediment Lead-21…
+#&gt; </span><span style='color: #BCBCBC;'>7</span><span> Dunnington et al. 2016 / …      5         </span><span style='text-decoration: underline;'>1</span><span>947.         8.21 Sediment Lead-21…
+#&gt; </span><span style='color: #BCBCBC;'>8</span><span> Dunnington et al. 2016 / …      6         </span><span style='text-decoration: underline;'>1</span><span>922.        27.0  Sediment Lead-21…
+#&gt; </span><span style='color: #BCBCBC;'>9</span><span> Dunnington et al. 2016 / …      7         </span><span style='text-decoration: underline;'>1</span><span>896         57.2  Sediment Lead-21…</div><div class='input'><span class='va'>alta_lake_14C_ages</span>
+</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 1 x 5</span><span>
+#&gt;   core                      depth_cm age_14C age_error_14C type                 
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>                        </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>         </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>                
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> Dunnington et al. 2015 /…     29.5     340            30 Carbon-14 age / fir …</div><div class='input'><span class='va'>alta_lake_bacon_ages</span>
+</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 58 x 5</span><span>
+#&gt;    depth_cm age_min_year_BP age_max_year_BP age_median_year_… age_weighted_mean…
+#&gt;  </span><span style='color: #BCBCBC;'>*</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>           </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>           </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>             </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>              </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'> 1</span><span>      1            -</span><span style='color: #BB0000;'>59.1</span><span>           -</span><span style='color: #BB0000;'>57.1</span><span>             -</span><span style='color: #BB0000;'>58.1</span><span>              -</span><span style='color: #BB0000;'>58.1</span><span> 
+#&gt; </span><span style='color: #BCBCBC;'> 2</span><span>      1.5          -</span><span style='color: #BB0000;'>54.3</span><span>           -</span><span style='color: #BB0000;'>52.4</span><span>             -</span><span style='color: #BB0000;'>53.3</span><span>              -</span><span style='color: #BB0000;'>53.3</span><span> 
+#&gt; </span><span style='color: #BCBCBC;'> 3</span><span>      2            -</span><span style='color: #BB0000;'>50.5</span><span>           -</span><span style='color: #BB0000;'>46.7</span><span>             -</span><span style='color: #BB0000;'>48.6</span><span>              -</span><span style='color: #BB0000;'>48.6</span><span> 
+#&gt; </span><span style='color: #BCBCBC;'> 4</span><span>      2.5          -</span><span style='color: #BB0000;'>43.9</span><span>           -</span><span style='color: #BB0000;'>37.1</span><span>             -</span><span style='color: #BB0000;'>40.5</span><span>              -</span><span style='color: #BB0000;'>40.5</span><span> 
+#&gt; </span><span style='color: #BCBCBC;'> 5</span><span>      3            -</span><span style='color: #BB0000;'>39.3</span><span>           -</span><span style='color: #BB0000;'>25.8</span><span>             -</span><span style='color: #BB0000;'>32.4</span><span>              -</span><span style='color: #BB0000;'>32.4</span><span> 
+#&gt; </span><span style='color: #BCBCBC;'> 6</span><span>      3.5          -</span><span style='color: #BB0000;'>30.9</span><span>           -</span><span style='color: #BB0000;'>17.8</span><span>             -</span><span style='color: #BB0000;'>24.5</span><span>              -</span><span style='color: #BB0000;'>24.4</span><span> 
+#&gt; </span><span style='color: #BCBCBC;'> 7</span><span>      4            -</span><span style='color: #BB0000;'>26.8</span><span>            -</span><span style='color: #BB0000;'>4.42</span><span>            -</span><span style='color: #BB0000;'>16.7</span><span>              -</span><span style='color: #BB0000;'>16.3</span><span> 
+#&gt; </span><span style='color: #BCBCBC;'> 8</span><span>      4.5          -</span><span style='color: #BB0000;'>18.0</span><span>             3.28             -</span><span style='color: #BB0000;'>7.79</span><span>              -</span><span style='color: #BB0000;'>7.61</span><span>
+#&gt; </span><span style='color: #BCBCBC;'> 9</span><span>      5            -</span><span style='color: #BB0000;'>13.6</span><span>            17.8               0.46               1.01
+#&gt; </span><span style='color: #BCBCBC;'>10</span><span>      5.5           -</span><span style='color: #BB0000;'>5.91</span><span>           29.0               9.8               10.4 
+#&gt; </span><span style='color: #949494;'># … with 48 more rows</span><span></div><div class='input'>
+</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -205,11 +236,11 @@ Thesis, Acadia University, 2015.
 
       <footer>
       <div class="copyright">
-  <p>Developed by Dewey Dunnington.</p>
+  <p><p>Developed by Dewey Dunnington.</p></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p></p>
 </div>
 
       </footer>
@@ -217,6 +248,8 @@ Thesis, Acadia University, 2015.
 
   
 
+
+  
 
   </body>
 </html>

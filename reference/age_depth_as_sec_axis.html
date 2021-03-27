@@ -45,6 +45,8 @@
 
 
 
+
+
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -56,9 +58,18 @@
 
 
 
+<!-- dependencies from examples -->
+
+
+  
+
+  
+
   </head>
 
   <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -72,19 +83,13 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">tidypaleo</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -109,7 +114,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/paleolimbot/tidypaleo/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -135,7 +140,7 @@
     <p>Use an age depth model as a second ggplot axis</p>
     </div>
 
-    <pre class="usage"><span class='fu'>age_depth_as_sec_axis</span>(<span class='no'>x</span>, <span class='kw'>primary</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"depth"</span>, <span class='st'>"age"</span>), <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>age_depth_as_sec_axis</span><span class='op'>(</span><span class='va'>x</span>, primary <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"depth"</span>, <span class='st'>"age"</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -156,21 +161,22 @@
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A ggplot2 <a href='https://ggplot2.tidyverse.org/reference/sec_axis.html'>sec_axis</a> for use in <a href='https://ggplot2.tidyverse.org/reference/scale_continuous.html'>scale_x_continuous</a>,
-<a href='https://ggplot2.tidyverse.org/reference/scale_continuous.html'>scale_y_continuous</a>, or their reverse variants.</p>
+    <p>A ggplot2 <a href='https://ggplot2.tidyverse.org/reference/sec_axis.html'>sec_axis</a> for use in scale_x_continuous,
+scale_y_continuous, or their reverse variants.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>ggplot2</span>)
-<span class='no'>alta_lake_adm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='age_depth_model.html'>age_depth_model</a></span>(
-  <span class='no'>alta_lake_210Pb_ages</span>,
-  <span class='kw'>depth</span> <span class='kw'>=</span> <span class='no'>depth_cm</span>,
-  <span class='kw'>age</span> <span class='kw'>=</span> <span class='no'>age_year_ad</span>
-)
+    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://ggplot2.tidyverse.org'>ggplot2</a></span><span class='op'>)</span>
+<span class='va'>alta_lake_adm</span> <span class='op'>&lt;-</span> <span class='fu'><a href='age_depth_model.html'>age_depth_model</a></span><span class='op'>(</span>
+  <span class='va'>alta_lake_210Pb_ages</span>,
+  depth <span class='op'>=</span> <span class='va'>depth_cm</span>,
+  age <span class='op'>=</span> <span class='va'>age_year_ad</span>
+<span class='op'>)</span>
 
-<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='no'>alta_lake_210Pb_ages</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>depth_cm</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>age_year_ad</span>)) +
-  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_path.html'>geom_path</a></span>() +
-  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span>() +
-  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/scale_continuous.html'>scale_y_reverse</a></span>(<span class='kw'>sec.axis</span> <span class='kw'>=</span> <span class='fu'>age_depth_as_sec_axis</span>(<span class='no'>alta_lake_adm</span>))</div><div class='img'><img src='age_depth_as_sec_axis-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>alta_lake_210Pb_ages</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>y <span class='op'>=</span> <span class='va'>depth_cm</span>, x <span class='op'>=</span> <span class='va'>age_year_ad</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_path.html'>geom_path</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/scale_continuous.html'>scale_y_reverse</a></span><span class='op'>(</span>sec.axis <span class='op'>=</span> <span class='fu'>age_depth_as_sec_axis</span><span class='op'>(</span><span class='va'>alta_lake_adm</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='img'><img src='age_depth_as_sec_axis-1.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -183,11 +189,11 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by Dewey Dunnington.</p>
+  <p><p>Developed by Dewey Dunnington.</p></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p></p>
 </div>
 
       </footer>
@@ -195,6 +201,8 @@
 
   
 
+
+  
 
   </body>
 </html>

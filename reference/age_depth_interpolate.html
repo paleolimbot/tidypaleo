@@ -45,6 +45,8 @@
 
 
 
+
+
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -56,9 +58,18 @@
 
 
 
+<!-- dependencies from examples -->
+
+
+  
+
+  
+
   </head>
 
   <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -72,19 +83,13 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">tidypaleo</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -109,7 +114,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/paleolimbot/tidypaleo/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -135,13 +140,13 @@
     <p>Age-depth model interpolators/extrapolators</p>
     </div>
 
-    <pre class="usage"><span class='fu'>age_depth_interpolate</span>(<span class='no'>x</span>, <span class='no'>y</span>)
+    <pre class="usage"><span class='fu'>age_depth_interpolate</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span><span class='op'>)</span>
 
-<span class='fu'>age_depth_extrapolate</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>x0</span> <span class='kw'>=</span> <span class='no'>last</span>, <span class='kw'>y0</span> <span class='kw'>=</span> <span class='no'>last</span>, <span class='kw'>slope</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+<span class='fu'>age_depth_extrapolate</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span>, x0 <span class='op'>=</span> <span class='va'>last</span>, y0 <span class='op'>=</span> <span class='va'>last</span>, slope <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
 
-<span class='fu'>age_depth_exact</span>(<span class='no'>x</span>, <span class='no'>y</span>)
+<span class='fu'>age_depth_exact</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span><span class='op'>)</span>
 
-<span class='fu'>age_depth_na</span>(<span class='no'>x</span>, <span class='no'>y</span>)</pre>
+<span class='fu'>age_depth_na</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -172,6 +177,34 @@
 
     <p>A list with component functions <code>trans</code> and <code>inverse</code></p>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'><a href='age_depth_model.html'>age_depth_model</a></span><span class='op'>(</span>
+  <span class='va'>alta_lake_210Pb_ages</span>,
+  depth <span class='op'>=</span> <span class='va'>depth_cm</span>, age <span class='op'>=</span> <span class='va'>age_year_ad</span>,
+  age_max <span class='op'>=</span> <span class='va'>age_year_ad</span> <span class='op'>+</span> <span class='va'>age_error_yr</span>,
+  age_min <span class='op'>=</span> <span class='va'>age_year_ad</span> <span class='op'>-</span> <span class='va'>age_error_yr</span>,
+  extrapolate_age_below <span class='op'>=</span> <span class='op'>~</span><span class='fu'>age_depth_extrapolate</span><span class='op'>(</span>
+    <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>tail</a></span><span class='op'>(</span><span class='va'>.x</span>, <span class='fl'>3</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>tail</a></span><span class='op'>(</span><span class='va'>.y</span>, <span class='fl'>3</span><span class='op'>)</span>, x0 <span class='op'>=</span> <span class='fu'>dplyr</span><span class='fu'>::</span><span class='va'><a href='https://dplyr.tidyverse.org/reference/nth.html'>last</a></span>, y0 <span class='op'>=</span> <span class='fu'>dplyr</span><span class='fu'>::</span><span class='va'><a href='https://dplyr.tidyverse.org/reference/nth.html'>last</a></span>
+  <span class='op'>)</span>,
+  extrapolate_age_above <span class='op'>=</span> <span class='op'>~</span><span class='fu'>age_depth_extrapolate</span><span class='op'>(</span>
+    <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>.x</span>, <span class='fl'>3</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>.y</span>, <span class='fl'>3</span><span class='op'>)</span>, x0 <span class='op'>=</span> <span class='fu'>dplyr</span><span class='fu'>::</span><span class='va'><a href='https://dplyr.tidyverse.org/reference/nth.html'>first</a></span>, y0 <span class='op'>=</span> <span class='fu'>dplyr</span><span class='fu'>::</span><span class='va'><a href='https://dplyr.tidyverse.org/reference/nth.html'>first</a></span>
+  <span class='op'>)</span>
+<span class='op'>)</span>
+</div><div class='output co'>#&gt; &lt;age_depth_model&gt;
+#&gt; Call: 
+#&gt; age_depth_model(
+#&gt;   .data = alta_lake_210Pb_ages, depth = depth_cm,
+#&gt;   age = age_year_ad, age_min = age_year_ad - age_error_yr,
+#&gt;   age_max = age_year_ad + age_error_yr, extrapolate_age_below = ~ age_depth_extrapolate(tail(
+#&gt;     .x,
+#&gt;     3
+#&gt;   ), tail(.y, 3), x0 = dplyr::last, y0 = dplyr::last),
+#&gt;   extrapolate_age_above = ~ age_depth_extrapolate(head(.x, 3),
+#&gt;     head(.y, 3),
+#&gt;     x0 = dplyr::first, y0 = dplyr::first
+#&gt;   )
+#&gt; )</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -183,11 +216,11 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by Dewey Dunnington.</p>
+  <p><p>Developed by Dewey Dunnington.</p></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p></p>
 </div>
 
       </footer>
@@ -195,6 +228,8 @@
 
   
 
+
+  
 
   </body>
 </html>

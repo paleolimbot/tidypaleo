@@ -44,7 +44,9 @@
 Lake (Nova Scotia-New Brunswick Border Region, Canada) core LL-PC2
 (Dunnington et al. 2017; White 2012). The long_lake_bacon_ages object
 contains the result of the Carbon-14 ages as
-modelled by rbacon-package (Blaauw and Christen 2011)." />
+modelled by the rbacon package (Blaauw and Christen 2011)." />
+
+
 
 
 
@@ -60,9 +62,18 @@ modelled by rbacon-package (Blaauw and Christen 2011)." />
 
 
 
+<!-- dependencies from examples -->
+
+
+  
+
+  
+
   </head>
 
   <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -76,19 +87,13 @@ modelled by rbacon-package (Blaauw and Christen 2011)." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">tidypaleo</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -113,7 +118,7 @@ modelled by rbacon-package (Blaauw and Christen 2011)." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/paleolimbot/tidypaleo/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -140,42 +145,77 @@ modelled by rbacon-package (Blaauw and Christen 2011)." />
 Lake (Nova Scotia-New Brunswick Border Region, Canada) core LL-PC2
 (Dunnington et al. 2017; White 2012). The <code>long_lake_bacon_ages</code> object
 contains the result of the Carbon-14 ages as
-modelled by rbacon-package (Blaauw and Christen 2011).</p>
+modelled by the rbacon package (Blaauw and Christen 2011).</p>
     </div>
 
-    <pre class="usage"><span class='no'>long_lake_14C_ages</span>
+    <pre class="usage"><span class='va'>long_lake_14C_ages</span>
 
-<span class='no'>long_lake_bacon_ages</span></pre>
+<span class='va'>long_lake_bacon_ages</span>
+
+<span class='va'>long_lake_plottable</span></pre>
 
 
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
     <p>An object of class <code>tbl_df</code> (inherits from <code>tbl</code>, <code>data.frame</code>) with 5 rows and 5 columns.</p>
 <p>An object of class <code>tbl_df</code> (inherits from <code>tbl</code>, <code>data.frame</code>) with 86 rows and 5 columns.</p>
+<p>An object of class <code>tbl_df</code> (inherits from <code>tbl</code>, <code>data.frame</code>) with 51 rows and 10 columns.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Blaauw, Maarten, and J. Andrés Christen. "Flexible Paleoclimate Age-Depth
 Models Using an Autoregressive Gamma Process." Bayesian Analysis 6, no. 3
-(September 2011): 457–74. <a href='https://doi.org/10.1214/ba/1339616472'>https://doi.org/10.1214/ba/1339616472</a>.</p>
+(September 2011): 457–74. doi: <a href='https://doi.org/10.1214/ba/1339616472'>10.1214/ba/1339616472</a>
+.</p>
 <p>Dunnington, Dewey W., Hilary White, Ian S. Spooner, Mark L. Mallory, Chris
 White, Nelson J. O’Driscoll, and Nic R. McLellan. "A Paleolimnological
 Archive of Metal Sequestration and Release in the Cumberland Basin Marshes,
 Atlantic Canada." FACETS 2, no. 1 (May 23, 2017): 440–60.
-<a href='https://doi.org/10.1139/facets-2017-0004'>https://doi.org/10.1139/facets-2017-0004</a>.</p>
+doi: <a href='https://doi.org/10.1139/facets-2017-0004'>10.1139/facets-2017-0004</a>
+.</p>
 <p>White, Hilary E. "Paleolimnological Records of Post-Glacial Lake
 and Wetland Evolution from the Isthmus of Chignecto Region, Eastern Canada."
 M.Sc. Thesis, Acadia University, 2012.
 <a href='https://scholar.acadiau.ca/islandora/object/theses:247'>https://scholar.acadiau.ca/islandora/object/theses:247</a>.</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <div class='dont-index'><p>The <a href='https://rdrr.io/pkg/mudata2/man/long_lake.html'>long_lake</a> dataset (mudata2 package) for geochemical data.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>long_lake_14C_ages</span>)
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>long_lake_bacon_ages</span>)
-
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>mudata2</span>)
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>long_lake</span>)</div></pre>
+    <pre class="examples"><div class='input'><span class='va'>long_lake_14C_ages</span>
+</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 5 x 5</span><span>
+#&gt;   core                     depth_cm age_14C age_error_14C type                  
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>                       </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>         </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>                 
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> Dunnington et al. 2017 …      9       623            34 Carbon-14 age / twig …
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> Dunnington et al. 2017 …     37.3     575            18 Carbon-14 age / plant 
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span> Dunnington et al. 2017 …     46      </span><span style='text-decoration: underline;'>4</span><span>396            55 Carbon-14 age / wood …
+#&gt; </span><span style='color: #BCBCBC;'>4</span><span> Dunnington et al. 2017 …     70.5    </span><span style='text-decoration: underline;'>8</span><span>482            28 Carbon-14 age / wood  
+#&gt; </span><span style='color: #BCBCBC;'>5</span><span> Dunnington et al. 2017 …     94      </span><span style='text-decoration: underline;'>9</span><span>148            49 Carbon-14 age / wood …</div><div class='input'><span class='va'>long_lake_bacon_ages</span>
+</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 86 x 5</span><span>
+#&gt;    depth   min   max median wmean
+#&gt;    </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'> 1</span><span>     9  536.  667    598.  603.
+#&gt; </span><span style='color: #BCBCBC;'> 2</span><span>    10  572.  942.   695.  714.
+#&gt; </span><span style='color: #BCBCBC;'> 3</span><span>    11  583. </span><span style='text-decoration: underline;'>1</span><span>263.   775.  822.
+#&gt; </span><span style='color: #BCBCBC;'> 4</span><span>    12  637. </span><span style='text-decoration: underline;'>1</span><span>378.   893.  928.
+#&gt; </span><span style='color: #BCBCBC;'> 5</span><span>    13  669. </span><span style='text-decoration: underline;'>1</span><span>580.   996. </span><span style='text-decoration: underline;'>1</span><span>034.
+#&gt; </span><span style='color: #BCBCBC;'> 6</span><span>    14  738. </span><span style='text-decoration: underline;'>1</span><span>703.  </span><span style='text-decoration: underline;'>1</span><span>112. </span><span style='text-decoration: underline;'>1</span><span>144.
+#&gt; </span><span style='color: #BCBCBC;'> 7</span><span>    15  787. </span><span style='text-decoration: underline;'>1</span><span>922   </span><span style='text-decoration: underline;'>1</span><span>218. </span><span style='text-decoration: underline;'>1</span><span>254.
+#&gt; </span><span style='color: #BCBCBC;'> 8</span><span>    16  870. </span><span style='text-decoration: underline;'>2</span><span>031.  </span><span style='text-decoration: underline;'>1</span><span>331. </span><span style='text-decoration: underline;'>1</span><span>365.
+#&gt; </span><span style='color: #BCBCBC;'> 9</span><span>    17  925. </span><span style='text-decoration: underline;'>2</span><span>218.  </span><span style='text-decoration: underline;'>1</span><span>443. </span><span style='text-decoration: underline;'>1</span><span>478.
+#&gt; </span><span style='color: #BCBCBC;'>10</span><span>    18 </span><span style='text-decoration: underline;'>1</span><span>014. </span><span style='text-decoration: underline;'>2</span><span>329.  </span><span style='text-decoration: underline;'>1</span><span>556. </span><span style='text-decoration: underline;'>1</span><span>589.
+#&gt; </span><span style='color: #949494;'># … with 76 more rows</span><span></div><div class='input'><span class='va'>long_lake_plottable</span>
+</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 51 x 10</span><span>
+#&gt;    dataset     location param depth value     sd units zone       n n_detect
+#&gt;    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>       </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'> 1</span><span> long_lake17 LL PC2   C/N       1  15.4 </span><span style='color: #BB0000;'>NA</span><span>     </span><span style='color: #BB0000;'>NA</span><span>    Unit 3     1        1
+#&gt; </span><span style='color: #BCBCBC;'> 2</span><span> long_lake17 LL PC2   C/N       6  15.8  0.290 </span><span style='color: #BB0000;'>NA</span><span>    Unit 3     2        2
+#&gt; </span><span style='color: #BCBCBC;'> 3</span><span> long_lake17 LL PC2   C/N      11  24.0 </span><span style='color: #BB0000;'>NA</span><span>     </span><span style='color: #BB0000;'>NA</span><span>    Unit 2     1        1
+#&gt; </span><span style='color: #BCBCBC;'> 4</span><span> long_lake17 LL PC2   C/N      16  21.4 </span><span style='color: #BB0000;'>NA</span><span>     </span><span style='color: #BB0000;'>NA</span><span>    Unit 2     1        1
+#&gt; </span><span style='color: #BCBCBC;'> 5</span><span> long_lake17 LL PC2   C/N      21  23.2 </span><span style='color: #BB0000;'>NA</span><span>     </span><span style='color: #BB0000;'>NA</span><span>    Unit 2     1        1
+#&gt; </span><span style='color: #BCBCBC;'> 6</span><span> long_lake17 LL PC2   C/N      26  25.4 </span><span style='color: #BB0000;'>NA</span><span>     </span><span style='color: #BB0000;'>NA</span><span>    Unit 2     1        1
+#&gt; </span><span style='color: #BCBCBC;'> 7</span><span> long_lake17 LL PC2   C/N      43  27.2 </span><span style='color: #BB0000;'>NA</span><span>     </span><span style='color: #BB0000;'>NA</span><span>    Unit 2     1        1
+#&gt; </span><span style='color: #BCBCBC;'> 8</span><span> long_lake17 LL PC2   C/N      48  24.3 </span><span style='color: #BB0000;'>NA</span><span>     </span><span style='color: #BB0000;'>NA</span><span>    Unit 2     1        1
+#&gt; </span><span style='color: #BCBCBC;'> 9</span><span> long_lake17 LL PC2   C/N      53  30.2 </span><span style='color: #BB0000;'>NA</span><span>     </span><span style='color: #BB0000;'>NA</span><span>    Unit 2     1        1
+#&gt; </span><span style='color: #BCBCBC;'>10</span><span> long_lake17 LL PC2   C/N      63  24.4 </span><span style='color: #BB0000;'>NA</span><span>     </span><span style='color: #BB0000;'>NA</span><span>    Unit 2     1        1
+#&gt; </span><span style='color: #949494;'># … with 41 more rows</span><span></div><div class='input'>
+</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -187,11 +227,11 @@ M.Sc. Thesis, Acadia University, 2012.
 
       <footer>
       <div class="copyright">
-  <p>Developed by Dewey Dunnington.</p>
+  <p><p>Developed by Dewey Dunnington.</p></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p></p>
 </div>
 
       </footer>
@@ -199,6 +239,8 @@ M.Sc. Thesis, Acadia University, 2012.
 
   
 
+
+  
 
   </body>
 </html>

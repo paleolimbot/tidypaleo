@@ -44,6 +44,8 @@
 
 
 
+
+
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -55,9 +57,16 @@
 
 
 
+
+  
+
+  
+
   </head>
 
   <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-index">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -71,19 +80,13 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">tidypaleo</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -108,7 +111,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/paleolimbot/tidypaleo/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -137,79 +140,6 @@
     </colgroup>
 
     <tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-age-depth-models" class="hasAnchor"><a href="#section-age-depth-models" class="anchor"></a>Age-depth models</h2>
-          <p class="section-desc"><p>Functions to interpolate/extrapolate ages and depths given a set of paired age/depth values.</p></p>
-        </th>
-      </tr>
-      
-      
-    </tbody><tbody>
-      
-      
-      <tr>
-        
-        <td>
-          <p><code><a href="age_depth_model.html">age_depth_model()</a></code> </p>
-        </td>
-        <td><p>Create age depth models</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="predict.age_depth_model.html">predict(<i>&lt;age_depth_model&gt;</i>)</a></code> <code><a href="predict.age_depth_model.html">predict_depth()</a></code> <code><a href="predict.age_depth_model.html">predict_age()</a></code> </p>
-        </td>
-        <td><p>Predict age and depth values</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="age_depth_as_sec_axis.html">age_depth_as_sec_axis()</a></code> </p>
-        </td>
-        <td><p>Use an age depth model as a second ggplot axis</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="age_depth_interpolate.html">age_depth_interpolate()</a></code> <code><a href="age_depth_interpolate.html">age_depth_extrapolate()</a></code> <code><a href="age_depth_interpolate.html">age_depth_exact()</a></code> <code><a href="age_depth_interpolate.html">age_depth_na()</a></code> </p>
-        </td>
-        <td><p>Age-depth model interpolators/extrapolators</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="is_age_depth_model.html">is_age_depth_model()</a></code> </p>
-        </td>
-        <td><p>Test for age depth models</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="new_age_depth_model.html">new_age_depth_model()</a></code> </p>
-        </td>
-        <td><p>Create age depth model objects</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="plot.age_depth_model.html">plot(<i>&lt;age_depth_model&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Plot an age depth model using base graphics</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="print.age_depth_model.html">print(<i>&lt;age_depth_model&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Print summary of age-depth model objects</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="validate_age_depth_model.html">validate_age_depth_model()</a></code> </p>
-        </td>
-        <td><p>Validate age depth model objects</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="as_trans_factory.html">as_trans_factory()</a></code> <code><a href="as_trans_factory.html">validate_trans_factory()</a></code> <code><a href="as_trans_factory.html">validate_trans()</a></code> </p>
-        </td>
-        <td><p>Coerce and validate transforms and functions that produce them</p></td>
-      </tr>
-    </tbody><tbody>
       <tr>
         <th colspan="2">
           <h2 id="section-stratigraphic-diagrams" class="hasAnchor"><a href="#section-stratigraphic-diagrams" class="anchor"></a>Stratigraphic diagrams</h2>
@@ -315,8 +245,57 @@
     </tbody><tbody>
       <tr>
         <th colspan="2">
+          <h2 id="section-age-depth-models" class="hasAnchor"><a href="#section-age-depth-models" class="anchor"></a>Age-depth models</h2>
+          <p class="section-desc"><p>Functions to interpolate/extrapolate ages and depths given a set of paired age/depth values.</p></p>
+        </th>
+      </tr>
+      
+      
+    </tbody><tbody>
+      
+      
+      <tr>
+        
+        <td>
+          <p><code><a href="age_depth_model.html">age_depth_model()</a></code> </p>
+        </td>
+        <td><p>Create age depth models</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="predict.age_depth_model.html">predict(<i>&lt;age_depth_model&gt;</i>)</a></code> <code><a href="predict.age_depth_model.html">predict_depth()</a></code> <code><a href="predict.age_depth_model.html">predict_age()</a></code> </p>
+        </td>
+        <td><p>Predict age and depth values</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="age_depth_as_sec_axis.html">age_depth_as_sec_axis()</a></code> </p>
+        </td>
+        <td><p>Use an age depth model as a second ggplot axis</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="age_depth_interpolate.html">age_depth_interpolate()</a></code> <code><a href="age_depth_interpolate.html">age_depth_extrapolate()</a></code> <code><a href="age_depth_interpolate.html">age_depth_exact()</a></code> <code><a href="age_depth_interpolate.html">age_depth_na()</a></code> </p>
+        </td>
+        <td><p>Age-depth model interpolators/extrapolators</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="plot.age_depth_model.html">plot(<i>&lt;age_depth_model&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Plot an age depth model using base graphics</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="as_trans_factory.html">as_trans_factory()</a></code> <code><a href="as_trans_factory.html">validate_trans_factory()</a></code> <code><a href="as_trans_factory.html">validate_trans()</a></code> </p>
+        </td>
+        <td><p>Coerce and validate transforms and functions that produce them</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
           <h2 id="section-nested-analyses" class="hasAnchor"><a href="#section-nested-analyses" class="anchor"></a>Nested analyses</h2>
-          <p class="section-desc"><p>Helpers for clustering and ordination of stratigraphic data. These functions are experimental and may be removed in future a version.</p></p>
+          <p class="section-desc"><p>Helpers for clustering and ordination of stratigraphic data.</p></p>
         </th>
       </tr>
       
@@ -376,25 +355,25 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="halifax_lakes.html">halifax_lakes</a></code> <code><a href="halifax_lakes.html">halifax_lakes_plottable</a></code> </p>
+          <p><code><a href="halifax_lakes_plottable.html">halifax_lakes_plottable</a></code> </p>
         </td>
         <td><p>Halifax lakes water chemistry and top/bottom diatom counts</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="keji_lakes.html">keji_lakes</a></code> <code><a href="keji_lakes.html">keji_lakes_plottable</a></code> </p>
+          <p><code><a href="keji_lakes_plottable.html">keji_lakes_plottable</a></code> </p>
         </td>
         <td><p>Keji lakes core diatom counts</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="long_lake_14C_ages.html">long_lake_14C_ages</a></code> <code><a href="long_lake_14C_ages.html">long_lake_bacon_ages</a></code> </p>
+          <p><code><a href="long_lake_14C_ages.html">long_lake_14C_ages</a></code> <code><a href="long_lake_14C_ages.html">long_lake_bacon_ages</a></code> <code><a href="long_lake_14C_ages.html">long_lake_plottable</a></code> </p>
         </td>
         <td><p>Long Lake Carbon-14 Ages</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="kellys_lake.html">kellys_lake</a></code> <code><a href="kellys_lake.html">kellys_lake_cladocera</a></code> <code><a href="kellys_lake.html">kellys_lake_geochem</a></code> <code><a href="kellys_lake.html">kellys_lake_ages</a></code> </p>
+          <p><code><a href="kellys_lake.html">kellys_lake_cladocera</a></code> <code><a href="kellys_lake.html">kellys_lake_geochem</a></code> <code><a href="kellys_lake.html">kellys_lake_ages</a></code> </p>
         </td>
         <td><p>Kellys Lake Data</p></td>
       </tr>
@@ -412,11 +391,11 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by Dewey Dunnington.</p>
+  <p><p>Developed by Dewey Dunnington.</p></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p></p>
 </div>
 
       </footer>
@@ -424,6 +403,8 @@
 
   
 
+
+  
 
   </body>
 </html>

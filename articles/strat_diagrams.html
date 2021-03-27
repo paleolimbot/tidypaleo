@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,18 +33,12 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">tidypaleo</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
@@ -67,8 +63,8 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/paleolimbot/tidypaleo/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+  <a href="https://github.com/paleolimbot/tidypaleo/" class="external-link">
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -82,35 +78,39 @@
 
       
 
-      </header><div class="row">
+      </header><script src="strat_diagrams_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Stratigraphic diagrams</h1>
-                        <h4 class="author">Dewey Dunnington</h4>
+                        <h4 data-toc-skip class="author">Dewey Dunnington</h4>
             
-            <h4 class="date">2020-06-04</h4>
+            <h4 data-toc-skip class="date">2021-03-27</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/paleolimbot/tidypaleo/blob/master/vignettes/strat_diagrams.Rmd"><code>vignettes/strat_diagrams.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/paleolimbot/tidypaleo/blob/master/vignettes/strat_diagrams.Rmd" class="external-link"><code>vignettes/strat_diagrams.Rmd</code></a></small>
       <div class="hidden name"><code>strat_diagrams.Rmd</code></div>
 
     </div>
 
     
     
-<p>This vignette covers creating stratigraphic diagrams using <strong>ggplot2</strong>, highlighting the helpers contained within <strong>tidypaleo</strong>. The <strong>ggplot2</strong> framework was chosen because it is quite flexible and can be used to create almost any time-stratigraphic diagram except ones that involve multiple axes (we can have a fight about whether or not those are appropriate anyway, but if you absolutely need to create them I suggest you look elsewhere). It will help considerably if you are already familiar with <strong>ggplot2</strong> (<a href="http://r4ds.had.co.nz/data-visualisation.html">a great tutorial can be found here</a>).</p>
-<p>First, you will need to load the packages. For this tutorial, I will use <strong>tidypaleo</strong>, and the <strong>tidyverse</strong> (this includes <strong>ggplot2</strong>). Later, I will use <strong>patchwork</strong> to create more complex plots (you can install this from GitHub using <code>devtools::install_packages("thomasp85/patchwork")</code>, and <strong>mudata2</strong> because it contains more example data that is useful for illustrating plot data from multiple cores. I prefer the <code>theme_bw()</code> theme for <strong>ggplot2</strong> plots, so I will set this here as well. Setting the base font size to a small value (8 pt in this case) helps with strat diagrams.</p>
-<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">tidyverse</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">tidypaleo</span>)
-<span class="fu">theme_set</span>(<span class="fu"><a href="../reference/theme_paleo.html">theme_paleo</a></span>(<span class="fl">8</span>))</pre></body></html></div>
-<p>Next, you will need to load the example data. This vignette uses 3 datasets that are already in the correct format for plotting. These are datasets in the <strong>tidypaleo</strong> package: <code>alta_lake_geochem</code>, <code>keji_lakes_plottable</code>, and <code>halifax_lakes_plottable</code>. These represent three common dataset types for which stratigraphic plots are created.</p>
-<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"alta_lake_geochem"</span>)
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"keji_lakes_plottable"</span>)
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"halifax_lakes_plottable"</span>)</pre></body></html></div>
+<p>This vignette covers creating stratigraphic diagrams using <strong>ggplot2</strong>, highlighting the helpers contained within <strong>tidypaleo</strong>. The <strong>ggplot2</strong> framework was chosen because it is quite flexible and can be used to create almost any time-stratigraphic diagram except ones that involve multiple axes (we can have a fight about whether or not those are appropriate anyway, but if you absolutely need to create them I suggest you look elsewhere). It will help considerably if you are already familiar with <strong>ggplot2</strong> (<a href="https://r4ds.had.co.nz/data-visualisation.html" class="external-link">a great tutorial can be found here</a>).</p>
+<p>First, you will need to load the packages. For this tutorial, I will use <strong>tidypaleo</strong>, and the <strong>tidyverse</strong> (this includes <strong>ggplot2</strong>). Later, I will use <strong>patchwork</strong> to create more complex plots. I prefer the <code><a href="../reference/theme_paleo.html">theme_paleo()</a></code> theme for stratigraphic diagrams using <strong>ggplot2</strong>, so I will set this here as well. Setting the base font size to a small value (8 pt in this case) is useful for our purposes.</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">tidyverse</span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://paleolimbot.github.io/tidypaleo/" class="external-link">tidypaleo</a></span><span class="op">)</span>
+<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme_get.html" class="external-link">theme_set</a></span><span class="op">(</span><span class="fu"><a href="../reference/theme_paleo.html">theme_paleo</a></span><span class="op">(</span><span class="fl">8</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<p>Next, you will need to load the example data. This vignette uses 4 datasets that are already in the correct format for plotting. These are datasets in the <strong>tidypaleo</strong> package: <code>long_lake_plottable</code>, <code>alta_lake_geochem</code>, <code>keji_lakes_plottable</code>, and <code>halifax_lakes_plottable</code>. These represent four common dataset types for which stratigraphic plots are created.</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"long_lake_plottable"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"alta_lake_geochem"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"keji_lakes_plottable"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"halifax_lakes_plottable"</span><span class="op">)</span></code></pre></div>
 <div id="geochemical-stratigraphic-plots" class="section level2">
 <h2 class="hasAnchor">
 <a href="#geochemical-stratigraphic-plots" class="anchor"></a>Geochemical stratigraphic plots</h2>
-<p>Geochemical stratigraphic plots include any kind of plot where each panel of the plot should be scaled to the minimum and maximum of the data. This includes (most) non-species abundance data. The example data, <code>alta_lake_geochem</code>, is a data frame in parameter-long (one row per measurement) form (you may need to use <code>gather()</code> to get your data into this form, which you can learn about in <a href="http://r4ds.had.co.nz/tidy-data.html">this tutorial</a>). These measurements are from Alta Lake, British Columbia (Canada), and you can read more about them in the <a href="https://doi.org/10.1007/s10933-016-9919-x">journal article</a>.</p>
-<div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="no">alta_lake_geochem</span>
+<p>Geochemical stratigraphic plots include any kind of plot where each panel of the plot should be scaled to the minimum and maximum of the data. This includes (most) non-species abundance data. The example data, <code>alta_lake_geochem</code>, is a data frame in parameter-long (one row per measurement) form (you may need to use <code><a href="https://tidyr.tidyverse.org/reference/gather.html" class="external-link">gather()</a></code> to get your data into this form, which you can learn about in <a href="https://r4ds.had.co.nz/tidy-data.html" class="external-link">this tutorial</a>). These measurements are from Alta Lake, British Columbia (Canada), and you can read more about them in the <a href="https://doi.org/10.1007/s10933-016-9919-x" class="external-link">journal article</a>.</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">alta_lake_geochem</span>
 <span class="co">#&gt; # A tibble: 192 x 9</span>
 <span class="co">#&gt;    location param depth   age value stdev units     n zone  </span>
 <span class="co">#&gt;    &lt;chr&gt;    &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;int&gt; &lt;chr&gt; </span>
@@ -124,211 +124,221 @@
 <span class="co">#&gt;  8 ALGC2    Cu     5.5  1947.  65   NA    ppm       1 Zone 2</span>
 <span class="co">#&gt;  9 ALGC2    Cu     6.5  1922.  62.3  9.53 ppm       3 Zone 2</span>
 <span class="co">#&gt; 10 ALGC2    Cu     7.5  1896.  48   NA    ppm       1 Zone 2</span>
-<span class="co">#&gt; # … with 182 more rows</span></pre></body></html></div>
-<p>Plotting a single core with <code>ggplot()</code> involves several steps:</p>
+<span class="co">#&gt; # … with 182 more rows</span></code></pre></div>
+<p>Plotting a single core with <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot()</a></code> involves several steps:</p>
 <ul>
-<li>The initial <code>ggplot()</code> call, where we set which columns will get mapped to the <code>x</code> and <code>y</code> values for each layer.</li>
-<li>Two layers: <code><a href="../reference/geom_lineh.html">geom_lineh()</a></code> and <code>geom_point()</code>. We use <code><a href="../reference/geom_lineh.html">geom_lineh()</a></code> because our plots will be oriented vertically (<code>geom_line()</code> is designed for horizontal plots).</li>
+<li>The initial <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot()</a></code> call, where we set which columns will get mapped to the <code>x</code> and <code>y</code> values for each layer.</li>
+<li>Two layers: <code><a href="../reference/geom_lineh.html">geom_lineh()</a></code> and <code><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point()</a></code>. We use <code><a href="../reference/geom_lineh.html">geom_lineh()</a></code> because our plots will be oriented vertically (<code><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line()</a></code> is designed for horizontal plots).</li>
 <li>Specify how data are divided between facets using <code><a href="../reference/facet_abundanceh.html">facet_geochem_gridh()</a></code> (we use <code>_gridh()</code> to orient the panels horizontally rather than vertically).</li>
 <li>Reverse the Y-axis, so that a depth of 0 is at the top.</li>
 <li>Remove the X label, and set the Y label to “Depth (cm)”.</li>
 </ul>
-<div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="no">alta_plot</span> <span class="kw">&lt;-</span> <span class="fu">ggplot</span>(<span class="no">alta_lake_geochem</span>, <span class="fu">aes</span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">value</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="no">depth</span>)) +
-  <span class="fu"><a href="../reference/geom_lineh.html">geom_lineh</a></span>() +
-  <span class="fu">geom_point</span>() +
-  <span class="fu">scale_y_reverse</span>() +
-  <span class="fu"><a href="../reference/facet_abundanceh.html">facet_geochem_gridh</a></span>(<span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(<span class="no">param</span>)) +
-  <span class="fu">labs</span>(<span class="kw">x</span> <span class="kw">=</span> <span class="kw">NULL</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="st">"Depth (cm)"</span>)
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">alta_plot</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">alta_lake_geochem</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">value</span>, y <span class="op">=</span> <span class="va">depth</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="../reference/geom_lineh.html">geom_lineh</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_y_reverse</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="../reference/facet_abundanceh.html">facet_geochem_gridh</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">param</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="cn">NULL</span>, y <span class="op">=</span> <span class="st">"Depth (cm)"</span><span class="op">)</span>
 
-<span class="no">alta_plot</span></pre></body></html></div>
+<span class="va">alta_plot</span></code></pre></div>
 <p><img src="strat_diagrams_files/figure-html/unnamed-chunk-4-1.png" width="576"></p>
 <p>That’s it! Of course, there are many modifications that can be made, which are covered in the next few sections.</p>
 <div id="adding-annotations" class="section level3">
 <h3 class="hasAnchor">
 <a href="#adding-annotations" class="anchor"></a>Adding annotations</h3>
 <p>It is common to highlight certain depths or ages on strat diagrams, or to add things to various places on a plot. This is accomplished by adding additional layers to the plot. For example, highlighting the depth at which the zones change (according to the paper, this is at 4 cm and 16 cm).</p>
-<div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="no">alta_plot</span> +
-  <span class="fu">geom_hline</span>(<span class="kw">yintercept</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">4</span>, <span class="fl">16</span>), <span class="kw">col</span> <span class="kw">=</span> <span class="st">"red"</span>, <span class="kw">lty</span> <span class="kw">=</span> <span class="fl">2</span>, <span class="kw">alpha</span> <span class="kw">=</span> <span class="fl">0.7</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">alta_plot</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html" class="external-link">geom_hline</a></span><span class="op">(</span>yintercept <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fl">16</span><span class="op">)</span>, col <span class="op">=</span> <span class="st">"red"</span>, lty <span class="op">=</span> <span class="fl">2</span>, alpha <span class="op">=</span> <span class="fl">0.7</span><span class="op">)</span></code></pre></div>
 <p><img src="strat_diagrams_files/figure-html/unnamed-chunk-5-1.png" width="576"></p>
-<p>The <code>geom_hline()</code> function creates its own data using the <code>yintercept</code> argument, but other geometries require us to create our own data. For example, highlighting the middle zone using <code>geom_rect()</code> would look like this:</p>
-<div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="no">zone_data</span> <span class="kw">&lt;-</span> <span class="fu">tibble</span>(<span class="kw">ymin</span> <span class="kw">=</span> <span class="fl">4</span>, <span class="kw">ymax</span> <span class="kw">=</span> <span class="fl">16</span>, <span class="kw">xmin</span> <span class="kw">=</span> -<span class="fl">Inf</span>, <span class="kw">xmax</span> <span class="kw">=</span> <span class="fl">Inf</span>)
-<span class="no">alta_plot</span> +
-  <span class="fu">geom_rect</span>(
-    <span class="kw">mapping</span> <span class="kw">=</span> <span class="fu">aes</span>(<span class="kw">ymin</span> <span class="kw">=</span> <span class="no">ymin</span>, <span class="kw">ymax</span> <span class="kw">=</span> <span class="no">ymax</span>, <span class="kw">xmin</span> <span class="kw">=</span> <span class="no">xmin</span>, <span class="kw">xmax</span> <span class="kw">=</span> <span class="no">xmax</span>),
-    <span class="kw">data</span> <span class="kw">=</span> <span class="no">zone_data</span>,
-    <span class="kw">alpha</span> <span class="kw">=</span> <span class="fl">0.2</span>,
-    <span class="kw">fill</span> <span class="kw">=</span> <span class="st">"blue"</span>,
-    <span class="kw">inherit.aes</span> <span class="kw">=</span> <span class="fl">FALSE</span>
-  )</pre></body></html></div>
+<p>The <code><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html" class="external-link">geom_hline()</a></code> function creates its own data using the <code>yintercept</code> argument, but other geometries require us to create our own data. For example, highlighting the middle zone using <code><a href="https://ggplot2.tidyverse.org/reference/geom_tile.html" class="external-link">geom_rect()</a></code> would look like this:</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">zone_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span>ymin <span class="op">=</span> <span class="fl">4</span>, ymax <span class="op">=</span> <span class="fl">16</span>, xmin <span class="op">=</span> <span class="op">-</span><span class="cn">Inf</span>, xmax <span class="op">=</span> <span class="cn">Inf</span><span class="op">)</span>
+<span class="va">alta_plot</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_tile.html" class="external-link">geom_rect</a></span><span class="op">(</span>
+    mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>ymin <span class="op">=</span> <span class="va">ymin</span>, ymax <span class="op">=</span> <span class="va">ymax</span>, xmin <span class="op">=</span> <span class="va">xmin</span>, xmax <span class="op">=</span> <span class="va">xmax</span><span class="op">)</span>, 
+    data <span class="op">=</span> <span class="va">zone_data</span>, 
+    alpha <span class="op">=</span> <span class="fl">0.2</span>,
+    fill <span class="op">=</span> <span class="st">"blue"</span>,
+    inherit.aes <span class="op">=</span> <span class="cn">FALSE</span>
+  <span class="op">)</span></code></pre></div>
 <p><img src="strat_diagrams_files/figure-html/unnamed-chunk-6-1.png" width="576"></p>
 <p>So far, each new layer we have added has been propogated to all facets. To restrict annotations to a specific facet, we need to include the facetting column (in this case, <code>param</code>) in the layer data. The element copper (Cu) has standards set by the Canadian government (ISQG of 35.7 ppm), and highlighting values that are outside that range can be done in a similar way to highlighting the middle zone.</p>
-<div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="no">cu_standard_data</span> <span class="kw">&lt;-</span> <span class="fu">tibble</span>(<span class="kw">param</span> <span class="kw">=</span> <span class="st">"Cu"</span>, <span class="kw">xmin</span> <span class="kw">=</span> <span class="fl">35.7</span>, <span class="kw">xmax</span> <span class="kw">=</span> <span class="fl">Inf</span>, <span class="kw">ymin</span> <span class="kw">=</span> -<span class="fl">Inf</span>, <span class="kw">ymax</span> <span class="kw">=</span> <span class="fl">Inf</span>)
-<span class="no">alta_plot</span> +
-  <span class="fu">geom_rect</span>(
-    <span class="kw">mapping</span> <span class="kw">=</span> <span class="fu">aes</span>(<span class="kw">ymin</span> <span class="kw">=</span> <span class="no">ymin</span>, <span class="kw">ymax</span> <span class="kw">=</span> <span class="no">ymax</span>, <span class="kw">xmin</span> <span class="kw">=</span> <span class="no">xmin</span>, <span class="kw">xmax</span> <span class="kw">=</span> <span class="no">xmax</span>),
-    <span class="kw">data</span> <span class="kw">=</span> <span class="no">cu_standard_data</span>,
-    <span class="kw">alpha</span> <span class="kw">=</span> <span class="fl">0.2</span>,
-    <span class="kw">fill</span> <span class="kw">=</span> <span class="st">"red"</span>,
-    <span class="kw">inherit.aes</span> <span class="kw">=</span> <span class="fl">FALSE</span>
-  )</pre></body></html></div>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">cu_standard_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span>param <span class="op">=</span> <span class="st">"Cu"</span>, xmin <span class="op">=</span> <span class="fl">35.7</span>, xmax <span class="op">=</span> <span class="cn">Inf</span>, ymin <span class="op">=</span> <span class="op">-</span><span class="cn">Inf</span>, ymax <span class="op">=</span> <span class="cn">Inf</span><span class="op">)</span>
+<span class="va">alta_plot</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_tile.html" class="external-link">geom_rect</a></span><span class="op">(</span>
+    mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>ymin <span class="op">=</span> <span class="va">ymin</span>, ymax <span class="op">=</span> <span class="va">ymax</span>, xmin <span class="op">=</span> <span class="va">xmin</span>, xmax <span class="op">=</span> <span class="va">xmax</span><span class="op">)</span>, 
+    data <span class="op">=</span> <span class="va">cu_standard_data</span>, 
+    alpha <span class="op">=</span> <span class="fl">0.2</span>,
+    fill <span class="op">=</span> <span class="st">"red"</span>,
+    inherit.aes <span class="op">=</span> <span class="cn">FALSE</span>
+  <span class="op">)</span></code></pre></div>
 <p><img src="strat_diagrams_files/figure-html/unnamed-chunk-7-1.png" width="576"></p>
-<p>To highlight the syntax that changed from the original plot, I’ve been using <code>alta_plot + ...</code>, however with layers such as these, it may be desirable to have the annotation appear under the original data. To do this, you would have to add your annotation layer (<code>geom_rect()</code>) before your data layer (<code><a href="../reference/geom_lineh.html">geom_lineh()</a></code> and <code>geom_point()</code>).</p>
+<p>To highlight the syntax that changed from the original plot, I’ve been using <code>alta_plot + ...</code>, however with layers such as these, it may be desirable to have the annotation appear under the original data. To do this, you would have to add your annotation layer (<code><a href="https://ggplot2.tidyverse.org/reference/geom_tile.html" class="external-link">geom_rect()</a></code>) before your data layer (<code><a href="../reference/geom_lineh.html">geom_lineh()</a></code> and <code><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point()</a></code>).</p>
 </div>
 <div id="error-bars" class="section level3">
 <h3 class="hasAnchor">
 <a href="#error-bars" class="anchor"></a>Error bars</h3>
-<p>In the <code>alta_lake_geochem</code> data frame, there is a column for standard deviation (<code>stdev</code>). You can plot these values as error bars using <code>geom_errorbarh()</code>.</p>
-<div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="no">alta_plot</span> +
-  <span class="fu">geom_errorbarh</span>(<span class="fu">aes</span>(<span class="kw">xmin</span> <span class="kw">=</span> <span class="no">value</span> - <span class="no">stdev</span>, <span class="kw">xmax</span> <span class="kw">=</span> <span class="no">value</span> + <span class="no">stdev</span>), <span class="kw">height</span> <span class="kw">=</span> <span class="fl">0.5</span>)</pre></body></html></div>
+<p>In the <code>alta_lake_geochem</code> data frame, there is a column for standard deviation (<code>stdev</code>). You can plot these values as error bars using <code><a href="https://ggplot2.tidyverse.org/reference/geom_errorbarh.html" class="external-link">geom_errorbarh()</a></code>.</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">alta_plot</span> <span class="op">+</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_errorbarh.html" class="external-link">geom_errorbarh</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>xmin <span class="op">=</span> <span class="va">value</span> <span class="op">-</span> <span class="va">stdev</span>, xmax <span class="op">=</span> <span class="va">value</span> <span class="op">+</span> <span class="va">stdev</span><span class="op">)</span>, height <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></code></pre></div>
 <p><img src="strat_diagrams_files/figure-html/unnamed-chunk-8-1.png" width="576"></p>
 </div>
 <div id="reordering-facets" class="section level3">
 <h3 class="hasAnchor">
 <a href="#reordering-facets" class="anchor"></a>Reordering facets</h3>
-<p>To control the order of the facets, the column on which they are facetted (<code>param</code>) must be a <code><a href="https://rdrr.io/r/base/factor.html">factor()</a></code>, where the <code>levels</code> indicate the order. I suggest using <code>fct_relevel()</code> to do this, so that you only need to specify which items should go first. Usually I do this using a pipe (<code><a href="https://rdrr.io/pkg/mudata2/man/reexports.html">%&gt;%</a></code>) and <code>mutate()</code> to avoid assigning any intermediate variables.</p>
-<div class="sourceCode" id="cb9"><html><body><pre class="r"><span class="no">alta_lake_geochem</span> <span class="kw">%&gt;%</span>
-  <span class="fu">mutate</span>(<span class="kw">param</span> <span class="kw">=</span> <span class="fu">fct_relevel</span>(<span class="no">param</span>, <span class="st">"Ti"</span>, <span class="st">"Cu"</span>, <span class="st">"C/N"</span>)) <span class="kw">%&gt;%</span>
-  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">value</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="no">depth</span>)) +
-  <span class="no">...</span></pre></body></html></div>
+<p>To control the order of the facets, the column on which they are facetted (<code>param</code>) must be a <code><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor()</a></code>, where the <code>levels</code> indicate the order. I suggest using <code>fct_relevel()</code> to do this, so that you only need to specify which items should go first. Usually I do this using a pipe (<code><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></code>) and <code><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate()</a></code> to avoid assigning any intermediate variables.</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">alta_lake_geochem</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>param <span class="op">=</span> <span class="fu">fct_relevel</span><span class="op">(</span><span class="va">param</span>, <span class="st">"Ti"</span>, <span class="st">"Cu"</span>, <span class="st">"C/N"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">value</span>, y <span class="op">=</span> <span class="va">depth</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="va">...</span></code></pre></div>
 <p><img src="strat_diagrams_files/figure-html/unnamed-chunk-10-1.png" width="576"></p>
 </div>
 <div id="plotting-a-subset-of-the-data" class="section level3">
 <h3 class="hasAnchor">
 <a href="#plotting-a-subset-of-the-data" class="anchor"></a>Plotting a subset of the data</h3>
-<p>The <code>halifax_geochem</code> data frame was designed so that it is a reasonable number of parameters to plot at one time. Usually you will have a data frame with many more parameters, which you can subset using <code><a href="https://rdrr.io/r/stats/filter.html">filter()</a></code> before calling <code>ggplot()</code>. Usually I do this using a pipe (<code><a href="https://rdrr.io/pkg/mudata2/man/reexports.html">%&gt;%</a></code>) to avoid assigning any intermediate variables.</p>
-<div class="sourceCode" id="cb10"><html><body><pre class="r"><span class="no">alta_lake_geochem</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(<span class="no">param</span> <span class="kw">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"d15N"</span>, <span class="st">"d13C"</span>, <span class="st">"C/N"</span>)) <span class="kw">%&gt;%</span>
-  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">value</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="no">depth</span>)) +
-  <span class="no">...</span></pre></body></html></div>
+<p>The <code>halifax_geochem</code> data frame was designed so that it is a reasonable number of parameters to plot at one time. Usually you will have a data frame with many more parameters, which you can subset using <code><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter()</a></code> before calling <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot()</a></code>. Usually I do this using a pipe (<code><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></code>) to avoid assigning any intermediate variables.</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">alta_lake_geochem</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">param</span> <span class="op">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"d15N"</span>, <span class="st">"d13C"</span>, <span class="st">"C/N"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">value</span>, y <span class="op">=</span> <span class="va">depth</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="va">...</span></code></pre></div>
 <p><img src="strat_diagrams_files/figure-html/unnamed-chunk-12-1.png" width="576"></p>
 </div>
 <div id="using-a-y-axis-with-ages-and-depths" class="section level3">
 <h3 class="hasAnchor">
 <a href="#using-a-y-axis-with-ages-and-depths" class="anchor"></a>Using a y-axis with ages and depths</h3>
 <p>When plotting a single core, it is good practice to plot both ages and depths in the core. In <strong>ggplot2</strong>, this comes as a second axis generated by a helper function, <code><a href="../reference/scale_y_depth_age.html">scale_y_depth_age()</a></code>, that uses an <code><a href="../reference/age_depth_model.html">age_depth_model()</a></code> to produce a second axis. For Alta Lake, the age depth model as published is included in the <code>alta_lake_bacon_ages</code> object. It’s possible to set the age breaks using the <code>age_breaks</code> argument, and the labels using the <code>age_labels</code> argument (this is useful for adding error information to ages on a second axis). The axis title can be set using the <code>age_name</code> argument.</p>
-<div class="sourceCode" id="cb11"><html><body><pre class="r"><span class="no">alta_adm</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/age_depth_model.html">age_depth_model</a></span>(
-  <span class="no">alta_lake_bacon_ages</span>,
-  <span class="kw">depth</span> <span class="kw">=</span> <span class="no">depth_cm</span>,
-  <span class="kw">age</span> <span class="kw">=</span> <span class="fl">1950</span> - <span class="no">age_weighted_mean_year_BP</span>
-)
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">alta_adm</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/age_depth_model.html">age_depth_model</a></span><span class="op">(</span>
+  <span class="va">alta_lake_bacon_ages</span>, 
+  depth <span class="op">=</span> <span class="va">depth_cm</span>,
+  age <span class="op">=</span> <span class="fl">1950</span> <span class="op">-</span> <span class="va">age_weighted_mean_year_BP</span>
+<span class="op">)</span>
 
-<span class="no">alta_plot</span> +
-  <span class="fu"><a href="../reference/scale_y_depth_age.html">scale_y_depth_age</a></span>(
-    <span class="no">alta_adm</span>,
-    <span class="kw">age_name</span> <span class="kw">=</span> <span class="st">"Age (Year AD)"</span>
-  )</pre></body></html></div>
+<span class="va">alta_plot</span> <span class="op">+</span>
+  <span class="fu"><a href="../reference/scale_y_depth_age.html">scale_y_depth_age</a></span><span class="op">(</span>
+    <span class="va">alta_adm</span>,
+    age_name <span class="op">=</span> <span class="st">"Age (Year AD)"</span>
+  <span class="op">)</span></code></pre></div>
 <p><img src="strat_diagrams_files/figure-html/unnamed-chunk-13-1.png" width="576"></p>
 </div>
 <div id="adding-units-to-facet-labels" class="section level3">
 <h3 class="hasAnchor">
 <a href="#adding-units-to-facet-labels" class="anchor"></a>Adding units to facet labels</h3>
-<p>Ideally, we’d like to specify the unit in which each of these parameters was measured. This can be done (1) by renaming each parameter before it gets to <code>ggplot()</code>, or (2) by using the <code>units</code> argument of the <code>facet_geochem_*()</code> functions. I suggest using the second option because it maintains the order of the parameters that you’ve chosen, and keeps the automatic reformatting of <code>d13C</code>. The <code>units</code> argument takes a named character vector, which you can create using <code><a href="https://rdrr.io/r/base/c.html">c("parameter" = "unit")</a></code>. If most paremeters are in the same unit, you can pass the default unit using <code>default_unit = "unit"</code>, and if you need to suppress a unit for an item, you can use <code>NA</code>.</p>
-<div class="sourceCode" id="cb12"><html><body><pre class="r"><span class="no">alta_plot</span> +
-  <span class="fu"><a href="../reference/facet_abundanceh.html">facet_geochem_gridh</a></span>(
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(<span class="no">param</span>),
-    <span class="kw">units</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"C/N"</span> <span class="kw">=</span> <span class="fl">NA</span>, <span class="st">"Cu"</span> <span class="kw">=</span> <span class="st">"ppm"</span>, <span class="st">"d13C"</span> <span class="kw">=</span> <span class="st">"‰"</span>, <span class="st">"d15N"</span> <span class="kw">=</span> <span class="st">"‰"</span>),
-    <span class="kw">default_units</span> <span class="kw">=</span> <span class="st">"%"</span>
-  )</pre></body></html></div>
+<p>Ideally, we’d like to specify the unit in which each of these parameters was measured. This can be done (1) by renaming each parameter before it gets to <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot()</a></code>, or (2) by using the <code>units</code> argument of the <code>facet_geochem_*()</code> functions. I suggest using the second option because it maintains the order of the parameters that you’ve chosen, and keeps the automatic reformatting of <code>d13C</code>. The <code>units</code> argument takes a named character vector, which you can create using <code><a href="https://rdrr.io/r/base/c.html" class="external-link">c("parameter" = "unit")</a></code>. If most paremeters are in the same unit, you can pass the default unit using <code>default_unit = "unit"</code>, and if you need to suppress a unit for an item, you can use <code>NA</code>.</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">alta_plot</span> <span class="op">+</span>
+  <span class="fu"><a href="../reference/facet_abundanceh.html">facet_geochem_gridh</a></span><span class="op">(</span>
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">param</span><span class="op">)</span>,
+    units <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"C/N"</span> <span class="op">=</span> <span class="cn">NA</span>, <span class="st">"Cu"</span> <span class="op">=</span> <span class="st">"ppm"</span>, <span class="st">"d13C"</span> <span class="op">=</span> <span class="st">"‰"</span>, <span class="st">"d15N"</span> <span class="op">=</span> <span class="st">"‰"</span><span class="op">)</span>,
+    default_units <span class="op">=</span> <span class="st">"%"</span>
+  <span class="op">)</span></code></pre></div>
 <p><img src="strat_diagrams_files/figure-html/unnamed-chunk-14-1.png" width="576"></p>
 </div>
 <div id="multiple-cores" class="section level3">
 <h3 class="hasAnchor">
 <a href="#multiple-cores" class="anchor"></a>Multiple cores</h3>
-<p>So far we’ve plotted one core. That’s great, but often there is more than one core that needs to be plotted. There are two ways to go about this depending on how you would like identical parameters for each lake to be compared: using <code><a href="../reference/facet_abundanceh.html">facet_geochem_gridh()</a></code> will stretch the axis limits to fit values from both cores, and creating (and combining) two separate plots using <code><a href="https://patchwork.data-imaginist.com/reference/wrap_plots.html">patchwork::wrap_plots()</a></code> will result in each panel stretching to the min/max of the data for that parameter. We’ll illustrate both of these using some other data from Long Lake, Nova Scotia, that is contained in the <strong>mudata2</strong> package.</p>
-<div class="sourceCode" id="cb13"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">mudata2</span>)
-<span class="no">combined_data</span> <span class="kw">&lt;-</span> <span class="no">long_lake</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/mudata2/man/tbl_data.html">tbl_data</a></span>() <span class="kw">%&gt;%</span>
-  <span class="fu">bind_rows</span>(<span class="no">alta_lake_geochem</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(<span class="no">param</span> <span class="kw">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"C/N"</span>, <span class="st">"d13C"</span>, <span class="st">"d15N"</span>))
-
-<span class="no">combined_data</span>
-<span class="co">#&gt; # A tibble: 147 x 14</span>
-<span class="co">#&gt;    dataset location param depth value     sd units zone      n n_detect</span>
-<span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;    &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;int&gt;    &lt;int&gt;</span>
-<span class="co">#&gt;  1 long_l… LL PC2   C/N       1  15.4 NA     &lt;NA&gt;  Unit…     1        1</span>
-<span class="co">#&gt;  2 long_l… LL PC2   C/N       6  15.8  0.290 &lt;NA&gt;  Unit…     2        2</span>
-<span class="co">#&gt;  3 long_l… LL PC2   C/N      11  24.0 NA     &lt;NA&gt;  Unit…     1        1</span>
-<span class="co">#&gt;  4 long_l… LL PC2   C/N      16  21.4 NA     &lt;NA&gt;  Unit…     1        1</span>
-<span class="co">#&gt;  5 long_l… LL PC2   C/N      21  23.2 NA     &lt;NA&gt;  Unit…     1        1</span>
-<span class="co">#&gt;  6 long_l… LL PC2   C/N      26  25.4 NA     &lt;NA&gt;  Unit…     1        1</span>
-<span class="co">#&gt;  7 long_l… LL PC2   C/N      43  27.2 NA     &lt;NA&gt;  Unit…     1        1</span>
-<span class="co">#&gt;  8 long_l… LL PC2   C/N      48  24.3 NA     &lt;NA&gt;  Unit…     1        1</span>
-<span class="co">#&gt;  9 long_l… LL PC2   C/N      53  30.2 NA     &lt;NA&gt;  Unit…     1        1</span>
-<span class="co">#&gt; 10 long_l… LL PC2   C/N      63  24.4 NA     &lt;NA&gt;  Unit…     1        1</span>
-<span class="co">#&gt; # … with 137 more rows, and 4 more variables: min_value &lt;dbl&gt;, max_value &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   age &lt;dbl&gt;, stdev &lt;dbl&gt;</span></pre></body></html></div>
+<p>So far we’ve plotted one core. That’s great, but often there is more than one core that needs to be plotted. There are two ways to go about this depending on how you would like identical parameters for each lake to be compared: using <code><a href="../reference/facet_abundanceh.html">facet_geochem_gridh()</a></code> will stretch the axis limits to fit values from both cores, and creating (and combining) two separate plots using <code><a href="https://patchwork.data-imaginist.com/reference/wrap_plots.html" class="external-link">patchwork::wrap_plots()</a></code> will result in each panel stretching to the min/max of the data for that parameter. We’ll illustrate both of these using some other data from Long Lake, Nova Scotia.</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">combined_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind.html" class="external-link">bind_rows</a></span><span class="op">(</span><span class="va">long_lake_plottable</span>, <span class="va">alta_lake_geochem</span><span class="op">)</span>
+<span class="va">combined_data</span>
+<span class="co">#&gt; # A tibble: 243 x 12</span>
+<span class="co">#&gt;    dataset    location param depth value     sd units zone      n n_detect   age</span>
+<span class="co">#&gt;    &lt;chr&gt;      &lt;chr&gt;    &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;int&gt;    &lt;int&gt; &lt;dbl&gt;</span>
+<span class="co">#&gt;  1 long_lake… LL PC2   C/N       1  15.4 NA     &lt;NA&gt;  Unit…     1        1    NA</span>
+<span class="co">#&gt;  2 long_lake… LL PC2   C/N       6  15.8  0.290 &lt;NA&gt;  Unit…     2        2    NA</span>
+<span class="co">#&gt;  3 long_lake… LL PC2   C/N      11  24.0 NA     &lt;NA&gt;  Unit…     1        1    NA</span>
+<span class="co">#&gt;  4 long_lake… LL PC2   C/N      16  21.4 NA     &lt;NA&gt;  Unit…     1        1    NA</span>
+<span class="co">#&gt;  5 long_lake… LL PC2   C/N      21  23.2 NA     &lt;NA&gt;  Unit…     1        1    NA</span>
+<span class="co">#&gt;  6 long_lake… LL PC2   C/N      26  25.4 NA     &lt;NA&gt;  Unit…     1        1    NA</span>
+<span class="co">#&gt;  7 long_lake… LL PC2   C/N      43  27.2 NA     &lt;NA&gt;  Unit…     1        1    NA</span>
+<span class="co">#&gt;  8 long_lake… LL PC2   C/N      48  24.3 NA     &lt;NA&gt;  Unit…     1        1    NA</span>
+<span class="co">#&gt;  9 long_lake… LL PC2   C/N      53  30.2 NA     &lt;NA&gt;  Unit…     1        1    NA</span>
+<span class="co">#&gt; 10 long_lake… LL PC2   C/N      63  24.4 NA     &lt;NA&gt;  Unit…     1        1    NA</span>
+<span class="co">#&gt; # … with 233 more rows, and 1 more variable: stdev &lt;dbl&gt;</span></code></pre></div>
 <p>First we’ll go over the <code><a href="../reference/facet_abundanceh.html">facet_geochem_gridh()</a></code> approach, which adds <code>location</code> as another grouping variable. This will align parameters with themselves vertically, with one row on the plot per core. This usually the best option, as it makes values from one plot to another be directly comparable.</p>
-<div class="sourceCode" id="cb14"><html><body><pre class="r"><span class="fu">ggplot</span>(<span class="no">combined_data</span>, <span class="fu">aes</span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">value</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="no">depth</span>)) +
-  <span class="fu"><a href="../reference/geom_lineh.html">geom_lineh</a></span>() +
-  <span class="fu">geom_point</span>() +
-  <span class="fu">scale_y_reverse</span>() +
-  <span class="fu"><a href="../reference/facet_abundanceh.html">facet_geochem_gridh</a></span>(<span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(<span class="no">param</span>), <span class="kw">grouping</span> <span class="kw">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(<span class="no">location</span>), <span class="kw">scales</span> <span class="kw">=</span> <span class="st">"free"</span>) +
-  <span class="fu">labs</span>(<span class="kw">x</span> <span class="kw">=</span> <span class="kw">NULL</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="st">"Depth (cm)"</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">combined_data</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">value</span>, y <span class="op">=</span> <span class="va">depth</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="../reference/geom_lineh.html">geom_lineh</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_y_reverse</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="../reference/facet_abundanceh.html">facet_geochem_gridh</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">param</span><span class="op">)</span>, grouping <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">location</span><span class="op">)</span>, scales <span class="op">=</span> <span class="st">"free"</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="cn">NULL</span>, y <span class="op">=</span> <span class="st">"Depth (cm)"</span><span class="op">)</span></code></pre></div>
 <p><img src="strat_diagrams_files/figure-html/unnamed-chunk-16-1.png" width="576"></p>
 <p>The other way to do this is to create two separate plots, and combine them using the <strong>patchwork</strong> package. This is a good option when values from one core to another are so different that placing them on the same axis results in trends being obscured, or when ages and depths are absolutely necessary for both plots (using <code><a href="../reference/scale_y_depth_age.html">scale_y_depth_age()</a></code> doesn’t work when combining locations using a facet).</p>
-<div class="sourceCode" id="cb15"><html><body><pre class="r"><span class="no">alta_plot_1</span> <span class="kw">&lt;-</span> <span class="no">combined_data</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(<span class="no">location</span> <span class="kw">==</span> <span class="st">"ALGC2"</span>) <span class="kw">%&gt;%</span>
-  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">value</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="no">depth</span>)) +
-  <span class="fu"><a href="../reference/geom_lineh.html">geom_lineh</a></span>() +
-  <span class="fu">geom_point</span>() +
-  <span class="fu">scale_y_reverse</span>() +
-  <span class="fu"><a href="../reference/facet_abundanceh.html">facet_geochem_gridh</a></span>(<span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(<span class="no">param</span>), <span class="kw">scales</span> <span class="kw">=</span> <span class="st">"free"</span>) +
-  <span class="fu">labs</span>(<span class="kw">x</span> <span class="kw">=</span> <span class="kw">NULL</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="st">"Depth (cm)"</span>, <span class="kw">title</span> <span class="kw">=</span> <span class="st">"Alta Lake"</span>)
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">alta_plot_1</span> <span class="op">&lt;-</span> <span class="va">combined_data</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">location</span> <span class="op">==</span> <span class="st">"ALGC2"</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">value</span>, y <span class="op">=</span> <span class="va">depth</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="../reference/geom_lineh.html">geom_lineh</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_y_reverse</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="../reference/facet_abundanceh.html">facet_geochem_gridh</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">param</span><span class="op">)</span>, scales <span class="op">=</span> <span class="st">"free"</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="cn">NULL</span>, y <span class="op">=</span> <span class="st">"Depth (cm)"</span>, title <span class="op">=</span> <span class="st">"Alta Lake"</span><span class="op">)</span>
 
-<span class="no">long_plot_2</span> <span class="kw">&lt;-</span> <span class="no">combined_data</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(<span class="no">location</span> <span class="kw">==</span> <span class="st">"LL PC2"</span>) <span class="kw">%&gt;%</span>
-  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">value</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="no">depth</span>)) +
-  <span class="fu"><a href="../reference/geom_lineh.html">geom_lineh</a></span>() +
-  <span class="fu">geom_point</span>() +
-  <span class="fu">scale_y_reverse</span>() +
-  <span class="fu"><a href="../reference/facet_abundanceh.html">facet_geochem_gridh</a></span>(<span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(<span class="no">param</span>), <span class="kw">scales</span> <span class="kw">=</span> <span class="st">"free"</span>) +
-  <span class="fu">labs</span>(<span class="kw">x</span> <span class="kw">=</span> <span class="kw">NULL</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="st">"Depth (cm)"</span>, <span class="kw">title</span> <span class="kw">=</span> <span class="st">"Long Lake"</span>)
+<span class="va">long_plot_2</span> <span class="op">&lt;-</span> <span class="va">combined_data</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">location</span> <span class="op">==</span> <span class="st">"LL PC2"</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">value</span>, y <span class="op">=</span> <span class="va">depth</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="../reference/geom_lineh.html">geom_lineh</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_y_reverse</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="../reference/facet_abundanceh.html">facet_geochem_gridh</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">param</span><span class="op">)</span>, scales <span class="op">=</span> <span class="st">"free"</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="cn">NULL</span>, y <span class="op">=</span> <span class="st">"Depth (cm)"</span>, title <span class="op">=</span> <span class="st">"Long Lake"</span><span class="op">)</span>
 
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">patchwork</span>)
-<span class="fu"><a href="https://patchwork.data-imaginist.com/reference/wrap_plots.html">wrap_plots</a></span>(<span class="no">alta_plot_1</span>, <span class="no">long_plot_2</span>, <span class="kw">ncol</span> <span class="kw">=</span> <span class="fl">1</span>)</pre></body></html></div>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://patchwork.data-imaginist.com" class="external-link">patchwork</a></span><span class="op">)</span>
+<span class="fu"><a href="https://patchwork.data-imaginist.com/reference/wrap_plots.html" class="external-link">wrap_plots</a></span><span class="op">(</span><span class="va">alta_plot_1</span>, <span class="va">long_plot_2</span>, ncol <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></code></pre></div>
 <p><img src="strat_diagrams_files/figure-html/unnamed-chunk-17-1.png" width="576"></p>
 </div>
 <div id="adding-a-dendrogram" class="section level3">
 <h3 class="hasAnchor">
 <a href="#adding-a-dendrogram" class="anchor"></a>Adding a dendrogram</h3>
 <p>It’s fairly common to see a CONISS dendrogram at the right of plots, and so <strong>tidypaleo</strong> wouldn’t be complete if it couldn’t make that happen. For a variety of technical reasons, you have to specify that you need <code>depth</code> mapped to the <code>y</code> aesthetic for both <code><a href="../reference/layer_dendrogram.html">layer_zone_boundaries()</a></code> and <code><a href="../reference/layer_dendrogram.html">layer_dendrogram()</a></code>. Note that you’ll have to do CONISS using <code><a href="../reference/nested_hclust.html">nested_chclust_coniss()</a></code>, which uses the <strong>rioja</strong> package to do the constrained cluster analysis. By default, this will calculate the number of plausible zones based on a broken stick simulation.</p>
-<div class="sourceCode" id="cb16"><html><body><pre class="r"><span class="no">coniss</span> <span class="kw">&lt;-</span> <span class="no">alta_lake_geochem</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="../reference/nested_data.html">nested_data</a></span>(<span class="kw">qualifiers</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="no">age</span>, <span class="no">depth</span>), <span class="kw">key</span> <span class="kw">=</span> <span class="no">param</span>, <span class="kw">value</span> <span class="kw">=</span> <span class="no">value</span>, <span class="kw">trans</span> <span class="kw">=</span> <span class="no">scale</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="../reference/nested_hclust.html">nested_chclust_coniss</a></span>()
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">coniss</span> <span class="op">&lt;-</span> <span class="va">alta_lake_geochem</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="../reference/nested_data.html">nested_data</a></span><span class="op">(</span>qualifiers <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">age</span>, <span class="va">depth</span><span class="op">)</span>, key <span class="op">=</span> <span class="va">param</span>, value <span class="op">=</span> <span class="va">value</span>, trans <span class="op">=</span> <span class="va">scale</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="../reference/nested_hclust.html">nested_chclust_coniss</a></span><span class="op">(</span><span class="op">)</span>
 
-<span class="no">alta_plot</span> +
-  <span class="fu"><a href="../reference/layer_dendrogram.html">layer_dendrogram</a></span>(<span class="no">coniss</span>, <span class="fu">aes</span>(<span class="kw">y</span> <span class="kw">=</span> <span class="no">depth</span>), <span class="kw">param</span> <span class="kw">=</span> <span class="st">"CONISS"</span>) +
-  <span class="fu"><a href="../reference/layer_dendrogram.html">layer_zone_boundaries</a></span>(<span class="no">coniss</span>, <span class="fu">aes</span>(<span class="kw">y</span> <span class="kw">=</span> <span class="no">depth</span>))</pre></body></html></div>
+<span class="va">alta_plot</span> <span class="op">+</span>
+  <span class="fu"><a href="../reference/layer_dendrogram.html">layer_dendrogram</a></span><span class="op">(</span><span class="va">coniss</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">depth</span><span class="op">)</span>, param <span class="op">=</span> <span class="st">"CONISS"</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="../reference/layer_dendrogram.html">layer_zone_boundaries</a></span><span class="op">(</span><span class="va">coniss</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">depth</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p><img src="strat_diagrams_files/figure-html/unnamed-chunk-18-1.png" width="576"></p>
 </div>
 <div id="using-facet_geochem_wraph" class="section level3">
 <h3 class="hasAnchor">
 <a href="#using-facet_geochem_wraph" class="anchor"></a>Using <code>facet_geochem_wraph()</code>
 </h3>
-<p>If you are familiar with <code>facet_grid()</code> in <strong>ggplot2</strong>, you will notice that <code><a href="../reference/facet_abundanceh.html">facet_geochem_gridh()</a></code> has done a few things differently, including automatically renaming <code>d13C</code> and <code>d15N</code> to the proper formatting. This function also rotates axis labels, because this is the only sure-fire way to make sure they don’t overlap. You can un-rotate them using <code>rotate_axis_labels = 0</code>, and you can wrap panels in a defined number of rows or columns using <code><a href="../reference/facet_abundanceh.html">facet_geochem_wraph()</a></code>. This works well for plotting a larger number of parameters when there is only one core involved.</p>
-<div class="sourceCode" id="cb17"><html><body><pre class="r"><span class="no">alta_plot</span> +
-  <span class="fu"><a href="../reference/facet_abundanceh.html">facet_geochem_wraph</a></span>(<span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(<span class="no">param</span>), <span class="kw">rotate_axis_labels</span> <span class="kw">=</span> <span class="fl">0</span>, <span class="kw">ncol</span> <span class="kw">=</span> <span class="fl">4</span>)</pre></body></html></div>
+<p>If you are familiar with <code><a href="https://ggplot2.tidyverse.org/reference/facet_grid.html" class="external-link">facet_grid()</a></code> in <strong>ggplot2</strong>, you will notice that <code><a href="../reference/facet_abundanceh.html">facet_geochem_gridh()</a></code> has done a few things differently, including automatically renaming <code>d13C</code> and <code>d15N</code> to the proper formatting. This function also rotates axis labels, because this is the only sure-fire way to make sure they don’t overlap. You can un-rotate them using <code>rotate_axis_labels = 0</code>, and you can wrap panels in a defined number of rows or columns using <code><a href="../reference/facet_abundanceh.html">facet_geochem_wraph()</a></code>. This works well for plotting a larger number of parameters when there is only one core involved.</p>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">alta_plot</span> <span class="op">+</span> 
+  <span class="fu"><a href="../reference/facet_abundanceh.html">facet_geochem_wraph</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">param</span><span class="op">)</span>, rotate_axis_labels <span class="op">=</span> <span class="fl">0</span>, ncol <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></code></pre></div>
 <p><img src="strat_diagrams_files/figure-html/unnamed-chunk-19-1.png" width="576"></p>
 </div>
 <div id="going-horizontal" class="section level3">
 <h3 class="hasAnchor">
 <a href="#going-horizontal" class="anchor"></a>Going horizontal</h3>
 <p>Most stratigraphic diagrams are vertical, which is a reflection on the orientation of the core from which the data came. In many cases (especially when age is one of the axes), it may be adventageous to have the plots be horizontal, with time running from left to right along the x-axis. A few things need to change from our original plot, including the mapping, the line geometry, and the facet specification. Here I’ve used <code><a href="../reference/facet_abundanceh.html">facet_geochem_grid()</a></code> to stack the plots vertically, but you could also use <code><a href="../reference/facet_abundanceh.html">facet_geochem_wrap()</a></code>.</p>
-<div class="sourceCode" id="cb18"><html><body><pre class="r"><span class="fu">ggplot</span>(<span class="no">alta_lake_geochem</span>, <span class="fu">aes</span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">age</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="no">value</span>)) +
-  <span class="fu">geom_line</span>() +
-  <span class="fu">geom_point</span>() +
-  <span class="fu">scale_y_reverse</span>() +
-  <span class="fu"><a href="../reference/facet_abundanceh.html">facet_geochem_grid</a></span>(<span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(<span class="no">param</span>)) +
-  <span class="fu">labs</span>(<span class="kw">x</span> <span class="kw">=</span> <span class="st">"Age (Year AD)"</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="kw">NULL</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">alta_lake_geochem</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">age</span>, y <span class="op">=</span> <span class="va">value</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_y_reverse</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="../reference/facet_abundanceh.html">facet_geochem_grid</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">param</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Age (Year AD)"</span>, y <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></code></pre></div>
 <p><img src="strat_diagrams_files/figure-html/unnamed-chunk-20-1.png" width="288"></p>
 </div>
 </div>
 <div id="species-abundance-stratigraphic-plots" class="section level2">
 <h2 class="hasAnchor">
 <a href="#species-abundance-stratigraphic-plots" class="anchor"></a>Species abundance stratigraphic plots</h2>
-<p>If our data is relative species abundance, there are a few more restrictions on the plot: each facet must represent values such that 10% abundance on one facet is equal to 10% in another facet, and facet names are often long enough that they must be rotated. The sample data for these exercises is <code>keji_lakes_plottable</code>, which again is in the form of one row per measurement. This dataset contains two lakes, Beaverskin Lake and Peskawa Lake, both located within Keji National Park, Nova Scotia, Canada (<a href="https://doi.org/10.1007/s10750-007-0644-3">Ginn et al. 2007</a>).</p>
-<div class="sourceCode" id="cb19"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"keji_lakes_plottable"</span>)
-<span class="no">keji_lakes_plottable</span>
+<p>If our data is relative species abundance, there are a few more restrictions on the plot: each facet must represent values such that 10% abundance on one facet is equal to 10% in another facet, and facet names are often long enough that they must be rotated. The sample data for these exercises is <code>keji_lakes_plottable</code>, which again is in the form of one row per measurement. This dataset contains two lakes, Beaverskin Lake and Peskawa Lake, both located within Keji National Park, Nova Scotia, Canada (<a href="https://doi.org/10.1007/s10750-007-0644-3" class="external-link">Ginn et al. 2007</a>).</p>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"keji_lakes_plottable"</span><span class="op">)</span>
+<span class="va">keji_lakes_plottable</span>
 <span class="co">#&gt; # A tibble: 202 x 5</span>
 <span class="co">#&gt;    location        depth taxon                                   count rel_abund</span>
 <span class="co">#&gt;    &lt;chr&gt;           &lt;dbl&gt; &lt;fct&gt;                                   &lt;dbl&gt;     &lt;dbl&gt;</span>
@@ -342,125 +352,133 @@
 <span class="co">#&gt;  8 Beaverskin Lake 0.375 Aulacoseira distans                         8      3.25</span>
 <span class="co">#&gt;  9 Beaverskin Lake 0.375 Aulacoseira lirata                          5      2.03</span>
 <span class="co">#&gt; 10 Beaverskin Lake 0.375 Cyclotella stelligera                      14      5.69</span>
-<span class="co">#&gt; # … with 192 more rows</span></pre></body></html></div>
+<span class="co">#&gt; # … with 192 more rows</span></code></pre></div>
 <p>The code to generate the plot is similar to our previous plots, except we use <code><a href="../reference/geom_col_segsh.html">geom_col_segsh()</a></code> (which instead of points or a path, draws lines connected to the x-axis), and <code><a href="../reference/facet_abundanceh.html">facet_abundanceh()</a></code> (which takes care of rotating facet labels, partially italicizing them, and setting the scales for each panel to start at 0.</p>
-<div class="sourceCode" id="cb20"><html><body><pre class="r"><span class="no">keji_plot</span> <span class="kw">&lt;-</span> <span class="fu">ggplot</span>(<span class="no">keji_lakes_plottable</span>, <span class="fu">aes</span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">rel_abund</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="no">depth</span>)) +
-  <span class="fu"><a href="../reference/geom_col_segsh.html">geom_col_segsh</a></span>() +
-  <span class="fu">scale_y_reverse</span>() +
-  <span class="fu"><a href="../reference/facet_abundanceh.html">facet_abundanceh</a></span>(<span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(<span class="no">taxon</span>), <span class="kw">grouping</span> <span class="kw">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(<span class="no">location</span>)) +
-  <span class="fu">labs</span>(<span class="kw">x</span> <span class="kw">=</span> <span class="st">"Relative abundance (%)"</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="st">"Depth (cm)"</span>)
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">keji_plot</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">keji_lakes_plottable</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">rel_abund</span>, y <span class="op">=</span> <span class="va">depth</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="../reference/geom_col_segsh.html">geom_col_segsh</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_y_reverse</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="../reference/facet_abundanceh.html">facet_abundanceh</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">taxon</span><span class="op">)</span>, grouping <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">location</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Relative abundance (%)"</span>, y <span class="op">=</span> <span class="st">"Depth (cm)"</span><span class="op">)</span>
 
-<span class="no">keji_plot</span></pre></body></html></div>
+<span class="va">keji_plot</span></code></pre></div>
 <p><img src="strat_diagrams_files/figure-html/unnamed-chunk-22-1.png" width="576"></p>
 <p>Most of the modifications you can make on these plots are identical to the modifications you can make on non-abundance plots (see previous section), except for a few that we describe below.</p>
 <div id="different-styles" class="section level3">
 <h3 class="hasAnchor">
 <a href="#different-styles" class="anchor"></a>Different styles</h3>
-<p>There are a few famous styles for abundance plots, because a few existing programs (like <a href="https://www.tiliait.com/">Tilia</a>, <a href="https://www.staff.ncl.ac.uk/stephen.juggins/software/C2Home.htm">C2</a>, and <a href="https://cran.r-project.org/package=rioja">rioja</a>) have some very specific defaults that show up on repeat in the literature. These styles can be replicated by changing or adding to <code><a href="../reference/geom_col_segsh.html">geom_col_segsh()</a></code>. For example, the classic Tilia “area” style for pollen diagrams:</p>
-<div class="sourceCode" id="cb21"><html><body><pre class="r"><span class="fu">ggplot</span>(<span class="no">keji_lakes_plottable</span>, <span class="fu">aes</span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">rel_abund</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="no">depth</span>)) +
-  <span class="fu"><a href="../reference/geom_ribbonh.html">geom_areah</a></span>() +
-  <span class="fu">scale_y_reverse</span>() +
-  <span class="fu"><a href="../reference/facet_abundanceh.html">facet_abundanceh</a></span>(<span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(<span class="no">taxon</span>), <span class="kw">grouping</span> <span class="kw">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(<span class="no">location</span>)) +
-  <span class="fu">labs</span>(<span class="kw">x</span> <span class="kw">=</span> <span class="st">"Relative abundance (%)"</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="st">"Depth (cm)"</span>)</pre></body></html></div>
+<p>There are a few famous styles for abundance plots, because a few existing programs (like <a href="https://www.tiliait.com/" class="external-link">Tilia</a>, <a href="https://www.staff.ncl.ac.uk/stephen.juggins/software/C2Home.htm" class="external-link">C2</a>, and <a href="https://cran.r-project.org/package=rioja" class="external-link">rioja</a>) have some very specific defaults that show up on repeat in the literature. These styles can be replicated by changing or adding to <code><a href="../reference/geom_col_segsh.html">geom_col_segsh()</a></code>. For example, the classic Tilia “area” style for pollen diagrams:</p>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">keji_lakes_plottable</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">rel_abund</span>, y <span class="op">=</span> <span class="va">depth</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="../reference/geom_ribbonh.html">geom_areah</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_y_reverse</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="../reference/facet_abundanceh.html">facet_abundanceh</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">taxon</span><span class="op">)</span>, grouping <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">location</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Relative abundance (%)"</span>, y <span class="op">=</span> <span class="st">"Depth (cm)"</span><span class="op">)</span></code></pre></div>
 <p><img src="strat_diagrams_files/figure-html/unnamed-chunk-23-1.png" width="576"></p>
 <p>Or for rioja-style diagrams, use <code><a href="../reference/geom_col_segsh.html">geom_col_segsh()</a></code> plus <code><a href="../reference/geom_lineh.html">geom_lineh()</a></code>:</p>
-<div class="sourceCode" id="cb22"><html><body><pre class="r"><span class="fu">ggplot</span>(<span class="no">keji_lakes_plottable</span>, <span class="fu">aes</span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">rel_abund</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="no">depth</span>)) +
-  <span class="fu"><a href="../reference/geom_col_segsh.html">geom_col_segsh</a></span>() +
-  <span class="fu"><a href="../reference/geom_lineh.html">geom_lineh</a></span>() +
-  <span class="fu">scale_y_reverse</span>() +
-  <span class="fu"><a href="../reference/facet_abundanceh.html">facet_abundanceh</a></span>(<span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(<span class="no">taxon</span>), <span class="kw">grouping</span> <span class="kw">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(<span class="no">location</span>)) +
-  <span class="fu">labs</span>(<span class="kw">x</span> <span class="kw">=</span> <span class="st">"Relative abundance (%)"</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="st">"Depth (cm)"</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">keji_lakes_plottable</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">rel_abund</span>, y <span class="op">=</span> <span class="va">depth</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="../reference/geom_col_segsh.html">geom_col_segsh</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="../reference/geom_lineh.html">geom_lineh</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_y_reverse</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="../reference/facet_abundanceh.html">facet_abundanceh</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">taxon</span><span class="op">)</span>, grouping <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">location</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Relative abundance (%)"</span>, y <span class="op">=</span> <span class="st">"Depth (cm)"</span><span class="op">)</span></code></pre></div>
 <p><img src="strat_diagrams_files/figure-html/unnamed-chunk-24-1.png" width="576"></p>
 </div>
 <div id="exaggerating-low-abundance-taxa" class="section level3">
 <h3 class="hasAnchor">
 <a href="#exaggerating-low-abundance-taxa" class="anchor"></a>Exaggerating low-abundance taxa</h3>
-<p>It’s common to see some kind of geometry on abundance diagrams exaggerating low-abundance variation. You can use the <code>*_exaggerate()</code> varieties of <code><a href="../reference/geom_lineh.html">geom_lineh()</a></code>, <code><a href="../reference/geom_ribbonh.html">geom_areah()</a></code>, and <code>geom_point()</code> to display this information without affecting the scales. If you want to include it only for certain taxa, you can pass <code>data = keji_lakes_plottable %&gt;% filter(...)</code> to only include certain measurements.</p>
-<div class="sourceCode" id="cb23"><html><body><pre class="r"><span class="no">keji_plot</span> +
-  <span class="fu"><a href="../reference/geom_point_exaggerate.html">geom_lineh_exaggerate</a></span>(<span class="kw">exaggerate_x</span> <span class="kw">=</span> <span class="fl">5</span>, <span class="kw">col</span> <span class="kw">=</span> <span class="st">"grey70"</span>, <span class="kw">lty</span> <span class="kw">=</span> <span class="fl">2</span>)</pre></body></html></div>
+<p>It’s common to see some kind of geometry on abundance diagrams exaggerating low-abundance variation. You can use the <code>*_exaggerate()</code> varieties of <code><a href="../reference/geom_lineh.html">geom_lineh()</a></code>, <code><a href="../reference/geom_ribbonh.html">geom_areah()</a></code>, and <code><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point()</a></code> to display this information without affecting the scales. If you want to include it only for certain taxa, you can pass <code>data = keji_lakes_plottable %&gt;% filter(...)</code> to only include certain measurements.</p>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">keji_plot</span> <span class="op">+</span>
+  <span class="fu"><a href="../reference/geom_point_exaggerate.html">geom_lineh_exaggerate</a></span><span class="op">(</span>exaggerate_x <span class="op">=</span> <span class="fl">5</span>, col <span class="op">=</span> <span class="st">"grey70"</span>, lty <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></code></pre></div>
 <p><img src="strat_diagrams_files/figure-html/unnamed-chunk-25-1.png" width="576"></p>
 </div>
 <div id="adding-non-abundance-data" class="section level3">
 <h3 class="hasAnchor">
 <a href="#adding-non-abundance-data" class="anchor"></a>Adding non-abundance data</h3>
-<p>To add non-abundance data in the same figure, we need to create two plots and combine them using <strong>patchwork</strong>’s <code><a href="https://patchwork.data-imaginist.com/reference/wrap_plots.html">wrap_plots()</a></code> function. In this example, I’m going to use PCA scores, computed by the <code><a href="../reference/nested_prcomp.html">nested_prcomp()</a></code> function, and get them into parameter-long form using <code>gather()</code>. Note that when I create the plots, I make sure the labels still exist, and then I nix the labels inbetween the two plots using a few <code>theme()</code> modifications. It’s important to make sure that the panel labels and scale lables are the same before removing them!</p>
-<div class="sourceCode" id="cb24"><html><body><pre class="r"><span class="no">keji_pca_scores</span> <span class="kw">&lt;-</span> <span class="no">keji_lakes_plottable</span> <span class="kw">%&gt;%</span>
-  <span class="fu">group_by</span>(<span class="no">location</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="../reference/nested_data.html">nested_data</a></span>(<span class="kw">qualifiers</span> <span class="kw">=</span> <span class="no">depth</span>, <span class="kw">key</span> <span class="kw">=</span> <span class="no">taxon</span>, <span class="kw">value</span> <span class="kw">=</span> <span class="no">rel_abund</span>, <span class="kw">trans</span> <span class="kw">=</span> <span class="no">sqrt</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="../reference/nested_prcomp.html">nested_prcomp</a></span>() <span class="kw">%&gt;%</span>
-  <span class="fu">unnest</span>(<span class="no">qualifiers</span>, <span class="no">scores</span>) <span class="kw">%&gt;%</span>
-  <span class="fu">gather</span>(<span class="kw">key</span> <span class="kw">=</span> <span class="no">component</span>, <span class="kw">value</span> <span class="kw">=</span> <span class="no">value</span>, <span class="fu"><a href="https://rdrr.io/pkg/mudata2/man/reexports.html">starts_with</a></span>(<span class="st">"PC"</span>)) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(<span class="no">component</span> <span class="kw">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"PC1"</span>, <span class="st">"PC2"</span>))
+<p>To add non-abundance data in the same figure, we need to create two plots and combine them using <strong>patchwork</strong>’s <code><a href="https://patchwork.data-imaginist.com/reference/wrap_plots.html" class="external-link">wrap_plots()</a></code> function. In this example, I’m going to use PCA scores, computed by the <code><a href="../reference/nested_prcomp.html">nested_prcomp()</a></code> function, and get them into parameter-long form using <code><a href="https://tidyr.tidyverse.org/reference/gather.html" class="external-link">gather()</a></code>. Note that when I create the plots, I make sure the labels still exist, and then I nix the labels inbetween the two plots using a few <code><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme()</a></code> modifications. It’s important to make sure that the panel labels and scale lables are the same before removing them!</p>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">keji_pca_scores</span> <span class="op">&lt;-</span> <span class="va">keji_lakes_plottable</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">location</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="../reference/nested_data.html">nested_data</a></span><span class="op">(</span>qualifiers <span class="op">=</span> <span class="va">depth</span>, key <span class="op">=</span> <span class="va">taxon</span>, value <span class="op">=</span> <span class="va">rel_abund</span>, trans <span class="op">=</span> <span class="va">sqrt</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="../reference/nested_prcomp.html">nested_prcomp</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html" class="external-link">unnest</a></span><span class="op">(</span><span class="va">qualifiers</span>, <span class="va">scores</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/gather.html" class="external-link">gather</a></span><span class="op">(</span>key <span class="op">=</span> <span class="va">component</span>, value <span class="op">=</span> <span class="va">value</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"PC"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">component</span> <span class="op">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"PC1"</span>, <span class="st">"PC2"</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; Warning: unnest() has a new interface. See ?unnest for details.</span>
 <span class="co">#&gt; Try `df %&gt;% unnest(c(qualifiers, scores))`, with `mutate()` if needed</span>
 
-<span class="no">keji_pca_plot</span> <span class="kw">&lt;-</span> <span class="fu">ggplot</span>(<span class="no">keji_pca_scores</span>, <span class="fu">aes</span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">value</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="no">depth</span>)) +
-  <span class="fu"><a href="../reference/geom_lineh.html">geom_lineh</a></span>() +
-  <span class="fu">geom_point</span>() +
-  <span class="fu">scale_y_reverse</span>() +
-  <span class="fu"><a href="../reference/facet_abundanceh.html">facet_geochem_gridh</a></span>(<span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(<span class="no">component</span>), <span class="kw">grouping</span> <span class="kw">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(<span class="no">location</span>)) +
-  <span class="fu">labs</span>(<span class="kw">x</span> <span class="kw">=</span> <span class="kw">NULL</span>)
-
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">patchwork</span>)
-<span class="fu"><a href="https://patchwork.data-imaginist.com/reference/wrap_plots.html">wrap_plots</a></span>(
-  <span class="no">keji_plot</span> +
-    <span class="fu">theme</span>(<span class="kw">strip.background</span> <span class="kw">=</span> <span class="fu">element_blank</span>(), <span class="kw">strip.text.y</span> <span class="kw">=</span> <span class="fu">element_blank</span>()),
-  <span class="no">keji_pca_plot</span> +
-    <span class="fu">theme</span>(<span class="kw">axis.text.y.left</span> <span class="kw">=</span> <span class="fu">element_blank</span>(), <span class="kw">axis.ticks.y.left</span> <span class="kw">=</span> <span class="fu">element_blank</span>()) +
-    <span class="fu">labs</span>(<span class="kw">y</span> <span class="kw">=</span> <span class="kw">NULL</span>),
-  <span class="kw">nrow</span> <span class="kw">=</span> <span class="fl">1</span>,
-  <span class="kw">widths</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">4</span>, <span class="fl">1</span>)
-)</pre></body></html></div>
+<span class="va">keji_pca_plot</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">keji_pca_scores</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">value</span>, y <span class="op">=</span> <span class="va">depth</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="../reference/geom_lineh.html">geom_lineh</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_y_reverse</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="../reference/facet_abundanceh.html">facet_geochem_gridh</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">component</span><span class="op">)</span>, grouping <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">location</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span>
+  
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://patchwork.data-imaginist.com" class="external-link">patchwork</a></span><span class="op">)</span>
+<span class="fu"><a href="https://patchwork.data-imaginist.com/reference/wrap_plots.html" class="external-link">wrap_plots</a></span><span class="op">(</span>
+  <span class="va">keji_plot</span> <span class="op">+</span> 
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>strip.background <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span>, strip.text.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>,
+  <span class="va">keji_pca_plot</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>axis.text.y.left <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span>, axis.ticks.y.left <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>y <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span>,
+  nrow <span class="op">=</span> <span class="fl">1</span>,
+  widths <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fl">1</span><span class="op">)</span>
+<span class="op">)</span></code></pre></div>
 <p><img src="strat_diagrams_files/figure-html/unnamed-chunk-26-1.png" width="576"></p>
 </div>
 <div id="adding-dendrograms" class="section level3">
 <h3 class="hasAnchor">
 <a href="#adding-dendrograms" class="anchor"></a>Adding dendrograms</h3>
-<p>Adding a CONISS (or other) dendrogram created using <code><a href="../reference/nested_hclust.html">nested_chclust_coniss()</a></code> can be done in two ways: if there is already a non-abundance plot that exists, the dendrogram can be added to that plot using <code><a href="../reference/layer_dendrogram.html">layer_dendrogram()</a></code>. If there is not already a non-abundance plot, we need to create that plot. Then, the two plots can be combined using <strong>patchwork</strong>’s <code><a href="https://patchwork.data-imaginist.com/reference/wrap_plots.html">wrap_plots()</a></code>.</p>
-<div class="sourceCode" id="cb25"><html><body><pre class="r"><span class="no">keji_coniss</span> <span class="kw">&lt;-</span> <span class="no">keji_lakes_plottable</span> <span class="kw">%&gt;%</span>
-  <span class="fu">group_by</span>(<span class="no">location</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="../reference/nested_data.html">nested_data</a></span>(<span class="kw">qualifiers</span> <span class="kw">=</span> <span class="no">depth</span>, <span class="kw">key</span> <span class="kw">=</span> <span class="no">taxon</span>, <span class="kw">value</span> <span class="kw">=</span> <span class="no">rel_abund</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="../reference/nested_hclust.html">nested_chclust_coniss</a></span>()
+<p>Adding a CONISS (or other) dendrogram created using <code><a href="../reference/nested_hclust.html">nested_chclust_coniss()</a></code> can be done in two ways: if there is already a non-abundance plot that exists, the dendrogram can be added to that plot using <code><a href="../reference/layer_dendrogram.html">layer_dendrogram()</a></code>. If there is not already a non-abundance plot, we need to create that plot. Then, the two plots can be combined using <strong>patchwork</strong>’s <code><a href="https://patchwork.data-imaginist.com/reference/wrap_plots.html" class="external-link">wrap_plots()</a></code>.</p>
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">keji_coniss</span> <span class="op">&lt;-</span> <span class="va">keji_lakes_plottable</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">location</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="../reference/nested_data.html">nested_data</a></span><span class="op">(</span>qualifiers <span class="op">=</span> <span class="va">depth</span>, key <span class="op">=</span> <span class="va">taxon</span>, value <span class="op">=</span> <span class="va">rel_abund</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="../reference/nested_hclust.html">nested_chclust_coniss</a></span><span class="op">(</span><span class="op">)</span>
 
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">patchwork</span>)
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://patchwork.data-imaginist.com" class="external-link">patchwork</a></span><span class="op">)</span>
 
 <span class="co"># method 1: use existing non-abundance plot</span>
-<span class="fu"><a href="https://patchwork.data-imaginist.com/reference/wrap_plots.html">wrap_plots</a></span>(
-  <span class="no">keji_plot</span> +
-    <span class="fu">theme</span>(<span class="kw">strip.background</span> <span class="kw">=</span> <span class="fu">element_blank</span>(), <span class="kw">strip.text.y</span> <span class="kw">=</span> <span class="fu">element_blank</span>()),
-  <span class="no">keji_pca_plot</span> +
-    <span class="fu"><a href="../reference/layer_dendrogram.html">layer_dendrogram</a></span>(<span class="no">keji_coniss</span>, <span class="kw">component</span> <span class="kw">=</span> <span class="st">"CONISS"</span>, <span class="fu">aes</span>(<span class="kw">y</span> <span class="kw">=</span> <span class="no">depth</span>)) +
-    <span class="fu">theme</span>(<span class="kw">axis.text.y.left</span> <span class="kw">=</span> <span class="fu">element_blank</span>(), <span class="kw">axis.ticks.y.left</span> <span class="kw">=</span> <span class="fu">element_blank</span>()) +
-    <span class="fu">labs</span>(<span class="kw">y</span> <span class="kw">=</span> <span class="kw">NULL</span>),
-  <span class="kw">nrow</span> <span class="kw">=</span> <span class="fl">1</span>,
-  <span class="kw">widths</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">2</span>, <span class="fl">1</span>)
-)</pre></body></html></div>
+<span class="fu"><a href="https://patchwork.data-imaginist.com/reference/wrap_plots.html" class="external-link">wrap_plots</a></span><span class="op">(</span>
+  <span class="va">keji_plot</span> <span class="op">+</span> 
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>strip.background <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span>, strip.text.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>,
+  <span class="va">keji_pca_plot</span> <span class="op">+</span>
+    <span class="fu"><a href="../reference/layer_dendrogram.html">layer_dendrogram</a></span><span class="op">(</span><span class="va">keji_coniss</span>, component <span class="op">=</span> <span class="st">"CONISS"</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">depth</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>axis.text.y.left <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span>, axis.ticks.y.left <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>y <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span>,
+  nrow <span class="op">=</span> <span class="fl">1</span>,
+  widths <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">1</span><span class="op">)</span>
+<span class="op">)</span></code></pre></div>
 <p><img src="strat_diagrams_files/figure-html/unnamed-chunk-27-1.png" width="576"></p>
-<div class="sourceCode" id="cb26"><html><body><pre class="r"><span class="co"># method 2: create a standalone plot for CONISS</span>
-<span class="no">coniss_plot</span> <span class="kw">&lt;-</span> <span class="fu">ggplot</span>() +
-  <span class="fu"><a href="../reference/layer_dendrogram.html">layer_dendrogram</a></span>(<span class="no">keji_coniss</span>, <span class="fu">aes</span>(<span class="kw">y</span> <span class="kw">=</span> <span class="no">depth</span>)) +
-  <span class="fu">scale_y_reverse</span>() +
-  <span class="fu"><a href="../reference/facet_abundanceh.html">facet_geochem_gridh</a></span>(<span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(<span class="st">"CONISS"</span>), <span class="kw">grouping</span> <span class="kw">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(<span class="no">location</span>)) +
-  <span class="fu">labs</span>(<span class="kw">x</span> <span class="kw">=</span> <span class="kw">NULL</span>)
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># method 2: create a standalone plot for CONISS</span>
+<span class="va">coniss_plot</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="../reference/layer_dendrogram.html">layer_dendrogram</a></span><span class="op">(</span><span class="va">keji_coniss</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">depth</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_y_reverse</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="../reference/facet_abundanceh.html">facet_geochem_gridh</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="st">"CONISS"</span><span class="op">)</span>, grouping <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">location</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span>
 
-<span class="fu"><a href="https://patchwork.data-imaginist.com/reference/wrap_plots.html">wrap_plots</a></span>(
-  <span class="no">keji_plot</span> +
-    <span class="fu">theme</span>(<span class="kw">strip.background</span> <span class="kw">=</span> <span class="fu">element_blank</span>(), <span class="kw">strip.text.y</span> <span class="kw">=</span> <span class="fu">element_blank</span>()),
-  <span class="no">coniss_plot</span> +
-    <span class="fu">theme</span>(<span class="kw">axis.text.y.left</span> <span class="kw">=</span> <span class="fu">element_blank</span>(), <span class="kw">axis.ticks.y.left</span> <span class="kw">=</span> <span class="fu">element_blank</span>()) +
-    <span class="fu">labs</span>(<span class="kw">y</span> <span class="kw">=</span> <span class="kw">NULL</span>),
-  <span class="kw">nrow</span> <span class="kw">=</span> <span class="fl">1</span>,
-  <span class="kw">widths</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">6</span>, <span class="fl">1</span>)
-)</pre></body></html></div>
+<span class="fu"><a href="https://patchwork.data-imaginist.com/reference/wrap_plots.html" class="external-link">wrap_plots</a></span><span class="op">(</span>
+  <span class="va">keji_plot</span> <span class="op">+</span> 
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>strip.background <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span>, strip.text.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>,
+  <span class="va">coniss_plot</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>axis.text.y.left <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span>, axis.ticks.y.left <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>y <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span>,
+  nrow <span class="op">=</span> <span class="fl">1</span>,
+  widths <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">6</span>, <span class="fl">1</span><span class="op">)</span>
+<span class="op">)</span></code></pre></div>
 <p><img src="strat_diagrams_files/figure-html/unnamed-chunk-28-1.png" width="576"></p>
 </div>
 </div>
 <div id="topbottomspatial-diagrams" class="section level2">
 <h2 class="hasAnchor">
 <a href="#topbottomspatial-diagrams" class="anchor"></a>Top/bottom/spatial diagrams</h2>
-<p>So far we have looked at data that have depth as an axis. Another sample strategy includes collecting cores with a small number of samples in each (such as top/bottom, or sometimes just a surface sample). A sample dataset of this type was collected by <a href="https://doi.org/10.1080/10402381.2015.1013648">Ginn et al. (2015)</a> in lakes near Halifax, Nova Scotia. A subset of these measurements can be found in the <code>halifax_lakes_plottable</code> data frame.</p>
-<div class="sourceCode" id="cb27"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"halifax_lakes_plottable"</span>)
-<span class="no">halifax_lakes_plottable</span>
+<p>So far we have looked at data that have depth as an axis. Another sample strategy includes collecting cores with a small number of samples in each (such as top/bottom, or sometimes just a surface sample). A sample dataset of this type was collected by <a href="https://doi.org/10.1080/10402381.2015.1013648" class="external-link">Ginn et al. (2015)</a> in lakes near Halifax, Nova Scotia. A subset of these measurements can be found in the <code>halifax_lakes_plottable</code> data frame.</p>
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"halifax_lakes_plottable"</span><span class="op">)</span>
+<span class="va">halifax_lakes_plottable</span>
 <span class="co">#&gt; # A tibble: 114 x 5</span>
 <span class="co">#&gt;    location      sample_type taxon                             count rel_abund</span>
 <span class="co">#&gt;    &lt;chr&gt;         &lt;chr&gt;       &lt;fct&gt;                             &lt;dbl&gt;     &lt;dbl&gt;</span>
@@ -474,53 +492,56 @@
 <span class="co">#&gt;  8 Anderson Lake top         Eunotia exigua                      0       0    </span>
 <span class="co">#&gt;  9 Anderson Lake top         Fragilariforma exigua               1.5     0.330</span>
 <span class="co">#&gt; 10 Anderson Lake top         Tabellaria fenestrata              26       5.71 </span>
-<span class="co">#&gt; # … with 104 more rows</span></pre></body></html></div>
-<p>These diagrams are essentially bar charts, and use <code><a href="https://rdrr.io/pkg/ggstance/man/geom_barh.html">geom_colh()</a></code> to draw their geometry (this works better than <code><a href="../reference/geom_col_segsh.html">geom_col_segsh()</a></code>, which only draws a thin line). We can separate top/bottom samples by setting an additional aesthetic, <code>fill = sample_type</code>, and make sure they dodge vertically by setting <code>position = "dodgev"</code>.</p>
-<div class="sourceCode" id="cb28"><html><body><pre class="r"><span class="no">halifax_plot</span> <span class="kw">&lt;-</span> <span class="fu">ggplot</span>(<span class="no">halifax_lakes_plottable</span>, <span class="fu">aes</span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">rel_abund</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="no">location</span>, <span class="kw">fill</span> <span class="kw">=</span> <span class="no">sample_type</span>)) +
-  <span class="fu"><a href="https://rdrr.io/pkg/ggstance/man/geom_barh.html">geom_colh</a></span>(<span class="kw">width</span> <span class="kw">=</span> <span class="fl">0.5</span>, <span class="kw">position</span> <span class="kw">=</span> <span class="st">"dodgev"</span>) +
-  <span class="fu"><a href="../reference/facet_abundanceh.html">facet_abundanceh</a></span>(<span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(<span class="no">taxon</span>)) +
-  <span class="fu">labs</span>(<span class="kw">x</span> <span class="kw">=</span> <span class="st">"Relative abundance (%)"</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="kw">NULL</span>, <span class="kw">fill</span> <span class="kw">=</span> <span class="st">"Sample Type"</span>)
+<span class="co">#&gt; # … with 104 more rows</span></code></pre></div>
+<p>These diagrams are essentially bar charts, and use <code><a href="https://rdrr.io/pkg/ggstance/man/geom_barh.html" class="external-link">geom_colh()</a></code> to draw their geometry (this works better than <code><a href="../reference/geom_col_segsh.html">geom_col_segsh()</a></code>, which only draws a thin line). We can separate top/bottom samples by setting an additional aesthetic, <code>fill = sample_type</code>, and make sure they dodge vertically by setting <code>position = "dodgev"</code>.</p>
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">halifax_plot</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">halifax_lakes_plottable</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">rel_abund</span>, y <span class="op">=</span> <span class="va">location</span>, fill <span class="op">=</span> <span class="va">sample_type</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://rdrr.io/pkg/ggstance/man/geom_barh.html" class="external-link">geom_colh</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">0.5</span>, position <span class="op">=</span> <span class="st">"dodgev"</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="../reference/facet_abundanceh.html">facet_abundanceh</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">taxon</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Relative abundance (%)"</span>, y <span class="op">=</span> <span class="cn">NULL</span>, fill <span class="op">=</span> <span class="st">"Sample Type"</span><span class="op">)</span>
 
-<span class="no">halifax_plot</span></pre></body></html></div>
+<span class="va">halifax_plot</span></code></pre></div>
 <p><img src="strat_diagrams_files/figure-html/unnamed-chunk-30-1.png" width="576"></p>
 <div id="ordering-lakes-on-the-y-axis" class="section level3">
 <h3 class="hasAnchor">
 <a href="#ordering-lakes-on-the-y-axis" class="anchor"></a>Ordering lakes on the y-axis</h3>
-<p>Diagrams with a discrete axis (in this case, the y-axis) tend to be most efffective when they are ordered in some way. By default, <strong>ggplot2</strong> orders them alphabetically and lists them bottom to top. We can change this order in a similar way to changing the facet order, which is to convert the column containing the y-variable to a <code><a href="https://rdrr.io/r/base/factor.html">factor()</a></code> using <code>fct_relevel()</code>. In this context, <code>fct_rev()</code> is also useful, as it will result in a top-to-bottom ordering rather than a bottom-to-top one.</p>
-<div class="sourceCode" id="cb29"><html><body><pre class="r"><span class="no">halifax_lakes_plottable</span> <span class="kw">%&gt;%</span>
-  <span class="fu">mutate</span>(<span class="kw">location</span> <span class="kw">=</span> <span class="fu">fct_relevel</span>(<span class="no">location</span>, <span class="st">"Bell Lake"</span>, <span class="st">"Bayers"</span>, <span class="st">"Little Springfield"</span>) <span class="kw">%&gt;%</span> <span class="fu">fct_rev</span>()) <span class="kw">%&gt;%</span>
-  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">rel_abund</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="no">location</span>, <span class="kw">fill</span> <span class="kw">=</span> <span class="no">sample_type</span>)) +
-  <span class="no">...</span></pre></body></html></div>
+<p>Diagrams with a discrete axis (in this case, the y-axis) tend to be most efffective when they are ordered in some way. By default, <strong>ggplot2</strong> orders them alphabetically and lists them bottom to top. We can change this order in a similar way to changing the facet order, which is to convert the column containing the y-variable to a <code><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor()</a></code> using <code>fct_relevel()</code>. In this context, <code>fct_rev()</code> is also useful, as it will result in a top-to-bottom ordering rather than a bottom-to-top one.</p>
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">halifax_lakes_plottable</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>location <span class="op">=</span> <span class="fu">fct_relevel</span><span class="op">(</span><span class="va">location</span>, <span class="st">"Bell Lake"</span>, <span class="st">"Bayers"</span>, <span class="st">"Little Springfield"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">fct_rev</span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">rel_abund</span>, y <span class="op">=</span> <span class="va">location</span>, fill <span class="op">=</span> <span class="va">sample_type</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="va">...</span></code></pre></div>
 <p><img src="strat_diagrams_files/figure-html/unnamed-chunk-32-1.png" width="576"></p>
 </div>
 <div id="adding-a-dendrogram-1" class="section level3">
 <h3 class="hasAnchor">
 <a href="#adding-a-dendrogram-1" class="anchor"></a>Adding a dendrogram</h3>
 <p>Adding a dendrogram to a plot with a discrete axis is only tricky because the order of the axes depends on the dendrogram itself. This means that the axes for both plots rely on the result of the clustering.</p>
-<div class="sourceCode" id="cb30"><html><body><pre class="r"><span class="no">halifax_clust</span> <span class="kw">&lt;-</span> <span class="no">halifax_lakes_plottable</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(<span class="no">sample_type</span> <span class="kw">==</span> <span class="st">"top"</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="../reference/nested_data.html">nested_data</a></span>(<span class="kw">qualifiers</span> <span class="kw">=</span> <span class="no">location</span>, <span class="kw">key</span> <span class="kw">=</span> <span class="no">taxon</span>, <span class="kw">value</span> <span class="kw">=</span> <span class="no">rel_abund</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="../reference/nested_hclust.html">nested_hclust</a></span>(<span class="kw">method</span> <span class="kw">=</span> <span class="st">"average"</span>)
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">halifax_clust</span> <span class="op">&lt;-</span> <span class="va">halifax_lakes_plottable</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">sample_type</span> <span class="op">==</span> <span class="st">"top"</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="../reference/nested_data.html">nested_data</a></span><span class="op">(</span>qualifiers <span class="op">=</span> <span class="va">location</span>, key <span class="op">=</span> <span class="va">taxon</span>, value <span class="op">=</span> <span class="va">rel_abund</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="../reference/nested_hclust.html">nested_hclust</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"average"</span><span class="op">)</span>
 
-<span class="no">dendro_order</span> <span class="kw">&lt;-</span> <span class="no">halifax_clust</span> <span class="kw">%&gt;%</span>
-  <span class="fu">unnest</span>(<span class="no">qualifiers</span>, <span class="no">dendro_order</span>) <span class="kw">%&gt;%</span>
-  <span class="fu">arrange</span>(<span class="no">dendro_order</span>) <span class="kw">%&gt;%</span>
-  <span class="fu">pull</span>(<span class="no">location</span>)
+<span class="va">dendro_order</span> <span class="op">&lt;-</span> <span class="va">halifax_clust</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html" class="external-link">unnest</a></span><span class="op">(</span><span class="va">qualifiers</span>, <span class="va">dendro_order</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="va">dendro_order</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html" class="external-link">pull</a></span><span class="op">(</span><span class="va">location</span><span class="op">)</span>
 <span class="co">#&gt; Warning: unnest() has a new interface. See ?unnest for details.</span>
 <span class="co">#&gt; Try `df %&gt;% unnest(c(qualifiers, dendro_order))`, with `mutate()` if needed</span>
 
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">patchwork</span>)
-<span class="fu"><a href="https://patchwork.data-imaginist.com/reference/wrap_plots.html">wrap_plots</a></span>(
-  <span class="no">halifax_plot</span> +
-    <span class="fu">scale_y_discrete</span>(<span class="kw">limits</span> <span class="kw">=</span> <span class="no">dendro_order</span>) +
-    <span class="fu">theme</span>(<span class="kw">legend.position</span> <span class="kw">=</span> <span class="st">"left"</span>),
-  <span class="fu">ggplot</span>() +
-    <span class="fu"><a href="../reference/layer_dendrogram.html">layer_dendrogram</a></span>(<span class="no">halifax_clust</span>, <span class="fu">aes</span>(<span class="kw">y</span> <span class="kw">=</span> <span class="no">location</span>)) +
-    <span class="fu">scale_y_discrete</span>(<span class="kw">limits</span> <span class="kw">=</span> <span class="no">dendro_order</span>) +
-    <span class="fu">labs</span>(<span class="kw">x</span> <span class="kw">=</span> <span class="st">"Dispersion"</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="kw">NULL</span>) +
-    <span class="fu">theme</span>(<span class="kw">axis.text.y.left</span> <span class="kw">=</span> <span class="fu">element_blank</span>(), <span class="kw">axis.ticks.y.left</span> <span class="kw">=</span> <span class="fu">element_blank</span>()),
-  <span class="kw">widths</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">4</span>, <span class="fl">1</span>)
-)</pre></body></html></div>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://patchwork.data-imaginist.com" class="external-link">patchwork</a></span><span class="op">)</span>
+<span class="fu"><a href="https://patchwork.data-imaginist.com/reference/wrap_plots.html" class="external-link">wrap_plots</a></span><span class="op">(</span>
+  <span class="va">halifax_plot</span> <span class="op">+</span> 
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_discrete.html" class="external-link">scale_y_discrete</a></span><span class="op">(</span>limits <span class="op">=</span> <span class="va">dendro_order</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"left"</span><span class="op">)</span>,
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> 
+    <span class="fu"><a href="../reference/layer_dendrogram.html">layer_dendrogram</a></span><span class="op">(</span><span class="va">halifax_clust</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">location</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_discrete.html" class="external-link">scale_y_discrete</a></span><span class="op">(</span>limits <span class="op">=</span> <span class="va">dendro_order</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Dispersion"</span>, y <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>axis.text.y.left <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span>, axis.ticks.y.left <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>,
+  widths <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fl">1</span><span class="op">)</span>
+<span class="op">)</span></code></pre></div>
 <p><img src="strat_diagrams_files/figure-html/unnamed-chunk-33-1.png" width="576"></p>
 </div>
 </div>
@@ -537,11 +558,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Dewey Dunnington.</p>
+  <p></p>
+<p>Developed by Dewey Dunnington.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link external-link">pkgdown</a> 1.6.1.9001.</p>
 </div>
 
       </footer>
@@ -549,6 +572,8 @@
 
   
 
+
+  
 
   </body>
 </html>

@@ -47,6 +47,8 @@ in the same unit." />
 
 
 
+
+
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -58,9 +60,18 @@ in the same unit." />
 
 
 
+<!-- dependencies from examples -->
+
+
+  
+
+  
+
   </head>
 
   <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -74,19 +85,13 @@ in the same unit." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">tidypaleo</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -111,7 +116,7 @@ in the same unit." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/paleolimbot/tidypaleo/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -139,7 +144,7 @@ the data should be scaled (i.e, <code>trans = scale</code>) if all variables are
 in the same unit.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>nested_prcomp</span>(<span class='no'>.data</span>, <span class='kw'>data_column</span> <span class='kw'>=</span> <span class='no'>.data</span>$<span class='no'>data</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>nested_prcomp</span><span class='op'>(</span><span class='va'>.data</span>, data_column <span class='op'>=</span> <span class='va'>.data</span><span class='op'>$</span><span class='va'>data</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -164,58 +169,56 @@ in the same unit.</p>
     <p>.data with additional columns 'model', 'loadings', 'variance' and 'scores'</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>tidyr</span>)
+    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://dplyr.tidyverse.org'>dplyr</a></span>, warn.conflicts <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 
-<span class='no'>nested_pca</span> <span class='kw'>&lt;-</span> <span class='no'>alta_lake_geochem</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='nested_data.html'>nested_data</a></span>(
-    <span class='kw'>qualifiers</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='no'>depth</span>, <span class='no'>zone</span>),
-    <span class='kw'>key</span> <span class='kw'>=</span> <span class='no'>param</span>,
-    <span class='kw'>value</span> <span class='kw'>=</span> <span class='no'>value</span>,
-    <span class='kw'>trans</span> <span class='kw'>=</span> <span class='no'>scale</span>
-  ) <span class='kw'>%&gt;%</span>
-  <span class='fu'>nested_prcomp</span>()
+<span class='va'>nested_pca</span> <span class='op'>&lt;-</span> <span class='va'>alta_lake_geochem</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='nested_data.html'>nested_data</a></span><span class='op'>(</span>
+    qualifiers <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>depth</span>, <span class='va'>zone</span><span class='op'>)</span>,
+    key <span class='op'>=</span> <span class='va'>param</span>,
+    value <span class='op'>=</span> <span class='va'>value</span>,
+    trans <span class='op'>=</span> <span class='va'>scale</span>
+  <span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>nested_prcomp</span><span class='op'>(</span><span class='op'>)</span>
 
 <span class='co'># get variance info</span>
-<span class='no'>nested_pca</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://tidyr.tidyverse.org/reference/nest.html'>unnest</a></span>(<span class='no'>variance</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 6 x 13</span><span>
-#&gt;   discarded_colum… discarded_rows qualifiers data  model component
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;list&gt;</span><span>           </span><span style='color: #555555;font-style: italic;'>&lt;list&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;list&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;lis&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lis&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span> </span><span style='color: #555555;'>&lt;tibble [32 × 0</span><span>… </span><span style='color: #555555;'>&lt;tibble [0 × </span><span>… </span><span style='color: #555555;'>&lt;tibble [</span><span>… </span><span style='color: #555555;'>&lt;tib</span><span>… </span><span style='color: #555555;'>&lt;prc</span><span>…         1
-#&gt; </span><span style='color: #555555;'>2</span><span> </span><span style='color: #555555;'>&lt;tibble [32 × 0</span><span>… </span><span style='color: #555555;'>&lt;tibble [0 × </span><span>… </span><span style='color: #555555;'>&lt;tibble [</span><span>… </span><span style='color: #555555;'>&lt;tib</span><span>… </span><span style='color: #555555;'>&lt;prc</span><span>…         2
-#&gt; </span><span style='color: #555555;'>3</span><span> </span><span style='color: #555555;'>&lt;tibble [32 × 0</span><span>… </span><span style='color: #555555;'>&lt;tibble [0 × </span><span>… </span><span style='color: #555555;'>&lt;tibble [</span><span>… </span><span style='color: #555555;'>&lt;tib</span><span>… </span><span style='color: #555555;'>&lt;prc</span><span>…         3
-#&gt; </span><span style='color: #555555;'>4</span><span> </span><span style='color: #555555;'>&lt;tibble [32 × 0</span><span>… </span><span style='color: #555555;'>&lt;tibble [0 × </span><span>… </span><span style='color: #555555;'>&lt;tibble [</span><span>… </span><span style='color: #555555;'>&lt;tib</span><span>… </span><span style='color: #555555;'>&lt;prc</span><span>…         4
-#&gt; </span><span style='color: #555555;'>5</span><span> </span><span style='color: #555555;'>&lt;tibble [32 × 0</span><span>… </span><span style='color: #555555;'>&lt;tibble [0 × </span><span>… </span><span style='color: #555555;'>&lt;tibble [</span><span>… </span><span style='color: #555555;'>&lt;tib</span><span>… </span><span style='color: #555555;'>&lt;prc</span><span>…         5
-#&gt; </span><span style='color: #555555;'>6</span><span> </span><span style='color: #555555;'>&lt;tibble [32 × 0</span><span>… </span><span style='color: #555555;'>&lt;tibble [0 × </span><span>… </span><span style='color: #555555;'>&lt;tibble [</span><span>… </span><span style='color: #555555;'>&lt;tib</span><span>… </span><span style='color: #555555;'>&lt;prc</span><span>…         6
-#&gt; </span><span style='color: #555555;'># … with 7 more variables: component_text </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, standard_deviation </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>,</span><span>
-#&gt; </span><span style='color: #555555;'>#   variance </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, variance_proportion </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>,</span><span>
-#&gt; </span><span style='color: #555555;'>#   variance_proportion_cumulative </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, loadings </span><span style='color: #555555;font-style: italic;'>&lt;list&gt;</span><span style='color: #555555;'>, scores </span><span style='color: #555555;font-style: italic;'>&lt;list&gt;</span><span></div><div class='input'>
+<span class='va'>nested_pca</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='nested_data.html'>unnested_data</a></span><span class='op'>(</span><span class='va'>variance</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 6 x 6</span><span>
+#&gt;   component component_text standard_deviation variance variance_proportion
+#&gt;       </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>                       </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>               </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span>         1 PC1                         2.15    4.61               0.768  
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span>         2 PC2                         0.884   0.781              0.130  
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span>         3 PC3                         0.603   0.364              0.060</span><span style='text-decoration: underline;'>7</span><span> 
+#&gt; </span><span style='color: #BCBCBC;'>4</span><span>         4 PC4                         0.381   0.145              0.024</span><span style='text-decoration: underline;'>2</span><span> 
+#&gt; </span><span style='color: #BCBCBC;'>5</span><span>         5 PC5                         0.276   0.076</span><span style='text-decoration: underline;'>1</span><span>             0.012</span><span style='text-decoration: underline;'>7</span><span> 
+#&gt; </span><span style='color: #BCBCBC;'>6</span><span>         6 PC6                         0.151   0.022</span><span style='text-decoration: underline;'>8</span><span>             0.003</span><span style='text-decoration: underline;'>80</span><span>
+#&gt; </span><span style='color: #949494;'># … with 1 more variable: variance_proportion_cumulative &lt;dbl&gt;</span><span></div><div class='input'>
 <span class='co'># get loadings info</span>
-<span class='no'>nested_pca</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://tidyr.tidyverse.org/reference/nest.html'>unnest</a></span>(<span class='no'>loadings</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 6 x 14</span><span>
-#&gt;   discarded_colum… discarded_rows qualifiers data  model variance variable
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;list&gt;</span><span>           </span><span style='color: #555555;font-style: italic;'>&lt;list&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;list&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;lis&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lis&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;list&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>   
-#&gt; </span><span style='color: #555555;'>1</span><span> </span><span style='color: #555555;'>&lt;tibble [32 × 0</span><span>… </span><span style='color: #555555;'>&lt;tibble [0 × </span><span>… </span><span style='color: #555555;'>&lt;tibble [</span><span>… </span><span style='color: #555555;'>&lt;tib</span><span>… </span><span style='color: #555555;'>&lt;prc</span><span>… </span><span style='color: #555555;'>&lt;tibble</span><span>… C       
-#&gt; </span><span style='color: #555555;'>2</span><span> </span><span style='color: #555555;'>&lt;tibble [32 × 0</span><span>… </span><span style='color: #555555;'>&lt;tibble [0 × </span><span>… </span><span style='color: #555555;'>&lt;tibble [</span><span>… </span><span style='color: #555555;'>&lt;tib</span><span>… </span><span style='color: #555555;'>&lt;prc</span><span>… </span><span style='color: #555555;'>&lt;tibble</span><span>… C/N     
-#&gt; </span><span style='color: #555555;'>3</span><span> </span><span style='color: #555555;'>&lt;tibble [32 × 0</span><span>… </span><span style='color: #555555;'>&lt;tibble [0 × </span><span>… </span><span style='color: #555555;'>&lt;tibble [</span><span>… </span><span style='color: #555555;'>&lt;tib</span><span>… </span><span style='color: #555555;'>&lt;prc</span><span>… </span><span style='color: #555555;'>&lt;tibble</span><span>… Cu      
-#&gt; </span><span style='color: #555555;'>4</span><span> </span><span style='color: #555555;'>&lt;tibble [32 × 0</span><span>… </span><span style='color: #555555;'>&lt;tibble [0 × </span><span>… </span><span style='color: #555555;'>&lt;tibble [</span><span>… </span><span style='color: #555555;'>&lt;tib</span><span>… </span><span style='color: #555555;'>&lt;prc</span><span>… </span><span style='color: #555555;'>&lt;tibble</span><span>… d13C    
-#&gt; </span><span style='color: #555555;'>5</span><span> </span><span style='color: #555555;'>&lt;tibble [32 × 0</span><span>… </span><span style='color: #555555;'>&lt;tibble [0 × </span><span>… </span><span style='color: #555555;'>&lt;tibble [</span><span>… </span><span style='color: #555555;'>&lt;tib</span><span>… </span><span style='color: #555555;'>&lt;prc</span><span>… </span><span style='color: #555555;'>&lt;tibble</span><span>… d15N    
-#&gt; </span><span style='color: #555555;'>6</span><span> </span><span style='color: #555555;'>&lt;tibble [32 × 0</span><span>… </span><span style='color: #555555;'>&lt;tibble [0 × </span><span>… </span><span style='color: #555555;'>&lt;tibble [</span><span>… </span><span style='color: #555555;'>&lt;tib</span><span>… </span><span style='color: #555555;'>&lt;prc</span><span>… </span><span style='color: #555555;'>&lt;tibble</span><span>… Ti      
-#&gt; </span><span style='color: #555555;'># … with 7 more variables: PC1 </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, PC2 </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, PC3 </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, PC4 </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>,</span><span>
-#&gt; </span><span style='color: #555555;'>#   PC5 </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, PC6 </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, scores </span><span style='color: #555555;font-style: italic;'>&lt;list&gt;</span><span></div><div class='input'>
+<span class='va'>nested_pca</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='nested_data.html'>unnested_data</a></span><span class='op'>(</span><span class='va'>loadings</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 6 x 7</span><span>
+#&gt;   variable    PC1     PC2    PC3    PC4     PC5     PC6
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> C        -</span><span style='color: #BB0000;'>0.380</span><span> -</span><span style='color: #BB0000;'>0.540</span><span>  -</span><span style='color: #BB0000;'>0.460</span><span>  0.162 -</span><span style='color: #BB0000;'>0.567</span><span>   0.071</span><span style='text-decoration: underline;'>8</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> C/N       0.401 -</span><span style='color: #BB0000;'>0.451</span><span>   0.207 -</span><span style='color: #BB0000;'>0.735</span><span> -</span><span style='color: #BB0000;'>0.223</span><span>  -</span><span style='color: #BB0000;'>0.040</span><span style='color: #BB0000;text-decoration: underline;'>8</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span> Cu       -</span><span style='color: #BB0000;'>0.387</span><span> -</span><span style='color: #BB0000;'>0.340</span><span>   0.760  0.173  0.060</span><span style='text-decoration: underline;'>9</span><span>  0.352 
+#&gt; </span><span style='color: #BCBCBC;'>4</span><span> d13C      0.458  0.089</span><span style='text-decoration: underline;'>0</span><span> -</span><span style='color: #BB0000;'>0.144</span><span>  0.145 -</span><span style='color: #BB0000;'>0.126</span><span>   0.851 
+#&gt; </span><span style='color: #BCBCBC;'>5</span><span> d15N     -</span><span style='color: #BB0000;'>0.377</span><span>  0.613   0.144 -</span><span style='color: #BB0000;'>0.386</span><span> -</span><span style='color: #BB0000;'>0.539</span><span>   0.149 
+#&gt; </span><span style='color: #BCBCBC;'>6</span><span> Ti        0.439  0.078</span><span style='text-decoration: underline;'>3</span><span>  0.356  0.483 -</span><span style='color: #BB0000;'>0.565</span><span>  -</span><span style='color: #BB0000;'>0.350</span><span> </div><div class='input'>
 <span class='co'># scores, requalified</span>
-<span class='no'>nested_pca</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://tidyr.tidyverse.org/reference/nest.html'>unnest</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='no'>qualifiers</span>, <span class='no'>scores</span>))</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 32 x 15</span><span>
-#&gt;    discarded_colum… discarded_rows depth zone  row_number data  model variance
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;list&gt;</span><span>           </span><span style='color: #555555;font-style: italic;'>&lt;list&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lis&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lis&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;list&gt;</span><span>  
-#&gt; </span><span style='color: #555555;'> 1</span><span> </span><span style='color: #555555;'>&lt;tibble [32 × 0</span><span>… </span><span style='color: #555555;'>&lt;tibble [0 × </span><span>…  0.25 Zone…          1 </span><span style='color: #555555;'>&lt;tib</span><span>… </span><span style='color: #555555;'>&lt;prc</span><span>… </span><span style='color: #555555;'>&lt;tibble</span><span>…
-#&gt; </span><span style='color: #555555;'> 2</span><span> </span><span style='color: #555555;'>&lt;tibble [32 × 0</span><span>… </span><span style='color: #555555;'>&lt;tibble [0 × </span><span>…  0.75 Zone…          2 </span><span style='color: #555555;'>&lt;tib</span><span>… </span><span style='color: #555555;'>&lt;prc</span><span>… </span><span style='color: #555555;'>&lt;tibble</span><span>…
-#&gt; </span><span style='color: #555555;'> 3</span><span> </span><span style='color: #555555;'>&lt;tibble [32 × 0</span><span>… </span><span style='color: #555555;'>&lt;tibble [0 × </span><span>…  1.25 Zone…          3 </span><span style='color: #555555;'>&lt;tib</span><span>… </span><span style='color: #555555;'>&lt;prc</span><span>… </span><span style='color: #555555;'>&lt;tibble</span><span>…
-#&gt; </span><span style='color: #555555;'> 4</span><span> </span><span style='color: #555555;'>&lt;tibble [32 × 0</span><span>… </span><span style='color: #555555;'>&lt;tibble [0 × </span><span>…  1.75 Zone…          4 </span><span style='color: #555555;'>&lt;tib</span><span>… </span><span style='color: #555555;'>&lt;prc</span><span>… </span><span style='color: #555555;'>&lt;tibble</span><span>…
-#&gt; </span><span style='color: #555555;'> 5</span><span> </span><span style='color: #555555;'>&lt;tibble [32 × 0</span><span>… </span><span style='color: #555555;'>&lt;tibble [0 × </span><span>…  2.5  Zone…          5 </span><span style='color: #555555;'>&lt;tib</span><span>… </span><span style='color: #555555;'>&lt;prc</span><span>… </span><span style='color: #555555;'>&lt;tibble</span><span>…
-#&gt; </span><span style='color: #555555;'> 6</span><span> </span><span style='color: #555555;'>&lt;tibble [32 × 0</span><span>… </span><span style='color: #555555;'>&lt;tibble [0 × </span><span>…  3.5  Zone…          6 </span><span style='color: #555555;'>&lt;tib</span><span>… </span><span style='color: #555555;'>&lt;prc</span><span>… </span><span style='color: #555555;'>&lt;tibble</span><span>…
-#&gt; </span><span style='color: #555555;'> 7</span><span> </span><span style='color: #555555;'>&lt;tibble [32 × 0</span><span>… </span><span style='color: #555555;'>&lt;tibble [0 × </span><span>…  4.5  Zone…          7 </span><span style='color: #555555;'>&lt;tib</span><span>… </span><span style='color: #555555;'>&lt;prc</span><span>… </span><span style='color: #555555;'>&lt;tibble</span><span>…
-#&gt; </span><span style='color: #555555;'> 8</span><span> </span><span style='color: #555555;'>&lt;tibble [32 × 0</span><span>… </span><span style='color: #555555;'>&lt;tibble [0 × </span><span>…  5.5  Zone…          8 </span><span style='color: #555555;'>&lt;tib</span><span>… </span><span style='color: #555555;'>&lt;prc</span><span>… </span><span style='color: #555555;'>&lt;tibble</span><span>…
-#&gt; </span><span style='color: #555555;'> 9</span><span> </span><span style='color: #555555;'>&lt;tibble [32 × 0</span><span>… </span><span style='color: #555555;'>&lt;tibble [0 × </span><span>…  6.5  Zone…          9 </span><span style='color: #555555;'>&lt;tib</span><span>… </span><span style='color: #555555;'>&lt;prc</span><span>… </span><span style='color: #555555;'>&lt;tibble</span><span>…
-#&gt; </span><span style='color: #555555;'>10</span><span> </span><span style='color: #555555;'>&lt;tibble [32 × 0</span><span>… </span><span style='color: #555555;'>&lt;tibble [0 × </span><span>…  7.5  Zone…         10 </span><span style='color: #555555;'>&lt;tib</span><span>… </span><span style='color: #555555;'>&lt;prc</span><span>… </span><span style='color: #555555;'>&lt;tibble</span><span>…
-#&gt; </span><span style='color: #555555;'># … with 22 more rows, and 7 more variables: loadings </span><span style='color: #555555;font-style: italic;'>&lt;list&gt;</span><span style='color: #555555;'>, PC1 </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>,</span><span>
-#&gt; </span><span style='color: #555555;'>#   PC2 </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, PC3 </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, PC4 </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, PC5 </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, PC6 </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span></div><div class='input'>
+<span class='va'>nested_pca</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='nested_data.html'>unnested_data</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>qualifiers</span>, <span class='va'>scores</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 32 x 9</span><span>
+#&gt;    depth zone   row_number    PC1      PC2    PC3     PC4     PC5     PC6
+#&gt;    </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>       </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'> 1</span><span>  0.25 Zone 3          1 -</span><span style='color: #BB0000;'>3.41</span><span>   1.05    -</span><span style='color: #BB0000;'>0.517</span><span> -</span><span style='color: #BB0000;'>1.14</span><span>   -</span><span style='color: #BB0000;'>0.261</span><span>  -</span><span style='color: #BB0000;'>0.363</span><span> 
+#&gt; </span><span style='color: #BCBCBC;'> 2</span><span>  0.75 Zone 3          2 -</span><span style='color: #BB0000;'>3.71</span><span>  -</span><span style='color: #BB0000;'>0.002</span><span style='color: #BB0000;text-decoration: underline;'>29</span><span> -</span><span style='color: #BB0000;'>0.280</span><span> -</span><span style='color: #BB0000;'>0.954</span><span>   0.156   0.044</span><span style='text-decoration: underline;'>7</span><span>
+#&gt; </span><span style='color: #BCBCBC;'> 3</span><span>  1.25 Zone 3          3 -</span><span style='color: #BB0000;'>3.75</span><span>  -</span><span style='color: #BB0000;'>0.980</span><span>    0.833  0.030</span><span style='text-decoration: underline;'>4</span><span>  0.187   0.047</span><span style='text-decoration: underline;'>5</span><span>
+#&gt; </span><span style='color: #BCBCBC;'> 4</span><span>  1.75 Zone 3          4 -</span><span style='color: #BB0000;'>3.89</span><span>  -</span><span style='color: #BB0000;'>0.925</span><span>    1.12   0.076</span><span style='text-decoration: underline;'>5</span><span> -</span><span style='color: #BB0000;'>0.073</span><span style='color: #BB0000;text-decoration: underline;'>9</span><span>  0.202 
+#&gt; </span><span style='color: #BCBCBC;'> 5</span><span>  2.5  Zone 3          5 -</span><span style='color: #BB0000;'>3.46</span><span>  -</span><span style='color: #BB0000;'>1.19</span><span>     0.967  0.270  -</span><span style='color: #BB0000;'>0.048</span><span style='color: #BB0000;text-decoration: underline;'>0</span><span>  0.034</span><span style='text-decoration: underline;'>8</span><span>
+#&gt; </span><span style='color: #BCBCBC;'> 6</span><span>  3.5  Zone 3          6 -</span><span style='color: #BB0000;'>2.88</span><span>  -</span><span style='color: #BB0000;'>0.835</span><span>    0.394  0.151   0.040</span><span style='text-decoration: underline;'>5</span><span> -</span><span style='color: #BB0000;'>0.179</span><span> 
+#&gt; </span><span style='color: #BCBCBC;'> 7</span><span>  4.5  Zone 2          7 -</span><span style='color: #BB0000;'>1.49</span><span>  -</span><span style='color: #BB0000;'>0.293</span><span>   -</span><span style='color: #BB0000;'>0.144</span><span>  0.248  -</span><span style='color: #BB0000;'>0.081</span><span style='color: #BB0000;text-decoration: underline;'>9</span><span> -</span><span style='color: #BB0000;'>0.093</span><span style='color: #BB0000;text-decoration: underline;'>4</span><span>
+#&gt; </span><span style='color: #BCBCBC;'> 8</span><span>  5.5  Zone 2          8 -</span><span style='color: #BB0000;'>0.223</span><span>  0.081</span><span style='text-decoration: underline;'>8</span><span>  -</span><span style='color: #BB0000;'>0.218</span><span>  0.575   0.342  -</span><span style='color: #BB0000;'>0.237</span><span> 
+#&gt; </span><span style='color: #BCBCBC;'> 9</span><span>  6.5  Zone 2          9 -</span><span style='color: #BB0000;'>0.331</span><span>  0.573   -</span><span style='color: #BB0000;'>0.181</span><span>  0.366   0.354  -</span><span style='color: #BB0000;'>0.066</span><span style='color: #BB0000;text-decoration: underline;'>0</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>10</span><span>  7.5  Zone 2         10 -</span><span style='color: #BB0000;'>0.638</span><span>  0.543   -</span><span style='color: #BB0000;'>0.904</span><span>  0.145   0.239   0.150 
+#&gt; </span><span style='color: #949494;'># … with 22 more rows</span><span></div><div class='input'>
 </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -228,11 +231,11 @@ in the same unit.</p>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Dewey Dunnington.</p>
+  <p><p>Developed by Dewey Dunnington.</p></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p></p>
 </div>
 
       </footer>
@@ -240,6 +243,8 @@ in the same unit.</p>
 
   
 
+
+  
 
   </body>
 </html>
