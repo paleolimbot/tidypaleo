@@ -28,7 +28,7 @@ knitr::opts_chunk$set(
 
 This vignette covers creating stratigraphic diagrams using **ggplot2**, highlighting the helpers contained within **tidypaleo**. The **ggplot2** framework was chosen because it is quite flexible and can be used to create almost any time-stratigraphic diagram except ones that involve multiple axes (we can have a fight about whether or not those are appropriate anyway, but if you absolutely need to create them I suggest you look elsewhere). It will help considerably if you are already familiar with **ggplot2** ([a great tutorial can be found here](http://r4ds.had.co.nz/data-visualisation.html)).
 
-First, you will need to load the packages. For this tutorial, I will use **tidypaleo**, and the **tidyverse** (this includes **ggplot2**). Later, I will use **patchwork** to create more complex plots (you can install this from GitHub using `devtools::install_packages("thomasp85/patchwork")`, and **mudata2** because it contains more example data that is useful for illustrating plot data from multiple cores. I prefer the `theme_bw()` theme for **ggplot2** plots, so I will set this here as well. Setting the base font size to a small value (8 pt in this case) helps with strat diagrams.
+First, you will need to load the packages. For this tutorial, I will use **tidypaleo**, and the **tidyverse** (this includes **ggplot2**). Later, I will use **patchwork** to create more complex plots. I prefer the `theme_paleo()` theme for stratigraphic diagrams using **ggplot2**, so I will set this here as well. Setting the base font size to a small value (8 pt in this case) is useful for our purposes.
 
 ```{r, eval=FALSE}
 library(tidyverse)
@@ -36,9 +36,10 @@ library(tidypaleo)
 theme_set(theme_paleo(8))
 ```
 
-Next, you will need to load the example data. This vignette uses 3 datasets that are already in the correct format for plotting. These are datasets in the **tidypaleo** package: `alta_lake_geochem`, `keji_lakes_plottable`, and `halifax_lakes_plottable`. These represent three common dataset types for which stratigraphic plots are created.
+Next, you will need to load the example data. This vignette uses 4 datasets that are already in the correct format for plotting. These are datasets in the **tidypaleo** package: `long_lake_plottable`, `alta_lake_geochem`, `keji_lakes_plottable`, and `halifax_lakes_plottable`. These represent four common dataset types for which stratigraphic plots are created.
 
 ```{r}
+data("long_lake_plottable")
 data("alta_lake_geochem")
 data("keji_lakes_plottable")
 data("halifax_lakes_plottable")
@@ -198,15 +199,10 @@ alta_plot +
 
 ### Multiple cores
 
-So far we've plotted one core. That's great, but often there is more than one core that needs to be plotted. There are two ways to go about this depending on how you would like identical parameters for each lake to be compared: using `facet_geochem_gridh()` will stretch the axis limits to fit values from both cores, and creating (and combining) two separate plots using `patchwork::wrap_plots()` will result in each panel stretching to the min/max of the data for that parameter. We'll illustrate both of these using some other data from Long Lake, Nova Scotia, that is contained in the **mudata2** package.
+So far we've plotted one core. That's great, but often there is more than one core that needs to be plotted. There are two ways to go about this depending on how you would like identical parameters for each lake to be compared: using `facet_geochem_gridh()` will stretch the axis limits to fit values from both cores, and creating (and combining) two separate plots using `patchwork::wrap_plots()` will result in each panel stretching to the min/max of the data for that parameter. We'll illustrate both of these using some other data from Long Lake, Nova Scotia.
 
 ```{r}
-library(mudata2)
-combined_data <- long_lake %>%
-  tbl_data() %>%
-  bind_rows(alta_lake_geochem) %>%
-  filter(param %in% c("C/N", "d13C", "d15N"))
-
+combined_data <- bind_rows(long_lake_plottable, alta_lake_geochem)
 combined_data
 ```
 

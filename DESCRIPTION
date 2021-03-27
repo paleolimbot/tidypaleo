@@ -5,7 +5,12 @@ Authors@R: person("Dewey", "Dunnington",
                   email = "dewey@fishandwhistle.net", 
                   role = c("aut", "cre"), comment = c(ORCID = "0000-0002-9415-4582"))
 Description: Provides a set of functions with a common framework for age-depth model management, 
-  stratigraphic visualization, and common statistical transformations.
+  stratigraphic visualization, and common statistical transformations. The focus of the
+  package is stratigraphic visualization, for which 'ggplot2' components are provided
+  to reproduce the scales, geometries, facets, and theme elements commonly used in
+  publication-quality stratigraphic diagrams. Helpers are also provided to reproduce
+  the exploratory statistical summaries that are frequently included on
+  stratigraphic diagrams.
 Depends: R (>= 3.4.0)
 License: MIT + file LICENSE
 Encoding: UTF-8
@@ -16,7 +21,6 @@ Suggests: testthat,
     rmarkdown,
     vegan,
     glue,
-    mudata2,
     patchwork,
     forcats,
     vdiffr
@@ -34,10 +38,7 @@ Imports: rlang,
     ggstance,
     stringr,
     grid,
-    stats,
     withr,
-    graphics,
-    grDevices,
     tidyr (>= 1.0.2),
     digest,
     rioja

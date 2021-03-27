@@ -7,7 +7,12 @@
 \title{tidypaleo: Tidy Tools for Paleoenvironmental Archives}
 \description{
 Provides a set of functions with a common framework for age-depth model management, 
-  stratigraphic visualization, and common statistical transformations.
+  stratigraphic visualization, and common statistical transformations. The focus of the
+  package is stratigraphic visualization, for which 'ggplot2' components are provided
+  to reproduce the scales, geometries, facets, and theme elements commonly used in
+  publication-quality stratigraphic diagrams. Helpers are also provided to reproduce
+  the exploratory statistical summaries that are frequently included on
+  stratigraphic diagrams.
 }
 \seealso{
 Useful links:

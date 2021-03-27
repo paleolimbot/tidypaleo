@@ -4,16 +4,21 @@
 \name{long_lake_14C_ages}
 \alias{long_lake_14C_ages}
 \alias{long_lake_bacon_ages}
+\alias{long_lake_plottable}
 \title{Long Lake Carbon-14 Ages}
 \format{
 An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 5 rows and 5 columns.
 
 An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 86 rows and 5 columns.
+
+An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 51 rows and 10 columns.
 }
 \usage{
 long_lake_14C_ages
 
 long_lake_bacon_ages
+
+long_lake_plottable
 }
 \description{
 This object contains several uncalibrated Carbon-14 measurements from Long
@@ -25,6 +30,7 @@ modelled by the rbacon package (Blaauw and Christen 2011).
 \examples{
 long_lake_14C_ages
 long_lake_bacon_ages
+long_lake_plottable
 
 }
 \references{

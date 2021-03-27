@@ -112,11 +112,15 @@
 #' @examples
 #' long_lake_14C_ages
 #' long_lake_bacon_ages
+#' long_lake_plottable
 #'
 "long_lake_14C_ages"
 
 #' @rdname long_lake_14C_ages
 "long_lake_bacon_ages"
+
+#' @rdname long_lake_14C_ages
+"long_lake_plottable"
 
 #' Kellys Lake Data
 #'

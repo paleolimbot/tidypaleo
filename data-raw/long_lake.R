@@ -2,6 +2,11 @@
 library(tidyverse)
 library(mudata2)
 
+long_lake_plottable <- long_lake %>%
+  tbl_data() %>%
+  filter(param %in% c("C/N", "d13C", "d15N")) %>%
+  select(-min_value, -max_value)
+
 # from Dunnington et al. 2017 / doi:10.1139/facets-2017-0004
 # and White 2012 /
 # http://openarchive.acadiau.ca/cdm/singleitem/collection/Theses/id/645/rec/80
@@ -23,3 +28,4 @@ long_lake_bacon_ages <- read_delim("data-raw/LL-PC2_43_ages.txt", delim = "\t",
 
 devtools::use_data(long_lake_14C_ages, overwrite = TRUE)
 devtools::use_data(long_lake_bacon_ages, overwrite = TRUE)
+usethis::use_data(long_lake_plottable, overwrite = TRUE)
