@@ -26,7 +26,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-This vignette covers creating stratigraphic diagrams using **ggplot2**, highlighting the helpers contained within **tidypaleo**. The **ggplot2** framework was chosen because it is quite flexible and can be used to create almost any time-stratigraphic diagram except ones that involve multiple axes (we can have a fight about whether or not those are appropriate anyway, but if you absolutely need to create them I suggest you look elsewhere). It will help considerably if you are already familiar with **ggplot2** ([a great tutorial can be found here](http://r4ds.had.co.nz/data-visualisation.html)).
+This vignette covers creating stratigraphic diagrams using **ggplot2**, highlighting the helpers contained within **tidypaleo**. The **ggplot2** framework was chosen because it is quite flexible and can be used to create almost any time-stratigraphic diagram except ones that involve multiple axes (we can have a fight about whether or not those are appropriate anyway, but if you absolutely need to create them I suggest you look elsewhere). It will help considerably if you are already familiar with **ggplot2** ([a great tutorial can be found here](https://r4ds.had.co.nz/data-visualisation.html)).
 
 First, you will need to load the packages. For this tutorial, I will use **tidypaleo**, and the **tidyverse** (this includes **ggplot2**). Later, I will use **patchwork** to create more complex plots. I prefer the `theme_paleo()` theme for stratigraphic diagrams using **ggplot2**, so I will set this here as well. Setting the base font size to a small value (8 pt in this case) is useful for our purposes.
 
