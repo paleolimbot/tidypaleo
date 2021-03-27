@@ -8,7 +8,7 @@
 An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 202 rows and 5 columns.
 }
 \source{
-Neotoma paleoecology database (\url{http://neotomadb.org/})
+Neotoma paleoecology database (\url{https://neotomadb.org})
 }
 \usage{
 keji_lakes_plottable
@@ -25,6 +25,6 @@ keji_lakes_plottable
 Ginn, Brian K., Brian F. Cumming, and John P. Smol. "Long-Term
 Lake Acidification Trends in High- and Low-Sulphate Deposition Regions from
 Nova Scotia, Canada." Hydrobiologia 586, no. 1 (July 1, 2007): 261-75.
-\url{https://doi.org/10.1007/s10750-007-0644-3}.
+\doi{10.1007/s10750-007-0644-3}.
 }
 \keyword{datasets}

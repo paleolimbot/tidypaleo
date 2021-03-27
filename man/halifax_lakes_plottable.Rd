@@ -8,7 +8,7 @@
 An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 114 rows and 5 columns.
 }
 \source{
-Neotoma paleoecology database (\url{http://neotomadb.org/})
+Neotoma paleoecology database (\url{https://neotomadb.org})
 }
 \usage{
 halifax_lakes_plottable
@@ -26,6 +26,6 @@ Ginn, Brian K., Thiyake Rajaratnam, Brian F. Cumming, and John P.
 Smol. "Establishing Realistic Management Objectives for Urban Lakes Using
 Paleolimnological Techniques: An Example from Halifax Region (Nova Scotia,
 Canada)." Lake and Reservoir Management 31, no. 2 (April 3, 2015): 92-108.
-\url{https://doi.org/10.1080/10402381.2015.1013648}.
+\doi{10.1080/10402381.2015.1013648}.
 }
 \keyword{datasets}

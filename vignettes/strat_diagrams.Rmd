@@ -47,7 +47,7 @@ data("halifax_lakes_plottable")
 
 ## Geochemical stratigraphic plots
 
-Geochemical stratigraphic plots include any kind of plot where each panel of the plot should be scaled to the minimum and maximum of the data. This includes (most) non-species abundance data. The example data, `alta_lake_geochem`, is a data frame in parameter-long (one row per measurement) form (you may need to use `gather()` to get your data into this form, which you can learn about in [this tutorial](http://r4ds.had.co.nz/tidy-data.html)). These measurements are from Alta Lake, British Columbia (Canada), and you can read more about them in the [journal article](https://doi.org/10.1007/s10933-016-9919-x).
+Geochemical stratigraphic plots include any kind of plot where each panel of the plot should be scaled to the minimum and maximum of the data. This includes (most) non-species abundance data. The example data, `alta_lake_geochem`, is a data frame in parameter-long (one row per measurement) form (you may need to use `gather()` to get your data into this form, which you can learn about in [this tutorial](https://r4ds.had.co.nz/tidy-data.html)). These measurements are from Alta Lake, British Columbia (Canada), and you can read more about them in the [journal article](https://doi.org/10.1007/s10933-016-9919-x).
 
 ```{r}
 alta_lake_geochem

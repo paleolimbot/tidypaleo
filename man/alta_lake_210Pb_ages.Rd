@@ -45,17 +45,17 @@ alta_lake_bacon_ages
 \references{
 Appleby, P. G., and F. Oldfield. "The Assessment of 210Pb Data from Sites
 with Varying Sediment Accumulation Rates." Hydrobiologia 103, no. 1 (July 1,
-1983): 29–35. \url{https://doi.org/10.1007/BF00028424}.
+1983): 29–35. \doi{10.1007/BF00028424}.
 
 Blaauw, Maarten, and J. Andrés Christen. "Flexible Paleoclimate Age-Depth
 Models Using an Autoregressive Gamma Process." Bayesian Analysis 6, no. 3
-(September 2011): 457–74. \url{https://doi.org/10.1214/ba/1339616472}.
+(September 2011): 457–74. \doi{10.1214/ba/1339616472}.
 
 Dunnington, Dewey W., Ian S. Spooner, Chris E. White, R. Jack Cornett, Dave
 Williamson, and Mike Nelson. "A Geochemical Perspective on the Impact of
 Development at Alta Lake, British Columbia, Canada." Journal of
 Paleolimnology 56, no. 4 (November 2016): 315–330.
-\url{https://doi.org/10.1007/s10933-016-9919-x}.
+\doi{10.1007/s10933-016-9919-x}.
 
 Dunnington, Dewey W. "A 500-Year Applied Paleolimnological Assessment of
 Environmental Change at Alta Lake, Whistler, British Columbia, Canada." M.Sc.

@@ -17,7 +17,7 @@ Provides a set of functions with a common framework for age-depth model manageme
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://paleolimbot.github.io/tidypaleo}
+  \item \url{https://paleolimbot.github.io/tidypaleo/}
   \item \url{https://github.com/paleolimbot/tidypaleo}
   \item Report bugs at \url{https://github.com/paleolimbot/tidypaleo/issues}
 }

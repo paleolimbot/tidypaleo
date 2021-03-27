@@ -18,11 +18,11 @@
 #'
 #' Bennett, K. (1996) Determination of the number of zones in a biostratigraphic sequence.
 #' New Phytologist, 132, 155-170.
-#' <http://doi.org/10.1111/j.1469-8137.1996.tb04521.x> (Broken stick)
+#' \doi{10.1111/j.1469-8137.1996.tb04521.x} (Broken stick)
 #'
 #' Grimm, E.C. (1987) CONISS: A FORTRAN 77 program for stratigraphically constrained cluster
 #' analysis by the method of incremental sum of squares. Computers & Geosciences, 13, 13-35.
-#' <http://doi.org/10.1016/0098-3004(87)90022-7>
+#' \doi{10.1016/0098-3004(87)90022-7}
 #'
 #' Juggins, S. (2017) rioja: Analysis of Quaternary Science Data, R package version (0.9-15.1).
 #' (<https://cran.r-project.org/package=rioja>).
