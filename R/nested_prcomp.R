@@ -13,7 +13,7 @@
 #' @export
 #'
 #' @examples
-#' library(tidyr)
+#' library(dplyr, warn.conflicts = FALSE)
 #'
 #' nested_pca <- alta_lake_geochem %>%
 #'   nested_data(
@@ -25,13 +25,13 @@
 #'   nested_prcomp()
 #'
 #' # get variance info
-#' nested_pca %>% unnest(variance)
+#' nested_pca %>% unnested_data(variance)
 #'
 #' # get loadings info
-#' nested_pca %>% unnest(loadings)
+#' nested_pca %>% unnested_data(loadings)
 #'
 #' # scores, requalified
-#' nested_pca %>% unnest(c(qualifiers, scores))
+#' nested_pca %>% unnested_data(c(qualifiers, scores))
 #'
 nested_prcomp <- function(.data, data_column = .data$data, ...) {
   data_column <- enquo(data_column)

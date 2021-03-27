@@ -34,3 +34,16 @@ data frame within this object}
 \description{
 Perform an analysis on a nested data matrix
 }
+\examples{
+nd <- nested_data(
+  alta_lake_geochem,
+  qualifiers = c(age, depth, zone),
+  key = param,
+  value = value,
+  trans = scale
+)
+
+na <- nested_analysis(nd, vegan::rda, X = data)
+plot(na)
+
+}

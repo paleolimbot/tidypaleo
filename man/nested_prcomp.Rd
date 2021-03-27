@@ -23,7 +23,7 @@ the data should be scaled (i.e, \code{trans = scale}) if all variables are not
 in the same unit.
 }
 \examples{
-library(tidyr)
+library(dplyr, warn.conflicts = FALSE)
 
 nested_pca <- alta_lake_geochem \%>\%
   nested_data(
@@ -35,12 +35,12 @@ nested_pca <- alta_lake_geochem \%>\%
   nested_prcomp()
 
 # get variance info
-nested_pca \%>\% unnest(variance)
+nested_pca \%>\% unnested_data(variance)
 
 # get loadings info
-nested_pca \%>\% unnest(loadings)
+nested_pca \%>\% unnested_data(loadings)
 
 # scores, requalified
-nested_pca \%>\% unnest(c(qualifiers, scores))
+nested_pca \%>\% unnested_data(c(qualifiers, scores))
 
 }

@@ -42,3 +42,16 @@ the input, invisibly
 \description{
 Calls \link[graphics:plot.default]{plot} or another (base) plotting function on all models, arranging the output in subplots.
 }
+\examples{
+nd <- nested_data(
+  alta_lake_geochem,
+  qualifiers = c(age, depth, zone),
+  key = param,
+  value = value,
+  trans = scale
+)
+
+na <- nested_analysis(nd, vegan::rda, X = data)
+plot(na)
+
+}

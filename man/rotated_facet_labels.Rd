@@ -27,3 +27,12 @@ An object or list of objects that can be added to a \link[ggplot2:ggplot]{ggplot
 \description{
 Common plot modifications for stratigraphic plots
 }
+\examples{
+library(ggplot2)
+
+ggplot(mpg, aes(cty, hwy)) +
+  geom_point() +
+  facet_wrap(vars(class)) +
+  rotated_facet_labels(45, "x")
+
+}

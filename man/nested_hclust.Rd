@@ -62,7 +62,7 @@ Powered by \link[rioja:chclust]{chclust} and \link[stats:hclust]{hclust}; broken
 }
 \examples{
 library(tidyr)
-library(dplyr)
+library(dplyr, warn.conflicts = FALSE)
 
 nested_coniss <- keji_lakes_plottable \%>\%
   group_by(location) \%>\%

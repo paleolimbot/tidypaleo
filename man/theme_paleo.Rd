@@ -15,3 +15,11 @@ A complete \code{\link[ggplot2:theme]{ggplot2::theme()}}
 \description{
 Essentially, this is \code{\link[ggplot2:ggtheme]{ggplot2::theme_bw()}} with a few modifications
 }
+\examples{
+library(ggplot2)
+
+ggplot(mpg, aes(cty, hwy)) +
+  geom_point() +
+  theme_paleo()
+
+}

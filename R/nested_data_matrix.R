@@ -189,6 +189,18 @@ unnested_data <- function(.data, ...) {
 #' @return .data with an additional list column of fun output
 #' @export
 #'
+#' @examples
+#' nd <- nested_data(
+#'   alta_lake_geochem,
+#'   qualifiers = c(age, depth, zone),
+#'   key = param,
+#'   value = value,
+#'   trans = scale
+#' )
+#'
+#' na <- nested_analysis(nd, vegan::rda, X = data)
+#' plot(na)
+#'
 nested_analysis <- function(.data, .fun, ..., .output_column = "model", .reserved_names = NULL, .env = parent.frame()) {
   # allow lambda-style functions
   .fun <- rlang::as_function(.fun, env = .env)
@@ -316,9 +328,22 @@ mutate.nested_analysis <- function(.data, ...) {
 #' @param .output_column The column in which the output of the plot function should be placed
 #'
 #' @return the input, invisibly
+#' @export
+#'
+#' @examples
+#' nd <- nested_data(
+#'   alta_lake_geochem,
+#'   qualifiers = c(age, depth, zone),
+#'   key = param,
+#'   value = value,
+#'   trans = scale
+#' )
+#'
+#' na <- nested_analysis(nd, vegan::rda, X = data)
+#' plot(na)
 #'
 #' @importFrom graphics plot
-#' @export
+#'
 plot.nested_analysis <- function(x, ..., main = "", nrow = NULL, ncol = NULL) {
   main <- enquo(main)
   plot_nested_analysis(x, .fun = graphics::plot, ..., main = !!main, nrow = nrow, ncol = ncol)
