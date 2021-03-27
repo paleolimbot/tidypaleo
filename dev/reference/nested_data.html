@@ -58,6 +58,8 @@
 
 
 
+<!-- dependencies from examples -->
+
 
   
 
@@ -205,8 +207,23 @@ variance of 1. See <a href='https://dplyr.tidyverse.org/reference/mutate_all.htm
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A nested data matrix</p>
+    <p>A nested data matrix, which is composed of a <code><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble::tibble()</a></code>
+with tibble list-columns <code>data</code>, <code>discarded_rows</code>, <code>discarded_columns</code>, and
+<code>qualifiers</code>.</p>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'>nested_data</span><span class='op'>(</span>
+  <span class='va'>alta_lake_geochem</span>,
+  qualifiers <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>age</span>, <span class='va'>depth</span>, <span class='va'>zone</span><span class='op'>)</span>,
+  key <span class='op'>=</span> <span class='va'>param</span>,
+  value <span class='op'>=</span> <span class='va'>value</span>,
+  trans <span class='op'>=</span> <span class='va'>scale</span>
+<span class='op'>)</span>
+</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 1 x 4</span><span>
+#&gt;   discarded_columns discarded_rows   qualifiers        data             
+#&gt; </span><span style='color: #BCBCBC;'>*</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;list&gt;</span><span>            </span><span style='color: #949494;font-style: italic;'>&lt;list&gt;</span><span>           </span><span style='color: #949494;font-style: italic;'>&lt;list&gt;</span><span>            </span><span style='color: #949494;font-style: italic;'>&lt;list&gt;</span><span>           
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> </span><span style='color: #949494;'>&lt;tibble [32 × 0]&gt;</span><span> </span><span style='color: #949494;'>&lt;tibble [0 × 9]&gt;</span><span> </span><span style='color: #949494;'>&lt;tibble [32 × 4]&gt;</span><span> </span><span style='color: #949494;'>&lt;tibble [32 × 6]&gt;</span><span></div><div class='input'>
+</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
