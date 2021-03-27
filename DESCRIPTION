@@ -7,7 +7,7 @@ Authors@R: person("Dewey", "Dunnington",
 Description: Provides a set of functions with a common framework for age-depth model management, 
   stratigraphic visualization, and common statistical transformations.
 Depends: R (>= 3.4.0)
-License: GPL-3
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.1
