@@ -43,6 +43,9 @@ of the plot.}
 
 \item{panel_label}{Use to label a pane on a stanalone dendrogram plot}
 }
+\value{
+A \code{\link[ggplot2:layer]{ggplot2::layer()}}
+}
 \description{
 Add a dendrogram as a layer or facet
 }

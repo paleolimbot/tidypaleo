@@ -30,6 +30,9 @@ NULL to suppress renaming.}
 
 \item{multi_line}{See \link[ggplot2:labellers]{label_parsed}}
 }
+\value{
+A \code{\link[ggplot2:labeller]{ggplot2::labeller()}}
+}
 \description{
 Geochem facet labelers
 }

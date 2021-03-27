@@ -37,6 +37,9 @@ the only one that makes sense.}
 
 \item{show.legend}{Show mapped aesthetics in the legend?}
 }
+\value{
+A \link[ggplot2:ggplot2-ggproto]{ggplot2::Stat}
+}
 \description{
 Display a dendrogram as a ggplot2 layer
 }

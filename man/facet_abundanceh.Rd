@@ -110,6 +110,9 @@ NULL to suppress renaming.}
 
 \item{default_units}{The default units to apply}
 }
+\value{
+A subclass of \code{\link[ggplot2:facet_grid]{ggplot2::facet_grid()}} or \code{\link[ggplot2:facet_wrap]{ggplot2::facet_wrap()}}.
+}
 \description{
 Provides a number of modifications to the plot that are necessary for relative abundance plots
 of a number of species. See \link{scale_x_abundance}, \link[ggplot2:facet_grid]{facet_grid},

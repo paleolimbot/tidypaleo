@@ -42,6 +42,9 @@ of the plot.}
 
 \item{...}{Passed to layer_scores()}
 }
+\value{
+A \code{list()} that can be addeed to a \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}}
+}
 \description{
 Add scores to a plot
 }

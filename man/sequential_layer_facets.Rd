@@ -9,6 +9,9 @@ sequential_layer_facets(reverse = FALSE)
 \arguments{
 \item{reverse}{Use TRUE to process layers in reverse order}
 }
+\value{
+An object that can be added to a \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}}
+}
 \description{
 Normally, facets are ordered using \link[base:factor]{as.factor} on all values that occur
 within layer data, which means that when adding additional layers, any ordering

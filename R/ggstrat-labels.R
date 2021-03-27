@@ -8,6 +8,7 @@
 #' @param species_facet Which facet(s) contain species values
 #' @param multi_line See [label_parsed][ggplot2::label_parsed]
 #'
+#' @return A [ggplot2::labeller()]
 #' @export
 #'
 #' @examples
@@ -115,6 +116,7 @@ partial_italic_expr <- function(labs, dont_italicize) {
 #'   NULL to suppress renaming.
 #' @param multi_line See [label_parsed][ggplot2::label_parsed]
 #'
+#' @return A [ggplot2::labeller()]
 #' @export
 #'
 #' @examples

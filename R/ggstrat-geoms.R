@@ -5,6 +5,7 @@
 #'   parent geometries
 #' @param exaggerate_x,exaggerate_y The factor by which to exaggerate x or y values
 #'
+#' @return A subclass of [ggplot2::Geom].
 #' @export
 #'
 geom_point_exaggerate <- function(mapping = NULL, data = NULL,

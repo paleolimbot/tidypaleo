@@ -10,6 +10,8 @@
 #' @param sequential_facets TRUE will result in the panel containing the dendrogram added to the right
 #'   of the plot.
 #' @param ... Passed to layer_scores()
+#'
+#' @return A `list()` that can be addeed to a [ggplot2::ggplot()]
 #' @export
 #'
 layer_scores <- function(
@@ -69,6 +71,7 @@ plot_layer_scores <- function(object, mapping, which = "PC1", key = "param", val
 #' @param panel_label Use to label a pane on a stanalone dendrogram plot
 #' @param ... Use facet_var = "CONISS" or similar to name the panel
 #'
+#' @return A [ggplot2::layer()]
 #' @export
 #'
 layer_dendrogram <- function(object, mapping,
@@ -146,6 +149,7 @@ layer_zone_boundaries <- function(object, mapping, ..., linetype = 2, alpha = 0.
 #'
 #' @param reverse Use TRUE to process layers in reverse order
 #'
+#' @return An object that can be added to a [ggplot2::ggplot()]
 #' @export
 #'
 sequential_layer_facets <- function(reverse = FALSE) {

@@ -18,8 +18,19 @@
 #'   variance of 1. See [mutate_all][dplyr::mutate_all].
 #' @param ... One or more columns to unnest.
 #'
-#' @return A nested data matrix
+#' @return A nested data matrix, which is composed of a [tibble::tibble()]
+#'   with tibble list-columns `data`, `discarded_rows`, `discarded_columns`, and
+#'   `qualifiers`.
 #' @export
+#'
+#' @examples
+#' nested_data(
+#'   alta_lake_geochem,
+#'   qualifiers = c(age, depth, zone),
+#'   key = param,
+#'   value = value,
+#'   trans = scale
+#' )
 #'
 #' @importFrom dplyr any_vars all_vars
 #' @importFrom rlang enquo quos !! !!!

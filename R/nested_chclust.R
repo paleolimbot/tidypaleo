@@ -11,7 +11,7 @@
 #' @param .fun Function powering the clustering. Must return an hclust object of some kind.
 #' @param ... Passed to [chclust][rioja::chclust] or [hclust][stats::hclust].
 #'
-#' @return .data with additional columns
+#' @return `.data` with additional columns
 #' @export
 #'
 #' @references
@@ -203,6 +203,7 @@ plot.nested_hclust <- function(x, ..., sub = "", xlab = "", nrow = NULL, ncol = 
 #' @param inherit.aes Inherit aesthetics from ggplot()?
 #' @param show.legend Show mapped aesthetics in the legend?
 #'
+#' @return A [ggplot2::Stat]
 #' @export
 #'
 stat_nested_hclust <- function(mapping = NULL, data = NULL,

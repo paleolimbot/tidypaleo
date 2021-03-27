@@ -18,6 +18,7 @@
 #' @inheritParams label_geochem
 #' @inheritParams label_species
 #'
+#' @return A subclass of [ggplot2::facet_grid()] or [ggplot2::facet_wrap()].
 #' @export
 #'
 #' @examples

@@ -47,8 +47,20 @@ variance of 1. See \link[dplyr:mutate_all]{mutate_all}.}
 \item{...}{One or more columns to unnest.}
 }
 \value{
-A nested data matrix
+A nested data matrix, which is composed of a \code{\link[tibble:tibble]{tibble::tibble()}}
+with tibble list-columns \code{data}, \code{discarded_rows}, \code{discarded_columns}, and
+\code{qualifiers}.
 }
 \description{
 Prepare a parameter-long data frame for statistical analysis
+}
+\examples{
+nested_data(
+  alta_lake_geochem,
+  qualifiers = c(age, depth, zone),
+  key = param,
+  value = value,
+  trans = scale
+)
+
 }

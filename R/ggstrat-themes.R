@@ -5,6 +5,7 @@
 #'
 #' @param ... Passed to [ggplot2::theme_bw()]
 #'
+#' @return A complete [ggplot2::theme()]
 #' @export
 #'
 theme_paleo <- function(...) {

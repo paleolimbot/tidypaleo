@@ -55,7 +55,7 @@ nested_chclust_coniss(
 data frame within this object}
 }
 \value{
-.data with additional columns
+\code{.data} with additional columns
 }
 \description{
 Powered by \link[rioja:chclust]{chclust} and \link[stats:hclust]{hclust}; broken stick using \link[rioja:chclust]{bstick}.

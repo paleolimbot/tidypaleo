@@ -20,6 +20,9 @@ label_species(
 
 \item{multi_line}{See \link[ggplot2:labellers]{label_parsed}}
 }
+\value{
+A \code{\link[ggplot2:labeller]{ggplot2::labeller()}}
+}
 \description{
 Use these to label species with partial italic formatting. See \link[ggplot2:labellers]{label_parsed}.
 }

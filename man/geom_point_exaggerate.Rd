@@ -79,6 +79,9 @@ parent geometries}
 
 \item{exaggerate_x, exaggerate_y}{The factor by which to exaggerate x or y values}
 }
+\value{
+A subclass of \link[ggplot2:ggplot2-ggproto]{ggplot2::Geom}.
+}
 \description{
 Exaggerated geometries that do not train scales
 }
