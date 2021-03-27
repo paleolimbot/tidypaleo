@@ -206,6 +206,23 @@ plot.nested_hclust <- function(x, ..., sub = "", xlab = "", nrow = NULL, ncol = 
 #' @return A [ggplot2::Stat]
 #' @export
 #'
+#' @examples
+#' library(ggplot2)
+#' library(dplyr, warn.conflicts = FALSE)
+#'
+#' alta_coniss <- nested_data(
+#'   alta_lake_geochem,
+#'   qualifiers = c(age, depth, zone),
+#'   key = param,
+#'   value = value,
+#'   trans = scale
+#' ) %>%
+#'   nested_chclust_coniss()
+#'
+#' ggplot(alta_coniss) +
+#'   stat_nested_hclust(aes(model = model, y = depth)) +
+#'   scale_y_reverse()
+#'
 stat_nested_hclust <- function(mapping = NULL, data = NULL,
                                geom = "segment", position = "identity",
                                ...,

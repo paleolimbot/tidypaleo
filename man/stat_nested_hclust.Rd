@@ -43,4 +43,22 @@ A \link[ggplot2:ggplot2-ggproto]{ggplot2::Stat}
 \description{
 Display a dendrogram as a ggplot2 layer
 }
+\examples{
+library(ggplot2)
+library(dplyr, warn.conflicts = FALSE)
+
+alta_coniss <- nested_data(
+  alta_lake_geochem,
+  qualifiers = c(age, depth, zone),
+  key = param,
+  value = value,
+  trans = scale
+) \%>\%
+  nested_chclust_coniss()
+
+ggplot(alta_coniss) +
+  stat_nested_hclust(aes(model = model, y = depth)) +
+  scale_y_reverse()
+
+}
 \keyword{datasets}

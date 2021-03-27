@@ -1,18 +1,6 @@
 development:
   mode: auto
 
-reference:
-- title: Age-depth models
-  desc: Functions to interpolate/extrapolate ages and depths given a set of paired age/depth values.
-  contents:
-  - age_depth_model
-  - predict.age_depth_model
-  - predict_age
-  - predict_depth
-  - starts_with("age_depth_")
-  - contains("age_depth_model")
-  - as_trans_factory
-
 - title: Stratigraphic diagrams
   desc: Helpers for ggplot2-based stratigraphic diagrams.
   contents:
@@ -26,8 +14,20 @@ reference:
   - starts_with("theme_")
   - sequential_layer_facets
 
+reference:
+- title: Age-depth models
+  desc: Functions to interpolate/extrapolate ages and depths given a set of paired age/depth values.
+  contents:
+  - age_depth_model
+  - predict.age_depth_model
+  - predict_age
+  - predict_depth
+  - starts_with("age_depth_")
+  - contains("age_depth_model")
+  - as_trans_factory
+
 - title: Nested analyses
-  desc: Helpers for clustering and ordination of stratigraphic data. These functions are experimental and may be removed in future a version.
+  desc: Helpers for clustering and ordination of stratigraphic data.
   contents:
   - starts_with("nested_")
   - plot.nested_analysis

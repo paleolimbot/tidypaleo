@@ -14,6 +14,26 @@
 #' @return A `list()` that can be addeed to a [ggplot2::ggplot()]
 #' @export
 #'
+#' @examples
+#' library(ggplot2)
+#' library(dplyr, warn.conflicts = FALSE)
+#'
+#' alta_pca <- nested_data(
+#'   alta_lake_geochem,
+#'   qualifiers = c(age, depth, zone),
+#'   key = param,
+#'   value = value,
+#'   trans = scale
+#' ) %>%
+#'   nested_prcomp()
+#'
+#' ggplot() +
+#'   layer_scores(alta_pca, aes(value, depth), which = "PC1") +
+#'   scale_y_reverse()
+#'
+#' plot_layer_scores(alta_pca, aes(y = depth), which = c("PC1", "PC2")) +
+#'   scale_y_reverse()
+#'
 layer_scores <- function(
   object, mapping = NULL, which = "PC1", key = "param", value = "value",
   scores_geom = list(ggplot2::geom_path(), ggplot2::geom_point()),
