@@ -58,6 +58,8 @@
 
 
 
+<!-- dependencies from examples -->
+
 
   
 
@@ -174,6 +176,24 @@ rlang lambda-style functions.</p></td>
 
     <p>The input, invisibly.</p>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'>as_trans_factory</span><span class='op'>(</span><span class='va'>age_depth_interpolate</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; function (x, y) 
+#&gt; {
+#&gt;     if (!all(is.finite(c(x, y)))) 
+#&gt;         stop("Non-finite values in transformation")
+#&gt;     verify_length(x, y)
+#&gt;     force(x)
+#&gt;     force(y)
+#&gt;     list(trans = function(new_x) {
+#&gt;         stats::approx(x, y, xout = new_x)$y
+#&gt;     }, inverse = function(new_y) {
+#&gt;         stats::approx(y, x, xout = new_y)$y
+#&gt;     })
+#&gt; }
+#&gt; &lt;bytecode: 0x7fca0abd35f0&gt;
+#&gt; &lt;environment: namespace:tidypaleo&gt;</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
