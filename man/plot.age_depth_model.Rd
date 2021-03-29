@@ -25,6 +25,9 @@
 
 \item{...}{Passed to \link[graphics:points]{points} to customize points display}
 }
+\value{
+The input, invisibly
+}
 \description{
 Plot an age depth model using base graphics
 }

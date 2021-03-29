@@ -266,6 +266,7 @@ predict_age <- function(object, depth) {
 #' @param add Pass TRUE to skip creating a new plot
 #' @param ... Passed to [points][graphics::points] to customize points display
 #'
+#' @return The input, invisibly
 #' @export
 #'
 #' @examples
@@ -322,6 +323,8 @@ plot.age_depth_model <- function(x, xlab = "depth", ylab = "age", xlim = NULL, y
 
   # data for model
   graphics::points(x$data$depth, x$data$age, ...)
+
+  invisible(x)
 }
 
 create_trans_list <- function(adm) {
