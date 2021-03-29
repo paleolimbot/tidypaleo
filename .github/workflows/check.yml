@@ -10,6 +10,9 @@ jobs:
       - uses: r-lib/actions/setup-r@master
       - uses: r-lib/actions/setup-pandoc@master
 
+      - name: Install libgit2
+        run: brew install libgit2
+
       - name: Install dependencies
         run: |
           install.packages(c("remotes", "rcmdcheck", "covr", "systemfonts"))
