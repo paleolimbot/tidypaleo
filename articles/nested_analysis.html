@@ -84,7 +84,7 @@
       <h1 data-toc-skip>Nested analyses</h1>
                         <h4 data-toc-skip class="author">Dewey Dunnington</h4>
             
-            <h4 data-toc-skip class="date">2021-03-27</h4>
+            <h4 data-toc-skip class="date">2021-03-29</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/paleolimbot/tidypaleo/blob/master/vignettes/nested_analysis.Rmd" class="external-link"><code>vignettes/nested_analysis.Rmd</code></a></small>
       <div class="hidden name"><code>nested_analysis.Rmd</code></div>
@@ -128,9 +128,9 @@
 
 <span class="va">alta_nested</span>
 <span class="co">#&gt; # A tibble: 1 x 4</span>
-<span class="co">#&gt;   discarded_columns discarded_rows   qualifiers        data             </span>
-<span class="co">#&gt; * &lt;list&gt;            &lt;list&gt;           &lt;list&gt;            &lt;list&gt;           </span>
-<span class="co">#&gt; 1 &lt;tibble [32 × 0]&gt; &lt;tibble [0 × 9]&gt; &lt;tibble [32 × 4]&gt; &lt;tibble [32 × 6]&gt;</span></code></pre></div>
+<span class="co">#&gt;   discarded_columns    discarded_rows      qualifiers          data             </span>
+<span class="co">#&gt; * &lt;list&gt;               &lt;list&gt;              &lt;list&gt;              &lt;list&gt;           </span>
+<span class="co">#&gt; 1 &lt;tibble[,0] [32 × 0… &lt;tibble[,9] [0 × 9… &lt;tibble[,4] [32 × … &lt;tibble[,6] [32 …</span></code></pre></div>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">alta_nested</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/nested_data.html">unnested_data</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 32 x 6</span>
@@ -172,7 +172,7 @@
 <span class="co">#&gt; # A tibble: 1 x 8</span>
 <span class="co">#&gt;   discarded_columns discarded_rows  qualifiers  data   model variance  loadings </span>
 <span class="co">#&gt; * &lt;list&gt;            &lt;list&gt;          &lt;list&gt;      &lt;list&gt; &lt;lis&gt; &lt;list&gt;    &lt;list&gt;   </span>
-<span class="co">#&gt; 1 &lt;tibble [32 × 0]&gt; &lt;tibble [0 × 9… &lt;tibble [3… &lt;tibb… &lt;prc… &lt;tibble … &lt;tibble …</span>
+<span class="co">#&gt; 1 &lt;tibble[,0] [32 … &lt;tibble[,9] [0… &lt;tibble[,4… &lt;tibb… &lt;prc… &lt;tibble[… &lt;tibble[…</span>
 <span class="co">#&gt; # … with 1 more variable: scores &lt;list&gt;</span></code></pre></div>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">pca</span><span class="op">)</span></code></pre></div>
