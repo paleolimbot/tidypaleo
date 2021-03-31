@@ -224,9 +224,10 @@ test_that("lm transform anchors work as expected", {
   expect_identical(test_trans3$inverse(0), 16)
 
   # null anchor
+  # (equal because identical fails on M1 mac)
   test_trans4 <- age_depth_extrapolate(test_depth, test_age, x0 = NULL, y0 = NULL)
-  expect_identical(test_trans4$trans(20), 80)
-  expect_identical(test_trans4$inverse(80), 20)
+  expect_equal(test_trans4$trans(20), 80)
+  expect_equal(test_trans4$inverse(80), 20)
 
   # override slope
   test_trans5 <- age_depth_extrapolate(test_depth, test_age, x0 = 0, y0 = 100, slope = -2)
