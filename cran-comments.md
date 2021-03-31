@@ -1,13 +1,5 @@
 
-This is the initial relase of the 'tidypaleo' package. The problems
-noted by the initial CRAN reviewer (missing one `\value` Rd tag)
-have been fixed. The initial review noted that if there are published
-methods referred to by the package that they should be documented in
-the package Description. The paper describing this package has been
-accepted to the Journal of Statistical Software and will be published
-soon; however, the paper cannot be published until the package is
-available on CRAN. I will update the Description with a link to
-the paper when it has been published.
+This release fixes a failing check on M1 Mac.
 
 ## R CMD check results
 
