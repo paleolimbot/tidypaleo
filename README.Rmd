@@ -25,9 +25,15 @@ Working with multi-proxy paleo-archive data can be difficult. There are multiple
 
 ## Installation
 
-You can install tidypaleo from [GitHub](https://github.com) with:
+You can install the released versio of tidypaleo from [CRAN](https://cran.r-project.org/) with:
 
-```{r gh-installation, eval = FALSE}
+``` r
+install.packages("tidypaleo")
+```
+
+You can install the development version from [GitHub](https://github.com) with:
+
+``` r
 # install.packages("remotes")
 remotes::install_github("paleolimbot/tidypaleo")
 ```

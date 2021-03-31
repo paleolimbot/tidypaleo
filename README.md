@@ -18,7 +18,15 @@ documents in paleo-based studies.
 
 ## Installation
 
-You can install tidypaleo from [GitHub](https://github.com) with:
+You can install the released versio of tidypaleo from
+[CRAN](https://cran.r-project.org/) with:
+
+``` r
+install.packages("tidypaleo")
+```
+
+You can install the development version from
+[GitHub](https://github.com) with:
 
 ``` r
 # install.packages("remotes")
