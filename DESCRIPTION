@@ -1,6 +1,6 @@
 Package: tidypaleo
 Title: Tidy Tools for Paleoenvironmental Archives
-Version: 0.1.1
+Version: 0.1.1.9000
 Authors@R: person("Dewey", "Dunnington", 
                   email = "dewey@fishandwhistle.net", 
                   role = c("aut", "cre", "cph"), comment = c(ORCID = "0000-0002-9415-4582"))
