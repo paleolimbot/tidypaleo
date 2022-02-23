@@ -1,0 +1,22 @@
+bibentry(bibtype = "Article",
+  title        = "{tidypaleo}: Visualizing Paleoenvironmental Archives Using {ggplot2}",
+  author       = c(person(given = c("Dewey", "W."),
+                          family = "Dunnington",
+                          email = "dewey.dunnington@dal.ca"),
+                   person(given = "Nell",
+                          family = "Libera"),
+                   person(given = "Joshua",
+                          family = "Kurek"),
+                   person(given = c("Ian", "S."),
+                          family = "Spooner"),
+                   person(given = c("Graham", "A."),
+                          family = "Gagnon")),
+  journal      = "Journal of Statistical Software",
+  year         = "2022",
+  volume       = "101",
+  number       = "7",
+  pages        = "1--20",
+  doi          = "10.18637/jss.v101.i07",
+  header       = "To cite tidypaleo in publications use:"
+)
+

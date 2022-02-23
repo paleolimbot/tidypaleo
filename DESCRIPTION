@@ -10,7 +10,7 @@ Description: Provides a set of functions with a common framework for age-depth m
   to reproduce the scales, geometries, facets, and theme elements commonly used in
   publication-quality stratigraphic diagrams. Helpers are also provided to reproduce
   the exploratory statistical summaries that are frequently included on
-  stratigraphic diagrams.
+  stratigraphic diagrams. See Dunnington et al. (2021) <doi:10.18637/jss.v101.i07>.
 Depends: R (>= 3.4.0)
 License: MIT + file LICENSE
 Encoding: UTF-8

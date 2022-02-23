@@ -1,5 +1,8 @@
 
-This release fixes a failing check on M1 Mac.
+This release adds a CITATION and updates the Description to reflect the
+forthcoming publication of a Journal of Statistical Software article.
+The DOI in the CITATION is for a new JSS publication that will be
+registered after publication on CRAN.
 
 ## R CMD check results
 
