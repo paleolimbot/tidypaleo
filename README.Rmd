@@ -17,8 +17,8 @@ knitr::opts_chunk$set(
 # tidypaleo
 
 <!-- badges: start -->
-![R-CMD-check](https://github.com/paleolimbot/tidypaleo/workflows/R-CMD-check/badge.svg)
 [![Coverage Status](https://img.shields.io/codecov/c/github/paleolimbot/tidypaleo/master.svg)](https://codecov.io/github/paleolimbot/tidypaleo?branch=master)
+[![R-CMD-check](https://github.com/paleolimbot/tidypaleo/workflows/R-CMD-check/badge.svg)](https://github.com/paleolimbot/tidypaleo/actions)
 <!-- badges: end -->
 
 Working with multi-proxy paleo-archive data can be difficult. There are multiple locations, multiple parameters, and a lot of discipline-specific norms for plot layout and notation. This package simplifies a few workflows to promote the use of R for reproducible documents in paleo-based studies.

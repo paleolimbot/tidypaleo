@@ -5,9 +5,9 @@
 
 <!-- badges: start -->
 
-![R-CMD-check](https://github.com/paleolimbot/tidypaleo/workflows/R-CMD-check/badge.svg)
 [![Coverage
 Status](https://img.shields.io/codecov/c/github/paleolimbot/tidypaleo/master.svg)](https://codecov.io/github/paleolimbot/tidypaleo?branch=master)
+[![R-CMD-check](https://github.com/paleolimbot/tidypaleo/workflows/R-CMD-check/badge.svg)](https://github.com/paleolimbot/tidypaleo/actions)
 <!-- badges: end -->
 
 Working with multi-proxy paleo-archive data can be difficult. There are
