@@ -1,3 +1,5 @@
+# tidypaleo (development version)
+
 # tidypaleo 0.1.2
 
 * Add CITATION file and Journal of Statistical Software
