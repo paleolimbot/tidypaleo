@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">tidypaleo</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.2</span>
       </span>
     </div>
 
@@ -43,7 +43,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -87,9 +87,9 @@
       <h1 data-toc-skip>Nested analyses</h1>
                         <h4 data-toc-skip class="author">Dewey Dunnington</h4>
             
-            <h4 data-toc-skip class="date">2021-03-31</h4>
+            <h4 data-toc-skip class="date">2022-09-04</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/paleolimbot/tidypaleo/blob/master/vignettes/nested_analysis.Rmd" class="external-link"><code>vignettes/nested_analysis.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/paleolimbot/tidypaleo/blob/HEAD/vignettes/nested_analysis.Rmd" class="external-link"><code>vignettes/nested_analysis.Rmd</code></a></small>
       <div class="hidden name"><code>nested_analysis.Rmd</code></div>
 
     </div>
@@ -98,244 +98,252 @@
     
 <p>Load the packages:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">tidyverse</span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://paleolimbot.github.io/tidypaleo/" class="external-link">tidypaleo</a></span><span class="op">)</span></code></pre></div>
-<div id="creating-nested-data" class="section level2">
-<h2 class="hasAnchor">
-<a href="#creating-nested-data" class="anchor"></a>Creating nested data</h2>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://paleolimbot.github.io/tidypaleo/" class="external-link">tidypaleo</a></span><span class="op">)</span></span></code></pre></div>
+<div class="section level2">
+<h2 id="creating-nested-data">Creating nested data<a class="anchor" aria-label="anchor" href="#creating-nested-data"></a>
+</h2>
 <p>Preparing the data:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">alta_lake_geochem</span>
-<span class="co">#&gt; # A tibble: 192 x 9</span>
-<span class="co">#&gt;    location param depth   age value stdev units     n zone  </span>
-<span class="co">#&gt;    &lt;chr&gt;    &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;int&gt; &lt;chr&gt; </span>
-<span class="co">#&gt;  1 ALGC2    Cu     0.25 2015.  76   NA    ppm       1 Zone 3</span>
-<span class="co">#&gt;  2 ALGC2    Cu     0.75 2011. 108.   4.50 ppm       3 Zone 3</span>
-<span class="co">#&gt;  3 ALGC2    Cu     1.25 2008. 158   NA    ppm       1 Zone 3</span>
-<span class="co">#&gt;  4 ALGC2    Cu     1.75 2003. 169   NA    ppm       1 Zone 3</span>
-<span class="co">#&gt;  5 ALGC2    Cu     2.5  1998. 161   NA    ppm       1 Zone 3</span>
-<span class="co">#&gt;  6 ALGC2    Cu     3.5  1982. 129   NA    ppm       1 Zone 3</span>
-<span class="co">#&gt;  7 ALGC2    Cu     4.5  1966.  88.7  3.86 ppm       3 Zone 2</span>
-<span class="co">#&gt;  8 ALGC2    Cu     5.5  1947.  65   NA    ppm       1 Zone 2</span>
-<span class="co">#&gt;  9 ALGC2    Cu     6.5  1922.  62.3  9.53 ppm       3 Zone 2</span>
-<span class="co">#&gt; 10 ALGC2    Cu     7.5  1896.  48   NA    ppm       1 Zone 2</span>
-<span class="co">#&gt; # … with 182 more rows</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">alta_lake_geochem</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 192 × 9</span></span></span>
+<span><span class="co">#&gt;    location param depth   age value stdev units     n zone  </span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> ALGC2    Cu     0.25 <span style="text-decoration: underline;">2</span>015.  76   <span style="color: #BB0000;">NA</span>    ppm       1 Zone 3</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> ALGC2    Cu     0.75 <span style="text-decoration: underline;">2</span>011. 108.   4.50 ppm       3 Zone 3</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> ALGC2    Cu     1.25 <span style="text-decoration: underline;">2</span>008. 158   <span style="color: #BB0000;">NA</span>    ppm       1 Zone 3</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> ALGC2    Cu     1.75 <span style="text-decoration: underline;">2</span>003. 169   <span style="color: #BB0000;">NA</span>    ppm       1 Zone 3</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> ALGC2    Cu     2.5  <span style="text-decoration: underline;">1</span>998. 161   <span style="color: #BB0000;">NA</span>    ppm       1 Zone 3</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> ALGC2    Cu     3.5  <span style="text-decoration: underline;">1</span>982. 129   <span style="color: #BB0000;">NA</span>    ppm       1 Zone 3</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> ALGC2    Cu     4.5  <span style="text-decoration: underline;">1</span>966.  88.7  3.86 ppm       3 Zone 2</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> ALGC2    Cu     5.5  <span style="text-decoration: underline;">1</span>947.  65   <span style="color: #BB0000;">NA</span>    ppm       1 Zone 2</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> ALGC2    Cu     6.5  <span style="text-decoration: underline;">1</span>922.  62.3  9.53 ppm       3 Zone 2</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> ALGC2    Cu     7.5  <span style="text-decoration: underline;">1</span>896.  48   <span style="color: #BB0000;">NA</span>    ppm       1 Zone 2</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># … with 182 more rows</span></span></span></code></pre></div>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">alta_nested</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/nested_data.html">nested_data</a></span><span class="op">(</span>
-  <span class="va">alta_lake_geochem</span>,
-  qualifiers <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">age</span>, <span class="va">depth</span>, <span class="va">zone</span><span class="op">)</span>,
-  key <span class="op">=</span> <span class="va">param</span>,
-  value <span class="op">=</span> <span class="va">value</span>,
-  trans <span class="op">=</span> <span class="va">scale</span>
-<span class="op">)</span>
-
-<span class="va">alta_nested</span>
-<span class="co">#&gt; # A tibble: 1 x 4</span>
-<span class="co">#&gt;   discarded_columns    discarded_rows      qualifiers          data             </span>
-<span class="co">#&gt; * &lt;list&gt;               &lt;list&gt;              &lt;list&gt;              &lt;list&gt;           </span>
-<span class="co">#&gt; 1 &lt;tibble[,0] [32 × 0… &lt;tibble[,9] [0 × 9… &lt;tibble[,4] [32 × … &lt;tibble[,6] [32 …</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">alta_nested</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/nested_data.html">nested_data</a></span><span class="op">(</span></span>
+<span>  <span class="va">alta_lake_geochem</span>,</span>
+<span>  qualifiers <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">age</span>, <span class="va">depth</span>, <span class="va">zone</span><span class="op">)</span>,</span>
+<span>  key <span class="op">=</span> <span class="va">param</span>,</span>
+<span>  value <span class="op">=</span> <span class="va">value</span>,</span>
+<span>  trans <span class="op">=</span> <span class="va">scale</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">alta_nested</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 1 × 4</span></span></span>
+<span><span class="co">#&gt;   discarded_columns discarded_rows   qualifiers        data             </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">*</span> <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>           </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> <span style="color: #949494;">&lt;tibble [32 × 0]&gt;</span> <span style="color: #949494;">&lt;tibble [0 × 9]&gt;</span> <span style="color: #949494;">&lt;tibble [32 × 4]&gt;</span> <span style="color: #949494;">&lt;tibble [32 × 6]&gt;</span></span></span></code></pre></div>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">alta_nested</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/nested_data.html">unnested_data</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 32 x 6</span>
-<span class="co">#&gt;     C[,1] `C/N`[,1] Cu[,1] d13C[,1] d15N[,1] Ti[,1]</span>
-<span class="co">#&gt;     &lt;dbl&gt;     &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;</span>
-<span class="co">#&gt;  1 -1.54      1.26  -0.794    1.03   -0.670   0.807</span>
-<span class="co">#&gt;  2 -1.59      1.36  -0.559    1.19    0.0499  1.33 </span>
-<span class="co">#&gt;  3 -1.98      0.960 -0.721    1.10   -0.511   0.682</span>
-<span class="co">#&gt;  4 -0.189     1.61  -0.749    0.836  -2.37    0.233</span>
-<span class="co">#&gt;  5  0.993     2.48  -0.694    1.06   -2.55    0.908</span>
-<span class="co">#&gt;  6 -0.157     1.76  -0.712    1.17   -1.52    0.941</span>
-<span class="co">#&gt;  7 -0.642     1.36  -0.667    1.07   -1.39    1.14 </span>
-<span class="co">#&gt;  8 -1.07      0.924 -0.559    0.820  -0.439   1.16 </span>
-<span class="co">#&gt;  9 -0.722     0.696 -0.830    0.765  -0.929   0.932</span>
-<span class="co">#&gt; 10 -0.631     0.309 -0.504    0.409  -0.166   0.882</span>
-<span class="co">#&gt; # … with 22 more rows</span>
-<span class="va">alta_nested</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/nested_data.html">unnested_data</a></span><span class="op">(</span><span class="va">qualifiers</span>, <span class="va">data</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 32 x 10</span>
-<span class="co">#&gt;      age depth zone  row_number  C[,1] `C/N`[,1] Cu[,1] d13C[,1] d15N[,1] Ti[,1]</span>
-<span class="co">#&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;int&gt;  &lt;dbl&gt;     &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;</span>
-<span class="co">#&gt;  1 1550   29.5 Zone…          1 -1.54      1.26  -0.794    1.03   -0.670   0.807</span>
-<span class="co">#&gt;  2 1566.  28.5 Zone…          2 -1.59      1.36  -0.559    1.19    0.0499  1.33 </span>
-<span class="co">#&gt;  3 1581.  27.5 Zone…          3 -1.98      0.960 -0.721    1.10   -0.511   0.682</span>
-<span class="co">#&gt;  4 1597.  26.5 Zone…          4 -0.189     1.61  -0.749    0.836  -2.37    0.233</span>
-<span class="co">#&gt;  5 1613.  25.5 Zone…          5  0.993     2.48  -0.694    1.06   -2.55    0.908</span>
-<span class="co">#&gt;  6 1629.  24.5 Zone…          6 -0.157     1.76  -0.712    1.17   -1.52    0.941</span>
-<span class="co">#&gt;  7 1644.  23.5 Zone…          7 -0.642     1.36  -0.667    1.07   -1.39    1.14 </span>
-<span class="co">#&gt;  8 1660.  22.5 Zone…          8 -1.07      0.924 -0.559    0.820  -0.439   1.16 </span>
-<span class="co">#&gt;  9 1676.  21.5 Zone…          9 -0.722     0.696 -0.830    0.765  -0.929   0.932</span>
-<span class="co">#&gt; 10 1692.  20.5 Zone…         10 -0.631     0.309 -0.504    0.409  -0.166   0.882</span>
-<span class="co">#&gt; # … with 22 more rows</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">alta_nested</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/nested_data.html">unnested_data</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 32 × 6</span></span></span>
+<span><span class="co">#&gt;     C[,1] `C/N`[,1] Cu[,1] d13C[,1] d15N[,1] Ti[,1]</span></span>
+<span><span class="co">#&gt;     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> -<span style="color: #BB0000;">1.54</span>      1.26  -<span style="color: #BB0000;">0.794</span>    1.03   -<span style="color: #BB0000;">0.670</span>   0.807</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> -<span style="color: #BB0000;">1.59</span>      1.36  -<span style="color: #BB0000;">0.559</span>    1.19    0.049<span style="text-decoration: underline;">9</span>  1.33 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> -<span style="color: #BB0000;">1.98</span>      0.960 -<span style="color: #BB0000;">0.721</span>    1.10   -<span style="color: #BB0000;">0.511</span>   0.682</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> -<span style="color: #BB0000;">0.189</span>     1.61  -<span style="color: #BB0000;">0.749</span>    0.836  -<span style="color: #BB0000;">2.37</span>    0.233</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span>  0.993     2.48  -<span style="color: #BB0000;">0.694</span>    1.06   -<span style="color: #BB0000;">2.55</span>    0.908</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> -<span style="color: #BB0000;">0.157</span>     1.76  -<span style="color: #BB0000;">0.712</span>    1.17   -<span style="color: #BB0000;">1.52</span>    0.941</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> -<span style="color: #BB0000;">0.642</span>     1.36  -<span style="color: #BB0000;">0.667</span>    1.07   -<span style="color: #BB0000;">1.39</span>    1.14 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> -<span style="color: #BB0000;">1.07</span>      0.924 -<span style="color: #BB0000;">0.559</span>    0.820  -<span style="color: #BB0000;">0.439</span>   1.16 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> -<span style="color: #BB0000;">0.722</span>     0.696 -<span style="color: #BB0000;">0.830</span>    0.765  -<span style="color: #BB0000;">0.929</span>   0.932</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> -<span style="color: #BB0000;">0.631</span>     0.309 -<span style="color: #BB0000;">0.504</span>    0.409  -<span style="color: #BB0000;">0.166</span>   0.882</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># … with 22 more rows</span></span></span>
+<span><span class="va">alta_nested</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/nested_data.html">unnested_data</a></span><span class="op">(</span><span class="va">qualifiers</span>, <span class="va">data</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 32 × 10</span></span></span>
+<span><span class="co">#&gt;      age depth zone   row_number  C[,1] `C/N`[,1] Cu[,1] d13C[,1] d15N[…¹ Ti[,1]</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> <span style="text-decoration: underline;">1</span>550   29.5 Zone 1          1 -<span style="color: #BB0000;">1.54</span>      1.26  -<span style="color: #BB0000;">0.794</span>    1.03  -<span style="color: #BB0000;">0.670</span>   0.807</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> <span style="text-decoration: underline;">1</span>566.  28.5 Zone 1          2 -<span style="color: #BB0000;">1.59</span>      1.36  -<span style="color: #BB0000;">0.559</span>    1.19   0.049<span style="text-decoration: underline;">9</span>  1.33 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> <span style="text-decoration: underline;">1</span>581.  27.5 Zone 1          3 -<span style="color: #BB0000;">1.98</span>      0.960 -<span style="color: #BB0000;">0.721</span>    1.10  -<span style="color: #BB0000;">0.511</span>   0.682</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> <span style="text-decoration: underline;">1</span>597.  26.5 Zone 1          4 -<span style="color: #BB0000;">0.189</span>     1.61  -<span style="color: #BB0000;">0.749</span>    0.836 -<span style="color: #BB0000;">2.37</span>    0.233</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> <span style="text-decoration: underline;">1</span>613.  25.5 Zone 1          5  0.993     2.48  -<span style="color: #BB0000;">0.694</span>    1.06  -<span style="color: #BB0000;">2.55</span>    0.908</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> <span style="text-decoration: underline;">1</span>629.  24.5 Zone 1          6 -<span style="color: #BB0000;">0.157</span>     1.76  -<span style="color: #BB0000;">0.712</span>    1.17  -<span style="color: #BB0000;">1.52</span>    0.941</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> <span style="text-decoration: underline;">1</span>644.  23.5 Zone 1          7 -<span style="color: #BB0000;">0.642</span>     1.36  -<span style="color: #BB0000;">0.667</span>    1.07  -<span style="color: #BB0000;">1.39</span>    1.14 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> <span style="text-decoration: underline;">1</span>660.  22.5 Zone 1          8 -<span style="color: #BB0000;">1.07</span>      0.924 -<span style="color: #BB0000;">0.559</span>    0.820 -<span style="color: #BB0000;">0.439</span>   1.16 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> <span style="text-decoration: underline;">1</span>676.  21.5 Zone 1          9 -<span style="color: #BB0000;">0.722</span>     0.696 -<span style="color: #BB0000;">0.830</span>    0.765 -<span style="color: #BB0000;">0.929</span>   0.932</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> <span style="text-decoration: underline;">1</span>692.  20.5 Zone 1         10 -<span style="color: #BB0000;">0.631</span>     0.309 -<span style="color: #BB0000;">0.504</span>    0.409 -<span style="color: #BB0000;">0.166</span>   0.882</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># … with 22 more rows, and abbreviated variable name ¹​d15N[,1]</span></span></span></code></pre></div>
 </div>
-<div id="principal-components-analysis" class="section level2">
-<h2 class="hasAnchor">
-<a href="#principal-components-analysis" class="anchor"></a>Principal components analysis</h2>
+<div class="section level2">
+<h2 id="principal-components-analysis">Principal components analysis<a class="anchor" aria-label="anchor" href="#principal-components-analysis"></a>
+</h2>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">pca</span> <span class="op">&lt;-</span> <span class="va">alta_nested</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/nested_prcomp.html">nested_prcomp</a></span><span class="op">(</span><span class="op">)</span>
-<span class="va">pca</span>
-<span class="co">#&gt; # A tibble: 1 x 8</span>
-<span class="co">#&gt;   discarded_columns discarded_rows  qualifiers  data   model variance  loadings </span>
-<span class="co">#&gt; * &lt;list&gt;            &lt;list&gt;          &lt;list&gt;      &lt;list&gt; &lt;lis&gt; &lt;list&gt;    &lt;list&gt;   </span>
-<span class="co">#&gt; 1 &lt;tibble[,0] [32 … &lt;tibble[,9] [0… &lt;tibble[,4… &lt;tibb… &lt;prc… &lt;tibble[… &lt;tibble[…</span>
-<span class="co">#&gt; # … with 1 more variable: scores &lt;list&gt;</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">pca</span> <span class="op">&lt;-</span> <span class="va">alta_nested</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/nested_prcomp.html">nested_prcomp</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">pca</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 1 × 8</span></span></span>
+<span><span class="co">#&gt;   discarded_col…¹ discar…² qualif…³ data     model    variance loadings scores  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">*</span> <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> &lt;tibble&gt;        &lt;tibble&gt; &lt;tibble&gt; &lt;tibble&gt; <span style="color: #949494;">&lt;prcomp&gt;</span> &lt;tibble&gt; &lt;tibble&gt; &lt;tibble&gt;</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># … with abbreviated variable names ¹​discarded_columns, ²​discarded_rows,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   ³​qualifiers</span></span></span></code></pre></div>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">pca</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">pca</span><span class="op">)</span></span></code></pre></div>
 <p><img src="nested_analysis_files/figure-html/unnamed-chunk-6-1.png" width="750"></p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">pca</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/nested_data.html">unnested_data</a></span><span class="op">(</span><span class="va">qualifiers</span>, <span class="va">scores</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 32 x 10</span>
-<span class="co">#&gt;      age depth zone   row_number   PC1     PC2     PC3     PC4     PC5     PC6</span>
-<span class="co">#&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;       &lt;int&gt; &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;</span>
-<span class="co">#&gt;  1 1550   29.5 Zone 1          1 -2.48 -0.273   0.409   0.518   0.316  -0.0538</span>
-<span class="co">#&gt;  2 1566.  28.5 Zone 1          2 -2.48 -0.675   0.902   0.561  -0.364  -0.190 </span>
-<span class="co">#&gt;  3 1581.  27.5 Zone 1          3 -2.41 -0.721   0.576   0.465   0.619  -0.184 </span>
-<span class="co">#&gt;  4 1597.  26.5 Zone 1          4 -2.39  1.73   -0.527   0.197   0.742   0.0656</span>
-<span class="co">#&gt;  5 1613.  25.5 Zone 1          5 -2.73  2.82   -0.666   0.212  -0.432   0.0715</span>
-<span class="co">#&gt;  6 1629.  24.5 Zone 1          6 -2.56  1.22   -0.155   0.235  -0.208  -0.105 </span>
-<span class="co">#&gt;  7 1644.  23.5 Zone 1          7 -2.57  0.708   0.123  -0.0210 -0.0114  0.0286</span>
-<span class="co">#&gt;  8 1660.  22.5 Zone 1          8 -2.04 -0.243   0.490   0.101  -0.157   0.0834</span>
-<span class="co">#&gt;  9 1676.  21.5 Zone 1          9 -1.98  0.0702 -0.0657 -0.147   0.0813  0.186 </span>
-<span class="co">#&gt; 10 1692.  20.5 Zone 1         10 -1.20 -0.376   0.202  -0.132  -0.202   0.220 </span>
-<span class="co">#&gt; # … with 22 more rows</span>
-<span class="va">pca</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/nested_data.html">unnested_data</a></span><span class="op">(</span><span class="va">variance</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 6 x 6</span>
-<span class="co">#&gt;   component component_text standard_deviation variance variance_proportion</span>
-<span class="co">#&gt;       &lt;int&gt; &lt;chr&gt;                       &lt;dbl&gt;    &lt;dbl&gt;               &lt;dbl&gt;</span>
-<span class="co">#&gt; 1         1 PC1                         2.15    4.61               0.768  </span>
-<span class="co">#&gt; 2         2 PC2                         0.884   0.781              0.130  </span>
-<span class="co">#&gt; 3         3 PC3                         0.603   0.364              0.0607 </span>
-<span class="co">#&gt; 4         4 PC4                         0.381   0.145              0.0242 </span>
-<span class="co">#&gt; 5         5 PC5                         0.276   0.0761             0.0127 </span>
-<span class="co">#&gt; 6         6 PC6                         0.151   0.0228             0.00380</span>
-<span class="co">#&gt; # … with 1 more variable: variance_proportion_cumulative &lt;dbl&gt;</span>
-<span class="va">pca</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/nested_data.html">unnested_data</a></span><span class="op">(</span><span class="va">loadings</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 6 x 7</span>
-<span class="co">#&gt;   variable    PC1     PC2    PC3    PC4     PC5     PC6</span>
-<span class="co">#&gt;   &lt;chr&gt;     &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 C         0.380  0.540  -0.460 -0.162 -0.567  -0.0718</span>
-<span class="co">#&gt; 2 C/N      -0.401  0.451   0.207  0.735 -0.223   0.0408</span>
-<span class="co">#&gt; 3 Cu        0.387  0.340   0.760 -0.173  0.0609 -0.352 </span>
-<span class="co">#&gt; 4 d13C     -0.458 -0.0890 -0.144 -0.145 -0.126  -0.851 </span>
-<span class="co">#&gt; 5 d15N      0.377 -0.613   0.144  0.386 -0.539  -0.149 </span>
-<span class="co">#&gt; 6 Ti       -0.439 -0.0783  0.356 -0.483 -0.565   0.350</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">pca</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/nested_data.html">unnested_data</a></span><span class="op">(</span><span class="va">qualifiers</span>, <span class="va">scores</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 32 × 10</span></span></span>
+<span><span class="co">#&gt;      age depth zone   row_number   PC1     PC2     PC3     PC4     PC5     PC6</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> <span style="text-decoration: underline;">1</span>550   29.5 Zone 1          1 -<span style="color: #BB0000;">2.48</span> -<span style="color: #BB0000;">0.273</span>   0.409   0.518   0.316  -<span style="color: #BB0000;">0.053</span><span style="color: #BB0000; text-decoration: underline;">8</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> <span style="text-decoration: underline;">1</span>566.  28.5 Zone 1          2 -<span style="color: #BB0000;">2.48</span> -<span style="color: #BB0000;">0.675</span>   0.902   0.561  -<span style="color: #BB0000;">0.364</span>  -<span style="color: #BB0000;">0.190</span> </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> <span style="text-decoration: underline;">1</span>581.  27.5 Zone 1          3 -<span style="color: #BB0000;">2.41</span> -<span style="color: #BB0000;">0.721</span>   0.576   0.465   0.619  -<span style="color: #BB0000;">0.184</span> </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> <span style="text-decoration: underline;">1</span>597.  26.5 Zone 1          4 -<span style="color: #BB0000;">2.39</span>  1.73   -<span style="color: #BB0000;">0.527</span>   0.197   0.742   0.065<span style="text-decoration: underline;">6</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> <span style="text-decoration: underline;">1</span>613.  25.5 Zone 1          5 -<span style="color: #BB0000;">2.73</span>  2.82   -<span style="color: #BB0000;">0.666</span>   0.212  -<span style="color: #BB0000;">0.432</span>   0.071<span style="text-decoration: underline;">5</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> <span style="text-decoration: underline;">1</span>629.  24.5 Zone 1          6 -<span style="color: #BB0000;">2.56</span>  1.22   -<span style="color: #BB0000;">0.155</span>   0.235  -<span style="color: #BB0000;">0.208</span>  -<span style="color: #BB0000;">0.105</span> </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> <span style="text-decoration: underline;">1</span>644.  23.5 Zone 1          7 -<span style="color: #BB0000;">2.57</span>  0.708   0.123  -<span style="color: #BB0000;">0.021</span><span style="color: #BB0000; text-decoration: underline;">0</span> -<span style="color: #BB0000;">0.011</span><span style="color: #BB0000; text-decoration: underline;">4</span>  0.028<span style="text-decoration: underline;">6</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> <span style="text-decoration: underline;">1</span>660.  22.5 Zone 1          8 -<span style="color: #BB0000;">2.04</span> -<span style="color: #BB0000;">0.243</span>   0.490   0.101  -<span style="color: #BB0000;">0.157</span>   0.083<span style="text-decoration: underline;">4</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> <span style="text-decoration: underline;">1</span>676.  21.5 Zone 1          9 -<span style="color: #BB0000;">1.98</span>  0.070<span style="text-decoration: underline;">2</span> -<span style="color: #BB0000;">0.065</span><span style="color: #BB0000; text-decoration: underline;">7</span> -<span style="color: #BB0000;">0.147</span>   0.081<span style="text-decoration: underline;">3</span>  0.186 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> <span style="text-decoration: underline;">1</span>692.  20.5 Zone 1         10 -<span style="color: #BB0000;">1.20</span> -<span style="color: #BB0000;">0.376</span>   0.202  -<span style="color: #BB0000;">0.132</span>  -<span style="color: #BB0000;">0.202</span>   0.220 </span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># … with 22 more rows</span></span></span>
+<span><span class="va">pca</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/nested_data.html">unnested_data</a></span><span class="op">(</span><span class="va">variance</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 6</span></span></span>
+<span><span class="co">#&gt;   component component_text standard_deviation variance variance_propor…¹ varia…²</span></span>
+<span><span class="co">#&gt;       <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>         1 PC1                         2.15    4.61             0.768     0.768</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span>         2 PC2                         0.884   0.781            0.130     0.899</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span>         3 PC3                         0.603   0.364            0.060<span style="text-decoration: underline;">7</span>    0.959</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span>         4 PC4                         0.381   0.145            0.024<span style="text-decoration: underline;">2</span>    0.984</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span>         5 PC5                         0.276   0.076<span style="text-decoration: underline;">1</span>           0.012<span style="text-decoration: underline;">7</span>    0.996</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span>         6 PC6                         0.151   0.022<span style="text-decoration: underline;">8</span>           0.003<span style="text-decoration: underline;">80</span>   1    </span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># … with abbreviated variable names ¹​variance_proportion,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   ²​variance_proportion_cumulative</span></span></span>
+<span><span class="va">pca</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/nested_data.html">unnested_data</a></span><span class="op">(</span><span class="va">loadings</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 7</span></span></span>
+<span><span class="co">#&gt;   variable    PC1     PC2    PC3    PC4     PC5     PC6</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> C         0.380  0.540  -<span style="color: #BB0000;">0.460</span> -<span style="color: #BB0000;">0.162</span> -<span style="color: #BB0000;">0.567</span>  -<span style="color: #BB0000;">0.071</span><span style="color: #BB0000; text-decoration: underline;">8</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> C/N      -<span style="color: #BB0000;">0.401</span>  0.451   0.207  0.735 -<span style="color: #BB0000;">0.223</span>   0.040<span style="text-decoration: underline;">8</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Cu        0.387  0.340   0.760 -<span style="color: #BB0000;">0.173</span>  0.060<span style="text-decoration: underline;">9</span> -<span style="color: #BB0000;">0.352</span> </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> d13C     -<span style="color: #BB0000;">0.458</span> -<span style="color: #BB0000;">0.089</span><span style="color: #BB0000; text-decoration: underline;">0</span> -<span style="color: #BB0000;">0.144</span> -<span style="color: #BB0000;">0.145</span> -<span style="color: #BB0000;">0.126</span>  -<span style="color: #BB0000;">0.851</span> </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> d15N      0.377 -<span style="color: #BB0000;">0.613</span>   0.144  0.386 -<span style="color: #BB0000;">0.539</span>  -<span style="color: #BB0000;">0.149</span> </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> Ti       -<span style="color: #BB0000;">0.439</span> -<span style="color: #BB0000;">0.078</span><span style="color: #BB0000; text-decoration: underline;">3</span>  0.356 -<span style="color: #BB0000;">0.483</span> -<span style="color: #BB0000;">0.565</span>   0.350</span></span></code></pre></div>
 </div>
-<div id="constrained-hierarchical-clustering" class="section level2">
-<h2 class="hasAnchor">
-<a href="#constrained-hierarchical-clustering" class="anchor"></a>Constrained hierarchical clustering</h2>
+<div class="section level2">
+<h2 id="constrained-hierarchical-clustering">Constrained hierarchical clustering<a class="anchor" aria-label="anchor" href="#constrained-hierarchical-clustering"></a>
+</h2>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">keji_nested</span> <span class="op">&lt;-</span> <span class="va">keji_lakes_plottable</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">location</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="../reference/nested_data.html">nested_data</a></span><span class="op">(</span>qualifiers <span class="op">=</span> <span class="va">depth</span>, key <span class="op">=</span> <span class="va">taxon</span>, value <span class="op">=</span> <span class="va">rel_abund</span><span class="op">)</span>
-
-<span class="va">keji_nested</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/nested_data.html">unnested_data</a></span><span class="op">(</span><span class="va">qualifiers</span>, <span class="va">data</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 37 x 9</span>
-<span class="co">#&gt;    location  depth row_number `Asterionella r… `Aulacoseira di… `Aulacoseira li…</span>
-<span class="co">#&gt;    &lt;chr&gt;     &lt;dbl&gt;      &lt;int&gt;            &lt;dbl&gt;            &lt;dbl&gt;            &lt;dbl&gt;</span>
-<span class="co">#&gt;  1 Beaversk… 0.125          1            0                 3.02             1.72</span>
-<span class="co">#&gt;  2 Beaversk… 0.375          2            0                 3.25             2.03</span>
-<span class="co">#&gt;  3 Beaversk… 0.825          3            1.32              0                2.32</span>
-<span class="co">#&gt;  4 Beaversk… 2.12           4            0.333             0                2.67</span>
-<span class="co">#&gt;  5 Beaversk… 3.12           5            0                 0                5.32</span>
-<span class="co">#&gt;  6 Beaversk… 4.12           6            0                 0                3.54</span>
-<span class="co">#&gt;  7 Beaversk… 5.38           7            0.987             0               10.2 </span>
-<span class="co">#&gt;  8 Beaversk… 6.38           8            0.993             0                8.94</span>
-<span class="co">#&gt;  9 Beaversk… 7.62           9            1.63              0                8.82</span>
-<span class="co">#&gt; 10 Beaversk… 9.12          10            0.328             0               10.8 </span>
-<span class="co">#&gt; # … with 27 more rows, and 3 more variables: Cyclotella stelligera &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   Tabellaria flocculosa (strain III) &lt;dbl&gt;, Other &lt;dbl&gt;</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">keji_nested</span> <span class="op">&lt;-</span> <span class="va">keji_lakes_plottable</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">location</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/nested_data.html">nested_data</a></span><span class="op">(</span>qualifiers <span class="op">=</span> <span class="va">depth</span>, key <span class="op">=</span> <span class="va">taxon</span>, value <span class="op">=</span> <span class="va">rel_abund</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">keji_nested</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/nested_data.html">unnested_data</a></span><span class="op">(</span><span class="va">qualifiers</span>, <span class="va">data</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 37 × 9</span></span></span>
+<span><span class="co">#&gt;    location        depth row_num…¹ Aster…² Aulac…³ Aulac…⁴ Cyclo…⁵ Tabel…⁶ Other</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> Beaverskin Lake 0.125         1   0        3.02    1.72    3.45   0      91.8</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> Beaverskin Lake 0.375         2   0        3.25    2.03    5.69   1.63   87.4</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> Beaverskin Lake 0.825         3   1.32     0       2.32    4.30   1.32   90.7</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> Beaverskin Lake 2.12          4   0.333    0       2.67    3      1.67   92.3</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> Beaverskin Lake 3.12          5   0        0       5.32    6.98   1.33   86.4</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> Beaverskin Lake 4.12          6   0        0       3.54   13.2    0.643  82.6</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> Beaverskin Lake 5.38          7   0.987    0      10.2    12.8    2.63   73.4</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> Beaverskin Lake 6.38          8   0.993    0       8.94   17.5    3.97   68.5</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> Beaverskin Lake 7.62          9   1.63     0       8.82   20.3    2.29   67.0</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> Beaverskin Lake 9.12         10   0.328    0      10.8    23.9    2.95   62.0</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># … with 27 more rows, and abbreviated variable names ¹​row_number,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   ²​`Asterionella ralfsii var. americana (large)`, ³​`Aulacoseira distans`,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   ⁴​`Aulacoseira lirata`, ⁵​`Cyclotella stelligera`,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   ⁶​`Tabellaria flocculosa (strain III)`</span></span></span></code></pre></div>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">coniss</span> <span class="op">&lt;-</span> <span class="va">keji_nested</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="../reference/nested_hclust.html">nested_chclust_coniss</a></span><span class="op">(</span><span class="op">)</span>
-
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">coniss</span>, main <span class="op">=</span> <span class="va">location</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">coniss</span> <span class="op">&lt;-</span> <span class="va">keji_nested</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="../reference/nested_hclust.html">nested_chclust_coniss</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">coniss</span>, main <span class="op">=</span> <span class="va">location</span><span class="op">)</span></span></code></pre></div>
 <p><img src="nested_analysis_files/figure-html/unnamed-chunk-8-1.png" width="750"></p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">coniss</span>, main <span class="op">=</span> <span class="va">location</span>, xvar <span class="op">=</span> <span class="va">qualifiers</span><span class="op">$</span><span class="va">depth</span>, labels <span class="op">=</span> <span class="st">""</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">coniss</span>, main <span class="op">=</span> <span class="va">location</span>, xvar <span class="op">=</span> <span class="va">qualifiers</span><span class="op">$</span><span class="va">depth</span>, labels <span class="op">=</span> <span class="st">""</span><span class="op">)</span></span></code></pre></div>
 <p><img src="nested_analysis_files/figure-html/unnamed-chunk-9-1.png" width="750"></p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">coniss</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">location</span>, <span class="va">zone_info</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html" class="external-link">unnest</a></span><span class="op">(</span><span class="va">zone_info</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 4 x 12</span>
-<span class="co">#&gt;   location hclust_zone min_depth max_depth first_depth last_depth min_row_number</span>
-<span class="co">#&gt;   &lt;chr&gt;          &lt;int&gt;     &lt;dbl&gt;     &lt;dbl&gt;       &lt;dbl&gt;      &lt;dbl&gt;          &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 Beavers…           1     0.125      4.12       0.125       4.12              1</span>
-<span class="co">#&gt; 2 Beavers…           2     5.38      23.4        5.38       23.4               7</span>
-<span class="co">#&gt; 3 Peskawa…           1     0.125      5.12       0.125       5.12              1</span>
-<span class="co">#&gt; 4 Peskawa…           2     6.38      35.1        6.38       35.1               6</span>
-<span class="co">#&gt; # … with 5 more variables: max_row_number &lt;dbl&gt;, first_row_number &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   last_row_number &lt;dbl&gt;, boundary_depth &lt;dbl&gt;, boundary_row_number &lt;dbl&gt;</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">coniss</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">location</span>, <span class="va">zone_info</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html" class="external-link">unnest</a></span><span class="op">(</span><span class="va">zone_info</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 4 × 12</span></span></span>
+<span><span class="co">#&gt;   location       hclus…¹ min_d…² max_d…³ first…⁴ last_…⁵ min_r…⁶ max_r…⁷ first…⁸</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Beaverskin La…       1   0.125    4.12   0.125    4.12       1       6       1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Beaverskin La…       2   5.38    23.4    5.38    23.4        7      17       7</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Peskawa Lake         1   0.125    5.12   0.125    5.12       1       5       1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> Peskawa Lake         2   6.38    35.1    6.38    35.1        6      20       6</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># … with 3 more variables: last_row_number &lt;dbl&gt;, boundary_depth &lt;dbl&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   boundary_row_number &lt;dbl&gt;, and abbreviated variable names ¹​hclust_zone,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   ²​min_depth, ³​max_depth, ⁴​first_depth, ⁵​last_depth, ⁶​min_row_number,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   ⁷​max_row_number, ⁸​first_row_number</span></span></span></code></pre></div>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">keji_nested</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="../reference/nested_hclust.html">nested_chclust_coniss</a></span><span class="op">(</span>n_groups <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">location</span>, <span class="va">zone_info</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="../reference/nested_data.html">unnested_data</a></span><span class="op">(</span><span class="va">zone_info</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 5 x 12</span>
-<span class="co">#&gt;   location hclust_zone min_depth max_depth first_depth last_depth min_row_number</span>
-<span class="co">#&gt;   &lt;chr&gt;          &lt;int&gt;     &lt;dbl&gt;     &lt;dbl&gt;       &lt;dbl&gt;      &lt;dbl&gt;          &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 Beavers…           1     0.125      4.12       0.125       4.12              1</span>
-<span class="co">#&gt; 2 Beavers…           2     5.38      13.6        5.38       13.6               7</span>
-<span class="co">#&gt; 3 Beavers…           3    15.1       23.4       15.1        23.4              14</span>
-<span class="co">#&gt; 4 Peskawa…           1     0.125      5.12       0.125       5.12              1</span>
-<span class="co">#&gt; 5 Peskawa…           2     6.38      35.1        6.38       35.1               6</span>
-<span class="co">#&gt; # … with 5 more variables: max_row_number &lt;dbl&gt;, first_row_number &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   last_row_number &lt;dbl&gt;, boundary_depth &lt;dbl&gt;, boundary_row_number &lt;dbl&gt;</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">keji_nested</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/nested_hclust.html">nested_chclust_coniss</a></span><span class="op">(</span>n_groups <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">location</span>, <span class="va">zone_info</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="../reference/nested_data.html">unnested_data</a></span><span class="op">(</span><span class="va">zone_info</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 5 × 12</span></span></span>
+<span><span class="co">#&gt;   location       hclus…¹ min_d…² max_d…³ first…⁴ last_…⁵ min_r…⁶ max_r…⁷ first…⁸</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Beaverskin La…       1   0.125    4.12   0.125    4.12       1       6       1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Beaverskin La…       2   5.38    13.6    5.38    13.6        7      13       7</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Beaverskin La…       3  15.1     23.4   15.1     23.4       14      17      14</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> Peskawa Lake         1   0.125    5.12   0.125    5.12       1       5       1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> Peskawa Lake         2   6.38    35.1    6.38    35.1        6      20       6</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># … with 3 more variables: last_row_number &lt;dbl&gt;, boundary_depth &lt;dbl&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   boundary_row_number &lt;dbl&gt;, and abbreviated variable names ¹​hclust_zone,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   ²​min_depth, ³​max_depth, ⁴​first_depth, ⁵​last_depth, ⁶​min_row_number,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   ⁷​max_row_number, ⁸​first_row_number</span></span></span></code></pre></div>
 </div>
-<div id="unconstrained-hierarchical-clustering" class="section level2">
-<h2 class="hasAnchor">
-<a href="#unconstrained-hierarchical-clustering" class="anchor"></a>Unconstrained hierarchical clustering</h2>
+<div class="section level2">
+<h2 id="unconstrained-hierarchical-clustering">Unconstrained hierarchical clustering<a class="anchor" aria-label="anchor" href="#unconstrained-hierarchical-clustering"></a>
+</h2>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">halifax_nested</span> <span class="op">&lt;-</span> <span class="va">halifax_lakes_plottable</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="../reference/nested_data.html">nested_data</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">location</span>, <span class="va">sample_type</span><span class="op">)</span>, <span class="va">taxon</span>, <span class="va">rel_abund</span>, fill <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>
-
-<span class="va">halifax_nested</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/nested_data.html">unnested_data</a></span><span class="op">(</span><span class="va">qualifiers</span>, <span class="va">data</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 20 x 9</span>
-<span class="co">#&gt;    location         sample_type row_number `Aulacoseira distan… `Eunotia exigua`</span>
-<span class="co">#&gt;    &lt;chr&gt;            &lt;chr&gt;            &lt;int&gt;                &lt;dbl&gt;            &lt;dbl&gt;</span>
-<span class="co">#&gt;  1 Anderson Lake    bottom               1                4.65             2.42 </span>
-<span class="co">#&gt;  2 Anderson Lake    top                  2                1.87             0    </span>
-<span class="co">#&gt;  3 Bayers           bottom               3               11.6              5.71 </span>
-<span class="co">#&gt;  4 Bayers           top                  4                0.993            6.81 </span>
-<span class="co">#&gt;  5 Bell Lake        bottom               5                0.476            2.62 </span>
-<span class="co">#&gt;  6 Bell Lake        top                  6                9.22             0.432</span>
-<span class="co">#&gt;  7 Cranberry Lake   bottom               7                0                9.17 </span>
-<span class="co">#&gt;  8 Cranberry Lake   top                  8                0                7.72 </span>
-<span class="co">#&gt;  9 Frasers Lake     bottom               9                6.42             0.714</span>
-<span class="co">#&gt; 10 Frasers Lake     top                 10                4.85             0    </span>
-<span class="co">#&gt; 11 Kinsac lake      bottom              11               11.3              8.33 </span>
-<span class="co">#&gt; 12 Kinsac lake      top                 12                0                3.85 </span>
-<span class="co">#&gt; 13 Little Albro La… bottom              13                2.34             2.34 </span>
-<span class="co">#&gt; 14 Little Albro La… top                 14                5.78             2.61 </span>
-<span class="co">#&gt; 15 Little Springfi… bottom              15               12.1              2.64 </span>
-<span class="co">#&gt; 16 Little Springfi… top                 16                0               19.8  </span>
-<span class="co">#&gt; 17 Maynard Lake     bottom              17                9.75             4    </span>
-<span class="co">#&gt; 18 Maynard Lake     top                 18                2.98             1.23 </span>
-<span class="co">#&gt; 19 Miller Lake      bottom              19                1.79             2.19 </span>
-<span class="co">#&gt; 20 Miller Lake      top                 20                0.816            4.35 </span>
-<span class="co">#&gt; # … with 4 more variables: Fragilariforma exigua &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   Tabellaria fenestrata &lt;dbl&gt;, Tabellaria flocculosa (strain IV) &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   Other &lt;dbl&gt;</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">halifax_nested</span> <span class="op">&lt;-</span> <span class="va">halifax_lakes_plottable</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/nested_data.html">nested_data</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">location</span>, <span class="va">sample_type</span><span class="op">)</span>, <span class="va">taxon</span>, <span class="va">rel_abund</span>, fill <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">halifax_nested</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/nested_data.html">unnested_data</a></span><span class="op">(</span><span class="va">qualifiers</span>, <span class="va">data</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 20 × 9</span></span></span>
+<span><span class="co">#&gt;    location        sampl…¹ row_n…² Aulac…³ Eunot…⁴ Fragi…⁵ Tabel…⁶ Tabel…⁷ Other</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> Anderson Lake   bottom        1   4.65    2.42    1.16    4.11    3.76   83.9</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> Anderson Lake   top           2   1.87    0       0.330   5.71    5.71   86.4</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> Bayers          bottom        3  11.6     5.71    4.50    4.84    0      73.4</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> Bayers          top           4   0.993   6.81    3.40    3.40    0      85.4</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> Bell Lake       bottom        5   0.476   2.62    0.833   2.14    6.90   87.0</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> Bell Lake       top           6   9.22    0.432   2.59    6.20    1.01   80.5</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> Cranberry Lake  bottom        7   0       9.17   11.6     3.06    9.39   66.8</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> Cranberry Lake  top           8   0       7.72    8.94    0.203   8.54   74.6</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> Frasers Lake    bottom        9   6.42    0.714   0.624   1.87    2.59   87.8</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> Frasers Lake    top          10   4.85    0       0       8.58   10.6    76.0</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span> Kinsac lake     bottom       11  11.3     8.33    2.98   12.7     0.992  63.7</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">12</span> Kinsac lake     top          12   0       3.85    2.75    3.30    0      90.1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">13</span> Little Albro L… bottom       13   2.34    2.34    1.91    1.70    6.69   85.0</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">14</span> Little Albro L… top          14   5.78    2.61    1.90    0       5.78   83.9</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">15</span> Little Springf… bottom       15  12.1     2.64    6.23   10       0      69.1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">16</span> Little Springf… top          16   0      19.8    14.1    11.4     0      54.6</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">17</span> Maynard Lake    bottom       17   9.75    4       1.5    11.6     7.88   65.2</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">18</span> Maynard Lake    top          18   2.98    1.23    2.26    7.51   10.1    75.9</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">19</span> Miller Lake     bottom       19   1.79    2.19    2.19    0.299  15.6    77.9</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">20</span> Miller Lake     top          20   0.816   4.35    2.90    1.27    1.18   89.5</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># … with abbreviated variable names ¹​sample_type, ²​row_number,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   ³​`Aulacoseira distans`, ⁴​`Eunotia exigua`, ⁵​`Fragilariforma exigua`,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   ⁶​`Tabellaria fenestrata`, ⁷​`Tabellaria flocculosa (strain IV)`</span></span></span></code></pre></div>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">hclust</span> <span class="op">&lt;-</span> <span class="va">halifax_nested</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="../reference/nested_hclust.html">nested_hclust</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"average"</span><span class="op">)</span>
-
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span>
-  <span class="va">hclust</span>, 
-  labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sprintf.html" class="external-link">sprintf</a></span><span class="op">(</span>
-    <span class="st">"%s (%s)"</span>,
-    <span class="va">qualifiers</span><span class="op">$</span><span class="va">location</span>,
-    <span class="va">qualifiers</span><span class="op">$</span><span class="va">sample_type</span>
-  <span class="op">)</span>
-<span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">hclust</span> <span class="op">&lt;-</span> <span class="va">halifax_nested</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/nested_hclust.html">nested_hclust</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"average"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span></span>
+<span>  <span class="va">hclust</span>, </span>
+<span>  labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sprintf.html" class="external-link">sprintf</a></span><span class="op">(</span></span>
+<span>    <span class="st">"%s (%s)"</span>,</span>
+<span>    <span class="va">qualifiers</span><span class="op">$</span><span class="va">location</span>,</span>
+<span>    <span class="va">qualifiers</span><span class="op">$</span><span class="va">sample_type</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p><img src="nested_analysis_files/figure-html/unnamed-chunk-13-1.png" width="750"></p>
 </div>
-<div id="nested-analysis-of-other-functions" class="section level2">
-<h2 class="hasAnchor">
-<a href="#nested-analysis-of-other-functions" class="anchor"></a>Nested analysis of other functions</h2>
+<div class="section level2">
+<h2 id="nested-analysis-of-other-functions">Nested analysis of other functions<a class="anchor" aria-label="anchor" href="#nested-analysis-of-other-functions"></a>
+</h2>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">alta_nested</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="../reference/nested_analysis.html">nested_analysis</a></span><span class="op">(</span><span class="fu">vegan</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/vegan/man/cca.html" class="external-link">rda</a></span>, <span class="va">data</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">alta_nested</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/nested_analysis.html">nested_analysis</a></span><span class="op">(</span><span class="fu">vegan</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/vegan/man/cca.html" class="external-link">rda</a></span>, <span class="va">data</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="nested_analysis_files/figure-html/unnamed-chunk-14-1.png" width="750"></p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/biplot.html" class="external-link">biplot</a></span><span class="op">(</span><span class="va">pca</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/biplot.html" class="external-link">biplot</a></span><span class="op">(</span><span class="va">pca</span><span class="op">)</span></span></code></pre></div>
 <p><img src="nested_analysis_files/figure-html/unnamed-chunk-15-1.png" width="750"></p>
 </div>
   </div>
@@ -357,7 +365,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link external-link">pkgdown</a> 1.6.1.9001.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer>
