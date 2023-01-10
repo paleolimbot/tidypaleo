@@ -53,10 +53,10 @@ nested_data <- function(.data, qualifiers = NULL, key = NULL, value, fill = NA,
   }
 
   # this makes sure all args refer to valid columns, enables checking names later
-  group_vars <- tidyselect::vars_select(colnames(.data), !!groups)
-  qualifier_vars <- tidyselect::vars_select(colnames(.data), !!qualifiers)
-  key_vars <- tidyselect::vars_select(colnames(.data), !!key)
-  value_vars <- tidyselect::vars_select(colnames(.data), !!value)
+  group_vars <- unname(tidyselect::vars_select(colnames(.data), !!groups))
+  qualifier_vars <- unname(tidyselect::vars_select(colnames(.data), !!qualifiers))
+  key_vars <- unname(tidyselect::vars_select(colnames(.data), !!key))
+  value_vars <- unname(tidyselect::vars_select(colnames(.data), !!value))
 
   # key, qualifier, and group vars can't intersect
   stopifnot(
