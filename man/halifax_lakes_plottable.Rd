@@ -8,7 +8,7 @@
 An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 114 rows and 5 columns.
 }
 \source{
-Neotoma paleoecology database (\url{https://neotomadb.org})
+Neotoma paleoecology database (\url{https://www.neotomadb.org})
 }
 \usage{
 halifax_lakes_plottable

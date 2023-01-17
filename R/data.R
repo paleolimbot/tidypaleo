@@ -5,7 +5,7 @@
 #' an analysis of which has been published by Ginn et al. (2015).
 #'
 #' @source
-#' Neotoma paleoecology database (<https://neotomadb.org>)
+#' Neotoma paleoecology database (<https://www.neotomadb.org>)
 #'
 #' @references
 #' Ginn, Brian K., Thiyake Rajaratnam, Brian F. Cumming, and John P.
@@ -24,7 +24,7 @@
 #' A subset of well-labeled, clean diatom count data for 3 Keji-area (Nova
 #' Scotia) lakes, which form part of the analysis in Ginn et al. (2007).
 #'
-#' @source Neotoma paleoecology database (<https://neotomadb.org>)
+#' @source Neotoma paleoecology database (<https://www.neotomadb.org>)
 #'
 #' @references
 #' Ginn, Brian K., Brian F. Cumming, and John P. Smol. "Long-Term
