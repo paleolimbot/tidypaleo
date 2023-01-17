@@ -1,5 +1,8 @@
 # tidypaleo (development version)
 
+* Fixes for the forthcoming dplyr 1.1.0.
+* Fix deprecated usage of tidyselect.
+
 # tidypaleo 0.1.2
 
 * Add CITATION file and Journal of Statistical Software
