@@ -21,7 +21,7 @@ modelled by the rbacon package (Blaauw and Christen 2011)."><meta name="robots" 
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">tidypaleo</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.1.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.2.9000</span>
       </span>
     </div>
 
@@ -30,7 +30,7 @@ modelled by the rbacon package (Blaauw and Christen 2011)."><meta name="robots" 
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -77,11 +77,11 @@ modelled by the rbacon package (Blaauw and Christen 2011).</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="va">long_lake_14C_ages</span>
-
-<span class="va">long_lake_bacon_ages</span>
-
-<span class="va">long_lake_plottable</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="va">long_lake_14C_ages</span></span>
+<span></span>
+<span><span class="va">long_lake_bacon_ages</span></span>
+<span></span>
+<span><span class="va">long_lake_plottable</span></span></code></pre></div>
     </div>
 
     <div id="format">
@@ -94,13 +94,13 @@ modelled by the rbacon package (Blaauw and Christen 2011).</p>
     <h2>References</h2>
     <p>Blaauw, Maarten, and J. Andrés Christen. "Flexible Paleoclimate Age-Depth
 Models Using an Autoregressive Gamma Process." Bayesian Analysis 6, no. 3
-(September 2011): 457–74. doi: <a href="https://doi.org/10.1214/ba/1339616472" class="external-link">10.1214/ba/1339616472</a>
+(September 2011): 457–74. <a href="https://doi.org/10.1214/ba/1339616472" class="external-link">doi:10.1214/ba/1339616472</a>
 .</p>
 <p>Dunnington, Dewey W., Hilary White, Ian S. Spooner, Mark L. Mallory, Chris
 White, Nelson J. O’Driscoll, and Nic R. McLellan. "A Paleolimnological
 Archive of Metal Sequestration and Release in the Cumberland Basin Marshes,
 Atlantic Canada." FACETS 2, no. 1 (May 23, 2017): 440–60.
-doi: <a href="https://doi.org/10.1139/facets-2017-0004" class="external-link">10.1139/facets-2017-0004</a>
+<a href="https://doi.org/10.1139/facets-2017-0004" class="external-link">doi:10.1139/facets-2017-0004</a>
 .</p>
 <p>White, Hilary E. "Paleolimnological Records of Post-Glacial Lake
 and Wetland Evolution from the Isthmus of Chignecto Region, Eastern Canada."
@@ -110,7 +110,7 @@ M.Sc. Thesis, Acadia University, 2012.
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">long_lake_14C_ages</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">long_lake_14C_ages</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 5 × 5</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   core                            depth_cm age_14C age_error_14C type           </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                              <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          </span>
@@ -119,7 +119,7 @@ M.Sc. Thesis, Acadia University, 2012.
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> Dunnington et al. 2017 / LL-PC2     46      <span style="text-decoration: underline;">4</span>396            55 Carbon-14 age …</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> Dunnington et al. 2017 / LL-PC2     70.5    <span style="text-decoration: underline;">8</span>482            28 Carbon-14 age …</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> Dunnington et al. 2017 / LL-PC2     94      <span style="text-decoration: underline;">9</span>148            49 Carbon-14 age …</span>
-<span class="r-in"><span class="va">long_lake_bacon_ages</span></span>
+<span class="r-in"><span><span class="va">long_lake_bacon_ages</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 86 × 5</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    depth   min   max median wmean</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
@@ -134,7 +134,7 @@ M.Sc. Thesis, Acadia University, 2012.
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>    17  925. <span style="text-decoration: underline;">2</span>218.  <span style="text-decoration: underline;">1</span>443. <span style="text-decoration: underline;">1</span>478.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>    18 <span style="text-decoration: underline;">1</span>014. <span style="text-decoration: underline;">2</span>329.  <span style="text-decoration: underline;">1</span>556. <span style="text-decoration: underline;">1</span>589.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 76 more rows</span></span>
-<span class="r-in"><span class="va">long_lake_plottable</span></span>
+<span class="r-in"><span><span class="va">long_lake_plottable</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 51 × 10</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    dataset     location param depth value     sd units zone       n n_detect</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span>
@@ -149,7 +149,7 @@ M.Sc. Thesis, Acadia University, 2012.
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> long_lake17 LL PC2   C/N      53  30.2 <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>    Unit 2     1        1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> long_lake17 LL PC2   C/N      63  24.4 <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>    Unit 2     1        1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 41 more rows</span></span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -164,7 +164,7 @@ M.Sc. Thesis, Acadia University, 2012.
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

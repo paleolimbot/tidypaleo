@@ -34,7 +34,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">tidypaleo</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.1.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.2.9000</span>
       </span>
     </div>
 
@@ -44,7 +44,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -82,13 +82,14 @@
 
       
 
-      </header><script src="age_depth_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Age-depth models</h1>
-                        <h4 data-toc-skip class="author">Dewey Dunnington</h4>
+                        <h4 data-toc-skip class="author">Dewey
+Dunnington</h4>
             
-            <h4 data-toc-skip class="date">2022-02-23</h4>
+            <h4 data-toc-skip class="date">2023-01-17</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/paleolimbot/tidypaleo/blob/HEAD/vignettes/age_depth.Rmd" class="external-link"><code>vignettes/age_depth.Rmd</code></a></small>
       <div class="hidden name"><code>age_depth.Rmd</code></div>
@@ -97,75 +98,94 @@
 
     
     
-<p>Given a known depths and known (or modelled) ages, it is often convenient to approximate age as a continuous function of depth in an archive. This package provides tools to flexibly create age-depth relationships with various rules for interpolating age within known age-depth values, and extrapolating above and below these values. Typically, this is interpolation between known values and extrapolating using average sedimentation rates based on ages known at discrete points in a core.</p>
+<p>Given a known depths and known (or modelled) ages, it is often
+convenient to approximate age as a continuous function of depth in an
+archive. This package provides tools to flexibly create age-depth
+relationships with various rules for interpolating age within known
+age-depth values, and extrapolating above and below these values.
+Typically, this is interpolation between known values and extrapolating
+using average sedimentation rates based on ages known at discrete points
+in a core.</p>
 <div class="section level2">
 <h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
 </h2>
-<p>Using the built-in dataset <code>alta_lake_210Pb_ages</code>, which contains a Lead-210 (CRS) age-depth relationship for a core from <a href="https://en.wikipedia.org/wiki/Alta_Lake_(British_Columbia)" class="external-link">Alta Lake, Whistler, British Columbia</a>, we can create an age-depth model (note that <code>age</code> and <code>depth</code> are evaluated within <code>.data</code>, if it is provided, and support tidy evaluation):</p>
+<p>Using the built-in dataset <code>alta_lake_210Pb_ages</code>, which
+contains a Lead-210 (CRS) age-depth relationship for a core from <a href="https://en.wikipedia.org/wiki/Alta_Lake_(British_Columbia)" class="external-link">Alta
+Lake, Whistler, British Columbia</a>, we can create an age-depth model
+(note that <code>age</code> and <code>depth</code> are evaluated within
+<code>.data</code>, if it is provided, and support tidy evaluation):</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://paleolimbot.github.io/tidypaleo/" class="external-link">tidypaleo</a></span><span class="op">)</span>
-<span class="va">alta_lake_adm</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/age_depth_model.html">age_depth_model</a></span><span class="op">(</span>
-  <span class="va">alta_lake_210Pb_ages</span>,
-  depth <span class="op">=</span> <span class="va">depth_cm</span>, age <span class="op">=</span> <span class="va">age_year_ad</span>,
-  age_max <span class="op">=</span> <span class="va">age_year_ad</span> <span class="op">+</span> <span class="va">age_error_yr</span>, 
-  age_min <span class="op">=</span> <span class="va">age_year_ad</span> <span class="op">-</span> <span class="va">age_error_yr</span>
-<span class="op">)</span>
-<span class="va">alta_lake_adm</span>
-<span class="co">#&gt; &lt;age_depth_model&gt;</span>
-<span class="co">#&gt; Call: </span>
-<span class="co">#&gt; age_depth_model(</span>
-<span class="co">#&gt;   .data = alta_lake_210Pb_ages, depth = depth_cm,</span>
-<span class="co">#&gt;   age = age_year_ad, age_min = age_year_ad - age_error_yr,</span>
-<span class="co">#&gt;   age_max = age_year_ad + age_error_yr</span>
-<span class="co">#&gt; )</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://paleolimbot.github.io/tidypaleo/" class="external-link">tidypaleo</a></span><span class="op">)</span></span>
+<span><span class="va">alta_lake_adm</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/age_depth_model.html">age_depth_model</a></span><span class="op">(</span></span>
+<span>  <span class="va">alta_lake_210Pb_ages</span>,</span>
+<span>  depth <span class="op">=</span> <span class="va">depth_cm</span>, age <span class="op">=</span> <span class="va">age_year_ad</span>,</span>
+<span>  age_max <span class="op">=</span> <span class="va">age_year_ad</span> <span class="op">+</span> <span class="va">age_error_yr</span>, </span>
+<span>  age_min <span class="op">=</span> <span class="va">age_year_ad</span> <span class="op">-</span> <span class="va">age_error_yr</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">alta_lake_adm</span></span>
+<span><span class="co">#&gt; &lt;age_depth_model&gt;</span></span>
+<span><span class="co">#&gt; Call: </span></span>
+<span><span class="co">#&gt; age_depth_model(</span></span>
+<span><span class="co">#&gt;   .data = alta_lake_210Pb_ages, depth = depth_cm,</span></span>
+<span><span class="co">#&gt;   age = age_year_ad, age_min = age_year_ad - age_error_yr,</span></span>
+<span><span class="co">#&gt;   age_max = age_year_ad + age_error_yr</span></span>
+<span><span class="co">#&gt; )</span></span></code></pre></div>
 <p>Then, we can plot the relationship:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">alta_lake_adm</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">alta_lake_adm</span><span class="op">)</span></span></code></pre></div>
 <p><img src="age_depth_files/figure-html/alta_lake_adm_plot-1.png" width="750"></p>
 <p>…Or predict raw data:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">alta_lake_adm</span>, depth <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>, <span class="fl">10</span>, <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; <span style="color: #949494;"># A tibble: 23 × 5</span></span>
-<span class="co">#&gt;    depth   age age_min age_max method           </span>
-<span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span>  -<span style="color: #BB0000;">1</span>   <span style="text-decoration: underline;">2</span>032.     <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>  extrapolate_above</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span>  -<span style="color: #BB0000;">0.5</span> <span style="text-decoration: underline;">2</span>023.     <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>  extrapolate_above</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span>   0   <span style="text-decoration: underline;">2</span>015.   <span style="text-decoration: underline;">2</span>015.   <span style="text-decoration: underline;">2</span>015. interpolate      </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span>   0.5 <span style="text-decoration: underline;">2</span>011.     <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>  interpolate      </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span>   1   <span style="text-decoration: underline;">2</span>008    <span style="text-decoration: underline;">2</span>008.   <span style="text-decoration: underline;">2</span>008. interpolate      </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span>   1.5 <span style="text-decoration: underline;">2</span>003.   <span style="text-decoration: underline;">2</span>003.   <span style="text-decoration: underline;">2</span>004. interpolate      </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span>   2   <span style="text-decoration: underline;">1</span>998.   <span style="text-decoration: underline;">1</span>997.   <span style="text-decoration: underline;">1</span>999. interpolate      </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span>   2.5 <span style="text-decoration: underline;">1</span>990.     <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>  interpolate      </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span>   3   <span style="text-decoration: underline;">1</span>982.   <span style="text-decoration: underline;">1</span>980.   <span style="text-decoration: underline;">1</span>984. interpolate      </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">10</span>   3.5 <span style="text-decoration: underline;">1</span>974.     <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>  interpolate      </span>
-<span class="co">#&gt; <span style="color: #949494;"># … with 13 more rows</span></span></code></pre></div>
-<p>The default behaviour is to interpolate within known ages/depths, and extrapolate using a linear fit of ages/depths. These can be specified using transform functions, which take XY data and produce forward and inverse predictions based on them. The default call is:</p>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">alta_lake_adm</span>, depth <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>, <span class="fl">10</span>, <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 23 × 5</span></span></span>
+<span><span class="co">#&gt;    depth   age age_min age_max method           </span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span>  -<span style="color: #BB0000;">1</span>   <span style="text-decoration: underline;">2</span>032.     <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>  extrapolate_above</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span>  -<span style="color: #BB0000;">0.5</span> <span style="text-decoration: underline;">2</span>023.     <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>  extrapolate_above</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span>   0   <span style="text-decoration: underline;">2</span>015.   <span style="text-decoration: underline;">2</span>015.   <span style="text-decoration: underline;">2</span>015. interpolate      </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span>   0.5 <span style="text-decoration: underline;">2</span>011.     <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>  interpolate      </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span>   1   <span style="text-decoration: underline;">2</span>008    <span style="text-decoration: underline;">2</span>008.   <span style="text-decoration: underline;">2</span>008. interpolate      </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span>   1.5 <span style="text-decoration: underline;">2</span>003.   <span style="text-decoration: underline;">2</span>003.   <span style="text-decoration: underline;">2</span>004. interpolate      </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span>   2   <span style="text-decoration: underline;">1</span>998.   <span style="text-decoration: underline;">1</span>997.   <span style="text-decoration: underline;">1</span>999. interpolate      </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span>   2.5 <span style="text-decoration: underline;">1</span>990.     <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>  interpolate      </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span>   3   <span style="text-decoration: underline;">1</span>982.   <span style="text-decoration: underline;">1</span>980.   <span style="text-decoration: underline;">1</span>984. interpolate      </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span>   3.5 <span style="text-decoration: underline;">1</span>974.     <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>  interpolate      </span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># … with 13 more rows</span></span></span></code></pre></div>
+<p>The default behaviour is to interpolate within known ages/depths, and
+extrapolate using a linear fit of ages/depths. These can be specified
+using transform functions, which take XY data and produce forward and
+inverse predictions based on them. The default call is:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/age_depth_model.html">age_depth_model</a></span><span class="op">(</span>
-  <span class="va">...</span>,
-  interpolate_age <span class="op">=</span> <span class="va">age_depth_interpolate</span>,
-  extrapolate_age_below <span class="op">=</span> <span class="op">~</span><span class="fu"><a href="../reference/age_depth_interpolate.html">age_depth_extrapolate</a></span><span class="op">(</span><span class="va">.x</span>, <span class="va">.y</span>, x0 <span class="op">=</span> <span class="va">last</span>, y0 <span class="op">=</span> <span class="va">last</span><span class="op">)</span>,
-  extrapolate_age_above <span class="op">=</span> <span class="op">~</span><span class="fu"><a href="../reference/age_depth_interpolate.html">age_depth_extrapolate</a></span><span class="op">(</span><span class="va">.x</span>, <span class="va">.y</span>, x0 <span class="op">=</span> <span class="va">first</span>, y0 <span class="op">=</span> <span class="va">first</span><span class="op">)</span>,
-  interpolate_age_limits <span class="op">=</span> <span class="va">trans_exact</span>,
-  extrapolate_age_limits_below <span class="op">=</span> <span class="va">trans_na</span>,
-  extrapolate_age_limits_above <span class="op">=</span> <span class="va">trans_na</span>
-<span class="op">)</span></code></pre></div>
-<p>To customize the behaviour of the predictions (e.g., disable extrapolating above or below), specify a transform function in the appropriate category. One-sided formulas are turned into functions using the <code><a href="https://rlang.r-lib.org/reference/as_function.html" class="external-link">rlang::as_function()</a></code>. A more advanced way might be to only use the first/last few observations to extrapolate above and below, which one could do like this:</p>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/age_depth_model.html">age_depth_model</a></span><span class="op">(</span></span>
+<span>  <span class="va">...</span>,</span>
+<span>  interpolate_age <span class="op">=</span> <span class="va">age_depth_interpolate</span>,</span>
+<span>  extrapolate_age_below <span class="op">=</span> <span class="op">~</span><span class="fu"><a href="../reference/age_depth_interpolate.html">age_depth_extrapolate</a></span><span class="op">(</span><span class="va">.x</span>, <span class="va">.y</span>, x0 <span class="op">=</span> <span class="va">last</span>, y0 <span class="op">=</span> <span class="va">last</span><span class="op">)</span>,</span>
+<span>  extrapolate_age_above <span class="op">=</span> <span class="op">~</span><span class="fu"><a href="../reference/age_depth_interpolate.html">age_depth_extrapolate</a></span><span class="op">(</span><span class="va">.x</span>, <span class="va">.y</span>, x0 <span class="op">=</span> <span class="va">first</span>, y0 <span class="op">=</span> <span class="va">first</span><span class="op">)</span>,</span>
+<span>  interpolate_age_limits <span class="op">=</span> <span class="va">trans_exact</span>,</span>
+<span>  extrapolate_age_limits_below <span class="op">=</span> <span class="va">trans_na</span>,</span>
+<span>  extrapolate_age_limits_above <span class="op">=</span> <span class="va">trans_na</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<p>To customize the behaviour of the predictions (e.g., disable
+extrapolating above or below), specify a transform function in the
+appropriate category. One-sided formulas are turned into functions using
+the <code><a href="https://rlang.r-lib.org/reference/as_function.html" class="external-link">rlang::as_function()</a></code>. A more advanced way might be to
+only use the first/last few observations to extrapolate above and below,
+which one could do like this:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">alta_lake_adm2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/age_depth_model.html">age_depth_model</a></span><span class="op">(</span>
-  <span class="va">alta_lake_210Pb_ages</span>,
-  depth <span class="op">=</span> <span class="va">depth_cm</span>, age <span class="op">=</span> <span class="va">age_year_ad</span>,
-  age_max <span class="op">=</span> <span class="va">age_year_ad</span> <span class="op">+</span> <span class="va">age_error_yr</span>, 
-  age_min <span class="op">=</span> <span class="va">age_year_ad</span> <span class="op">-</span> <span class="va">age_error_yr</span>,
-  extrapolate_age_below <span class="op">=</span> <span class="op">~</span><span class="fu"><a href="../reference/age_depth_interpolate.html">age_depth_extrapolate</a></span><span class="op">(</span>
-    <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">tail</a></span><span class="op">(</span><span class="va">.x</span>, <span class="fl">3</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">tail</a></span><span class="op">(</span><span class="va">.y</span>, <span class="fl">3</span><span class="op">)</span>, x0 <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="va"><a href="https://dplyr.tidyverse.org/reference/nth.html" class="external-link">last</a></span>, y0 <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="va"><a href="https://dplyr.tidyverse.org/reference/nth.html" class="external-link">last</a></span>
-  <span class="op">)</span>,
-  extrapolate_age_above <span class="op">=</span> <span class="op">~</span><span class="fu"><a href="../reference/age_depth_interpolate.html">age_depth_extrapolate</a></span><span class="op">(</span>
-    <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">.x</span>, <span class="fl">3</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">.y</span>, <span class="fl">3</span><span class="op">)</span>, x0 <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="va"><a href="https://dplyr.tidyverse.org/reference/nth.html" class="external-link">first</a></span>, y0 <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="va"><a href="https://dplyr.tidyverse.org/reference/nth.html" class="external-link">first</a></span>
-  <span class="op">)</span>
-<span class="op">)</span>
-
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">alta_lake_adm2</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">alta_lake_adm2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/age_depth_model.html">age_depth_model</a></span><span class="op">(</span></span>
+<span>  <span class="va">alta_lake_210Pb_ages</span>,</span>
+<span>  depth <span class="op">=</span> <span class="va">depth_cm</span>, age <span class="op">=</span> <span class="va">age_year_ad</span>,</span>
+<span>  age_max <span class="op">=</span> <span class="va">age_year_ad</span> <span class="op">+</span> <span class="va">age_error_yr</span>, </span>
+<span>  age_min <span class="op">=</span> <span class="va">age_year_ad</span> <span class="op">-</span> <span class="va">age_error_yr</span>,</span>
+<span>  extrapolate_age_below <span class="op">=</span> <span class="op">~</span><span class="fu"><a href="../reference/age_depth_interpolate.html">age_depth_extrapolate</a></span><span class="op">(</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">tail</a></span><span class="op">(</span><span class="va">.x</span>, <span class="fl">3</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">tail</a></span><span class="op">(</span><span class="va">.y</span>, <span class="fl">3</span><span class="op">)</span>, x0 <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="va"><a href="https://dplyr.tidyverse.org/reference/nth.html" class="external-link">last</a></span>, y0 <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="va"><a href="https://dplyr.tidyverse.org/reference/nth.html" class="external-link">last</a></span></span>
+<span>  <span class="op">)</span>,</span>
+<span>  extrapolate_age_above <span class="op">=</span> <span class="op">~</span><span class="fu"><a href="../reference/age_depth_interpolate.html">age_depth_extrapolate</a></span><span class="op">(</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">.x</span>, <span class="fl">3</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">.y</span>, <span class="fl">3</span><span class="op">)</span>, x0 <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="va"><a href="https://dplyr.tidyverse.org/reference/nth.html" class="external-link">first</a></span>, y0 <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="va"><a href="https://dplyr.tidyverse.org/reference/nth.html" class="external-link">first</a></span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">alta_lake_adm2</span><span class="op">)</span></span></code></pre></div>
 <p><img src="age_depth_files/figure-html/unnamed-chunk-4-1.png" width="750"></p>
 </div>
   </div>
@@ -187,7 +207,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>

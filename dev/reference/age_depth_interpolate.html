@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">tidypaleo</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.1.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.2.9000</span>
       </span>
     </div>
 
@@ -26,7 +26,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -69,47 +69,60 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">age_depth_interpolate</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span>
-
-<span class="fu">age_depth_extrapolate</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, x0 <span class="op">=</span> <span class="va">last</span>, y0 <span class="op">=</span> <span class="va">last</span>, slope <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span>
-
-<span class="fu">age_depth_exact</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span>
-
-<span class="fu">age_depth_na</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">age_depth_interpolate</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">age_depth_extrapolate</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, x0 <span class="op">=</span> <span class="va">last</span>, y0 <span class="op">=</span> <span class="va">last</span>, slope <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">age_depth_exact</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">age_depth_na</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>x</dt>
 <dd><p>A paired vector of x values</p></dd>
+
+
 <dt>y</dt>
 <dd><p>A paired vector of y values</p></dd>
+
+
 <dt>x0</dt>
 <dd><p>The x value to anchor the transform</p></dd>
+
+
 <dt>y0</dt>
 <dd><p>The y value to anchor the transform</p></dd>
+
+
 <dt>slope</dt>
 <dd><p>The slope (in units of y/x) to use for the transform</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A list with component functions <code>trans</code> and <code>inverse</code></p>
+    
+
+<p>A list with component functions <code>trans</code> and <code>inverse</code></p>
+
+
     </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu"><a href="age_depth_model.html">age_depth_model</a></span><span class="op">(</span></span>
-<span class="r-in">  <span class="va">alta_lake_210Pb_ages</span>,</span>
-<span class="r-in">  depth <span class="op">=</span> <span class="va">depth_cm</span>, age <span class="op">=</span> <span class="va">age_year_ad</span>,</span>
-<span class="r-in">  age_max <span class="op">=</span> <span class="va">age_year_ad</span> <span class="op">+</span> <span class="va">age_error_yr</span>,</span>
-<span class="r-in">  age_min <span class="op">=</span> <span class="va">age_year_ad</span> <span class="op">-</span> <span class="va">age_error_yr</span>,</span>
-<span class="r-in">  extrapolate_age_below <span class="op">=</span> <span class="op">~</span><span class="fu">age_depth_extrapolate</span><span class="op">(</span></span>
-<span class="r-in">    <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">tail</a></span><span class="op">(</span><span class="va">.x</span>, <span class="fl">3</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">tail</a></span><span class="op">(</span><span class="va">.y</span>, <span class="fl">3</span><span class="op">)</span>, x0 <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="va"><a href="https://dplyr.tidyverse.org/reference/nth.html" class="external-link">last</a></span>, y0 <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="va"><a href="https://dplyr.tidyverse.org/reference/nth.html" class="external-link">last</a></span></span>
-<span class="r-in">  <span class="op">)</span>,</span>
-<span class="r-in">  extrapolate_age_above <span class="op">=</span> <span class="op">~</span><span class="fu">age_depth_extrapolate</span><span class="op">(</span></span>
-<span class="r-in">    <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">.x</span>, <span class="fl">3</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">.y</span>, <span class="fl">3</span><span class="op">)</span>, x0 <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="va"><a href="https://dplyr.tidyverse.org/reference/nth.html" class="external-link">first</a></span>, y0 <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="va"><a href="https://dplyr.tidyverse.org/reference/nth.html" class="external-link">first</a></span></span>
-<span class="r-in">  <span class="op">)</span></span>
-<span class="r-in"><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="age_depth_model.html">age_depth_model</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="va">alta_lake_210Pb_ages</span>,</span></span>
+<span class="r-in"><span>  depth <span class="op">=</span> <span class="va">depth_cm</span>, age <span class="op">=</span> <span class="va">age_year_ad</span>,</span></span>
+<span class="r-in"><span>  age_max <span class="op">=</span> <span class="va">age_year_ad</span> <span class="op">+</span> <span class="va">age_error_yr</span>,</span></span>
+<span class="r-in"><span>  age_min <span class="op">=</span> <span class="va">age_year_ad</span> <span class="op">-</span> <span class="va">age_error_yr</span>,</span></span>
+<span class="r-in"><span>  extrapolate_age_below <span class="op">=</span> <span class="op">~</span><span class="fu">age_depth_extrapolate</span><span class="op">(</span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">tail</a></span><span class="op">(</span><span class="va">.x</span>, <span class="fl">3</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">tail</a></span><span class="op">(</span><span class="va">.y</span>, <span class="fl">3</span><span class="op">)</span>, x0 <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="va"><a href="https://dplyr.tidyverse.org/reference/nth.html" class="external-link">last</a></span>, y0 <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="va"><a href="https://dplyr.tidyverse.org/reference/nth.html" class="external-link">last</a></span></span></span>
+<span class="r-in"><span>  <span class="op">)</span>,</span></span>
+<span class="r-in"><span>  extrapolate_age_above <span class="op">=</span> <span class="op">~</span><span class="fu">age_depth_extrapolate</span><span class="op">(</span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">.x</span>, <span class="fl">3</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">.y</span>, <span class="fl">3</span><span class="op">)</span>, x0 <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="va"><a href="https://dplyr.tidyverse.org/reference/nth.html" class="external-link">first</a></span>, y0 <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="va"><a href="https://dplyr.tidyverse.org/reference/nth.html" class="external-link">first</a></span></span></span>
+<span class="r-in"><span>  <span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;age_depth_model&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Call: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> age_depth_model(</span>
@@ -124,7 +137,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>     x0 = dplyr::first, y0 = dplyr::first</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   )</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> )</span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -139,7 +152,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

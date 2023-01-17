@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">tidypaleo</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.1.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.2.9000</span>
       </span>
     </div>
 
@@ -26,7 +26,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -69,43 +69,43 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">geom_col_segsh</span><span class="op">(</span>
-  mapping <span class="op">=</span> <span class="cn">NULL</span>,
-  data <span class="op">=</span> <span class="cn">NULL</span>,
-  stat <span class="op">=</span> <span class="st">"identity"</span>,
-  position <span class="op">=</span> <span class="st">"identity"</span>,
-  <span class="va">...</span>,
-  xend <span class="op">=</span> <span class="fl">0</span>,
-  arrow <span class="op">=</span> <span class="cn">NULL</span>,
-  arrow.fill <span class="op">=</span> <span class="cn">NULL</span>,
-  lineend <span class="op">=</span> <span class="st">"butt"</span>,
-  linejoin <span class="op">=</span> <span class="st">"round"</span>,
-  na.rm <span class="op">=</span> <span class="cn">FALSE</span>,
-  show.legend <span class="op">=</span> <span class="cn">NA</span>,
-  inherit.aes <span class="op">=</span> <span class="cn">TRUE</span>
-<span class="op">)</span>
-
-<span class="fu">geom_col_segs</span><span class="op">(</span>
-  mapping <span class="op">=</span> <span class="cn">NULL</span>,
-  data <span class="op">=</span> <span class="cn">NULL</span>,
-  stat <span class="op">=</span> <span class="st">"identity"</span>,
-  position <span class="op">=</span> <span class="st">"identity"</span>,
-  <span class="va">...</span>,
-  yend <span class="op">=</span> <span class="fl">0</span>,
-  arrow <span class="op">=</span> <span class="cn">NULL</span>,
-  arrow.fill <span class="op">=</span> <span class="cn">NULL</span>,
-  lineend <span class="op">=</span> <span class="st">"butt"</span>,
-  linejoin <span class="op">=</span> <span class="st">"round"</span>,
-  na.rm <span class="op">=</span> <span class="cn">FALSE</span>,
-  show.legend <span class="op">=</span> <span class="cn">NA</span>,
-  inherit.aes <span class="op">=</span> <span class="cn">TRUE</span>
-<span class="op">)</span>
-
-<span class="va">GeomColSegsh</span>
-
-<span class="va">GeomColSegs</span>
-
-<span class="va">GeomLineh</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">geom_col_segsh</span><span class="op">(</span></span>
+<span>  mapping <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  data <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  stat <span class="op">=</span> <span class="st">"identity"</span>,</span>
+<span>  position <span class="op">=</span> <span class="st">"identity"</span>,</span>
+<span>  <span class="va">...</span>,</span>
+<span>  xend <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  arrow <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  arrow.fill <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  lineend <span class="op">=</span> <span class="st">"butt"</span>,</span>
+<span>  linejoin <span class="op">=</span> <span class="st">"round"</span>,</span>
+<span>  na.rm <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  show.legend <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  inherit.aes <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">geom_col_segs</span><span class="op">(</span></span>
+<span>  mapping <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  data <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  stat <span class="op">=</span> <span class="st">"identity"</span>,</span>
+<span>  position <span class="op">=</span> <span class="st">"identity"</span>,</span>
+<span>  <span class="va">...</span>,</span>
+<span>  yend <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  arrow <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  arrow.fill <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  lineend <span class="op">=</span> <span class="st">"butt"</span>,</span>
+<span>  linejoin <span class="op">=</span> <span class="st">"round"</span>,</span>
+<span>  na.rm <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  show.legend <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  inherit.aes <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">GeomColSegsh</span></span>
+<span></span>
+<span><span class="va">GeomColSegs</span></span>
+<span></span>
+<span><span class="va">GeomLineh</span></span></code></pre></div>
     </div>
 
     <div id="format">
@@ -119,12 +119,17 @@
     <dl><dt>mapping, data, stat, position, arrow, arrow.fill, lineend, linejoin, na.rm, show.legend, inherit.aes, ...</dt>
 <dd><p>See
 <a href="https://ggplot2.tidyverse.org/reference/geom_segment.html" class="external-link">geom_segment</a>.</p></dd>
+
+
 <dt>xend, yend</dt>
 <dd><p>The end of the horizontal or vertical segment bars, respectively.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A ggplot2 layer</p>
+    
+
+<p>A ggplot2 layer</p>
     </div>
 
   </div>
@@ -139,7 +144,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

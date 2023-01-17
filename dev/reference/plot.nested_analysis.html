@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">tidypaleo</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.1.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.2.9000</span>
       </span>
     </div>
 
@@ -26,7 +26,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -69,60 +69,75 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="co"># S3 method for nested_analysis</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span>, main <span class="op">=</span> <span class="st">""</span>, nrow <span class="op">=</span> <span class="cn">NULL</span>, ncol <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span>
-
-<span class="fu">plot_nested_analysis</span><span class="op">(</span>
-  <span class="va">.x</span>,
-  <span class="va">.fun</span>,
-  <span class="va">...</span>,
-  nrow <span class="op">=</span> <span class="cn">NULL</span>,
-  ncol <span class="op">=</span> <span class="cn">NULL</span>,
-  .model_column <span class="op">=</span> <span class="va">.data</span><span class="op">$</span><span class="va">model</span>,
-  .output_column <span class="op">=</span> <span class="cn">NULL</span>
-<span class="op">)</span>
-
-<span class="co"># S3 method for nested_prcomp</span>
-<span class="fu"><a href="https://rdrr.io/r/stats/biplot.html" class="external-link">biplot</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span>, nrow <span class="op">=</span> <span class="cn">NULL</span>, ncol <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for nested_analysis</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span>, main <span class="op">=</span> <span class="st">""</span>, nrow <span class="op">=</span> <span class="cn">NULL</span>, ncol <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">plot_nested_analysis</span><span class="op">(</span></span>
+<span>  <span class="va">.x</span>,</span>
+<span>  <span class="va">.fun</span>,</span>
+<span>  <span class="va">...</span>,</span>
+<span>  nrow <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  ncol <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  .model_column <span class="op">=</span> <span class="va">.data</span><span class="op">$</span><span class="va">model</span>,</span>
+<span>  .output_column <span class="op">=</span> <span class="cn">NULL</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for nested_prcomp</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/biplot.html" class="external-link">biplot</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span>, nrow <span class="op">=</span> <span class="cn">NULL</span>, ncol <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>x, .x</dt>
 <dd><p>A <a href="nested_analysis.html">nested_analysis</a> object (or subclass)</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Passed to the plot function. Tidy evaluation is supported, and arguments are evaluated
 within a transposed version of x for each row.</p></dd>
+
+
 <dt>main</dt>
 <dd><p>The plot title</p></dd>
+
+
 <dt>nrow, ncol</dt>
 <dd><p>Force a number of rows or columns in the output</p></dd>
+
+
 <dt>.fun</dt>
 <dd><p>A function that produces graphical output</p></dd>
+
+
 <dt>.model_column</dt>
 <dd><p>The column containing the model</p></dd>
+
+
 <dt>.output_column</dt>
 <dd><p>The column in which the output of the plot function should be placed</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>the input, invisibly</p>
+    
+
+<p>the input, invisibly</p>
     </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">nd</span> <span class="op">&lt;-</span> <span class="fu"><a href="nested_data.html">nested_data</a></span><span class="op">(</span></span>
-<span class="r-in">  <span class="va">alta_lake_geochem</span>,</span>
-<span class="r-in">  qualifiers <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">age</span>, <span class="va">depth</span>, <span class="va">zone</span><span class="op">)</span>,</span>
-<span class="r-in">  key <span class="op">=</span> <span class="va">param</span>,</span>
-<span class="r-in">  value <span class="op">=</span> <span class="va">value</span>,</span>
-<span class="r-in">  trans <span class="op">=</span> <span class="va">scale</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">na</span> <span class="op">&lt;-</span> <span class="fu"><a href="nested_analysis.html">nested_analysis</a></span><span class="op">(</span><span class="va">nd</span>, <span class="fu">vegan</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/vegan/man/cca.html" class="external-link">rda</a></span>, X <span class="op">=</span> <span class="va">data</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">na</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">nd</span> <span class="op">&lt;-</span> <span class="fu"><a href="nested_data.html">nested_data</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="va">alta_lake_geochem</span>,</span></span>
+<span class="r-in"><span>  qualifiers <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">age</span>, <span class="va">depth</span>, <span class="va">zone</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  key <span class="op">=</span> <span class="va">param</span>,</span></span>
+<span class="r-in"><span>  value <span class="op">=</span> <span class="va">value</span>,</span></span>
+<span class="r-in"><span>  trans <span class="op">=</span> <span class="va">scale</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">na</span> <span class="op">&lt;-</span> <span class="fu"><a href="nested_analysis.html">nested_analysis</a></span><span class="op">(</span><span class="va">nd</span>, <span class="fu">vegan</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/vegan/man/cca.html" class="external-link">rda</a></span>, X <span class="op">=</span> <span class="va">data</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">na</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="plot.nested_analysis-1.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -137,7 +152,7 @@ within a transposed version of x for each row.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

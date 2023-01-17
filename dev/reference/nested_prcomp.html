@@ -19,7 +19,7 @@ in the same unit."><meta name="robots" content="noindex"><!-- mathjax --><script
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">tidypaleo</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.1.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.2.9000</span>
       </span>
     </div>
 
@@ -28,7 +28,7 @@ in the same unit."><meta name="robots" content="noindex"><!-- mathjax --><script
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -73,7 +73,7 @@ in the same unit.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">nested_prcomp</span><span class="op">(</span><span class="va">.data</span>, data_column <span class="op">=</span> <span class="va">.data</span><span class="op">$</span><span class="va">data</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">nested_prcomp</span><span class="op">(</span><span class="va">.data</span>, data_column <span class="op">=</span> <span class="va">.data</span><span class="op">$</span><span class="va">data</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -81,44 +81,52 @@ in the same unit.</p>
     <dl><dt>.data</dt>
 <dd><p>A data frame with a list column of data frames, possibly created using
 <a href="nested_data.html">nested_data</a>.</p></dd>
+
+
 <dt>data_column</dt>
 <dd><p>An expression that evalulates to the data object within each row of .data</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Passed to <a href="https://rdrr.io/r/stats/prcomp.html" class="external-link">prcomp</a>.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>.data with additional columns 'model', 'loadings', 'variance' and 'scores'</p>
+    
+
+<p>.data with additional columns 'model', 'loadings', 'variance' and 'scores'</p>
     </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span>, warn.conflicts <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">nested_pca</span> <span class="op">&lt;-</span> <span class="va">alta_lake_geochem</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="nested_data.html">nested_data</a></span><span class="op">(</span></span>
-<span class="r-in">    qualifiers <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">depth</span>, <span class="va">zone</span><span class="op">)</span>,</span>
-<span class="r-in">    key <span class="op">=</span> <span class="va">param</span>,</span>
-<span class="r-in">    value <span class="op">=</span> <span class="va">value</span>,</span>
-<span class="r-in">    trans <span class="op">=</span> <span class="va">scale</span></span>
-<span class="r-in">  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu">nested_prcomp</span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># get variance info</span></span>
-<span class="r-in"><span class="va">nested_pca</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="nested_data.html">unnested_data</a></span><span class="op">(</span><span class="va">variance</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span>, warn.conflicts <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">nested_pca</span> <span class="op">&lt;-</span> <span class="va">alta_lake_geochem</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="nested_data.html">nested_data</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    qualifiers <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">depth</span>, <span class="va">zone</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    key <span class="op">=</span> <span class="va">param</span>,</span></span>
+<span class="r-in"><span>    value <span class="op">=</span> <span class="va">value</span>,</span></span>
+<span class="r-in"><span>    trans <span class="op">=</span> <span class="va">scale</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu">nested_prcomp</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># get variance info</span></span></span>
+<span class="r-in"><span><span class="va">nested_pca</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="nested_data.html">unnested_data</a></span><span class="op">(</span><span class="va">variance</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 6 × 6</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   component component_text standard_deviation variance variance_proportion</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span>         1 PC1                         2.15    4.61               0.768  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span>         2 PC2                         0.884   0.781              0.130  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span>         3 PC3                         0.603   0.364              0.060<span style="text-decoration: underline;">7</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span>         4 PC4                         0.381   0.145              0.024<span style="text-decoration: underline;">2</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span>         5 PC5                         0.276   0.076<span style="text-decoration: underline;">1</span>             0.012<span style="text-decoration: underline;">7</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span>         6 PC6                         0.151   0.022<span style="text-decoration: underline;">8</span>             0.003<span style="text-decoration: underline;">80</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 1 more variable: variance_proportion_cumulative &lt;dbl&gt;</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># get loadings info</span></span>
-<span class="r-in"><span class="va">nested_pca</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="nested_data.html">unnested_data</a></span><span class="op">(</span><span class="va">loadings</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   component component_text standard_deviation variance variance_propor…¹ varia…²</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span>         1 PC1                         2.15    4.61             0.768     0.768</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span>         2 PC2                         0.884   0.781            0.130     0.899</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span>         3 PC3                         0.603   0.364            0.060<span style="text-decoration: underline;">7</span>    0.959</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span>         4 PC4                         0.381   0.145            0.024<span style="text-decoration: underline;">2</span>    0.984</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span>         5 PC5                         0.276   0.076<span style="text-decoration: underline;">1</span>           0.012<span style="text-decoration: underline;">7</span>    0.996</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span>         6 PC6                         0.151   0.022<span style="text-decoration: underline;">8</span>           0.003<span style="text-decoration: underline;">80</span>   1    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with abbreviated variable names ¹​variance_proportion,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   ²​variance_proportion_cumulative</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># get loadings info</span></span></span>
+<span class="r-in"><span><span class="va">nested_pca</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="nested_data.html">unnested_data</a></span><span class="op">(</span><span class="va">loadings</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 6 × 7</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   variable    PC1     PC2    PC3    PC4     PC5     PC6</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
@@ -128,9 +136,9 @@ in the same unit.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> Ti        0.439  0.078<span style="text-decoration: underline;">3</span>  0.356  0.483 -<span style="color: #BB0000;">0.565</span>  -<span style="color: #BB0000;">0.350</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> d13C      0.458  0.089<span style="text-decoration: underline;">0</span> -<span style="color: #BB0000;">0.144</span>  0.145 -<span style="color: #BB0000;">0.126</span>   0.851 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> d15N     -<span style="color: #BB0000;">0.377</span>  0.613   0.144 -<span style="color: #BB0000;">0.386</span> -<span style="color: #BB0000;">0.539</span>   0.149 </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># scores, requalified</span></span>
-<span class="r-in"><span class="va">nested_pca</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="nested_data.html">unnested_data</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">qualifiers</span>, <span class="va">scores</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># scores, requalified</span></span></span>
+<span class="r-in"><span><span class="va">nested_pca</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="nested_data.html">unnested_data</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">qualifiers</span>, <span class="va">scores</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 32 × 9</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    depth zone   row_number    PC1      PC2    PC3     PC4     PC5     PC6</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
@@ -145,7 +153,7 @@ in the same unit.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>  6.5  Zone 2          9 -<span style="color: #BB0000;">0.331</span>  0.573   -<span style="color: #BB0000;">0.181</span>  0.366   0.354  -<span style="color: #BB0000;">0.066</span><span style="color: #BB0000; text-decoration: underline;">0</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>  7.5  Zone 2         10 -<span style="color: #BB0000;">0.638</span>  0.543   -<span style="color: #BB0000;">0.904</span>  0.145   0.239   0.150 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 22 more rows</span></span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -160,7 +168,7 @@ in the same unit.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>
