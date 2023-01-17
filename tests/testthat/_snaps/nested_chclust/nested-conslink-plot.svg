@@ -1,0 +1,72 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' class='svglite' data-engine-version='2.0' width='720.00pt' height='576.00pt' viewBox='0 0 720.00 576.00'>
+<defs>
+  <style type='text/css'><![CDATA[
+    .svglite line, .svglite polyline, .svglite polygon, .svglite path, .svglite rect, .svglite circle {
+      fill: none;
+      stroke: #000000;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-miterlimit: 10.00;
+    }
+  ]]></style>
+</defs>
+<rect width='100%' height='100%' style='stroke: none; fill: #FFFFFF;'/>
+<defs>
+  <clipPath id='cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA='>
+    <rect x='0.00' y='0.00' width='720.00' height='576.00' />
+  </clipPath>
+</defs>
+<g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
+<text x='374.40' y='34.48' text-anchor='middle' style='font-size: 14.40px; font-weight: bold; font-family: sans;' textLength='75.65px' lengthAdjust='spacingAndGlyphs'>CCC = 0.32</text>
+<text x='374.40' y='571.68' text-anchor='middle' style='font-size: 12.00px; font-family: sans;' textLength='220.15px' lengthAdjust='spacingAndGlyphs'>no fishy subtext (unconstrained, conslink)</text>
+<text transform='translate(84.97,513.00) rotate(-90)' text-anchor='end' style='font-size: 7.20px; font-family: sans;' textLength='72.46px' lengthAdjust='spacingAndGlyphs'>Anderson Lake bottom</text>
+<text transform='translate(115.00,513.00) rotate(-90)' text-anchor='end' style='font-size: 7.20px; font-family: sans;' textLength='60.45px' lengthAdjust='spacingAndGlyphs'>Anderson Lake top</text>
+<polyline points='82.40,506.83 82.40,462.48 113.14,462.48 113.14,506.83 ' style='stroke-width: 0.75;' />
+<text transform='translate(145.74,339.21) rotate(-90)' text-anchor='end' style='font-size: 7.20px; font-family: sans;' textLength='46.43px' lengthAdjust='spacingAndGlyphs'>Bayers bottom</text>
+<polyline points='97.77,462.48 97.77,288.70 143.87,288.70 143.87,333.05 ' style='stroke-width: 0.75;' />
+<text transform='translate(176.34,497.57) rotate(-90)' text-anchor='end' style='font-size: 7.20px; font-family: sans;' textLength='34.43px' lengthAdjust='spacingAndGlyphs'>Bayers top</text>
+<text transform='translate(207.92,497.57) rotate(-90)' text-anchor='end' style='font-size: 7.20px; font-family: sans;' textLength='53.64px' lengthAdjust='spacingAndGlyphs'>Bell Lake bottom</text>
+<polyline points='174.61,491.41 174.61,447.06 205.35,447.06 205.35,491.41 ' style='stroke-width: 0.75;' />
+<polyline points='120.82,288.70 120.82,288.70 189.98,288.70 189.98,447.06 ' style='stroke-width: 0.75;' />
+<text transform='translate(237.95,339.21) rotate(-90)' text-anchor='end' style='font-size: 7.20px; font-family: sans;' textLength='41.63px' lengthAdjust='spacingAndGlyphs'>Bell Lake top</text>
+<polyline points='155.40,288.70 155.40,288.70 236.08,288.70 236.08,333.05 ' style='stroke-width: 0.75;' />
+<text transform='translate(268.68,412.15) rotate(-90)' text-anchor='end' style='font-size: 7.20px; font-family: sans;' textLength='73.65px' lengthAdjust='spacingAndGlyphs'>Cranberry Lake bottom</text>
+<text transform='translate(299.42,412.15) rotate(-90)' text-anchor='end' style='font-size: 7.20px; font-family: sans;' textLength='61.64px' lengthAdjust='spacingAndGlyphs'>Cranberry Lake top</text>
+<polyline points='266.82,405.99 266.82,361.64 297.56,361.64 297.56,405.99 ' style='stroke-width: 0.75;' />
+<polyline points='195.74,288.70 195.74,288.70 282.19,288.70 282.19,361.64 ' style='stroke-width: 0.75;' />
+<text transform='translate(330.87,339.21) rotate(-90)' text-anchor='end' style='font-size: 7.20px; font-family: sans;' textLength='66.04px' lengthAdjust='spacingAndGlyphs'>Frasers Lake bottom</text>
+<polyline points='238.97,288.70 238.97,288.70 328.29,288.70 328.29,333.05 ' style='stroke-width: 0.75;' />
+<text transform='translate(360.89,339.21) rotate(-90)' text-anchor='end' style='font-size: 7.20px; font-family: sans;' textLength='54.03px' lengthAdjust='spacingAndGlyphs'>Frasers Lake top</text>
+<polyline points='283.63,288.70 283.63,288.70 359.03,288.70 359.03,333.05 ' style='stroke-width: 0.75;' />
+<text transform='translate(392.34,315.34) rotate(-90)' text-anchor='end' style='font-size: 7.20px; font-family: sans;' textLength='60.84px' lengthAdjust='spacingAndGlyphs'>Kinsac lake bottom</text>
+<polyline points='321.33,288.70 321.33,264.83 389.77,264.83 389.77,309.18 ' style='stroke-width: 0.75;' />
+<text transform='translate(422.37,427.14) rotate(-90)' text-anchor='end' style='font-size: 7.20px; font-family: sans;' textLength='48.84px' lengthAdjust='spacingAndGlyphs'>Kinsac lake top</text>
+<text transform='translate(453.82,536.65) rotate(-90)' text-anchor='end' style='font-size: 7.20px; font-family: sans;' textLength='75.65px' lengthAdjust='spacingAndGlyphs'>Little Albro Lake bottom</text>
+<text transform='translate(483.84,536.65) rotate(-90)' text-anchor='end' style='font-size: 7.20px; font-family: sans;' textLength='63.64px' lengthAdjust='spacingAndGlyphs'>Little Albro Lake top</text>
+<polyline points='451.24,530.49 451.24,486.13 481.98,486.13 481.98,530.49 ' style='stroke-width: 0.75;' />
+<polyline points='420.51,420.98 420.51,376.63 466.61,376.63 466.61,486.13 ' style='stroke-width: 0.75;' />
+<polyline points='355.55,264.83 355.55,264.83 443.56,264.83 443.56,376.63 ' style='stroke-width: 0.75;' />
+<text transform='translate(514.58,315.34) rotate(-90)' text-anchor='end' style='font-size: 7.20px; font-family: sans;' textLength='75.24px' lengthAdjust='spacingAndGlyphs'>Little Springfield bottom</text>
+<polyline points='399.55,264.83 399.55,264.83 512.72,264.83 512.72,309.18 ' style='stroke-width: 0.75;' />
+<text transform='translate(545.31,125.98) rotate(-90)' text-anchor='end' style='font-size: 7.20px; font-family: sans;' textLength='63.24px' lengthAdjust='spacingAndGlyphs'>Little Springfield top</text>
+<polyline points='456.13,264.83 456.13,75.47 543.45,75.47 543.45,119.82 ' style='stroke-width: 0.75;' />
+<text transform='translate(576.05,321.33) rotate(-90)' text-anchor='end' style='font-size: 7.20px; font-family: sans;' textLength='69.65px' lengthAdjust='spacingAndGlyphs'>Maynard Lake bottom</text>
+<text transform='translate(606.79,418.03) rotate(-90)' text-anchor='end' style='font-size: 7.20px; font-family: sans;' textLength='57.65px' lengthAdjust='spacingAndGlyphs'>Maynard Lake top</text>
+<text transform='translate(638.24,418.03) rotate(-90)' text-anchor='end' style='font-size: 7.20px; font-family: sans;' textLength='58.83px' lengthAdjust='spacingAndGlyphs'>Miller Lake bottom</text>
+<polyline points='604.93,411.87 604.93,367.52 635.66,367.52 635.66,411.87 ' style='stroke-width: 0.75;' />
+<polyline points='574.19,315.17 574.19,270.82 620.29,270.82 620.29,367.52 ' style='stroke-width: 0.75;' />
+<text transform='translate(668.26,231.68) rotate(-90)' text-anchor='end' style='font-size: 7.20px; font-family: sans;' textLength='46.82px' lengthAdjust='spacingAndGlyphs'>Miller Lake top</text>
+<polyline points='597.24,270.82 597.24,181.16 666.40,181.16 666.40,225.51 ' style='stroke-width: 0.75;' />
+<polyline points='499.79,75.47 499.79,75.47 631.82,75.47 631.82,181.16 ' style='stroke-width: 0.75;' />
+<line x1='59.04' y1='466.39' x2='59.04' y2='132.15' style='stroke-width: 0.75;' />
+<line x1='59.04' y1='466.39' x2='51.84' y2='466.39' style='stroke-width: 0.75;' />
+<line x1='59.04' y1='354.97' x2='51.84' y2='354.97' style='stroke-width: 0.75;' />
+<line x1='59.04' y1='243.56' x2='51.84' y2='243.56' style='stroke-width: 0.75;' />
+<line x1='59.04' y1='132.15' x2='51.84' y2='132.15' style='stroke-width: 0.75;' />
+<text transform='translate(41.76,466.39) rotate(-90)' text-anchor='middle' style='font-size: 12.00px; font-family: sans;' textLength='6.67px' lengthAdjust='spacingAndGlyphs'>5</text>
+<text transform='translate(41.76,354.97) rotate(-90)' text-anchor='middle' style='font-size: 12.00px; font-family: sans;' textLength='13.35px' lengthAdjust='spacingAndGlyphs'>10</text>
+<text transform='translate(41.76,243.56) rotate(-90)' text-anchor='middle' style='font-size: 12.00px; font-family: sans;' textLength='13.35px' lengthAdjust='spacingAndGlyphs'>15</text>
+<text transform='translate(41.76,132.15) rotate(-90)' text-anchor='middle' style='font-size: 12.00px; font-family: sans;' textLength='13.35px' lengthAdjust='spacingAndGlyphs'>20</text>
+</g>
+</svg>
