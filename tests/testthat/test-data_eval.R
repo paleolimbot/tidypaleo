@@ -1,4 +1,3 @@
-context("test-data_eval.R")
 
 test_that("data_eval creates tibbles with or without data", {
   expect_is(data_eval(a = 1:5, b = 6:10), "tbl_df")

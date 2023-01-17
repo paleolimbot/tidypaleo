@@ -1,4 +1,3 @@
-context("test-nested_prcomp.R")
 
 test_that("nested_pca works as intended", {
 

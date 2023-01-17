@@ -1,5 +1,3 @@
-context("test-nested_chclust_coniss.R")
-
 
 test_that("nested_chclust_coniss produces the correct columns", {
 

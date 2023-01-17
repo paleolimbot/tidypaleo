@@ -1,4 +1,3 @@
-context("test-ggstrat-plot_addons.R")
 
 test_that("facet reordering works", {
 

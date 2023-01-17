@@ -1,4 +1,3 @@
-context("test-age_depth_model.R")
 
 test_that("age_depth_model() creates valid age depth model objects", {
   test_data <- data.frame(depth_col = 0:5, age_col = 2000:1995)

@@ -1,4 +1,3 @@
-context("test-nested_data.R")
 
 test_that("nested_data works as intended", {
 

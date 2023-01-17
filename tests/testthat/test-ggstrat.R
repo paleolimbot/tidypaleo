@@ -1,4 +1,3 @@
-context("test-ggstrat.R")
 
 test_that("facet label rotating works properly", {
 
