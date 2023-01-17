@@ -109,7 +109,7 @@ nested_hclust <- function(.data, data_column = "data", qualifiers_column = "qual
     nchclust$nodes,
     function(df) tidyr::unnest(
       dplyr::select(df, "node_id", "hclust_zone", "segments"),
-      .data$segments
+      "segments"
     )
   )
   nchclust$nodes <- purrr::map(nchclust$nodes, function(df) dplyr::select(df, -"segments"))
@@ -311,7 +311,7 @@ fortify.nested_hclust <- function(model, data, ...) {
 
   # add unnested qualifier columns to data prior to mapping
   # model, x, and y column must be mapped
-  tidyr::unnest(data, .data$qualifiers)
+  tidyr::unnest(data, "qualifiers")
 }
 
 group_boundaries <- function(hclust_zones, qualifiers, n_groups = 1) {

@@ -45,7 +45,7 @@ layer_scores <- function(
   object$scores <- purrr::map(object$scores, function(df) dplyr::select(df, !!which))
   scores <- tidyr::unnest(
     drop_list_cols(object, c("qualifiers",  "scores")),
-    c(.data$qualifiers, .data$scores)
+    c("qualifiers",  "scores")
   )
   scores_long <- tidyr::gather(scores, key = !!key, value = !!value, dplyr::starts_with("PC"))
 
@@ -154,7 +154,7 @@ layer_zone_boundaries <- function(object, mapping, ..., linetype = 2, alpha = 0.
   )
 
   mutate_args <- quos(...)
-  zone_info <- tidyr::unnest(drop_list_cols(object,  "zone_info"), .data$zone_info)
+  zone_info <- tidyr::unnest(drop_list_cols(object,  "zone_info"), "zone_info")
   zone_info <- dplyr::mutate(zone_info, !!!mutate_args)
 
   if("x" %in% names(mapping)) {
