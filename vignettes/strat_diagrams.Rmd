@@ -303,7 +303,7 @@ Most of the modifications you can make on these plots are identical to the modif
 
 ### Different styles
 
-There are a few famous styles for abundance plots, because a few existing programs (like [Tilia](https://www.tiliait.com/), [C2](https://www.staff.ncl.ac.uk/stephen.juggins/software/C2Home.htm), and [rioja](https://cran.r-project.org/package=rioja)) have some very specific defaults that show up on repeat in the literature. These styles can be replicated by changing or adding to `geom_col_segsh()`. For example, the classic Tilia "area" style for pollen diagrams:
+There are a few famous styles for abundance plots, because a few existing programs (like Tilia, [C2](https://www.staff.ncl.ac.uk/stephen.juggins/software/C2Home.htm), and [rioja](https://cran.r-project.org/package=rioja)) have some very specific defaults that show up on repeat in the literature. These styles can be replicated by changing or adding to `geom_col_segsh()`. For example, the classic Tilia "area" style for pollen diagrams:
 
 ```{r, fig.height=6}
 ggplot(keji_lakes_plottable, aes(x = rel_abund, y = depth)) +
