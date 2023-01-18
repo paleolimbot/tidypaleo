@@ -1,4 +1,4 @@
-# tidypaleo (development version)
+# tidypaleo 0.1.3
 
 * Fixes for the forthcoming dplyr 1.1.0.
 * Fix deprecated usage of tidyselect.
