@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">tidypaleo</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.3</span>
       </span>
     </div>
 
@@ -81,13 +81,14 @@
 
       
 
-      </header><script src="age_depth_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Age-depth models</h1>
-                        <h4 data-toc-skip class="author">Dewey Dunnington</h4>
+                        <h4 data-toc-skip class="author">Dewey
+Dunnington</h4>
             
-            <h4 data-toc-skip class="date">2022-09-04</h4>
+            <h4 data-toc-skip class="date">2023-01-19</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/paleolimbot/tidypaleo/blob/HEAD/vignettes/age_depth.Rmd" class="external-link"><code>vignettes/age_depth.Rmd</code></a></small>
       <div class="hidden name"><code>age_depth.Rmd</code></div>
@@ -96,11 +97,22 @@
 
     
     
-<p>Given a known depths and known (or modelled) ages, it is often convenient to approximate age as a continuous function of depth in an archive. This package provides tools to flexibly create age-depth relationships with various rules for interpolating age within known age-depth values, and extrapolating above and below these values. Typically, this is interpolation between known values and extrapolating using average sedimentation rates based on ages known at discrete points in a core.</p>
+<p>Given a known depths and known (or modelled) ages, it is often
+convenient to approximate age as a continuous function of depth in an
+archive. This package provides tools to flexibly create age-depth
+relationships with various rules for interpolating age within known
+age-depth values, and extrapolating above and below these values.
+Typically, this is interpolation between known values and extrapolating
+using average sedimentation rates based on ages known at discrete points
+in a core.</p>
 <div class="section level2">
 <h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
 </h2>
-<p>Using the built-in dataset <code>alta_lake_210Pb_ages</code>, which contains a Lead-210 (CRS) age-depth relationship for a core from <a href="https://en.wikipedia.org/wiki/Alta_Lake_(British_Columbia)" class="external-link">Alta Lake, Whistler, British Columbia</a>, we can create an age-depth model (note that <code>age</code> and <code>depth</code> are evaluated within <code>.data</code>, if it is provided, and support tidy evaluation):</p>
+<p>Using the built-in dataset <code>alta_lake_210Pb_ages</code>, which
+contains a Lead-210 (CRS) age-depth relationship for a core from <a href="https://en.wikipedia.org/wiki/Alta_Lake_(British_Columbia)" class="external-link">Alta
+Lake, Whistler, British Columbia</a>, we can create an age-depth model
+(note that <code>age</code> and <code>depth</code> are evaluated within
+<code>.data</code>, if it is provided, and support tidy evaluation):</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://paleolimbot.github.io/tidypaleo/" class="external-link">tidypaleo</a></span><span class="op">)</span></span>
 <span><span class="va">alta_lake_adm</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/age_depth_model.html">age_depth_model</a></span><span class="op">(</span></span>
@@ -138,7 +150,10 @@
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span>   3   <span style="text-decoration: underline;">1</span>982.   <span style="text-decoration: underline;">1</span>980.   <span style="text-decoration: underline;">1</span>984. interpolate      </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span>   3.5 <span style="text-decoration: underline;">1</span>974.     <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>  interpolate      </span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># … with 13 more rows</span></span></span></code></pre></div>
-<p>The default behaviour is to interpolate within known ages/depths, and extrapolate using a linear fit of ages/depths. These can be specified using transform functions, which take XY data and produce forward and inverse predictions based on them. The default call is:</p>
+<p>The default behaviour is to interpolate within known ages/depths, and
+extrapolate using a linear fit of ages/depths. These can be specified
+using transform functions, which take XY data and produce forward and
+inverse predictions based on them. The default call is:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/age_depth_model.html">age_depth_model</a></span><span class="op">(</span></span>
 <span>  <span class="va">...</span>,</span>
@@ -149,7 +164,12 @@
 <span>  extrapolate_age_limits_below <span class="op">=</span> <span class="va">trans_na</span>,</span>
 <span>  extrapolate_age_limits_above <span class="op">=</span> <span class="va">trans_na</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p>To customize the behaviour of the predictions (e.g., disable extrapolating above or below), specify a transform function in the appropriate category. One-sided formulas are turned into functions using the <code><a href="https://rlang.r-lib.org/reference/as_function.html" class="external-link">rlang::as_function()</a></code>. A more advanced way might be to only use the first/last few observations to extrapolate above and below, which one could do like this:</p>
+<p>To customize the behaviour of the predictions (e.g., disable
+extrapolating above or below), specify a transform function in the
+appropriate category. One-sided formulas are turned into functions using
+the <code><a href="https://rlang.r-lib.org/reference/as_function.html" class="external-link">rlang::as_function()</a></code>. A more advanced way might be to
+only use the first/last few observations to extrapolate above and below,
+which one could do like this:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">alta_lake_adm2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/age_depth_model.html">age_depth_model</a></span><span class="op">(</span></span>
 <span>  <span class="va">alta_lake_210Pb_ages</span>,</span>
@@ -186,7 +206,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>
