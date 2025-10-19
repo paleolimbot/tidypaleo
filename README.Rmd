@@ -17,7 +17,7 @@ knitr::opts_chunk$set(
 # tidypaleo
 
 <!-- badges: start -->
-[![Coverage Status](https://img.shields.io/codecov/c/github/paleolimbot/tidypaleo/main.svg)](https://app.codecov.io/github/paleolimbot/tidypaleo?branch=main)
+[![Codecov test coverage](https://codecov.io/gh/paleolimbot/tidypaleo/graph/badge.svg)](https://app.codecov.io/gh/paleolimbot/tidypaleo)
 [![R-CMD-check](https://github.com/paleolimbot/tidypaleo/workflows/R-CMD-check/badge.svg)](https://github.com/paleolimbot/tidypaleo/actions)
 <!-- badges: end -->
 
