@@ -580,8 +580,8 @@ age_depth_as_sec_axis <- function(x, primary = c("depth", "age"), ...) {
 
   . <- NULL; rm(.) # no other way to create a second axis than with a .
   if(primary == "depth") {
-    ggplot2::sec_axis(trans = ~predict(x, depth = .)$age, ...)
+    ggplot2::sec_axis(transform = ~predict(x, depth = .)$age, ...)
   } else {
-    ggplot2::sec_axis(trans = ~predict(x, age = .)$depth, ...)
+    ggplot2::sec_axis(transform = ~predict(x, age = .)$depth, ...)
   }
 }
