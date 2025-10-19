@@ -67,7 +67,7 @@ test_that("nested_chclust_coniss produces the correct segments and nodes", {
         ggplot2::geom_segment(
           ggplot2::aes(x = dispersion, xend = dispersion_end, yend = depth_end, col = factor(hclust_zone)),
           data = tidyr::unnest_legacy(nested_coniss, segments) %>% dplyr::mutate(param = "Z_CONISS"),
-          size = 0.3
+          linewidth = 0.3
         ) +
         ggplot2::geom_hline(
           ggplot2::aes(yintercept = boundary_depth),
@@ -107,7 +107,7 @@ test_that("nested_chclust_coniss works with a grouping variable", {
           col = factor(hclust_zone)
         ),
         data = tidyr::unnest_legacy(nested_coniss, segments) %>% dplyr::mutate(param = "Z_CONISS"),
-        size = 0.3
+        linewidth = 0.3
       ) +
       ggplot2::geom_hline(
         ggplot2::aes(yintercept = boundary_depth),
