@@ -59,7 +59,7 @@ rotated_facet_labels <- function(angle = 45, direction = "x", remove_label_backg
 #' @export
 #' @importFrom purrr %||%
 #'
-ggplot_add.rotate_facet_label_spec <- function(object, plot, object_name) {
+ggplot_add.rotate_facet_label_spec <- function(object, plot, ...) {
   plot$facet <- modify_facet_clip(plot$facet, remove_clip = object$direction)
 
   facet_switch <- plot$facet$params$switch %||% plot$facet$params$strip.position %||% "none"

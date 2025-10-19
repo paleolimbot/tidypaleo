@@ -206,7 +206,7 @@ sequential_layer_facets <- function(reverse = FALSE) {
 
 #' @importFrom ggplot2 ggplot_add
 #' @export
-ggplot_add.sequential_layer_facet_spec <- function(object, plot, object_name) {
+ggplot_add.sequential_layer_facet_spec <- function(object, plot, ...) {
   force(object)
   facet_super <- plot$facet
 
