@@ -159,7 +159,7 @@ test_that("creating a second axis object", {
   )
 
   # depth as the primary axis
-  expect_true(ggplot2::is.ggproto(age_depth_as_sec_axis(alta_lake_adm)))
+  expect_true(ggplot2::is_ggproto(age_depth_as_sec_axis(alta_lake_adm)))
   expect_is(age_depth_as_sec_axis(alta_lake_adm), "AxisSecondary")
 
   expect_silent(
@@ -170,7 +170,7 @@ test_that("creating a second axis object", {
   )
 
   # age as the primary axis
-  expect_true(ggplot2::is.ggproto(age_depth_as_sec_axis(alta_lake_adm, primary = "age")))
+  expect_true(ggplot2::is_ggproto(age_depth_as_sec_axis(alta_lake_adm, primary = "age")))
   expect_is(age_depth_as_sec_axis(alta_lake_adm, primary = "age"), "AxisSecondary")
 
   expect_silent(

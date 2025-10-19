@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' class='svglite' data-engine-version='2.0' width='720.00pt' height='576.00pt' viewBox='0 0 720.00 576.00'>
+<defs>
+  <style type='text/css'><![CDATA[
+    .svglite line, .svglite polyline, .svglite polygon, .svglite path, .svglite rect, .svglite circle {
+      fill: none;
+      stroke: #000000;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-miterlimit: 10.00;
+    }
+  ]]></style>
+</defs>
+<rect width='100%' height='100%' style='stroke: none; fill: #FFFFFF;'/>
+<defs>
+  <clipPath id='cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA='>
+    <rect x='0.00' y='0.00' width='720.00' height='576.00' />
+  </clipPath>
+</defs>
+<g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
+<rect x='0.00' y='0.00' width='720.00' height='576.00' style='stroke-width: 1.07; stroke: #FFFFFF; fill: #FFFFFF;' />
+</g>
+<defs>
+  <clipPath id='cpMzIuNzl8Njg0LjI4fDIyLjc4fDU0NS4xMQ=='>
+    <rect x='32.79' y='22.78' width='651.48' height='522.33' />
+  </clipPath>
+</defs>
+<g clip-path='url(#cpMzIuNzl8Njg0LjI4fDIyLjc4fDU0NS4xMQ==)'>
+<rect x='32.79' y='22.78' width='651.48' height='522.33' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
+<polyline points='62.41,46.53 111.02,71.52 136.73,96.51 158.28,121.50 230.26,146.49 231.35,171.48 268.90,196.48 290.78,221.47 291.17,246.46 330.19,271.45 270.43,296.44 339.28,321.44 368.15,346.43 447.76,371.42 504.42,396.41 559.76,421.40 527.93,446.39 619.02,471.39 652.45,496.38 654.66,521.37 ' style='stroke-width: 1.07; stroke-linecap: butt;' />
+<rect x='32.79' y='22.78' width='651.48' height='522.33' style='stroke-width: 1.07; stroke: #333333;' />
+</g>
+<g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
+<text x='27.86' y='149.52' text-anchor='end' style='font-size: 8.80px; fill: #4D4D4D; font-family: sans;' textLength='4.89px' lengthAdjust='spacingAndGlyphs'>5</text>
+<text x='27.86' y='274.48' text-anchor='end' style='font-size: 8.80px; fill: #4D4D4D; font-family: sans;' textLength='9.79px' lengthAdjust='spacingAndGlyphs'>10</text>
+<text x='27.86' y='399.44' text-anchor='end' style='font-size: 8.80px; fill: #4D4D4D; font-family: sans;' textLength='9.79px' lengthAdjust='spacingAndGlyphs'>15</text>
+<text x='27.86' y='524.40' text-anchor='end' style='font-size: 8.80px; fill: #4D4D4D; font-family: sans;' textLength='9.79px' lengthAdjust='spacingAndGlyphs'>20</text>
+<polyline points='30.05,146.49 32.79,146.49 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
+<polyline points='30.05,271.45 32.79,271.45 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
+<polyline points='30.05,396.41 32.79,396.41 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
+<polyline points='30.05,521.37 32.79,521.37 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
+<polyline points='687.02,121.50 684.28,121.50 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
+<polyline points='687.02,221.47 684.28,221.47 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
+<polyline points='687.02,321.44 684.28,321.44 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
+<polyline points='687.02,421.40 684.28,421.40 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
+<polyline points='687.02,521.37 684.28,521.37 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
+<text x='689.21' y='124.53' style='font-size: 8.80px; fill: #4D4D4D; font-family: sans;' textLength='7.82px' lengthAdjust='spacingAndGlyphs'>-4</text>
+<text x='689.21' y='224.50' style='font-size: 8.80px; fill: #4D4D4D; font-family: sans;' textLength='7.82px' lengthAdjust='spacingAndGlyphs'>-8</text>
+<text x='689.21' y='324.46' style='font-size: 8.80px; fill: #4D4D4D; font-family: sans;' textLength='12.72px' lengthAdjust='spacingAndGlyphs'>-12</text>
+<text x='689.21' y='424.43' style='font-size: 8.80px; fill: #4D4D4D; font-family: sans;' textLength='12.72px' lengthAdjust='spacingAndGlyphs'>-16</text>
+<text x='689.21' y='524.40' style='font-size: 8.80px; fill: #4D4D4D; font-family: sans;' textLength='12.72px' lengthAdjust='spacingAndGlyphs'>-20</text>
+<polyline points='179.63,547.85 179.63,545.11 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
+<polyline points='330.89,547.85 330.89,545.11 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
+<polyline points='482.14,547.85 482.14,545.11 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
+<polyline points='633.40,547.85 633.40,545.11 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
+<text x='179.63' y='556.10' text-anchor='middle' style='font-size: 8.80px; fill: #4D4D4D; font-family: sans;' textLength='12.23px' lengthAdjust='spacingAndGlyphs'>2.5</text>
+<text x='330.89' y='556.10' text-anchor='middle' style='font-size: 8.80px; fill: #4D4D4D; font-family: sans;' textLength='12.23px' lengthAdjust='spacingAndGlyphs'>5.0</text>
+<text x='482.14' y='556.10' text-anchor='middle' style='font-size: 8.80px; fill: #4D4D4D; font-family: sans;' textLength='12.23px' lengthAdjust='spacingAndGlyphs'>7.5</text>
+<text x='633.40' y='556.10' text-anchor='middle' style='font-size: 8.80px; fill: #4D4D4D; font-family: sans;' textLength='17.13px' lengthAdjust='spacingAndGlyphs'>10.0</text>
+<text x='358.53' y='568.24' text-anchor='middle' style='font-size: 11.00px; font-family: sans;' textLength='26.30px' lengthAdjust='spacingAndGlyphs'>value</text>
+<text transform='translate(13.05,283.95) rotate(-90)' text-anchor='middle' style='font-size: 11.00px; font-family: sans;' textLength='27.53px' lengthAdjust='spacingAndGlyphs'>depth</text>
+<text transform='translate(706.95,283.95) rotate(90)' text-anchor='middle' style='font-size: 11.00px; font-family: sans;' textLength='40.98px' lengthAdjust='spacingAndGlyphs'>age axis</text>
+<text x='32.79' y='14.56' style='font-size: 13.20px; font-family: sans;' textLength='143.84px' lengthAdjust='spacingAndGlyphs'>adm rev yaxis depth age</text>
+</g>
+</svg>
