@@ -250,7 +250,7 @@ GeomColSegsh <- ggplot2::ggproto(
   "GeomColSegsh",
   ggplot2::GeomSegment,
   required_aes = c("x", "y"),
-  default_aes = ggplot2::aes(xend = 0, yend = 0, colour = "black", size = 0.5, linetype = 1, alpha = NA),
+  default_aes = ggplot2::aes(xend = 0, yend = 0, colour = "black", linewidth = 0.5, linetype = 1, alpha = NA),
 
   draw_panel = function(self, data, panel_params, coord, arrow = NULL, arrow.fill = NULL,
                         lineend = "butt", linejoin = "round", na.rm = FALSE) {
@@ -275,7 +275,7 @@ GeomColSegs <- ggplot2::ggproto(
   "GeomColSegs",
   ggplot2::GeomSegment,
   required_aes = c("x", "y"),
-  default_aes = ggplot2::aes(xend = 0, yend = 0, colour = "black", size = 0.5, linetype = 1, alpha = NA),
+  default_aes = ggplot2::aes(xend = 0, yend = 0, colour = "black", linewidth = 0.5, linetype = 1, alpha = NA),
 
   draw_panel = function(self, data, panel_params, coord, arrow = NULL, arrow.fill = NULL,
                         lineend = "butt", linejoin = "round", na.rm = FALSE) {
@@ -378,7 +378,7 @@ geom_ribbonh <- function(mapping = NULL, data = NULL,
 GeomRibbonh <- ggplot2::ggproto(
   "GeomRibbonh",
   ggplot2::Geom,
-  default_aes = ggplot2::aes(colour = NA, fill = "grey20", size = 0.5, linetype = 1, alpha = NA),
+  default_aes = ggplot2::aes(colour = NA, fill = "grey20", linewidth = 0.5, linetype = 1, alpha = NA),
 
   required_aes = c("y", "xmin", "xmax"),
 
@@ -393,7 +393,7 @@ GeomRibbonh <- ggplot2::ggproto(
     data <- data[order(data$group, data$y), ]
 
     # Check that aesthetics are constant
-    aes <- unique(data[c("colour", "fill", "size", "linetype", "alpha")])
+    aes <- unique(data[c("colour", "fill", "linewidth", "linetype", "alpha")])
     if (nrow(aes) > 1) {
       stop("Aesthetics can not vary with a ribbon")
     }
@@ -419,7 +419,7 @@ GeomRibbonh <- ggplot2::ggproto(
       gp = grid::gpar(
         fill = ggplot2::alpha(aes$fill, aes$alpha),
         col = aes$colour,
-        lwd = aes$size * ggplot2::.pt,
+        lwd = aes$linewidth * ggplot2::.pt,
         lty = aes$linetype)
     ))
   }
@@ -450,7 +450,7 @@ geom_areah <- function(mapping = NULL, data = NULL, stat = "identity",
 GeomAreah <- ggplot2::ggproto(
   "GeomAreah",
   GeomRibbonh,
-  default_aes = ggplot2::aes(colour = NA, fill = "grey20", size = 0.5, linetype = 1, alpha = NA),
+  default_aes = ggplot2::aes(colour = NA, fill = "grey20", linewidth = 0.5, linetype = 1, alpha = NA),
 
   required_aes = c("x", "y"),
 

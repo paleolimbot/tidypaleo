@@ -124,7 +124,7 @@ layer_dendrogram <- function(object, mapping,
   data <- dplyr::mutate(data, !!!mutate_args)
 
   list(
-    stat_nested_hclust(mapping = mapping, data = data, colour = colour, size = size,
+    stat_nested_hclust(mapping = mapping, data = data, colour = colour, linewidth = size,
                        linetype = linetype, alpha = alpha, inherit.aes = FALSE),
     if(sequential_facets) sequential_layer_facets()
   )
@@ -170,7 +170,7 @@ layer_zone_boundaries <- function(object, mapping, ..., linetype = 2, alpha = 0.
   geom(
     mapping = override_mapping(new_mapping, mapping),
     data = zone_info,
-    linetype = linetype, alpha = alpha, colour = colour, size = size,
+    linetype = linetype, alpha = alpha, colour = colour, linewidth = size,
     na.rm = TRUE
   )
 }

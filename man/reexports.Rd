@@ -28,6 +28,6 @@ below to see their documentation.
 
   \item{ggplot2}{\code{\link[ggplot2]{vars}}}
 
-  \item{ggstance}{\code{\link[ggstance:geom_barh]{geom_colh}}, \code{\link[ggstance:ggstance-ggproto]{GeomColh}}, \code{\link[ggstance:position-vertical]{position_dodge2v}}, \code{\link[ggstance:position-vertical]{position_dodgev}}, \code{\link[ggstance:position-vertical]{position_fillv}}, \code{\link[ggstance:position-vertical]{position_stackv}}, \code{\link[ggstance:ggstance-ggproto]{PositionDodge2v}}, \code{\link[ggstance:ggstance-ggproto]{PositionDodgev}}, \code{\link[ggstance:ggstance-ggproto]{PositionFillv}}, \code{\link[ggstance:ggstance-ggproto]{PositionStackv}}}
+  \item{ggstance}{\code{\link[ggstance:ggstance-ggproto]{GeomColh}}, \code{\link[ggstance:ggstance-ggproto]{PositionDodge2v}}, \code{\link[ggstance:ggstance-ggproto]{PositionDodgev}}, \code{\link[ggstance:ggstance-ggproto]{PositionFillv}}, \code{\link[ggstance:ggstance-ggproto]{PositionStackv}}, \code{\link[ggstance:geom_barh]{geom_colh}}, \code{\link[ggstance:position-vertical]{position_dodge2v}}, \code{\link[ggstance:position-vertical]{position_dodgev}}, \code{\link[ggstance:position-vertical]{position_fillv}}, \code{\link[ggstance:position-vertical]{position_stackv}}}
 }}
 
