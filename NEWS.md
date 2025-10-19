@@ -1,5 +1,9 @@
 # tidypaleo (development version)
 
+* Fixes for S3 method consistency in ggplot2 4.0.0
+* Fixes for deprecated arguments `sec_axis(trans = ...)` and `size` for
+  where `linewidth` is the reccomended usage.
+
 # tidypaleo 0.1.3
 
 * Fixes for the forthcoming dplyr 1.1.0.
